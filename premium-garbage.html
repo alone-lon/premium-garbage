@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>精品垃圾认证中心 · 100% 纯垃圾认证</title>
+<style>
+:root{
+  --paper:#FAF6EE;
+  --ink:#1C1914;
+  --muted:#8A8272;
+  --seal:#BF3A2B;
+  --faint:#DDD5C3;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--seal);color:#fff}
+.serif{font-family:"Songti SC","STSong","SimSun","NSimSun",Georgia,"Times New Roman",serif}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+
+/* ── 顶部档案行 ── */
+.meta{
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-bottom:1px solid var(--ink);padding-bottom:14px;
+  font-size:12px;letter-spacing:.18em;color:var(--muted);
+}
+.meta b{color:var(--ink);font-weight:600}
+
+/* ── 报头 ── */
+.mast{padding:60px 0 48px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:28px}
+.mast h1{font-size:clamp(38px,7vw,62px);font-weight:700;letter-spacing:.14em;line-height:1.3}
+.mast .sub{margin-top:22px;font-size:14px;color:var(--muted);letter-spacing:.06em}
+
+/* ── 证书主体 ── */
+.cert{border:1px solid var(--ink);padding:10px}
+.cert-inner{
+  border:1px solid var(--faint);padding:60px 36px 100px;
+  position:relative;text-align:center;
+}
+.cert .lead{font-size:15px;color:var(--ink);max-width:520px;margin:0 auto}
+.cert .verdict{
+  font-family:"Songti SC","STSong","SimSun","NSimSun",Georgia,serif;
+  font-size:clamp(42px,8vw,72px);font-weight:700;color:var(--seal);
+  letter-spacing:.08em;margin:26px 0 14px;
+}
+.cert .traits{font-size:13px;letter-spacing:.12em;color:var(--muted)}
+.seal{position:absolute;right:26px;bottom:22px;width:148px;transform:rotate(-9deg);opacity:.92}
+
+/* ── 指标带 ── */
+.metrics{display:flex;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin-top:56px}
+.m{flex:1;padding:24px 10px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.22em;color:var(--muted)}
+.m .v{font-size:26px;font-weight:700;margin-top:6px;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.m .v small{font-size:13px;font-weight:400;color:var(--muted);font-family:inherit}
+
+/* ── 章节标题 ── */
+.sec{margin-top:76px}
+.sec-tag{
+  display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:8px;
+}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+.sec .desc{font-size:14px;color:var(--muted);margin-bottom:24px}
+
+/* ── 检验报告 ── */
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:13px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:38%;font-size:14px;color:var(--ink)}
+td:last-child{font-size:14px;color:var(--muted)}
+tr.verdict-row td{color:var(--seal);font-weight:700;border-bottom:1px solid var(--ink)}
+.appeal{margin-top:26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.appeal .result{font-size:14px;color:var(--seal)}
+
+/* ── 装置 ── */
+.widget{border:1px solid var(--ink);padding:38px 32px 34px;margin-top:30px;position:relative}
+.widget-tag{
+  position:absolute;top:-11px;left:22px;background:var(--paper);padding:0 12px;
+  font-size:12px;letter-spacing:.24em;color:var(--muted);
+}
+.widget p.note{font-size:14px;color:var(--muted);margin-bottom:24px}
+.btn{
+  display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);
+  padding:13px 34px;font-size:15px;letter-spacing:.14em;cursor:pointer;font-family:inherit;
+  transition:background .15s,color .15s;
+}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.btn.big{padding:18px 48px;font-size:16px}
+
+.pressStat{margin-top:22px;font-size:13px;color:var(--muted);letter-spacing:.06em}
+.pressStat b{color:var(--ink);font-size:16px}
+.quote{
+  font-family:"Songti SC","STSong","SimSun",Georgia,serif;
+  font-size:20px;min-height:64px;margin-top:10px;color:var(--ink);
+}
+.quote.small{font-size:18px;min-height:56px}
+
+.gauge{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint)}
+.g{flex:1;padding:20px 8px;text-align:center;border-left:1px solid var(--faint)}
+.g:first-child{border-left:none}
+.g .k{font-size:11px;letter-spacing:.18em;color:var(--muted)}
+.g .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:30px;font-weight:700;margin-top:4px}
+.g .v small{font-size:12px;font-weight:400;color:var(--muted)}
+
+/* ── 结语 ── */
+.end{margin-top:88px;border-top:1px solid var(--ink);padding-top:32px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:22px;letter-spacing:.1em}
+.end .fine{margin-top:16px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+
+@media (max-width:560px){
+  .metrics{flex-wrap:wrap}
+  .m{flex:1 1 50%}
+  .m:nth-child(3){border-left:none;border-top:1px solid var(--faint)}
+  .m:nth-child(4){border-top:1px solid var(--faint)}
+  .widget{padding:30px 20px 26px}
+  .seal{width:112px;right:12px;bottom:12px}
+  .cert-inner{padding:44px 20px 90px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- 档案行 -->
+  <div class="meta">
+    <span>文件编号 <b>PGCB-2026-1111-001</b></span>
+    <span>签发日期 <b>2026-11-11</b></span>
+    <span>密级 <b>毫无秘密</b></span>
+  </div>
+
+  <!-- 报头 -->
+  <div class="mast">
+    <div class="en">PREMIUM&nbsp;GARBAGE&nbsp;CERTIFICATION&nbsp;BUREAU</div>
+    <h1 class="serif">精品垃圾认证中心</h1>
+    <div class="sub">本中心唯一职能:出具垃圾认定。概不办理任何有用业务。</div>
+  </div>
+
+  <!-- 证书 -->
+  <div class="cert">
+    <div class="cert-inner">
+      <p class="lead">兹证明:编号 PGCB-2026-1111-001 之网页文件,经本中心全套仪器检验、三名评审员轮流围观并一致鼓掌通过,认定为——</p>
+      <div class="verdict">100% 纯垃圾</div>
+      <div class="traits">纯手工打造 · 零实用功能 · 不含有效信息 · 谢绝回收</div>
+
+      <!-- 公章 -->
+      <svg class="seal" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="88" fill="none" stroke="#BF3A2B" stroke-width="3"/>
+        <circle cx="100" cy="100" r="78" fill="none" stroke="#BF3A2B" stroke-width="1"/>
+        <path id="arcTop" d="M 30 100 A 70 70 0 0 1 170 100" fill="none"/>
+        <path id="arcBottom" d="M 30 100 A 70 70 0 0 0 170 100" fill="none"/>
+        <text font-size="15" letter-spacing="6" fill="#BF3A2B" font-family="'Songti SC','SimSun',serif" font-weight="700">
+          <textPath href="#arcTop" startOffset="50%" text-anchor="middle">精品垃圾认证中心</textPath>
+        </text>
+        <text font-size="11" letter-spacing="4" fill="#BF3A2B" font-family="'Songti SC','SimSun',serif">
+          <textPath href="#arcBottom" startOffset="50%" text-anchor="middle">绝无用处 · 专用章</textPath>
+        </text>
+        <polygon points="100,70 107.1,90.3 128.5,90.7 111.4,103.7 117.6,124.3 100,112 82.4,124.3 88.6,103.7 71.5,90.7 92.9,90.3" fill="#BF3A2B"/>
+        <text x="100" y="143" text-anchor="middle" font-size="14" letter-spacing="2" fill="#BF3A2B" font-family="'Songti SC','SimSun',serif" font-weight="700">纯度100%</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 指标带 -->
+  <div class="metrics">
+    <div class="m"><div class="k">垃圾纯度</div><div class="v">100<small>%</small></div></div>
+    <div class="m"><div class="k">实用功能</div><div class="v">0<small> 项</small></div></div>
+    <div class="m"><div class="k">含金量</div><div class="v">0.00<small> g</small></div></div>
+    <div class="m"><div class="k">推荐用途</div><div class="v">无</div></div>
+  </div>
+
+  <!-- 检验报告 -->
+  <div class="sec">
+    <div class="sec-tag"><span class="zh">检验报告</span><span class="en">INSPECTION&nbsp;REPORT</span></div>
+    <p class="desc">检验方法:看了很久,想了很久,什么也没想出来。</p>
+    <table>
+      <tr><th>检验项目</th><th>检验结论</th></tr>
+      <tr><td>是否解决实际问题</td><td>否。问题在,它也在,互不打扰</td></tr>
+      <tr><td>是否提升任何效率</td><td>否。提升的只有本页打开次数</td></tr>
+      <tr><td>是否具有再利用价值</td><td>不建议。与其他垃圾混放会造成污染</td></tr>
+      <tr><td>是否美观</td><td>尚可。系本报告唯一达标项</td></tr>
+      <tr><td>有无隐藏功能</td><td>无。翻遍源码,全是废话</td></tr>
+      <tr class="verdict-row"><td>综合评级</td><td>SSS · 特级垃圾(评级标准:越没用,越纯)</td></tr>
+    </table>
+    <div class="appeal">
+      <button class="btn" id="appealBtn">申请评级复核</button>
+      <span class="result" id="appealResult"></span>
+    </div>
+  </div>
+
+  <!-- 装置一 -->
+  <div class="sec">
+    <div class="sec-tag"><span class="zh">交互式垃圾体验区</span><span class="en">HANDS-ON&nbsp;GARBAGE</span></div>
+    <p class="desc">以下装置均已通过"完全没用"认证,请放心使用。</p>
+
+    <div class="widget">
+      <div class="widget-tag">装置一 · 没用按钮</div>
+      <p class="note">本按钮不执行任何操作,不返回任何数据,不改变任何状态。它存在的全部意义,是等你按下去,然后证明以上陈述。</p>
+      <div style="text-align:center"><button class="btn big" id="uselessBtn">按下这个没用的按钮</button></div>
+      <div class="pressStat" style="text-align:center">已按下 <b id="pressCount">0</b> 次 · 实际效果 <b>0</b></div>
+      <div class="quote" id="pressQuote"></div>
+    </div>
+
+    <!-- 装置二 -->
+    <div class="widget">
+      <div class="widget-tag">装置二 · 垃圾话生成器</div>
+      <p class="note">由本中心词库随机拼装。语义通顺、信息为零,可直接用于周报、复盘与年终总结。</p>
+      <button class="btn accent" id="trashBtn">生成一句垃圾话</button>
+      <div class="quote small" id="trashLine">「按下按钮,领取今日垃圾话。」</div>
+    </div>
+
+    <!-- 装置三 -->
+    <div class="widget">
+      <div class="widget-tag">装置三 · 人生消耗仪表</div>
+      <p class="note">自打开本页起,计时开始。以下秒数本来可以用来做任何别的事。</p>
+      <div class="gauge">
+        <div class="g"><div class="k">已投入人生</div><div class="v"><span id="lifeSecs">0</span><small> 秒</small></div></div>
+        <div class="g"><div class="k">约合深呼吸</div><div class="v"><span id="breath">0</span><small> 次</small></div></div>
+        <div class="g"><div class="k">一碗泡面的进度</div><div class="v"><span id="noodle">0.0</span><small> %(3分钟)</small></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结语 -->
+  <div class="end">
+    <div class="zh">感谢您验证本垃圾。</div>
+    <div class="fine">
+      本中心郑重承诺:绝无隐藏功能 · 绝无二次用途 · 绝无回收价值<br>
+      若您在本页获得快乐,该快乐属于计划外产物,本中心概不负责。
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+
+  /* 装置一 */
+  var presses=0;
+  var pressQuotes=[
+    "看,没用吧。",
+    "还是没用。",
+    "第三次了。它还是没用,你开始有点用了——浪费人才。",
+    "按钮表示压力很大,但依然没用。",
+    "行,我服了,你再按一万次也还是没用。",
+    "这个按钮的全部功能,就是让你亲手确认它没用。",
+    "恭喜:你在本按钮上获得的价值,已超过本页其余部分的总和。",
+    "按钮已无话可说。它没用,你知道了,它也知道你知道了。"
+  ];
+  $("uselessBtn").addEventListener("click",function(){
+    presses++;
+    $("pressCount").textContent=presses;
+    $("pressQuote").textContent=pressQuotes[Math.min(presses-1,pressQuotes.length-1)];
+  });
+
+  /* 装置二 */
+  var trash=[
+    "本次结论:经研究,情况就是目前这个情况。",
+    "建议从长计议,议完再从长。",
+    "该方案可行性较高,因为没法验证不可行。",
+    "经综合研判,问题不大,也不小。",
+    "下一步工作重点:继续下一步。",
+    "理论上可行,实践上还没实践。",
+    "效率提升了,提升的是没效率的那部分。",
+    "经查,此事属实,但没关系。",
+    "综上所述,前述各条均已省略。",
+    "反馈已收到,反馈的内容是已收到反馈。",
+    "数据显示:数据还在显示。",
+    "机遇与挑战并存,且均与我无关。",
+    "本条垃圾话由机器生成,质量与人工持平。",
+    "本句为凑数而生,深感荣幸。"
+  ];
+  $("trashBtn").addEventListener("click",function(){
+    $("trashLine").textContent="「"+trash[Math.floor(Math.random()*trash.length)]+"」";
+  });
+
+  /* 复核 */
+  var appeals=0;
+  var appealMsgs=[
+    "受理中……",
+    "复核完毕:维持原判,确系垃圾。",
+    "再次复核:垃圾地位不可动摇。",
+    "本中心建议:把点复核的劲头用在别处。"
+  ];
+  $("appealBtn").addEventListener("click",function(){
+    appeals++;
+    $("appealResult").textContent=appealMsgs[Math.min(appeals-1,appealMsgs.length-1)];
+  });
+
+  /* 装置三 */
+  var s=0;
+  setInterval(function(){
+    s++;
+    $("lifeSecs").textContent=s;
+    $("breath").textContent=(s*0.25).toFixed(1);
+    $("noodle").textContent=Math.min(100,s/180*100).toFixed(1);
+  },1000);
+})();
+</script>
+</body>
+</html>

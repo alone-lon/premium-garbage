@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第十五号作品 · 献给打印机</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:56px 0 40px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:24px}
+.mast h1{font-size:clamp(32px,7vw,54px);font-weight:700;letter-spacing:.1em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:20px;font-size:14px;color:var(--muted)}
+.score{border:1px solid var(--ink);padding:46px 30px;text-align:center}
+.score .now{font-size:12px;letter-spacing:.24em;color:var(--muted)}
+.note{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(56px,12vw,96px);font-weight:700;line-height:1.2;margin:14px 0 6px;min-height:1.3em}
+.lyrics{font-size:15px;color:var(--muted);letter-spacing:.3em;min-height:2em}
+.ctrl{margin-top:30px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 30px;font-size:15px;letter-spacing:.14em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.movement{margin-top:64px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .no{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+.program{margin-top:26px;border:1px solid var(--ink);padding:24px 26px}
+.program .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.program p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:80px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>作品编号 <b>Op. 15</b></span>
+    <span>体裁 <b> office noise(办公室噪音)</b></span>
+    <span>献予 <b>每一台加班的打印机</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">OFFICE&nbsp;NOISE&nbsp;SYMPHONY</div>
+    <h1>第十五号作品 · 献给打印机</h1>
+    <div class="sub">办公室电子音乐,全部音源采自工位周边。未经混音,因为噪音本身就是混音。</div>
+  </div>
+
+  <div class="score">
+    <div class="now">正在演奏 · 第 <span id="mvNo">1</span> 乐章</div>
+    <div class="note" id="note">♪</div>
+    <div class="lyrics" id="lyric"></div>
+    <div class="ctrl">
+      <button class="btn accent" id="playBtn">开始演奏</button>
+      <button class="btn" id="stopBtn">停止(不接受静音)</button>
+    </div>
+  </div>
+
+  <div class="movement">
+    <div class="sec-tag"><span class="zh">乐章列表</span><span class="en">MOVEMENTS</span></div>
+    <ul>
+      <li><span class="no">第一乐章</span><span>打印机:进纸,卡住,沉默(行板,充满挣扎)</span></li>
+      <li><span class="no">第二乐章</span><span>空调外机:永恒的低音(广板,无情)</span></li>
+      <li><span class="no">第三乐章</span><span>键盘:机械键盘,同事的回击(快板,充满敌意)</span></li>
+      <li><span class="no">第四乐章</span><span>门禁「滴」声大合唱(终曲,辉煌的走音)</span></li>
+    </ul>
+  </div>
+
+  <div class="program">
+    <div class="title">乐曲说明</div>
+    <p>本曲无终止式——就像办公室的一天,你以为结束了,它只是进入了下一个乐章。乐评人(保洁阿姨)评价:「每天八小时,循环播放,免费。」</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">请外放演奏,这是对同事最好的问候。</div>
+    <div class="fine">
+      本曲不提供无损音质,因为它本来就是无损的噪音<br>
+      精品垃圾系列 · Op. 16 预告:《饮水机之歌》(烧水变奏曲)
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var playing=false,timer=null,step=0;
+  var notes=["♪","♫","♩","♬","♭","♯"];
+  var movements=[
+    {name:"打印机:进纸,卡住,沉默",lyric:"嗡——咔。嗡——咔咔。 error 13 error 13"},
+    {name:"空调外机:永恒的低音",lyric:"呜————嗡————(持续,永恒)"},
+    {name:"键盘:同事的回击",lyric:"哒哒哒哒 哒 哒哒哒 (噼里啪啦)"},
+    {name:"门禁「滴」声大合唱",lyric:"滴。滴。滴滴。滴——(辉煌地)"}
+  ];
+  var AC=null;
+  function beep(f,d,type){
+    try{
+      if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)();
+      var o=AC.createOscillator(),g=AC.createGain();
+      o.type=type||"square";o.frequency.value=f;
+      g.gain.value=0.04;
+      o.connect(g);g.connect(AC.destination);
+      o.start();o.stop(AC.currentTime+d);
+    }catch(e){}
+  }
+  function loop(){
+    step++;
+    var mv=Math.floor((step/8))%4;
+    $("mvNo").textContent=mv+1;
+    $("note").textContent=notes[step%notes.length];
+    $("lyric").textContent=movements[mv].lyric;
+    if(step%8===0){
+      if(mv===0) beep(220,.3,"sawtooth");
+      else if(mv===1) beep(80,.5,"triangle");
+      else if(mv===2) beep(660,.08,"square");
+      else beep(880,.15,"sine");
+    }
+    timer=setTimeout(loop,420);
+  }
+  $("playBtn").addEventListener("click",function(){
+    if(playing) return;
+    playing=true;loop();
+  });
+  $("stopBtn").addEventListener("click",function(){
+    playing=false;clearTimeout(timer);
+    $("note").textContent="♪";$("lyric").textContent="";
+    $("lyric").textContent="(停止失败。办公室噪音从不真正停止。)";
+    beep(160,.4,"sawtooth");
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全自动摆烂终端</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3;--term:#161512;--tgreen:#9EBB7C;--tamber:#C9A55C;--tmut:#6E6A5E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:860px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,48px);font-weight:700;letter-spacing:.1em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.state{display:flex;border:1px solid var(--ink);margin-top:8px}
+.st{flex:1;padding:22px 10px;text-align:center;border-left:1px solid var(--faint)}
+.st:first-child{border-left:none}
+.st .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.st .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:26px;font-weight:700;margin-top:4px}
+.st .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.termwrap{border:1px solid var(--ink);margin-top:26px}
+.termbar{display:flex;justify-content:space-between;background:var(--ink);color:var(--paper);padding:10px 18px;font-size:12px;letter-spacing:.14em}
+.term{background:var(--term);color:var(--tgreen);font-family:"Cascadia Code",Consolas,"Courier New",monospace;font-size:13.5px;line-height:1.9;padding:20px;height:340px;overflow-y:auto}
+.term .ln{white-space:pre-wrap;word-break:break-all}
+.term .mut{color:var(--tmut)}
+.term .warn{color:var(--tamber)}
+.term .hl{color:#E4DFD0}
+.ctrl{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 28px;font-size:15px;letter-spacing:.14em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.note{margin-top:22px;border:1px solid var(--ink);padding:22px 26px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:8px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:16px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>工作模式 <b>全自动摆烂(带自动化)</b></span>
+    <span>降级策略 <b>摆到底</b></span>
+    <span>KPI <b>不设,设了也完不成</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FULLY&nbsp;AUTOMATED&nbsp;SLACKING&nbsp;SYSTEM</div>
+    <h1>全自动摆烂终端</h1>
+    <div class="sub">本系统 7×24 小时不间断运行,全自动产出摸鱼日志,无需人工干预——人工只负责躺平。</div>
+  </div>
+
+  <div class="state">
+    <div class="st"><div class="k">系统状态</div><div class="v">摆烂中</div></div>
+    <div class="st"><div class="k">连续运行</div><div class="v"><span id="uptime">0</span><small> 秒</small></div></div>
+    <div class="st"><div class="k">今日产出</div><div class="v">0<small> 件</small></div></div>
+    <div class="st"><div class="k">意外勤奋</div><div class="v">0<small> 次</small></div></div>
+  </div>
+
+  <div class="termwrap">
+    <div class="termbar"><span>slack-bot v9.9.9 · 摆烂守护进程已启动</span><span>UPTIME ∞</span></div>
+    <div class="term" id="term"><div class="ln mut">[boot] 摆烂内核加载完毕,欢迎回来。</div></div>
+  </div>
+
+  <div class="ctrl">
+    <button class="btn accent" id="startBtn">启动摆烂守护进程</button>
+    <button class="btn" id="pauseBtn">暂停摆烂(重新加载后继续)</button>
+    <button class="btn" id="diligentBtn">尝试勤奋一下</button>
+  </div>
+
+  <div class="note">
+    <div class="title">系统说明</div>
+    <p>摆烂守护进程采用事件驱动架构:没有事件,就驱动不了;驱动不了,正好摆烂。日志实时生成,内容与真实工作完全无关,但格式无懈可击。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">它努力地不努力,这份努力不容置疑。</div>
+    <div class="fine">
+      本终端不建议在生产环境运行,但生活本身就是生产环境<br>
+      精品垃圾系列 · SLA:摆烂可用性 99.999%
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var term=$("term"),timer=null,up=0,running=false;
+  var logs=[
+    "[slack] 已收到 0 条工作消息,已读 0 条,处理 0 条,完美闭环。",
+    "[monitor] 检测到工作欲靠近,已自动后撤三步。",
+    "[cache] 摸鱼缓存命中率 100%(缓存内容:昨天摸的鱼)",
+    "[kpi] KPI 扫描完成:无 KPI,无需扫描,结论健康。",
+    "[slack] 今日待办:无。今日已办:无。待办清零达成。",
+    "[health] 摆烂指标全部正常,建议保持。",
+    "[mail] 收件箱 0 封新邮件,邮件系统状态良好。",
+    "[sync] 与「什么都不做」云端同步完成,无冲突。",
+    "[plan] 明日计划已生成:与今日完全一致。",
+    "[alert] WARNING: 检测到一丝上进心,已自动熄灭。",
+    "[slack] 摸鱼模式已持续运行,建议加水:去接杯水。",
+    "[audit] 审计通过:本时段无任何产出,符合预期。"
+  ];
+  function line(txt,cls){
+    var d=document.createElement("div");
+    d.className="ln"+(cls?" "+cls:"");
+    d.textContent=txt;
+    term.appendChild(d);
+    while(term.children.length>60) term.removeChild(term.firstChild);
+    term.scrollTop=term.scrollHeight;
+  }
+  var li=0;
+  function addLog(){
+    line("[bot@"+new Date().toTimeString().slice(0,8)+"] "+logs[li%logs.length].slice(8));
+    li++;
+  }
+  $("startBtn").addEventListener("click",function(){
+    if(running)return;running=true;
+    line("[boot] 摆烂守护进程启动成功,预计永不崩溃(无事可崩)。","hl");
+    addLog();
+    timer=setInterval(function(){
+      up++;
+      $("uptime").textContent=up;
+      if(up%3===0) addLog();
+    },1000);
+  });
+  $("pauseBtn").addEventListener("click",function(){
+    if(!running)return;
+    running=false;clearInterval(timer);
+    line("[pause] 摆烂已暂停。但摆烂从不需要暂停,这一步纯属仪式感。","warn");
+  });
+  $("diligentBtn").addEventListener("click",function(){
+    line("[diligent] 勤奋模块冷启动中 ……","warn");
+    setTimeout(function(){
+      line("[diligent] 启动失败:依赖缺失(躺平垫)。","err".replace("err","warn"));
+      setTimeout(function(){
+        line("[diligent] 已自动回退到摆烂模式,系统恢复稳定。","hl");
+      },900);
+    },1100);
+  });
+})();
+</script>
+</body>
+</html>

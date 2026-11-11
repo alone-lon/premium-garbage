@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · 查无此页</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.serif{font-family:"Songti SC","STSong","SimSun","NSimSun",Georgia,"Times New Roman",serif}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.hero{padding:70px 0 30px;text-align:center}
+.hero .code{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(90px,20vw,170px);font-weight:700;line-height:1}
+.stamp{display:inline-block;margin-top:18px;border:2px solid var(--seal);color:var(--seal);padding:6px 22px;font-size:16px;letter-spacing:.3em;transform:rotate(-4deg);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+.hero .sub{margin-top:26px;font-size:14px;color:var(--muted)}
+.panel{border:1px solid var(--ink);padding:28px 26px;margin-top:36px}
+.panel-title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:12px}
+.quote{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;line-height:2}
+.widget{border:1px solid var(--ink);padding:32px 26px 28px;margin-top:30px;position:relative}
+.widget-tag{position:absolute;top:-11px;left:22px;background:var(--paper);padding:0 12px;font-size:12px;letter-spacing:.24em;color:var(--muted)}
+.widget p.note{font-size:14px;color:var(--muted);margin-bottom:20px}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 30px;font-size:15px;letter-spacing:.14em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.quote-sm{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:18px;min-height:56px;margin-top:16px}
+.center{text-align:center}
+.spin{display:none;width:22px;height:22px;border:2px solid var(--faint);border-top-color:var(--ink);border-radius:50%;margin:18px auto 0;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.end{margin-top:80px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>错误代码 <b>404</b></span>
+    <span>页面状态 <b>从未存在</b></span>
+    <span>可用性 <b>稳定地不存在</b></span>
+  </div>
+
+  <div class="hero">
+    <div class="code">404</div>
+    <div class="stamp">查 无 此 页</div>
+    <div class="sub">本页不存在,且从未存在过,因此永远不会坏——这是它最大的优点。</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">官方说法</div>
+    <p class="quote">「你要找的页面不在。但好消息是:不存在的东西不会让你失望,我们已将失望的可能性优化到了零。」</p>
+  </div>
+
+  <div class="widget">
+    <div class="widget-tag">丢失原因生成器</div>
+    <p class="note">页面的下落已由本站官方认定,以下原因随机出具,无需查证。</p>
+    <div class="center"><button class="btn" id="whyBtn">换一个官方原因</button></div>
+    <div class="quote-sm center" id="whyOut">「尚未出具。请点击上方按钮。」</div>
+  </div>
+
+  <div class="widget">
+    <div class="widget-tag">假装刷新</div>
+    <p class="note">有些网站,刷新一下就好了。本站支持你保留这个美好的习惯。</p>
+    <div class="center"><button class="btn" id="refreshBtn">假装刷新</button></div>
+    <div class="spin" id="spin"></div>
+    <div class="quote-sm center" id="refreshOut"></div>
+  </div>
+
+  <div class="end">
+    <div class="zh">如果你本来要找别的东西,建议就当没来过。</div>
+    <div class="fine">
+      本站其余内容同样精彩地不存在 · 404 友情提示:这里连续多年保持零内容,从未宕机<br>
+      精品垃圾系列 · 唯一功能:证明 404 也可以很有排面
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var why=0;
+  var reasons=[
+    "该页面从未上线,谈不上失踪。",
+    "页面随旧版本一起光荣退役,去向保密。",
+    "被爬虫抓走后,页面嫌弃本站,伤心出走。",
+    "因长期无人访问,页面认定自己不存在,遂成真。",
+    "页面去更新了。已经更新了三年。",
+    "误入回收站,被彻底回收,连遗憾都没剩下。",
+    "该链接是本站故意布下的性格测试。",
+    "页面存在过,但存在得太安静,被系统误删。",
+    "页面去外地出差了,没有留下交接文档。"
+  ];
+  $("whyBtn").addEventListener("click",function(){
+    why++;
+    $("whyOut").textContent="「"+reasons[(why-1)%reasons.length]+"」";
+  });
+
+  $("refreshBtn").addEventListener("click",function(){
+    $("refreshOut").textContent="";
+    $("spin").style.display="block";
+    setTimeout(function(){
+      $("spin").style.display="none";
+      $("refreshOut").textContent="「刷新完毕。检查结果:依旧 404,但你的坚持值得尊敬。」";
+    },1800);
+  });
+})();
+</script>
+</body>
+</html>

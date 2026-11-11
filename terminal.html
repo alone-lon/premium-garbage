@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>生产级冒烟测试终端</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3;--term:#161512;--tgreen:#9EBB7C;--tred:#C96A5A;--tamber:#C9A55C;--tmut:#6E6A5E}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:860px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,48px);font-weight:700;letter-spacing:.1em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.termwrap{border:1px solid var(--ink)}
+.termbar{display:flex;justify-content:space-between;align-items:center;background:var(--ink);color:var(--paper);padding:10px 18px;font-size:12px;letter-spacing:.14em}
+.term{background:var(--term);color:var(--tgreen);font-family:"Cascadia Code",Consolas,"Courier New",monospace;font-size:13.5px;line-height:1.9;padding:22px 22px;height:380px;overflow-y:auto}
+.term .ln{white-space:pre-wrap;word-break:break-all}
+.term .mut{color:var(--tmut)}
+.term .err{color:var(--tred)}
+.term .warn{color:var(--tamber)}
+.term .hl{color:#E4DFD0}
+.cursor{display:inline-block;width:8px;height:15px;background:var(--tgreen);vertical-align:-2px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.ctrl{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 28px;font-size:15px;letter-spacing:.14em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>环境 <b>production(勿动)</b></span>
+    <span>风险等级 <b>心理层面较高</b></span>
+    <span>回滚方案 <b>没有,但不建议回滚</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PRODUCTION&nbsp;SMOKE&nbsp;TEST</div>
+    <h1>生产级冒烟测试终端</h1>
+    <div class="sub">对一台不存在的服务器,执行一套极专业的流程。命令无法输入——因为不敢让你在生产环境乱敲。</div>
+  </div>
+
+  <div class="termwrap">
+    <div class="termbar"><span>prod-bastion-01 · ssh · 严禁 Ctrl+C</span><span id="clock">--:--:--</span></div>
+    <div class="term" id="term"><div class="ln mut">[等待授权,点击下方「执行冒烟测试」开始]</div></div>
+  </div>
+
+  <div class="ctrl">
+    <button class="btn" id="runBtn">执行冒烟测试</button>
+    <button class="btn" id="rollbackBtn">一键回滚</button>
+  </div>
+
+  <div class="end">
+    <div class="zh">测试对象不存在,因此可靠性为 100%。</div>
+    <div class="fine">
+      本终端无任何真实连接 · 全部日志即产即焚 · 你的心跳已计入 P99<br>
+      精品垃圾系列 · 唯一真实指标:你紧张了
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var term=$("term"),busy=false;
+  setInterval(function(){
+    $("clock").textContent=new Date().toTimeString().slice(0,8);
+  },1000);
+  function line(txt,cls){
+    var d=document.createElement("div");
+    d.className="ln"+(cls?" "+cls:"");
+    d.textContent=txt;
+    term.appendChild(d);
+    term.scrollTop=term.scrollHeight;
+  }
+  function typeOut(lines,done){
+    var i=0;
+    (function next(){
+      if(i>=lines.length){done&&done();return}
+      var it=lines[i];
+      setTimeout(function(){
+        line(it.t,it.c);
+        i++;next();
+      },it.d||240);
+    })();
+  }
+  $("runBtn").addEventListener("click",function(){
+    if(busy)return;busy=true;
+    term.innerHTML="";
+    typeOut([
+      {t:"$ ./smoke-test --env production --accept-risk",c:"hl",d:100},
+      {t:"[00:00] 建立连接到 prod-bastion-01 …… 成功(其实是本地)" },
+      {t:"[00:01] WARNING: 当前为生产环境,每一步都关乎千万用户",c:"warn"},
+      {t:"[00:02] 检查 CPU 负载 …… 0.00(服务器:我不存在,别查我)",d:340},
+      {t:"[00:03] 检查内存占用 …… 0 MB / 0 MB,内存泄漏已根治",d:340},
+      {t:"[00:04] Ping 999 次 …… 0% 丢包(物理定律失效,建议申报),d:340".replace(",d:340",""),d:340},
+      {t:"[00:06] 数据库主从同步 …… 主不存在,从不存在,同步完美",c:"warn",d:420},
+      {t:"[00:08] 缓存命中率 …… NaN%(比 100% 还高,超额完成)",d:380},
+      {t:"[00:09] ERROR: 未发现任何错误,错误监控系统失业中",c:"err",d:420},
+      {t:"[00:11] P99 延迟 …… 取决于你此刻的心跳",d:380},
+      {t:"[00:12] 结论:系统 100% 可用,因为它 100% 不存在",c:"hl",d:480},
+      {t:"[00:13] ✓ 冒烟测试通过。没有烟,也没有火,也没有测试",c:"",d:300},
+      {t:"$ _",c:"hl",d:120}
+    ],function(){busy=false});
+  });
+  $("rollbackBtn").addEventListener("click",function(){
+    if(busy)return;busy=true;
+    term.innerHTML="";
+    typeOut([
+      {t:"$ git revert HEAD~100 --force",c:"hl",d:100},
+      {t:"[00:00] 正在回滚到上一个稳定版本 ……",c:"warn"},
+      {t:"[00:03] 稳定版本定位失败:从来没有稳定过",c:"err",d:500},
+      {t:"[00:04] 改用回滚到最初版本 ……",d:420},
+      {t:"[00:05] 最初版本也不存在(本项目从未发布)",d:420},
+      {t:"[00:06] 回滚完成:系统维持不存在状态,与回滚前一致",c:"hl",d:460},
+      {t:"[00:07] ✓ 回滚成功。什么都没变,这正是最佳结果",d:320},
+      {t:"$ _",c:"hl",d:120}
+    ],function(){busy=false});
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>项目进度:永动</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:56px 0 40px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:24px}
+.mast h1{font-size:clamp(34px,7vw,56px);font-weight:700;letter-spacing:.12em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:20px;font-size:14px;color:var(--muted)}
+.bar-box{border:1px solid var(--ink);padding:44px 34px 38px}
+.bar-row{display:flex;align-items:center;gap:18px}
+.bar-label{font-size:12px;letter-spacing:.2em;color:var(--muted);white-space:nowrap}
+.bar{flex:1;height:16px;border:1px solid var(--ink);position:relative;background:#fff}
+.fill{position:absolute;top:2px;bottom:2px;left:2px;width:0%;background:var(--seal);transition:width 1.4s cubic-bezier(.2,.8,.3,1)}
+.pct{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:30px;font-weight:700;width:120px;text-align:right}
+.cycle{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);letter-spacing:.14em;margin-top:16px}
+.log{margin-top:44px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:12px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+li .txt{color:var(--ink)}
+.legend{margin-top:26px;border:1px solid var(--ink);padding:24px 26px}
+.legend .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.legend p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:80px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>项目代号 <b>永动-α</b></span>
+    <span>立项时间 <b>很久以前</b></span>
+    <span>当前阶段 <b>即将完成</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PERPETUAL&nbsp;PROGRESS&nbsp;DASHBOARD</div>
+    <h1>项目进度:即将完成</h1>
+    <div class="sub">本项目最大的成果,是进度条本身。项目内容暂无可汇报,但进度从未停止。</div>
+  </div>
+
+  <div class="bar-box">
+    <div class="bar-row">
+      <span class="bar-label">总体进度</span>
+      <div class="bar"><div class="fill" id="fill"></div></div>
+      <div class="pct"><span id="pct">0.0</span>%</div>
+    </div>
+    <div class="cycle"><span>已完成:马上就好</span><span>剩余工作:马上就好之后的部分</span></div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">工作日志</span><span class="en">WORK&nbsp;LOG</span></div>
+    <ul id="log"></ul>
+  </div>
+
+  <div class="legend">
+    <div class="title">进度条哲学</div>
+    <p>本条进度条将在 99.9% 处进入稳态。剩下的 0.1% 属于收尾工作,而收尾工作的定义是:永远不会开始的工作。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">本周结论:一切正常,持续推进。</div>
+    <div class="fine">
+      下周计划:继续一切正常,继续持续推进<br>
+      精品垃圾系列 · 本页可放心转发到任何工作群,效果拔群
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var pct=0,target=99.9;
+  var msgs=[
+    "重构了进度统计方式,进度统计本身进度+5%。",
+    "召开关于下次会议时间的会议,会议圆满结束。",
+    "排期已完成,排期工作用时超过原定排期。",
+    "优化了汇报模板,汇报内容暂无变化。",
+    "识别出关键阻塞:不知道阻塞在哪。",
+    "完成可行性论证:项目可行,论证已归档。",
+    "同步了各方预期:所有人均已降低预期。",
+    "代码已写完 90%,与上周持平。",
+    "本条日志为凑数日志,凑数工作已验收。"
+  ];
+  function fillBar(){
+    pct=Math.min(target,pct+7+Math.random()*9);
+    $("fill").style.width=Math.min(99.9,pct)+"%";
+    $("pct").textContent=pct.toFixed(1);
+    if(pct<target) setTimeout(fillBar,1200+Math.random()*900);
+  }
+  fillBar();
+
+  var li=0;
+  function addLog(){
+    var now=new Date();
+    var el=document.createElement("li");
+    var t=now.getHours()+":"+String(now.getMinutes()).padStart(2,"0")+":"+String(now.getSeconds()).padStart(2,"0");
+    el.innerHTML='<span class="t">'+t+'</span><span class="txt">'+msgs[li%msgs.length]+'</span>';
+    $("log").prepend(el);
+    li++;
+    if($("log").children.length>6) $("log").removeChild($("log").lastChild);
+  }
+  addLog();addLog();
+  setInterval(addLog,8000);
+})();
+</script>
+</body>
+</html>

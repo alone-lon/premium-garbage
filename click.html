@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>世界级点击按钮</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:56px 0 40px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:24px}
+.mast h1{font-size:clamp(34px,7vw,56px);font-weight:700;letter-spacing:.12em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:20px;font-size:14px;color:var(--muted)}
+.stage{border:1px solid var(--ink);padding:70px 30px;text-align:center}
+.ach{margin-top:64px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:12px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;justify-content:space-between;gap:16px}
+li .name{color:var(--ink)}
+li.locked .name{color:var(--muted)}
+li .st{color:var(--seal);letter-spacing:.1em;white-space:nowrap}
+li.locked .st{color:var(--muted)}
+.ranks{margin-top:26px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint)}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:34%}
+td,th{font-size:14px}
+td:last-child{color:var(--muted)}
+.you td{color:var(--seal);font-weight:700;border-bottom:1px solid var(--ink)}
+.end{margin-top:80px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+#clickBtn{
+  font-family:"Songti SC","STSong","SimSun",Georgia,serif;
+  font-size:24px;font-weight:700;letter-spacing:.2em;
+  padding:26px 64px;background:transparent;color:var(--ink);
+  border:2px solid var(--ink);cursor:pointer;transition:transform .06s;
+}
+#clickBtn:active{transform:scale(.96)}
+#clickBtn:hover{background:var(--ink);color:var(--paper)}
+.counter{margin-top:30px;font-size:14px;color:var(--muted)}
+.counter b{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:34px;color:var(--ink)}
+.toast{
+  position:fixed;left:50%;bottom:36px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--paper);padding:12px 26px;font-size:14px;letter-spacing:.08em;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>产品定位 <b>点击类头部产品</b></span>
+    <span>核心指标 <b>点击数</b></span>
+    <span>商业模式 <b>暂无,先做大</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WORLD-CLASS&nbsp;BUTTON</div>
+    <h1>世界级点击按钮</h1>
+    <div class="sub">对标全球顶级按钮。本按钮无数值、无奖励、无排行榜,点击体验极度纯粹。</div>
+  </div>
+
+  <div class="stage">
+    <button id="clickBtn">点 我</button>
+    <div class="counter">累计点击 <b id="cnt">0</b> 次 · 全球排名 <b id="rank">未上榜</b></div>
+  </div>
+
+  <div class="ach">
+    <div class="sec-tag"><span class="zh">成就系统</span><span class="en">ACHIEVEMENTS</span></div>
+    <ul id="achList">
+      <li data-n="1"><span class="name">初次点击</span><span class="st">未解锁</span></li>
+      <li data-n="10"><span class="name">十连击:手指已热身</span><span class="st">未解锁</span></li>
+      <li data-n="50"><span class="name">五十连击:开始思考为什么</span><span class="st">未解锁</span></li>
+      <li data-n="100"><span class="name">百连击:问题没有答案</span><span class="st">未解锁</span></li>
+      <li data-n="500"><span class="name">五百连击:建议起身活动</span><span class="st">未解锁</span></li>
+      <li data-n="1000"><span class="name">千连击:你就是本页全部流量</span><span class="st">未解锁</span></li>
+    </ul>
+  </div>
+
+  <div class="ranks">
+    <div class="sec-tag" style="margin-top:40px"><span class="zh">段位对照表</span><span class="en">RANK&nbsp;TABLE</span></div>
+    <table>
+      <tr><th>段位</th><th>所需点击</th><th>称号</th></tr>
+      <tr><td>青铜</td><td>1 - 49</td><td>路过选手</td></tr>
+      <tr><td>白银</td><td>50 - 199</td><td>手滑大师</td></tr>
+      <tr><td>黄金</td><td>200 - 999</td><td>按钮研究者</td></tr>
+      <tr><td>王者</td><td>1000+</td><td>本页唯一用户</td></tr>
+      <tr class="you"><td>你的段位</td><td id="youN">0</td><td id="youT">尚未入场</td></tr>
+    </table>
+  </div>
+
+  <div class="end">
+    <div class="zh">点吧。按钮不产出任何东西,但你已经是它的一切。</div>
+    <div class="fine">
+      数据不出本页,不存云端,不分享——纯粹属于你自己的时间<br>
+      精品垃圾系列 · 全球同服,同时在线人数:1
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var n=0,shown=0;
+  var cnt=document.getElementById("cnt"),rank=document.getElementById("rank");
+  var toast=document.getElementById("toast"),tTimer=null;
+  var titles=["尚未入场","路过选手","路过选手","手滑大师","手滑大师","按钮研究者","按钮研究者","本页唯一用户"];
+  var btn=document.getElementById("clickBtn");
+  btn.addEventListener("click",function(){
+    n++;shown++;
+    cnt.textContent=n;
+    document.getElementById("youN").textContent=n;
+    var ti=n>=1000?7:n>=200?5:n>=50?3:n>=1?1:0;
+    var extra=n>=1000?7:n>=500?6:n>=200?5:n>=50?3:n>=10?2:n>=1?1:0;
+    ti=extra;
+    document.getElementById("youT").textContent=titles[ti];
+    rank.textContent=n>=1000?"全球第 1(样本仅你)":n>=100?"前 1%(样本仅你)":"未上榜";
+    var items=document.querySelectorAll("#achList li");
+    for(var i=0;i<items.length;i++){
+      var th=parseInt(items[i].getAttribute("data-n"),10);
+      if(n>=th&&items[i].className!==""){
+        items[i].className="";
+        items[i].querySelector(".st").textContent="已解锁";
+        showToast("成就解锁:「"+items[i].querySelector(".name").textContent+"」");
+      }
+    }
+  });
+  function showToast(msg){
+    toast.textContent=msg;
+    toast.className="toast show";
+    clearTimeout(tTimer);
+    tTimer=setTimeout(function(){toast.className="toast"},2200);
+  }
+})();
+</script>
+</body>
+</html>
