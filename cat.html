@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>猫语翻译机</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(32px,6vw,52px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.catface{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:56px;font-weight:700;line-height:1.2;min-height:1.4em}
+.say{font-size:15px;color:var(--muted);min-height:2.4em;margin-top:8px}
+.ctrl{margin-top:24px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 28px;font-size:15px;letter-spacing:.14em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.translate{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+.dict{margin-top:44px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:30%;font-size:14px;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{font-size:14px;color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>翻译方向 <b>猫语 → 人话(单向,够用了)</b></span>
+    <span>语料库 <b>一只猫 · 三年 · 拒绝配合</b></span>
+    <span>翻译置信度 <b>猫:不屑置评</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">MEOW&nbsp;TRANSLATOR</div>
+    <h1>猫语翻译机</h1>
+    <div class="sub">人类首次系统性破译猫语。破译结论:猫对你没有任何意见——它只是懒得理你。</div>
+  </div>
+
+  <div class="console">
+    <div class="catface" id="face">( =^･ω･^= )</div>
+    <div class="say" id="say">待机中。猫在某个你看不见的地方,做它自己的事。</div>
+    <div class="ctrl">
+      <button class="btn accent" id="meowBtn">戳一下猫</button>
+      <button class="btn" id="foodBtn">假装开罐头</button>
+      <button class="btn" id="petBtn">试图摸头</button>
+    </div>
+  </div>
+
+  <div class="translate">
+    <div class="sec-tag"><span class="zh">实时翻译记录</span><span class="en">LIVE&nbsp;TRANSCRIPT</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无交流。猫在观察你。</li></ul>
+  </div>
+
+  <div class="dict">
+    <div class="sec-tag"><span class="zh">高频词对照表</span><span class="en">PHRASEBOOK</span></div>
+    <table>
+      <tr><th>猫语</th><th>人话(已破译)</th></tr>
+      <tr><td>喵——(长)</td><td>「饭碗空了。空了很久。你可能没注意,我在提醒。」</td></tr>
+      <tr><td>喵(短促)</td><td>「看到了。知道了。不打算动。」</td></tr>
+      <tr><td>咕噜咕噜</td><td>「此刻可以摸。限时供应,时间表保密。」</td></tr>
+      <tr><td>咔咔咔(窗外)</td><td>「外面有鸟。我的狩猎本能已上线,身体配合度 0%。」</td></tr>
+      <tr><td>深夜跑酷声</td><td>「我在替全家锻炼身体,你们躺着就好。」</td></tr>
+      <tr><td>盯着你看然后慢慢眨眼</td><td>「本猫正式通知:勉强喜欢你。」</td></tr>
+      <tr><td>把桌上的东西推下去</td><td>「重力实验第 47 次,数据与预期一致:仍会掉。你的愤怒依旧有趣。」</td></tr>
+      <tr><td>半夜盯着空气看</td><td>「无可奉告。」(猫语中该场景不提供翻译,建议你也别看)</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">破译后记</div>
+    <p>经过三年语料采集,本机最终确认:猫语的核心语法只有一个词——「随便」。你对它的所有热情,翻译过来都是「收到」;它的所有回应,翻译过来都是「随缘」。这不是冷漠,这是猫的效率。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">翻译完毕。结论:它知道你叫它,它只是不想来。</div>
+    <div class="fine">
+      精品垃圾系列 · 本机不提供人话→猫语翻译(输入了它也不看)<br>
+      特别感谢:隔壁那只橘猫,为语料库贡献了 90% 的「喵」和 100% 的敷衍
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var faces=["( =^･ω･^= )","( ˘•ω•˘ )","( =✧ω✧= )","( =×ω×= )","( =^‥^= )","( ˶ᵔ ᵕ ᵔ˶ )"];
+  var pokeReplies=[
+    {s:"喵(短促)",t:"「看到了。知道了。不打算动。」"},
+    {s:"喵——(长)",t:"「手可以收回了,本猫今日营业已结束。」"},
+    {s:"( 猫看了你一眼 )",t:"「翻译:你行为幼稚,但被允许。」"},
+    {s:"喵呜——",t:"「翻译:勉强可以再戳一下,下不为例。」"},
+    {s:"( 猫起身,走了 )",t:"「翻译:话题结束。」"}
+  ];
+  var foodReplies=[
+    {s:"( 瞬间出现 )",t:"「罐头呢?罐头呢?!——空的。你演我?记录在案。」"},
+    {s:"喵!!(高八度)",t:"「翻译:又骗我。但下次演得更像一点,我还是会来。」"},
+    {s:"( 围着你转三圈 )",t:"「翻译:本人已到岗,请罐头立刻道歉并上岗。」"}
+  ];
+  var petReplies=[
+    {s:"咕噜咕噜",t:"「翻译:今日额度已开启,限时 5 秒,开始倒数。」"},
+    {s:"( 头一歪 )",t:"「翻译:位置不对,再来。耳朵后面,轻一点,对,就这样,够了。」"},
+    {s:"( 假装咬了一下 )",t:"「翻译:爱意过载,程序强制降温。没咬疼吧?疼也活该。」"}
+  ];
+  var n=0;
+  function act(list,face){
+    var r=list[n%list.length];
+    n++;
+    $("face").textContent=face||faces[n%faces.length];
+    $("say").textContent="猫语原文:"+r.s;
+    var log=$("log");
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+r.s+'</span><span>'+r.t+'</span>';
+    log.prepend(li);
+  }
+  $("meowBtn").addEventListener("click",function(){act(pokeReplies)});
+  $("foodBtn").addEventListener("click",function(){act(foodReplies,"( =★★★= )")});
+  $("petBtn").addEventListener("click",function(){act(petReplies,"( =^ω^= )")});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>犹豫决定器 5000</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.1em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.askbox{border:1px solid var(--ink);padding:34px 30px 30px;margin-top:8px}
+.askbox .label{font-size:12px;letter-spacing:.2em;color:var(--muted);margin-bottom:12px}
+.askbox .row{display:flex;gap:12px;flex-wrap:wrap}
+.askbox input{flex:1;min-width:220px;border:1px solid var(--ink);background:#fff;padding:13px 16px;font-size:15px;font-family:inherit;color:var(--ink);outline:none}
+.askbox input:focus{border-color:var(--seal)}
+.btn{display:inline-block;border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:12px 26px;font-size:15px;letter-spacing:.14em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--seal);border-color:var(--seal)}
+.spin{display:none;width:20px;height:20px;border:2px solid var(--faint);border-top-color:var(--seal);border-radius:50%;margin:20px auto 0;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.verdict{margin-top:30px;border:1px solid var(--ink);padding:40px 30px 34px;text-align:center;position:relative}
+.verdict .cap{font-size:12px;letter-spacing:.24em;color:var(--muted)}
+.verdict .q{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:16px;color:var(--muted);margin-top:10px}
+.verdict .ans{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(26px,5vw,40px);font-weight:700;color:var(--seal);margin:18px 0 8px;line-height:1.5}
+.conf{display:flex;border:1px solid var(--faint);margin-top:10px}
+.c{flex:1;padding:16px 8px;text-align:center;border-left:1px solid var(--faint)}
+.c:first-child{border-left:none}
+.c .k{font-size:11px;letter-spacing:.18em;color:var(--muted)}
+.c .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:24px;font-weight:700;margin-top:4px}
+.stats-line{margin-top:14px;font-size:13px;color:var(--muted)}
+.stats-line b{color:var(--ink)}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;justify-content:center}
+.chip{border:1px solid var(--faint);background:transparent;padding:7px 14px;font-size:12.5px;cursor:pointer;font-family:inherit;color:var(--muted);letter-spacing:.06em;transition:all .12s}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>型号 <b>决定器 5000(只到 4999)</b></span>
+    <span>算法 <b>蒙特卡洛·不做版</b></span>
+    <span>已助逃避决策 <b>无数</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">HESITATION&nbsp;ENGINE&nbsp;5000</div>
+    <h1>犹豫决定器 5000</h1>
+    <div class="sub">把任何难以决定的问题交给它。它从不给出选项,只给出智慧—— 「再想想」也是一种答案,而且是标准答案。</div>
+  </div>
+
+  <div class="askbox">
+    <div class="label">请输入你的世纪难题</div>
+    <div class="row">
+      <input id="q" type="text" placeholder="例如:中午吃什么 / 要不要辞职 / 要不要回消息" autocomplete="off">
+      <button class="btn" id="goBtn">帮我决定</button>
+    </div>
+    <div class="chips">
+      <button class="chip" data-q="中午吃什么">中午吃什么</button>
+      <button class="chip" data-q="要不要辞职">要不要辞职</button>
+      <button class="chip" data-q="要不要买这个">要不要买这个</button>
+      <button class="chip" data-q="现在睡还是再刷一会儿">现在睡还是再刷一会儿</button>
+    </div>
+  </div>
+
+  <div class="spin" id="spin"></div>
+
+  <div class="verdict" id="verdict" style="display:none">
+    <div class="cap">经 5000 次蒙特卡洛模拟 · 最终裁决</div>
+    <div class="q" id="qEcho"></div>
+    <div class="ans" id="ans">「再想想。」</div>
+    <div class="conf">
+      <div class="c"><div class="k">决策置信度</div><div class="v">0%</div></div>
+      <div class="c"><div class="k">正确率(历史)</div><div class="v">无从统计</div></div>
+      <div class="c"><div class="k">后悔率</div><div class="v">0%(没决定,无后悔)</div></div>
+    </div>
+  </div>
+
+  <div class="stats-line">本机已成功帮助逃避决策 <b id="n">0</b> 次 · 成功率 <b>100%</b>(成功逃避也算成功)</div>
+
+  <div class="note">
+    <div class="title">决策哲学</div>
+    <p>不做决定,就不会做错决定。本机深谙此道:它运行 5000 次模拟的目的,是为了证明所有模拟都指向同一个结论——你心里早有答案,只是想找个机器陪你耗着。现在,机器陪你耗完了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">再想想。</div>
+    <div class="fine">
+      精品垃圾系列 · 本机不接受「别再想想」的指令,该指令会被再想想<br>
+      温馨提示:如果你想要真正的决定,请把它的问题倒过来问,它会让你失望两次
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var n=0;
+  var answers=[
+    "再想想。",
+    "建议:先吃个饭。饿着做的决定都不算数。",
+    "建议:抛硬币。然后无视硬币结果——你举起硬币那一刻就知道想要哪面了。",
+    "建议:问妈。",
+    "建议:都行。反正你最后会选最初想的那个。",
+    "建议:睡一觉,让明天的你接着犹豫,分工明确。",
+    "经 5000 次模拟,结果与你的直觉完全一致:别问了,再想想。",
+    "建议:把它写进待办清单,让清单替你焦虑。",
+    "本机裁决:该问题不值得 5000 次模拟,降级为「随便」。",
+    "建议:再想想。想完了你会发现,原样不动也是一种推进。"
+  ];
+  function go(){
+    var q=$("q").value.trim()||"一个不便透露的难题";
+    $("spin").style.display="block";
+    $("verdict").style.display="none";
+    setTimeout(function(){
+      $("spin").style.display="none";
+      $("verdict").style.display="block";
+      $("qEcho").textContent="关于:「"+q+"」";
+      $("ans").textContent="「"+answers[n%answers.length]+"」";
+      n++;
+      $("n").textContent=n;
+      $("verdict").scrollIntoView({behavior:"smooth",block:"center"});
+    },1500);
+  }
+  $("goBtn").addEventListener("click",go);
+  $("q").addEventListener("keydown",function(e){if(e.key==="Enter")go()});
+  var chips=document.querySelectorAll(".chip");
+  for(var i=0;i<chips.length;i++){
+    chips[i].addEventListener("click",function(){
+      $("q").value=this.getAttribute("data-q");go();
+    });
+  }
+})();
+</script>
+</body>
+</html>

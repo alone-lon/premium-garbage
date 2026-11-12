@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>每日运势 · 准确率 0%</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(32px,6vw,52px);font-weight:700;letter-spacing:.1em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.zodiac{border:1px solid var(--ink);padding:34px 30px 30px;margin-top:8px;text-align:center}
+.zodiac .label{font-size:12px;letter-spacing:.2em;color:var(--muted);margin-bottom:14px}
+.grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.z{border:1px solid var(--faint);background:transparent;padding:9px 16px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--ink);letter-spacing:.08em;transition:all .12s}
+.z:hover{border-color:var(--ink)}
+.z.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.zodiac .tip{margin-top:14px;font-size:12.5px;color:var(--muted)}
+.zodiac .tip b{color:var(--seal)}
+.draw{margin-top:26px;text-align:center}
+.btn{display:inline-block;border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:14px 40px;font-size:16px;letter-spacing:.18em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--seal);border-color:var(--seal)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.result{margin-top:30px;border:1px solid var(--ink);padding:40px 30px 34px;text-align:center;display:none}
+.result .sign{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:13px;letter-spacing:.3em;color:var(--muted)}
+.result .fortune{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(24px,5vw,38px);font-weight:700;color:var(--seal);margin:16px 0 6px;line-height:1.5}
+.result .poem{font-size:15px;color:var(--ink);margin-top:6px;line-height:2.1}
+.bars{display:flex;flex-wrap:wrap;border:1px solid var(--faint);margin-top:24px}
+.b{flex:1 1 33%;padding:18px 8px;text-align:center;border-left:1px solid var(--faint);border-top:1px solid var(--faint)}
+.b:nth-child(-n+3){border-top:none}
+.b:nth-child(3n+1){border-left:none}
+.b .k{font-size:11px;letter-spacing:.18em;color:var(--muted)}
+.b .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:26px;font-weight:700;margin-top:4px;color:var(--ink)}
+.b .v.up{color:var(--seal)}
+.b .v.down{color:var(--muted)}
+.lucky{margin-top:24px;display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.lucky b{color:var(--ink)}
+.disclaim{margin-top:20px;font-size:12.5px;color:var(--muted);letter-spacing:.06em}
+.history{margin-top:44px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:12px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--muted);white-space:nowrap}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>占卜师 <b>算法一台</b></span>
+    <span>历史准确率 <b>0.0%(经统计学验证)</b></span>
+    <span>退款政策 <b>本来就没收钱</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DAILY&nbsp;FORTUNE&nbsp;·&nbsp;ACCURACY&nbsp;0%</div>
+    <h1>每日运势</h1>
+    <div class="sub">本运势由纯随机数生成,经大样本统计验证,准确率为精确的 0%。这使它成为本系列唯一「数据可查」的垃圾。</div>
+  </div>
+
+  <div class="zodiac">
+    <div class="label">选择你的星座(或随便选一个,反正不准)</div>
+    <div class="grid" id="zgrid">
+      <button class="z">白羊座</button><button class="z">金牛座</button><button class="z">双子座</button>
+      <button class="z">巨蟹座</button><button class="z">狮子座</button><button class="z">处女座</button>
+      <button class="z">天秤座</button><button class="z">天蝎座</button><button class="z">射手座</button>
+      <button class="z">摩羯座</button><button class="z">水瓶座</button><button class="z">双鱼座</button>
+      <button class="z">属猫的</button>
+    </div>
+    <div class="tip">已选:<b id="zpick">未选择</b>(选择不影响结果,结果不影响人生)</div>
+  </div>
+
+  <div class="draw">
+    <button class="btn" id="drawBtn">今日运势,开抽</button>
+  </div>
+
+  <div class="result" id="result">
+    <div class="sign" id="rSign"></div>
+    <div class="fortune" id="rMain"></div>
+    <div class="poem" id="rPoem"></div>
+    <div class="bars" id="rBars"></div>
+    <div class="lucky" id="rLucky"></div>
+    <div class="disclaim">本运势含 0% 预测成分 · 如遇巧合,纯属随机 · 如遇不准,符合规格</div>
+  </div>
+
+  <div class="history">
+    <div class="sec-tag"><span class="zh">抽签记录</span><span class="en">HISTORY</span></div>
+    <ul id="hist"><li style="color:var(--muted)">暂无记录。命运尚未开始。</li></ul>
+  </div>
+
+  <div class="end">
+    <div class="zh">运势已出。请以 0% 的严肃程度对待。</div>
+    <div class="fine">
+      精品垃圾系列 · 每天可无限重抽,直到抽到你想听的那条为止(玄学的尽头是自助)<br>
+      本页唯一注定成真的预言:你今天会看到这句话
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var pick="未选择",drawn=0;
+  var zs=document.querySelectorAll(".z");
+  for(var i=0;i<zs.length;i++){
+    zs[i].addEventListener("click",function(){
+      for(var j=0;j<zs.length;j++) zs[j].className="z";
+      this.className="z on";
+      pick=this.textContent;
+      $("zpick").textContent=pick;
+    });
+  }
+  var mains=[
+    {t:"宜摸鱼",p:"星象显示:今日工位引力异常,臀部与座椅将深度融合,任何离开的尝试都会被老板的视线弹回。"},
+    {t:"宜快乐",p:"今日快乐指数爆表,但来源不明。建议见到好玩的东西立刻笑,别问为什么,问就是天意。"},
+    {t:"忌做决定",p:"今日诸事悬而未决即是最佳状态。纠结不是病,是星象的一部分。"},
+    {t:"宜喝水",p:"水星顺行,宜多喝水。这可能是本运势中最科学的一条,请务必珍惜。"},
+    {t:"宜发呆",p:"宇宙能量今日经由放空通道进入身体。发得越深,充能越足。会议中也可进行,能量穿透性强。"},
+    {t:"忌抬杠",p:"今日水逆牌气阀松动,抬杠必输。对面那个不服的,星象显示他也没赢。"},
+    {t:"宜早睡",p:"今夜宜与床深度绑定。凌晨的手机屏幕会散发光污染,干扰明日运势——虽然明日运势也不准。"},
+    {t:"宜 procrastination",p:"今日拖延症获得星象加持,拖到最后期限,事情的走向往往出乎意料地……还是得自己做。"}
+  ];
+  var stats=["工作","财运","爱情","摸鱼","健康","奶茶"];
+  function draw(){
+    $("drawBtn").disabled=true;$("drawBtn").textContent="占卜中……";
+    setTimeout(function(){
+      $("drawBtn").disabled=false;$("drawBtn").textContent="再抽一次(结果会变,不准不变)";
+      var m=mains[Math.floor(Math.random()*mains.length)];
+      $("rSign").textContent=pick+" · "+new Date().toLocaleDateString("zh-CN")+" · 第 "+(++drawn)+" 抽";
+      $("rMain").textContent="今日 "+m.t;
+      $("rPoem").textContent=m.p;
+      var html="";
+      for(var i=0;i<stats.length;i++){
+        var v=Math.floor(Math.random()*101);
+        var cls=v>=70?" up":(v<=30?" down":"");
+        html+='<div class="b"><div class="k">'+stats[i]+'</div><div class="v'+cls+'">'+v+'%</div></div>';
+      }
+      $("rBars").innerHTML=html;
+      var dirs=["东","南","西","北","原地"];
+      var colors=["咖啡色","废纸黄","马尔斯红","老板的防盗色","办公室白"];
+      var nums=["3","17","88","0.5","99+"];
+      $("rLucky").innerHTML=
+        '<span>幸运方位:<b>'+dirs[Math.floor(Math.random()*dirs.length)]+'</b></span>'+
+        '<span>幸运色:<b>'+colors[Math.floor(Math.random()*colors.length)]+'</b></span>'+
+        '<span>幸运数字:<b>'+nums[Math.floor(Math.random()*nums.length)]+'</b></span>';
+      $("result").style.display="block";
+      var h=document.createElement("li");
+      var now=new Date().toTimeString().slice(0,8);
+      h.innerHTML='<span class="t">'+now+'</span><span>'+pick+' 抽到「宜/忌 '+m.t.replace(/^(宜|忌) /,"")+'」——大概率不准</span>';
+      var hist=$("hist");
+      if(hist.children.length===1&&hist.children[0].textContent.indexOf("暂无")>-1) hist.innerHTML="";
+      hist.prepend(h);
+      $("result").scrollIntoView({behavior:"smooth",block:"center"});
+    },1200);
+  }
+  $("drawBtn").addEventListener("click",draw);
+})();
+</script>
+</body>
+</html>
