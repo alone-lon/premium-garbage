@@ -77,12 +77,12 @@ td:last-child{color:var(--muted)}
   <div class="ach">
     <div class="sec-tag"><span class="zh">成就系统</span><span class="en">ACHIEVEMENTS</span></div>
     <ul id="achList">
-      <li data-n="1"><span class="name">初次点击</span><span class="st">未解锁</span></li>
-      <li data-n="10"><span class="name">十连击:手指已热身</span><span class="st">未解锁</span></li>
-      <li data-n="50"><span class="name">五十连击:开始思考为什么</span><span class="st">未解锁</span></li>
-      <li data-n="100"><span class="name">百连击:问题没有答案</span><span class="st">未解锁</span></li>
-      <li data-n="500"><span class="name">五百连击:建议起身活动</span><span class="st">未解锁</span></li>
-      <li data-n="1000"><span class="name">千连击:你就是本页全部流量</span><span class="st">未解锁</span></li>
+      <li class="locked" data-n="1"><span class="name">初次点击</span><span class="st">未解锁</span></li>
+      <li class="locked" data-n="10"><span class="name">十连击:手指已热身</span><span class="st">未解锁</span></li>
+      <li class="locked" data-n="50"><span class="name">五十连击:开始思考为什么</span><span class="st">未解锁</span></li>
+      <li class="locked" data-n="100"><span class="name">百连击:问题没有答案</span><span class="st">未解锁</span></li>
+      <li class="locked" data-n="500"><span class="name">五百连击:建议起身活动</span><span class="st">未解锁</span></li>
+      <li class="locked" data-n="1000"><span class="name">千连击:你就是本页全部流量</span><span class="st">未解锁</span></li>
     </ul>
   </div>
 
@@ -128,7 +128,7 @@ td:last-child{color:var(--muted)}
     var items=document.querySelectorAll("#achList li");
     for(var i=0;i<items.length;i++){
       var th=parseInt(items[i].getAttribute("data-n"),10);
-      if(n>=th&&items[i].className!==""){
+      if(n>=th&&items[i].className==="locked"){
         items[i].className="";
         items[i].querySelector(".st").textContent="已解锁";
         showToast("成就解锁:「"+items[i].querySelector(".name").textContent+"」");

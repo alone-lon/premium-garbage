@@ -136,7 +136,7 @@ body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragin
   $("diligentBtn").addEventListener("click",function(){
     line("[diligent] 勤奋模块冷启动中 ……","warn");
     setTimeout(function(){
-      line("[diligent] 启动失败:依赖缺失(躺平垫)。","err".replace("err","warn"));
+      line("[diligent] 启动失败:依赖缺失(躺平垫)。","warn");
       setTimeout(function(){
         line("[diligent] 已自动回退到摆烂模式,系统恢复稳定。","hl");
       },900);

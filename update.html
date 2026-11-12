@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>系统更新中心</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:56px 0 40px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:24px}
+.mast h1{font-size:clamp(34px,7vw,56px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:20px;font-size:14px;color:var(--muted)}
+.warnline{border:2px solid var(--seal);color:var(--seal);text-align:center;padding:12px;font-size:14px;letter-spacing:.28em;margin-top:10px}
+.upbox{border:1px solid var(--ink);padding:40px 34px 34px;margin-top:34px}
+.uprow{display:flex;align-items:center;gap:18px}
+.uplabel{font-size:12px;letter-spacing:.2em;color:var(--muted);white-space:nowrap}
+.bar{flex:1;height:16px;border:1px solid var(--ink);position:relative;background:#fff}
+.bar .fill{position:absolute;top:2px;bottom:2px;left:2px;background:var(--seal);transition:width .8s}
+.pct{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:30px;font-weight:700;width:110px;text-align:right}
+.upmeta{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);letter-spacing:.12em;margin-top:16px}
+.upmeta b{color:var(--ink)}
+.changes{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);white-space:nowrap;font-weight:700}
+.ctrl{margin-top:56px}
+.btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 28px;font-size:15px;letter-spacing:.14em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.spin{display:none;width:18px;height:18px;border:2px solid var(--faint);border-top-color:var(--seal);border-radius:50%;margin:16px auto 0;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.quote{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:18px;min-height:56px;margin-top:14px;text-align:center;color:var(--ink)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:80px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>当前版本 <b>v1.0.0</b></span>
+    <span>目标版本 <b>v1.0.1(重大更新)</b></span>
+    <span>已取消次数 <b>8</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SYSTEM&nbsp;UPDATE&nbsp;CENTER</div>
+    <h1>系统更新中心</h1>
+    <div class="sub">一个重量级更新正在准备中。它已经准备了很多年,准备得很充分,不着急上线。</div>
+  </div>
+
+  <div class="warnline">请 勿 关 闭 计 算 机(关 了 也 行,反 正 没 有 更 新)</div>
+
+  <div class="upbox">
+    <div class="uprow">
+      <span class="uplabel">更新进度</span>
+      <div class="bar"><div class="fill" id="fill" style="width:34%"></div></div>
+      <div class="pct"><span id="pct">34.0</span>%</div>
+    </div>
+    <div class="upmeta">
+      <span>预计剩余时间 <b id="eta">约 3 分钟</b></span>
+      <span>更新包大小 <b>0 KB(纯心理更新)</b></span>
+      <span>传输速率 <b>不可测量</b></span>
+    </div>
+  </div>
+
+  <div class="changes">
+    <div class="sec-tag"><span class="zh">本次更新内容</span><span class="en">CHANGELOG</span></div>
+    <ul>
+      <li><span class="t">修复</span><span>修复了更新进度条长期卡住的 bug(本次更新的全部内容就是这个修复)</span></li>
+      <li><span class="t">优化</span><span>延长了「请勿关闭计算机」的展示时长,让它更有存在感</span></li>
+      <li><span class="t">修复</span><span>修复了上一版更新日志过于诚实的问题</span></li>
+      <li><span class="t">新增</span><span>新增了一个更新,专门负责检查上一个更新(递归更新架构)</span></li>
+    </ul>
+  </div>
+
+  <div class="ctrl">
+    <div class="sec-tag" style="margin-top:8px"><span class="zh">更新操作</span><span class="en">ACTIONS</span></div>
+    <div class="btns">
+      <button class="btn accent" id="rebootBtn">立即重启</button>
+      <button class="btn" id="pauseBtn">暂停更新</button>
+      <button class="btn" id="checkBtn">检查更新</button>
+    </div>
+    <div class="spin" id="spin"></div>
+    <div class="quote" id="msgOut">「等待操作。更新也在等,它很有耐心。」</div>
+  </div>
+
+  <div class="note">
+    <div class="title">更新哲学</div>
+    <p>本系统对「更新」的理解已超越软件范畴:进度在动,版本未变,时间在流逝而一切如常。这不是故障,这是对世界最精确的模拟。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">更新完成后,你会收到通知:开始更新。</div>
+    <div class="fine">
+      精品垃圾系列 · 本页与真实系统更新的相似度 100%,纯属巧合<br>
+      友情提示:进度低于 35% 时不要刷新,否则它会诚实地下跌
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  /* 进度抖动:永远在 33%-36.9% 之间徘徊 */
+  setInterval(function(){
+    var p=33+Math.random()*3.9;
+    $("fill").style.width=p+"%";
+    $("pct").textContent=p.toFixed(1);
+    var m=2+Math.floor(Math.random()*3);
+    $("eta").textContent="约 "+m+" 分钟(每次重算都是新的)";
+  },900);
+
+  var checks=0;
+  var checkMsgs=[
+    "「已检查:发现一个更新,负责检查上一个更新。」",
+    "「该更新的更新,正在检查更早的更新。链条健康。」",
+    "「检查链已延伸至第 3 层,所有更新互相检查,无人工作。」",
+    "「递归深度警戒:再查就要查到本项目源码了,停止。」"
+  ];
+  $("checkBtn").addEventListener("click",function(){
+    $("msgOut").textContent="";$("spin").style.display="block";
+    setTimeout(function(){
+      $("spin").style.display="none";
+      $("msgOut").textContent=checkMsgs[Math.min(checks,checkMsgs.length-1)];
+      checks++;
+    },1300);
+  });
+  $("rebootBtn").addEventListener("click",function(){
+    $("msgOut").textContent="「重启被拒绝:更新尚未开始。重启的资格需要先有更新。」";
+  });
+  $("pauseBtn").addEventListener("click",function(){
+    $("msgOut").textContent="「暂停失败:更新本来就没在动。你无法暂停一个静止的东西,这是物理学的胜利。」";
+  });
+})();
+</script>
+</body>
+</html>
