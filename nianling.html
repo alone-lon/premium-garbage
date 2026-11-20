@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「多喝热水」年龄分层研究院</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>「多喝热水」的年龄疗效</b></span>
+    <span>样本分层 <b>5 个年龄段</b></span>
+    <span>研究结论 <b>疗效与年龄正相关</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">HOT-WATER&nbsp;AGE&nbsp;STUDY</div>
+    <h1>「多喝热水」年龄分层研究院</h1>
+    <div class="sub">同样是「多喝热水」:7 岁听是唠叨,17 岁听是敷衍,27 岁听是想念,37 岁听是真理——本院按年龄分层研究这句处方的疗效变化。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">分层研究中</div><div class="status" id="status">同一句话,五个年纪,五种感受。本院逐层分析——您现在在哪一层,哪一层就是您的疗效读数。</div><div class="metrics"><div class="m"><div class="k">样本分层</div><div class="v">5 层</div></div><div class="m"><div class="k">疗效曲线</div><div class="v">随年龄上升</div></div><div class="m"><div class="k">转折点</div><div class="v">27 岁</div></div><div class="m"><div class="k">研究院立场</div><div class="v">趁热,也趁早</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">层一·7 岁</button><button class="btn" id="btn1">层二·17 岁</button><button class="btn" id="btn2">层三·27 岁</button><button class="btn" id="btn3">层四·37 岁</button></div></div><div class="log"><div class="sec-tag"><span class="zh">分层记录</span><span class="en">LAYERS</span></div><ul id="log"><li style="color:var(--muted)">暂无分层。您的保温杯里,正泡着您这个年纪的疗效。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">研究院结语</div>
+    <p>「多喝热水」被吐槽了二十年,本院为它平反:它不是敷衍,是中国人最朴素的爱的表达——只是 17 岁时,我们还没学会翻译它。本研究的终极结论:下次收到这句话,别回「知道了」——回一句「你也多喝点」。热水会凉,这句不会。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">研究完毕。给谁,先倒一杯?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 165 号藏品 · 本院与 117 号(热水处方学)合并重组,成立「热水总院」<br>研究院冷知识:全人类喝下的热水,80% 在 30 岁之后——年轻时的胃,靠碳酸;中年后的胃,靠开水
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"分层研究中","stat0":"同一句话,五个年纪,五种感受。本院逐层分析——您现在在哪一层,哪一层就是您的疗效读数。","btns":[{"label":"层一·7 岁","tag":"7 岁","lines":["7 岁疗效:无效,但安全。「多喝热水」= 妈妈又在啰嗦——您咕咚咕咚喝下去,一半为了听话,一半为了快去玩。","层一记录:这个年纪的热水没有疗效,只有温度——它烫,您吹一吹;它暖,您忘了喝。妈妈的作用,是替您记得。","层一批注:长大后您会发现,7 岁时嫌烦的那句话,是您这辈子听过的最便宜的健康管理。"],"bigs":["唠叨","咕咚咕咚","最便宜"]},{"label":"层二·17 岁","tag":"17 岁","lines":["17 岁疗效:负值。「多喝热水」= 敷衍——尤其当它出自喜欢的人之口:您要的是「我陪你去看医生」,不是热水。","层二记录:这个年纪的您,为「谁该说更贴心的话」冷战过三天——三天里,热水没人喝,人也没人理。","层二批注:17 岁的您没说错,只是还不知道:成年后的世界,肯说「多喝热水」的人,已经排队排到了心门外。"],"bigs":["负值","冷战三天","心门外"]},{"label":"层三·27 岁","tag":"27 岁","lines":["27 岁疗效:回甘。加班到深夜,妈妈发来「多喝热水,别熬夜」——您盯着屏幕看了十秒,回了个「好」。","层三记录:这个年纪的您,开始给别人倒热水了——给同事、给对象、给爸妈。说出口才发现:这三个字,原来这么难说出真心。","层三批注:27 岁是「多喝热水」的转折层——从听的人,变成说的人;从嫌它敷衍,到懂它笨拙。"],"bigs":["回甘","倒水","转折层"]},{"label":"层四·37 岁","tag":"37 岁","lines":["37 岁疗效:真理。您把这句话说给了孩子、说给了父母、说给了疲惫的自己——每一句,都是当年那句的回声。","层四记录:您终于明白:热水从来不治病,治的是「有人管你」的孤独——37 岁的您,给爸妈的热水里,泡着您说不出口的爱。","层四批注:本院终审:「多喝热水」的疗效曲线,是一首倒放的情歌——年少时听不懂,听懂时已中年。"],"bigs":["回声","泡着爱","倒放"]}],"metrics":[["样本分层","5 层"],["疗效曲线","随年龄上升"],["转折点","27 岁"],["研究院立场","趁热,也趁早"]],"logTitle":"分层记录","logEn":"LAYERS","logEmpty":"暂无分层。您的保温杯里,正泡着您这个年纪的疗效。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

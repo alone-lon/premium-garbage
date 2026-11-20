@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>外卖评分心理学</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>评分瞬间的心理战</b></span>
+    <span>手下留情率 <b>64%</b></span>
+    <span>围观立场 <b>不劝好评,不劝差评</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DELIVERY-RATING&nbsp;PSYCHOLOGY</div>
+    <h1>外卖评分心理学</h1>
+    <div class="sub">好评返现 3 元,您给了五星;汤洒了,您犹豫了 8 秒——外卖评分不是评价,是一场心理博弈。本店全程围观,并解析您手下留情的每一刻。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">评分界面打开</div><div class="status" id="status">您吃完了,评分界面弹出来。五星和一星之间,隔着 8 秒的犹豫——本店记录这 8 秒里的每一个念头。</div><div class="metrics"><div class="m"><div class="k">围观场次</div><div class="v">3 场</div></div><div class="m"><div class="k">手下留情率</div><div class="v">64%</div></div><div class="m"><div class="k">返现成交</div><div class="v">¥3</div></div><div class="m"><div class="k">默认好评</div><div class="v">常态</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">考场一·返现考验</button><button class="btn" id="btn1">考场二·手下留情</button><button class="btn" id="btn2">考场三·忘评</button></div></div><div class="log"><div class="sec-tag"><span class="zh">评分记录</span><span class="en">RATING</span></div><ul id="log"><li style="color:var(--muted)">暂无评分。您今天的外卖,吃完了吗?评了吗?算了,默认好评吧。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本店结语</div>
+    <p>外卖评分是一场没有裁判的心理考:返现考验良心,汤洒考验体谅,忘记考验诚实。本店不评判您的选择——五星有五星的道理,三星有三星的温柔——只想说:您手下留情的那 8 秒,是这座城市运转的润滑剂之一。评分体系冰冷,但评的人,是热的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">围观完毕。这顿,您评了几星?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 166 号藏品 · 本店与 93 号(外卖备注文学馆)、134 号(骑手轨迹文学馆)组成「外卖人文三部曲」<br>店内冷知识:差评率最低的时段,是下雨天——全人类都在雨里学会了体谅
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"评分界面打开","stat0":"您吃完了,评分界面弹出来。五星和一星之间,隔着 8 秒的犹豫——本店记录这 8 秒里的每一个念头。","btns":[{"label":"考场一·返现考验","tag":"返现","lines":["考场实录:袋子里有张卡——「五星好评返现 3 元」。您看着 3 元,又看着 3 星的良心,交易达成了:五星+返现+删除差评的念头。","返现心理:3 元不多,但「白拿 3 元」的快乐是实打实的——您说服自己的话术:「反正也不难吃。」","考场点评:返现经济学——商家花 3 元买五星,您花良心赚 3 元,平台看着数据笑了。三方共赢,除了评分的真实性。"],"bigs":["3 元","白拿","共赢"]},{"label":"考场二·手下留情","tag":"留情","lines":["考场实录:汤洒了一半,面坨了——您正准备点一星,想起骑手在雨里跑的样子,手指悬停 8 秒,最后给了三星,备注:「雨大,辛苦了。」","手下留情率:64% 的差评,都死在了「算了」这两个字上——人类的善良,是差评的头号杀手。","考场点评:那 8 秒的犹豫,是您人性的高光时刻——评分可以给低,但您选择先体谅。这份体谅,骑手未必知道,但宇宙记了账。"],"bigs":["8 秒","算了","高光"]},{"label":"考场三·忘评","tag":"忘评","lines":["考场实录:系统默认好评倒计时 48 小时——您忘了评,系统替您打了五星,附言「默认好评」。","忘评心理:您不是敷衍,是真忘了——外卖吃完的那一刻,这顿饭的使命就完成了,评分是余波。","考场终语:默认好评里藏着当代人的疲惫:不是不想评价,是评价需要力气。而力气,早就用在了吃饭上。"],"bigs":["默认五星","余波","力气"]}],"metrics":[["围观场次","3 场"],["手下留情率","64%"],["返现成交","¥3"],["默认好评","常态"]],"logTitle":"评分记录","logEn":"RATING","logEmpty":"暂无评分。您今天的外卖,吃完了吗?评了吗?算了,默认好评吧。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

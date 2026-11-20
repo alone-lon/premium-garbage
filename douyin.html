@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「最后一个」视频定律</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>「最后一个」的真实含义</b></span>
+    <span>今晚纪录 <b>第 14 次</b></span>
+    <span>定律内容 <b>最后一个,永远不是最后一个</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">THE-LAST-VIDEO&nbsp;LAW</div>
+    <h1>「最后一个」视频定律</h1>
+    <div class="sub">「最后一个,看完就睡」——这是您今晚第 14 次说这句话。本定律研究「最后一个」的语义:它不是数量词,是借口。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">第 14 个「最后一个」</div><div class="status" id="status">您第 14 次按下「最后一个」。本定律记录这个短语的完整生命周期:出生(的决心)、成长(的惯性)、以及永不到来的终结。</div><div class="metrics"><div class="m"><div class="k">今晚纪录</div><div class="v">14 次</div></div><div class="m"><div class="k">终止信号</div><div class="v" id="是观测结论">不好笑</div></div><div class="m"><div class="k">定律状态</div><div class="v">永真</div></div><div class="m"><div class="k">适用人群</div><div class="v">全人类</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">定律一·语义漂移</button><button class="btn" id="btn1">定律二·终止条件</button></div></div><div class="log"><div class="sec-tag"><span class="zh">观测记录</span><span class="en">THE-LAST</span></div><ul id="log"><li style="color:var(--muted)">暂无观测。您今晚的「最后一个」,可能已经说了——也可能,正在路上。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">定律结语</div>
+    <p>「最后一个」是这个时代最温柔的谎言:它骗不了人,只骗得了当下。本定律无法帮您戒掉——算法比您懂您——只提供一个冷知识:当您刷到「不好笑的」内容时,请立刻放下手机。那是算法的下班信号,也是您今晚最后的机会。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">定律完毕。这次,真是最后一个了吧?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 181 号藏品 · 本定律与 97 号(最后一眼观测站)、118 号(时间折叠仪)并称「睡前三定律」<br>定律冷知识:「最后一个」的中文含金量,与「明天一定早起」并列当代谎言双雄——它们都真诚,都无效
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"第 14 个「最后一个」","stat0":"您第 14 次按下「最后一个」。本定律记录这个短语的完整生命周期:出生(的决心)、成长(的惯性)、以及永不到来的终结。","btns":[{"label":"定律一·语义漂移","tag":"漂移","lines":["「最后一个」的语义,在午夜前会漂移:20:00 的它 = 数量词;22:00 的它 = 习惯性口头禅;00:30 的它 = 纯粹的仪式——说完这句,您才能心安理得地看下一个。","漂移的物理学:这个短语的功能不是「宣布停止」,而是「购买许可」——每说一次,您给自己发放了一次继续的许可证。","定律一结论:「最后一个」是当代最廉价的自我赦免——说的人明知没用,还是要说;因为不说,连继续看的心理许可都没有。"],"bigs":["漂移","许可证","廉价赦免"]},{"label":"定律二·终止条件","tag":"终止","lines":["什么才能真正终止「最后一个」?本定律做了 100 次观测:是困意(38%)、是手机没电(11%)、是突然的理智(9%)、是「看到一条真的不好笑的」(42%)。","观测发现:「不好笑的」才是最强的终止信号——当算法开始给您推不感兴趣的内容,说明它知道:今晚,该放您走了。","定律二结论:您和算法之间,有一场心照不宣的合作——它投喂,您接收;它乏了,您睡了。人类与 AI 的第一次默契,发生在凌晨的床上。"],"bigs":["困意","不好笑","心照不宣"]}],"metrics":[["今晚纪录","14 次"],["终止信号","不好笑","是观测结论"],["定律状态","永真"],["适用人群","全人类"]],"logTitle":"观测记录","logEn":"THE-LAST","logEmpty":"暂无观测。您今晚的「最后一个」,可能已经说了——也可能,正在路上。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

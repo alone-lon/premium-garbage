@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>热搜榜情绪过山车</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>乘坐频次 <b>日均 27 次</b></span>
+    <span>过山车结构 <b>喜 12% · 怒 34% · 疑 54%</b></span>
+    <span>下车方式 <b>放下手机(唯一)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TRENDING&nbsp;LIST&nbsp;ROLLERCOASTER</div>
+    <h1>热搜榜情绪过山车</h1>
+    <div class="sub">早上一条好消息,中午一条坏消息,晚上一条「反转」——热搜榜是情绪的过山车:您没有票,但您每天被迫乘坐 27 次。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">第 1 条热搜</div><div class="status" id="status">您打开榜单——第一条是喜,第二条是怒,第三条是「反转再反转」。过山车启动,请系好情绪安全带。</div><div class="metrics"><div class="m"><div class="k">乘坐次数</div><div class="v">27 次/天</div></div><div class="m"><div class="k">情绪消耗</div><div class="v">中高</div></div><div class="m"><div class="k">反转率</div><div class="v">54%</div></div><div class="m"><div class="k">下车方式</div><div class="v">放下手机</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">车段一·早高峰</button><button class="btn" id="btn1">车段二·午间反转</button></div></div><div class="log"><div class="sec-tag"><span class="zh">车票记录</span><span class="en">ROLLERCOASTER</span></div><ul id="log"><li style="color:var(--muted)">暂无乘坐。今天的热搜还没开始转——安全带先系好。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">观测站结语</div>
+    <p>热搜榜是全民情绪的过山车:它免费、刺激、一天 27 次。本站无法让您下车——注意力就是生命力——只想递给您一份乘车指南:怒的先存着,喜的多看看,疑的等一等。过山车的安全带,是您自己的「让子弹飞」。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">乘坐完毕。今天,系好安全带了吗?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 168 号藏品 · 本站与 87 号(深夜emo气象台)联动:深夜的热搜,emo 加成 +40%<br>站内冷知识:热搜榜上「反转」词条的年均出现次数,比「真相」多 3 倍——真相迟到,是常态
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"第 1 条热搜","stat0":"您打开榜单——第一条是喜,第二条是怒,第三条是「反转再反转」。过山车启动,请系好情绪安全带。","btns":[{"label":"车段一·早高峰","tag":"早高峰","lines":["早 8 点的热搜:昨晚的瓜熟了——您吃瓜 10 分钟,耽误通勤 5 分钟,并且对一位明星的人生有了新的、错误的了解。","早高峰的情绪:吃瓜是快乐的——它便宜、即时、不需要共情成本。瓜再大,吃完就吐,胃里不留痕迹。","车段点评:早高峰的热搜是咖啡因——提神,但没有营养。"],"bigs":["吃瓜 10 分钟","咖啡因","没营养"]},{"label":"车段二·午间反转","tag":"反转","lines":["午间热搜:「事件反转」——您中午为 A 方义愤填膺,下午发现自己是 B 方。情绪过山车的恐怖,在于它倒着开。","反转心理学:每次反转,您的愤怒都「浪费」了——但您下次照样愤怒,因为「这次看起来是真的」。","车段点评:热搜的真相只有一个:今天的真相,可能在明天的热搜里被推翻。热搜教您做人:让子弹飞一会儿。"],"bigs":["倒着开","浪费","子弹飞"]}],"metrics":[["乘坐次数","27 次/天"],["情绪消耗","中高"],["反转率","54%"],["下车方式","放下手机"]],"logTitle":"车票记录","logEn":"ROLLERCOASTER","logEmpty":"暂无乘坐。今天的热搜还没开始转——安全带先系好。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

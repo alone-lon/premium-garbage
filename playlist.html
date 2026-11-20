@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>歌单私有化协议</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>协议范围 <b>歌单的三级权限</b></span>
+    <span>公开档 <b> 30%(形象工程)</b></span>
+    <span>最高密级 <b>私密歌单(永不公开)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PLAYLIST&nbsp;EXCLUSIVITY</div>
+    <h1>歌单私有化协议</h1>
+    <div class="sub">每首歌单都有三档权限:公开(假装品味)、部分可见(真实品味)、私密(深夜循环)——本协议研究您的歌单分级制度,并保护最高密级那一档。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">权限审查中</div><div class="meter"><div class="fill" id="fill" style="width:40%"></div></div><div class="status" id="status">您的音乐 App 里有 9 个歌单:3 个公开,4 个部分可见,2 个私密。本协议审查您的分级制度是否合理。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入您的私密歌单数量,例如:2" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">审查分级制度</button></div><div class="metrics"><div class="m"><div class="k">歌单总数</div><div class="v">9 个</div></div><div class="m"><div class="k">公开占比</div><div class="v">30%</div></div><div class="m"><div class="k">密级最高</div><div class="v">私密档</div></div><div class="m"><div class="k">协议立场</div><div class="v">永不公开</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">审查记录</span><span class="en">ACCESS</span></div><ul id="log"><li style="color:var(--muted)">暂无审查。您的私密歌单此刻处于锁定状态——锁,是它自己上的。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">协议结语</div>
+    <p>歌单是这个时代的日记:公开的给人看,私密的给自己听。本协议不破解任何人的私密歌单——那是当代最后的隐私圣域——只想说一句:如果您把私密歌单分享给了一个人,请想清楚,这是比「我喜欢你」更重的告白。歌不会说谎,歌单会。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">审查完毕。私密那份,好好锁着。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 179 号藏品 · 本协议与 142 号(猜歌擂台)、57 号(BGM 点唱机)同属「音乐隐私委员会」<br>协议冷知识:全人类的私密歌单里,出现频率最高的关键词不是「爱」,是「后来」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"权限审查中","pct":40,"stat0":"您的音乐 App 里有 9 个歌单:3 个公开,4 个部分可见,2 个私密。本协议审查您的分级制度是否合理。","inputPh":"输入您的私密歌单数量,例如:2","btnLabel":"审查分级制度","reasons":["公开档审查:「晨间唤醒」「通勤能量」——这两个歌单的存在,是为了让点进来的人觉得「他很有活力」。它们的名字就是人设,曲目全是装的。","部分可见档审查:「睡前放松」「雨天散步」——真实一些,但仍然经过挑选:慢歌可以有,emo 到流泪的不行。","私密档审查(最高密级):《深夜》。里面是什么?本协议无权查看——但全人类的私密歌单,大概率都是:前任喜欢的歌、深夜单曲循环的循环、以及那首「听起来像在说我」的。","协议条款一:私密歌单的公开,需要满足两个条件之一——彻底放下,或者彻底坦诚。绝大多数人,两样都做不到,所以歌单永远私密。","协议条款二:如果有人进入了您的私密歌单(分享给您听),那不是分享歌——那是把自己最软的部分,放在了您手里。请温柔对待。","协议终审:歌单分级是这个时代的自我保护:我们不再写日记,但我们需要一个只放真话的地方。私密歌单,就是日记的当代形态。"],"empty":"不输入歌单数没法审查——但您的最高密级歌单,本协议自动放行:它受法律(道义)保护。","metrics":[["歌单总数","9 个"],["公开占比","30%"],["密级最高","私密档"],["协议立场","永不公开"]],"logTitle":"审查记录","logEn":"ACCESS","logEmpty":"暂无审查。您的私密歌单此刻处于锁定状态——锁,是它自己上的。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

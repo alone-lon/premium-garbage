@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「改天约饭」计划博物馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏 <b>「改天」×43(未兑现)</b></span>
+    <span>兑现率 <b>0%(本馆样本)</b></span>
+    <span>馆藏立场 <b>真心珍贵,请换日期</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SOMEDAY-DINNER&nbsp;ARCHIVE</div>
+    <h1>「改天约饭」计划博物馆</h1>
+    <div class="sub">聊天记录里的「改天约饭」累计 43 次,兑现 0 次——本馆收藏每一句「改天」,并考证它们背后的真心:真心是真的,日子是假的。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">馆藏 43 件</div><div class="status" id="status">您和某人聊天记录里的「改天」——每一句都被本馆登记在册:时间、语境、以及那句「改天」的距离。</div><div class="metrics"><div class="m"><div class="k">馆藏在展</div><div class="v">43 件</div></div><div class="m"><div class="k">兑现</div><div class="v">0 件</div></div><div class="m"><div class="k">真心浓度</div><div class="v">100%</div></div><div class="m"><div class="k">改进建议</div><div class="v">换日期</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">藏品一·毕业季改天</button><button class="btn" id="btn1">藏品二·异地改天</button></div></div><div class="log"><div class="sec-tag"><span class="zh">馆藏登记</span><span class="en">ARCHIVE</span></div><ul id="log"><li style="color:var(--muted)">暂无登记。您的聊天记录里,「改天」们排着队,等着一个具体的日子。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长结语</div>
+    <p>「改天约饭」是这个时代友谊的最大泡沫:真心 100%,兑现 0%。本馆收藏它们,不为嘲讽——每一句「改天」都是真实的善意——只为提醒:善意需要日期才能落地。下次想约,别说「改天」,说「这周六中午」。泡沫,就这样变成了饭。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">登记完毕。周六中午,有空吗?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 170 号藏品 · 本馆与 75 号(「改天吧」换算器)、69 号(「下次一定」银行)同属「改天联邦」<br>馆藏冷知识:「改天约饭」兑现率最高的月份是 12 月——年底的怀旧情绪,是最好的饭搭子
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"馆藏 43 件","stat0":"您和某人聊天记录里的「改天」——每一句都被本馆登记在册:时间、语境、以及那句「改天」的距离。","btns":[{"label":"藏品一·毕业季改天","tag":"毕业","lines":["藏品:2018 年 6 月「改天聚!散伙饭还没吃呢」——这是馆藏最热的一件:当时是真心的,但散伙饭最终变成了各自的外卖。","考证:毕业季的「改天」平均存活 4 个月——之后,它被「下次一定」接棒(见 69 号银行)。","馆藏评语:这一句最可惜——它差一个具体的日子:如果当时定了「下周六」,你们的聚会已经办了八次。"],"bigs":["2018.6","4 个月","差一个日子"]},{"label":"藏品二·异地改天","tag":"异地","lines":["藏品:2021 年 3 月「你来我这,我带你吃好吃的」——你和老同学隔着 1,200 公里,这句「改天」横跨了两个省。","考证:异地「改天」的兑现需要三个条件:假期重叠、路线顺路、其中一人先开口——三个条件同时满足的概率,每年约 1 次。","馆藏评语:异地改天的真心浓度最高——它扛着距离,还站着。哪天真见了面,请把这一句,当面还给他。"],"bigs":["1,200 公里","三个条件","当面还"]}],"metrics":[["馆藏在展","43 件"],["兑现","0 件"],["真心浓度","100%"],["改进建议","换日期"]],"logTitle":"馆藏登记","logEn":"ARCHIVE","logEmpty":"暂无登记。您的聊天记录里,「改天」们排着队,等着一个具体的日子。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

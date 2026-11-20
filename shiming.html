@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>实名认证过的旧账号墓地</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏 <b>实名账号 14 个(自报)</b></span>
+    <span>墓地位置 <b>各大平台的角落</b></span>
+    <span>注销难度 <b>地狱级</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">VERIFIED-ACCOUNT&nbsp;CEMETERY</div>
+    <h1>实名认证过的旧账号墓地</h1>
+    <div class="sub">您实名认证过的账号,比您的朋友都多:游戏号、论坛号、抽奖号——它们绑着您的手机号,躺着您的青春,注销入口比传说还难找。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">在册 14 个</div><div class="status" id="status">请盘点:您实名认证过的账号有多少个?游戏、论坛、购物、打车……每一个都是您的数字分身,每一个都还活着。</div><div class="metrics"><div class="m"><div class="k">在册账号</div><div class="v">14 个</div></div><div class="m"><div class="k">活跃</div><div class="v">3 个</div></div><div class="m"><div class="k">可注销</div><div class="v">0 个(太难)</div></div><div class="m"><div class="k">墓地面积</div><div class="v">持续扩张</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">文物一·游戏号</button><button class="btn" id="btn1">文物二·论坛号</button><button class="btn" id="btn2">文物三·注销难题</button></div></div><div class="log"><div class="sec-tag"><span class="zh">墓地登记</span><span class="en">CEMETERY</span></div><ul id="log"><li style="color:var(--muted)">暂无登记。您的账号们分散在各大平台,各自安好,互不往来。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">墓地结语</div>
+    <p>实名账号是数字时代的身份碎片:每一个都绑着您的手机号,每一个都留着您的痕迹。本墓地不催您清理——清理的成本太高——只提供一个习惯:每年整理一次,能注销的注销,不能注销的记一笔。数字身后的身后事,也值得提前安排。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">登记完毕。账号安息,手机号保重。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 164 号藏品 · 本墓地与 140 号(自动续费收割机)是邻居:一个收账号,一个收月费<br>墓地冷知识:全人类的实名账号,加起来比全球人口还多——我们每个人,都是数字世界的多胞胎
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"在册 14 个","stat0":"请盘点:您实名认证过的账号有多少个?游戏、论坛、购物、打车……每一个都是您的数字分身,每一个都还活着。","btns":[{"label":"文物一·游戏号","tag":"游戏","lines":["文物:某端游账号,2015 年注册,实名+人脸。角色等级 47 级,仓库里有一把「当年花光零花钱」的武器。","它的现状:您三年没登录,但每次游戏出新闻,您都会想起它——想起那把武器,和当年一起熬夜的室友。","墓地评语:游戏号是青春的骨灰盒——注销?您舍不得;登录?设备都不支持了。它就这样躺着,越来越沉。"],"bigs":["47 级","骨灰盒","躺着"]},{"label":"文物二·论坛号","tag":"论坛","lines":["文物:某论坛账号,发帖 342 条,其中 1 条被加精——那条帖子讲的是您第一次实习的故事,评论区有 40 个陌生人给您打气。","论坛已转型:当年版块的版主不知道去了哪,服务器换过三次,您的帖子还在——像一封寄到已拆迁地址的信,居然送达了。","墓地评语:论坛号是互联网的琥珀——平台会死,帖子会老,但「40 个陌生人给年轻人打气」这件事,值得永久保存。"],"bigs":["342 帖","加精 1 条","琥珀"]},{"label":"文物三·注销难题","tag":"注销","lines":["注销难题实录:您想注销一个不用的账号——入口藏了三层,点了「注销」弹出挽留弹窗 ×2,然后要求「身份验证+人脸+等待 15 天冷静期」。","冷静期第 3 天,您收到了它的挽留短信:「您的会员即将过期,续费享 5 折。」——它在为您守灵,顺便推销。","墓地结语:账号的注销,比注册难十倍——这不是 bug,是设计:平台赌您懒得走完流程,而我们,确实常常懒得走完。"],"bigs":["三层入口","15 天冷静期","懒得走完"]}],"metrics":[["在册账号","14 个"],["活跃","3 个"],["可注销","0 个(太难)"],["墓地面积","持续扩张"]],"logTitle":"墓地登记","logEn":"CEMETERY","logEmpty":"暂无登记。您的账号们分散在各大平台,各自安好,互不往来。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
