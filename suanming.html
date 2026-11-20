@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>楼层与运势关联研究所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究样本 <b>全国小区 · 楼层偏好问卷</b></span>
+    <span>理论依据 <b>谐音玄学(祖传)</b></span>
+    <span>论文评审 <b>物业通过</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FLOOR-FORTUNE&nbsp;INSTITUTE</div>
+    <h1>楼层与运势关联研究所</h1>
+    <div class="sub">严肃研究「住几层决定走什么运」:3 层接地气、7 层上 luck、18 层要避开——结论无所谓对错,主要是邻居们都在算。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">研究所开门</div><div class="status" id="status">输入你家楼层前,先抽一签看看楼层的说法。信不信随意,反正买房时你妈会信。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽一签楼层运势</button><button class="btn" id="moreBtn">换个楼层再抽</button></div><div class="metrics"><div class="m"><div class="k">问卷样本</div><div class="v">0 份</div></div><div class="m"><div class="k">理论依据</div><div class="v">谐音玄学</div></div><div class="m"><div class="k">评审单位</div><div class="v">物业</div></div><div class="m"><div class="k">科学性</div><div class="v">为 0,但快乐</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">抽签记录</span><span class="en">LOTS</span></div><ul id="log"><li style="color:var(--muted)">暂无抽签。各楼层的住户都在认真生活,顺便替自己的楼层辩护。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">研究所声明</div>
+    <p>楼层运势的全部科学依据为零,全部社会依据为一百:因为所有人都信一点,它就真的影响房价、择偶和丈母娘的微笑。本研究不判定真伪——它记录的是一种集体心理:人类总是需要给「住在哪」找一个理由,而这个理由最好吉利。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">抽签完毕。住哪层都行,家和最重要。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 73 号藏品 · 本所与 14 号运势(每日运势)是总分公司关系<br>学术彩蛋:全国争议最大的楼层是 14——音乐派和忌讳派至今没吵出结果
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"研究所开门","why0":"输入你家楼层前,先抽一签看看楼层的说法。信不信随意,反正买房时你妈会信。","btnLabel":"抽一签楼层运势","moreLabel":"换个楼层再抽","pools":[{"q":"4 层 · 「四」平八稳","w":"谐音学上「四」不吉利,但建筑学上四层最宜居:不高不低、停电不怕、等电梯不烦。运势结论:稳稳的幸福,别嫌它土。"},{"q":"7 层 · 起步上 luck","w":"七上八下,七层是上坡的起点。住七层的人做事有种「再爬一层」的劲——运势结论:上升期,楼梯也算健身。"},{"q":"8 层 · 发,但下坡","w":"八层谐音「发」,但八下七上——住八层的运势是「先发后守」,适合守成,不适合冒进。楼梯健身效果同上。"},{"q":"13 层 · 西式忌讳,中式无视","w":"西方避 13,中国楼市表示:13 就是 12+1。运势结论:文化冲突层的住户,心态必须自洽——你的运势,由你的心理素质决定。"},{"q":"14 层 · 「要死」?不,「音乐层」","w":"1=do,4=fa——14 层其实是「do fa」,音乐层!运势结论:住 14 层的人适合搞艺术,至少适合在 KTV 抢麦。"},{"q":"18 层 · 「十八层」?那是地狱","w":"民俗避讳重灾区,但房价往往便宜 5%。运势结论:性价比与勇气成正比——住这里的都是唯物主义战士,运势由科学护体。"},{"q":"24 层 · 爱尔兰层","w":"24 谐音「爱是」——全楼最浪漫的楼层。运势结论:适合热恋入住、求婚观景,以及跟外卖员解释「24 楼不派送」。"},{"q":"26 层 · 「爱留」层","w":"「爱留」:适合长住、长情、长发(风大)。运势结论:26 层住户感情稳定率高——毕竟下楼一次成本那么高,吵架都懒得吵。"},{"q":"顶楼 · 「一览众山小」","w":"视野无敌,夏热冬冷,电梯罢工日怀疑人生。运势结论:顶楼的运势叫「看得远,走得累」——适合心里有事的人。"},{"q":"1 层 · 「接地气」 literally","w":"出门就是地,快递不用等,梅雨季地板冒汗。运势结论:一层住户的运势是「人间烟火」——潮,但是真的活气。"}],"metrics":[["问卷样本","0 份"],["理论依据","谐音玄学"],["评审单位","物业"],["科学性","为 0,但快乐"]],"logTitle":"抽签记录","logEn":"LOTS","logEmpty":"暂无抽签。各楼层的住户都在认真生活,顺便替自己的楼层辩护。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

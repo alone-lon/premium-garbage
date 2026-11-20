@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「改天吧」精确换算器</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>换算对象 <b>「改天吧」「回头说」「有空聚」</b></span>
+    <span>样本库 <b>十年聊天记录(匿名)</b></span>
+    <span>换算精度 <b>±一个十年</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SOMEDAY-TO-DATE&nbsp;CONVERTER</div>
+    <h1>「改天吧」精确换算器</h1>
+    <div class="sub">输入一句「改天吧」,换算它的真实日期。换算依据:说话人语气、双方关系、以及历史履约率——多数「改天」的实际值为「永不,但不伤感情」。</div>
+  </div>
+
+  <div class="console"><div class="input"><input id="src" type="text" placeholder="输入一句客套,例如:改天一起吃饭啊" maxlength="60"></div><div class="ctrl" style="margin-top:16px"><button class="btn accent" id="goBtn">换算真实日期</button><button class="btn" data-ev="改天一起吃饭啊">改天吃饭</button><button class="btn" data-ev="回头细聊">回头聊</button><button class="btn" data-ev="有空一定聚">有空聚</button></div><div class="output" id="out"><div class="fact" id="fact"></div><div class="deep" id="deep"></div></div></div>
+
+  
+
+  <div class="note">
+    <div class="title">换算原理</div>
+    <p>「改天」是中文里最伟大的模糊词:它同时承担了期待与免责。本换算器不揭穿它——揭穿没有意义——只是量化它。量化之后你会发现一个规律:真正会发生的聚会,从来不用「改天」开头,用的是「这周六」。语言的精度,就是关系的温度。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">换算完毕。要真约,就约到日子。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 75 号藏品 · 本器与 69 号(「下次一定」银行)联合风控,同一笔坏账两边都记<br>换算冷知识:「有空一定聚」的实际履约率,与双方中间隔的城市数量成反比
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入一句客套,例如:改天一起吃饭啊","btnLabel":"换算真实日期","presets":[{"label":"改天吃饭","ev":"改天一起吃饭啊"},{"label":"回头聊","ev":"回头细聊"},{"label":"有空聚","ev":"有空一定聚"}],"defaultEv":"改天一起吃饭啊","tmpl":"原句:「{ev}」\u003cbr>\u003cbr>换算结果:{a}{b}","a":["真实日期:不存在的星期八。该「改天」属于礼貌性期货,已自动进入「都知道不会来」的资产池。","真实日期:下次你们都失业的时候。「有空」的计量单位是「共同失意的某天」——那天你们真的会聚。","真实日期:三年后的某个婚礼现场。届时你们会激动地喊「早该聚了!」,并再约一次「改天」。该改天将继续换算为星期八。","真实日期:从未,但不伤感情。换算置信度 92%:双方都真心的,只是都默认对方会先开口。"],"b":["换算建议:别换算了,直接发「这周六?」。「改天」的唯一破解法,是给它一个具体的日子。","语言学附注:「回头说」比「改天吧」更虚——「头」在哪个方向,没人知道。","量子态说明:该约定同时处于「会来」与「不会来」的叠加态,直到有人发具体日期,波函数才坍缩。","友好提示:被换算为「永不」的约定不扣友情分——大家都忙,大家也都懂。真正伤感情的,是连「改天」都不说了。"]};
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function fill(t,ev){
+return t.replace(/\{ev\}/g,ev||"").replace(/\{a\}/g,rnd(D.a)).replace(/\{b\}/g,rnd(D.b)).replace(/\{c\}/g,rnd(D.c||D.b));
+}
+$("goBtn").addEventListener("click",function(){
+var ev=$("src").value.trim()||D.defaultEv;
+$("fact").textContent="原始素材:"+(ev||"(空)");
+$("deep").innerHTML=fill(D.tmpl,ev);
+$("out").style.display="block";
+});
+document.querySelectorAll("[data-ev]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=b.getAttribute("data-ev");$("goBtn").click();});
+});
+})();
+</script>
+</body>
+</html>

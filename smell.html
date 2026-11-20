@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>气味记忆博物馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏 <b>气味 30 种(文字复刻版)</b></span>
+    <span>展陈方式 <b>凭记忆闻</b></span>
+    <span>镇馆之宝 <b>小时候的巷口</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SMELL&nbsp;MEMORY&nbsp;MUSEUM</div>
+    <h1>气味记忆博物馆</h1>
+    <div class="sub">气味是最不会撒谎的记忆载体:雨后的操场、外婆的樟脑丸、新书的油墨——本馆只收「一闻就回到过去」的气味,文字复刻。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">展厅灯已调暗</div><div class="status" id="status">点击开启一件展品。请慢慢读——气味无法传输,但你的记忆会自己补齐那口气。</div><div class="ctrl"><button class="btn accent" id="goBtn">开启一件展品</button><button class="btn" id="moreBtn">换下一件</button></div><div class="metrics"><div class="m"><div class="k">在展</div><div class="v">10 件</div></div><div class="m"><div class="k">馆藏</div><div class="v">30 件</div></div><div class="m"><div class="k">参观方式</div><div class="v">凭记忆闻</div></div><div class="m"><div class="k">门票</div><div class="v">一段回忆</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">参观记录</span><span class="en">VISITS</span></div><ul id="log"><li style="color:var(--muted)">暂无参观。展厅很暗,气味们保持着各自的年代。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长致辞</div>
+    <p>视觉会骗人,听觉会骗人,只有嗅觉直通海马体——它记得的,全是没打算记住的。本馆的每一件展品都无法真正展出:气味无法装瓶、无法传输、无法快递。你能闻到的,只有文字唤起的那半口空气。但奇妙的是,那半口,往往就够了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">参观完毕。今晚的风,记得闻一下。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 70 号藏品 · 本馆与 59 号(时间旅行者留言板)隔街相望,都做时间的生意<br>捐赠须知:欢迎投稿你的气味,本馆免费保管——和 40 号遗言箱同一个物业
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"展厅灯已调暗","why0":"点击开启一件展品。请慢慢读——气味无法传输,但你的记忆会自己补齐那口气。","btnLabel":"开启一件展品","moreLabel":"换下一件","pools":[{"q":"1 号展柜 · 雨后的操场","w":"塑胶跑道被雨砸过之后,那股热烘烘的橡胶味混着土腥气。你在教室里闻到它,就知道体育课自由活动有戏了。"},{"q":"2 号展柜 · 外婆的樟脑丸","w":"打开旧衣柜的那一瞬间:樟脑、旧棉布、一点点阳光晒过的被角。你被那股味道抱了一下,那年你七岁。"},{"q":"3 号展柜 · 新学期的课本","w":"九月,新书的油墨混着塑料封膜。你包书皮的手艺很差,但那股「全新的、什么都还没发生」的味道,每年只有一次。"},{"q":"4 号展柜 · 老家厨房的柴火","w":"灶膛里秸秆噼啪,烟从锅底绕出来,混着酱油和葱花。你在院外玩泥巴,一闻就知道:饭好了,该回家了。"},{"q":"5 号展柜 · 网吧的烟味和泡面","w":"门口一掀帘子:烟味、泡面、汗和显示器的热气。那年你 16 岁,觉得这味道叫「自由」,现在你知道它叫「青春的空气样本」。"},{"q":"6 号展柜 · 便利店关东煮的汤汽","w":"深夜便利店,玻璃罩一掀,那股汤汽扑到眼镜上。加班的、失恋的、赶末班车的,都在这股汽里短暂地暖了 3 分钟。"},{"q":"7 号展柜 · 医院走廊的味道","w":"消毒水混着一丝紧张。你闻到它就想起走廊尽头的长椅、手里的缴费单,和那句「没事,小手术」。此展柜永久免费,献给所有等在门外的人。"},{"q":"8 号展柜 · 海边的咸腥","w":"风先到,咸味后到,混着防晒霜和烤肠。你踩进水里那一下的凉,是整个夏天的高光帧——气味在这里只当配乐。"},{"q":"9 号展柜 · 打印机的热纸","w":"刚吐出来的热敏纸,那股微烫的化学甜味。每一张都记录着一次报销、一份成绩单、一张你贴在墙上又被撕掉的奖状。"},{"q":"10 号展柜 · 巷口的煤球炉","w":"清晨六点,蜂窝煤的烟混着油条香。那是城市的闹钟——现在闹钟换成手机了,但那股烟味,你的鼻子还记得清清楚楚。"}],"metrics":[["在展","10 件"],["馆藏","30 件"],["参观方式","凭记忆闻"],["门票","一段回忆"]],"logTitle":"参观记录","logEn":"VISITS","logEmpty":"暂无参观。展厅很暗,气味们保持着各自的年代。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>吵架中文十级翻译器</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>语料来源 <b>十年情侣吵架实录(匿名)</b></span>
+    <span>翻译方向 <b>吵架话 → 人话</b></span>
+    <span>置信度 <b>当事人:不承认</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">COUPLE-QUARREL&nbsp;TRANSLATOR</div>
+    <h1>吵架中文十级翻译器</h1>
+    <div class="sub">情侣吵架专用:把「随便」「我没生气」「你忙吧」逐句翻译成真实语义。翻译结果请自行承担,本器只管忠实。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">待翻译</div><div class="status" id="status">翻译器已预热。请注意:本器忠实呈现语义,不带立场——立场部分,吵完架的自己补。</div><div class="metrics"><div class="m"><div class="k">已翻译</div><div class="v">0 句</div></div><div class="m"><div class="k">准确率</div><div class="v">当事人不认</div></div><div class="m"><div class="k">争议率</div><div class="v">100%</div></div><div class="m"><div class="k">和解率</div><div class="v">看手速</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">翻译「随便」</button><button class="btn" id="btn1">翻译「我没生气」</button><button class="btn" id="btn2">翻译「你忙吧」</button></div></div><div class="log"><div class="sec-tag"><span class="zh">翻译记录</span><span class="en">TRANSCRIPT</span></div><ul id="log"><li style="color:var(--muted)">暂无翻译。情侣们还在原句里彼此猜测,谁都不肯先按下翻译键。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">翻译器后记</div>
+    <p>情侣吵架的字典里,没有一句话是字面意思:语言在这里被用作盾牌,真实的意思藏在盾牌后面。本器不站队——它见过太多「随便」背后的期待,也见过太多「你忙吧」背后的失落。翻译到最后你会发现:吵架的双方想要的其实是同一件事——确认自己被在乎。翻译器只是把这句话,提前说了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">翻译完毕。去和好吧,趁火还没灭。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 71 号藏品 · 本器与 45 号(阴阳怪气检测仪)共享语料库,交叉审核<br>特别鸣谢:所有吵架后先低头的人——你们才是翻译器的语料英雄
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"待翻译","stat0":"翻译器已预热。请注意:本器忠实呈现语义,不带立场——立场部分,吵完架的自己补。","btns":[{"label":"翻译「随便」","tag":"逐句","lines":["「随便」的真实语义:不随便。我什么都有想法,但我不想说,我想看你会不会懂。答错扣分,答对恢复。","二次翻译:注意「随便」的语调。降调 = 真随便;升调 = 「你敢随便试试」。本器已内置声调识别(玄学模块)。","高危警报:连续两句「随便」= 冷战倒计时启动。建议立即切换战术:别问「你到底想吃什么」,直接订她提过的那家。"],"bigs":["不随便","听声调","快订那家"]},{"label":"翻译「我没生气」","tag":"逐句","lines":["「我没生气」= 我生气了,且正评估你的补救诚意。正确姿势:别问「你真没生气?」,直接开始补救。","进阶翻译:「我真没生气」= 气到需要强调两次。此时任何解释都属燃料,任何拥抱都是灭火器。","终极形态:「我没生气,你去忙吧」= 双重施压。翻译完毕,建议放下手机,现场救援。"],"bigs":["气了","气大了","现场救援"]},{"label":"翻译「你忙吧」","tag":"逐句","lines":["「你忙吧」= 我不重要。此时「好的」是错答案,「不忙,你说」是标准答案,「我把游戏关了」是满分答案。","二次翻译:「那你忙」(她转身) = 面试结束,你已被淘汰。补救窗口:追上去那三步。","翻译总结:情侣吵架翻译的难点不在语义,在时机——所有翻译都必须在 3 秒内完成,过时无效。"],"bigs":["我不重要","你被淘汰了","3 秒内"]}],"metrics":[["已翻译","0 句"],["准确率","当事人不认"],["争议率","100%"],["和解率","看手速"]],"logTitle":"翻译记录","logEn":"TRANSCRIPT","logEmpty":"暂无翻译。情侣们还在原句里彼此猜测,谁都不肯先按下翻译键。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

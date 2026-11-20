@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>垃圾话回收再生中心</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>回收范围 <b>阴阳话 · 潜台词 · 指桑骂槐</b></span>
+    <span>再生率 <b>34%(行业领先)</b></span>
+    <span>处理原则 <b>回收不评判</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TRASH-TALK&nbsp;RECYCLING</div>
+    <h1>垃圾话回收再生中心</h1>
+    <div class="sub">回收一切垃圾话:阴阳怪气、含沙射影、指桑骂槐——回收后再生为「可以好好说的话」。再生率 34%,剩下 66% 转给 45 号检测仪做展品。</div>
+  </div>
+
+  <div class="console"><div class="input"><input id="src" type="text" placeholder="输入一句垃圾话,例如:有的人真是闲得慌" maxlength="60"></div><div class="ctrl" style="margin-top:16px"><button class="btn accent" id="goBtn">回收再生</button><button class="btn" data-ev="有的人真是闲得慌,天天盯着别人">阴阳版</button><button class="btn" data-ev="某人的猫都比某人勤快">指桑骂槐</button><button class="btn" data-ev="我很忙,不像有些人">含沙射影</button></div><div class="output" id="out"><div class="fact" id="fact"></div><div class="deep" id="deep"></div></div></div>
+
+  
+
+  <div class="note">
+    <div class="title">再生原理</div>
+    <p>垃圾话不是废物,是包装过度的情绪:酸、怕、委屈、想被看见——这些原料都是好的,坏的是包装。本中心的工艺只有一步:把情绪从「指桑骂槐」的包装里拆出来,直接说。拆完你会发现:好好说话不是修养,是技术——而技术,是可以练的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">再生完毕。有话,直说;没话,喝茶。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 78 号藏品 · 本中心与 45 号检测仪、71 号情侣翻译器构成「好好说话」三部曲<br>再生冷知识:最难再生的一句是「随便你」——它连情绪都懒得包装
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入一句垃圾话,例如:有的人真是闲得慌","btnLabel":"回收再生","presets":[{"label":"阴阳版","ev":"有的人真是闲得慌,天天盯着别人"},{"label":"指桑骂槐","ev":"某人的猫都比某人勤快"},{"label":"含沙射影","ev":"我很忙,不像有些人"}],"defaultEv":"有的人真是闲得慌,天天盯着别人","tmpl":"回收垃圾话:「{ev}」\u003cbr>\u003cbr>再生输出:{a}{b}","a":["再生为(直接版):「我最近压力有点大,看到你悠闲有点酸。不是我该管的事,但我想让你知道我酸了。」——再生成功,尴尬但真诚。","再生为(需求版):「我需要一点安静/帮助/边界。」——垃圾话的 90% 本质是提需求,只是包了层刺。拆掉刺,需求就露出来了。","再生为(关心版):「你最近怎么样?我有点担心你。」——指桑骂槐常常是关心的方言:骂你猫不勤快,其实是想问你过得好不好。","再生失败(保留原样):本中心判定该垃圾话「毒性稳定,无法降解」,已转 45 号检测仪永久展览——有些话,留着警醒世人。"],"b":["再生备注:说出口的那一刻,你会觉得别扭——别扭是对的,垃圾话从来都是顺嘴的,好话都是要走心的。","再生备注:再生率 34% 意味着:十句垃圾话,三句能变好话,三句该道歉,四句该咽回去。本中心对最后一类无能为力。","再生备注:垃圾话的最大买家是自己——把它说给别人之前,先说给自己听一遍。大部分垃圾话,过一遍自己的耳朵,就自动分类了。"]};
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function fill(t,ev){
+return t.replace(/\{ev\}/g,ev||"").replace(/\{a\}/g,rnd(D.a)).replace(/\{b\}/g,rnd(D.b)).replace(/\{c\}/g,rnd(D.c||D.b));
+}
+$("goBtn").addEventListener("click",function(){
+var ev=$("src").value.trim()||D.defaultEv;
+$("fact").textContent="原始素材:"+(ev||"(空)");
+$("deep").innerHTML=fill(D.tmpl,ev);
+$("out").style.display="block";
+});
+document.querySelectorAll("[data-ev]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=b.getAttribute("data-ev");$("goBtn").click();});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI味鉴定所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>送检对象 <b>朋友圈文案 · 周报 · 情书</b></span>
+    <span>鉴定指标 <b>排比密度 · 金句率 · 转折词</b></span>
+    <span>去味效果 <b>变难看,但变真</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">AI-FLAVOR&nbsp;INSPECTION</div>
+    <h1>AI味鉴定所</h1>
+    <div class="sub">鉴定一段文字的 AI 味浓度:排比过多、金句收尾、「不是……而是……」——本所出具浓度报告,并附去味建议(去完之后,文章会变难看,但变真了)。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="粘贴一段疑似 AI 味的文字:朋友圈、周报、情书均可"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">送检鉴定</button><button class="btn" data-sample="0">周报版</button><button class="btn" data-sample="1">文案版</button><button class="btn" data-sample="2">情书版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">成分鉴定报告</span><span class="en">INSPECTION</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">鉴定所立场</div>
+    <p>AI 味不是罪——AI 写得工整,是人类教的。本所反对的从来不是 AI,是「把话说得太满」的习惯:满到没有具体的日子、具体的人、具体的那碗面。去味的本质是去妆:妆卸了,文字会变难看、变啰嗦、变小家子气——但它开始像你了。这买卖,值。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">鉴定完毕。发之前,删一句金句试试。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 76 号藏品 · 本所与 54 号(废话生成器)互相举报多年,至今没分出胜负<br>行业黑话:AI 味最重的文体是「年终总结」,重到本所检测仪直接摆烂
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"粘贴一段疑似 AI 味的文字:朋友圈、周报、情书均可","btnLabel":"送检鉴定","sampleLabels":["周报版","文案版","情书版"],"samples":["在这个快速变化的时代,我们不仅要仰望星空,更要脚踏实地。唯有如此,方能不负韶华,不负时代。","生活不是等待暴风雨过去,而是学会在雨中翩翩起舞。愿你我都能在平凡的日子里,活出不平凡的自己。","我喜欢你,不是因为你有多好,而是因为在你身边,我可以成为更好的自己。"],"num":"AI 味浓度:99.2%","verdict":"评级:重 AI 味 · 该文排比工整、金句饱满、首尾呼应——遗憾的是,没有一个字是你的。","breakdown":[["排比检测","检出 4 组","「不仅…更…」「唯有…方能…」——工整得像流水线产品"],["金句密度","每 40 字 1 句","金句是好句子,但连发金句,像靠墙站着一排保安"],["转折结构","「不是…而是…」×2","该结构是 AI 味的头号嫌疑人,人类用它多在吵架时"],["人类痕迹","未检出","全文无错别字、无口语、无突然的跑题——太干净了,干净得可疑"],["去味建议","删掉一半,加一件具体的事","把「不负韶华」换成「周三挤地铁时闻到有人吃韭菜盒子」——真实感立刻归位"]],"empty":{"num":"AI 味浓度:无法检测","verdict":"空白文稿 · 空白是人类最后的防 AI 阵地——请保持。","breakdown":[["检测结果","空白","本所对空白表示敬意"],["建议","就这样发出去","空白朋友圈是行为艺术,AI 暂时学不会"]]},"reportTitle":"成分鉴定报告","reportEn":"INSPECTION"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>
