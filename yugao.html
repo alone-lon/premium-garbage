@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>戒指盒盒博物收藏院</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏盒盒 <b>3 层(外盒 · 内盒 · 绒布托)</b></span>
+    <span>戒指现状 <b>在主人手上,盒们全部失业</b></span>
+    <span>院内立场 <b>包装是从未上岗的岗位,也是从未离职的忠诚</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">RING&nbsp;BOXES</div>
+    <h1>戒指盒盒博物收藏院</h1>
+    <div class="sub">买戒指送盒子,买盒子送绒布,绒布外面还有塑封——清点发现:一只戒指,竟配了三层包装:本院以「盒中盒」为院徽,将这批套娃包装尽数封存,并向所有被遗落的小物件开放收容。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">在院盒盒 3 层</div><div class="status" id="status">本院陈列室即您的抽屉一角。展品关系:外盒是房子,内盒是房间,绒布托是床——戒指搬走了,家还在原样保存,连床都铺好了。</div><div class="metrics"><div class="m"><div class="k">在院盒盒</div><div class="v">3 层</div></div><div class="m"><div class="k">收容小件</div><div class="v">2 枚</div></div><div class="m"><div class="k">凹槽原主</div><div class="v">在主人手上</div></div><div class="m"><div class="k">院训</div><div class="v">空着,但铺好</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">参观·三层编制</button><button class="btn" id="btn1">参观·收容登记</button><button class="btn" id="btn2">参观·院史陈词</button></div></div><div class="log"><div class="sec-tag"><span class="zh">参观记录</span><span class="en">BOXES</span></div><ul id="log"><li style="color:var(--muted)">暂无参观。抽屉一角安静,绒布托敞着凹槽——今天也没有新住户来投。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">院长陈词</div>
+    <p>这是本特辑的最后一件,也是本院最想说话的一件。人类总说包装是浪费,可我们谁都留着那个盒子——因为盒子里躺着的不只是戒指,是「收到它那一刻的自己」。院长陈词想说的是:这三层套娃包装,是商业社会给仪式感做的家具;戒指取走了日子,盒子留下了证据。您留着它们,就像家里留着一间铺好床的空房——不为什么,就为了「哪天想起来,一切都在原来的位置」。特辑二十件,收在此处,恰如其分:所有保管的尽头,都是同一句话——东西没用了,但日子用过它;日子用过,就是文物。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">闭馆。特辑至此二十件,件件无用途,件件被郑重——谢谢您翻到这里。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 262 号藏品 · 本院与 251 号(「重要纸张」鞋盒封存馆)同属「家庭包装遗产总会」:一个封纸,一个封盒<br>院史冷知识:戒指盒的平均留存年限是 9.7 年——比大多数首饰的佩戴期都长:盒子记住的,比手多
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"在院盒盒 3 层","stat0":"本院陈列室即您的抽屉一角。展品关系:外盒是房子,内盒是房间,绒布托是床——戒指搬走了,家还在原样保存,连床都铺好了。","btns":[{"label":"参观·三层编制","tag":"编制","lines":["编制档案:外盒,纸面烫金,印着品牌与「永恒」字样——它的岗位描述是「体面地出现在送礼那一刻」,那一刻用了它 11 秒,此后是它的一生。","编制档案:内盒,开合带阻尼,合页精致——院方考证:阻尼的手感是全盒最贵的部分,可惜没人天天开;它把最好的手感,留给了偶尔想起的您。","编制小结:绒布托,凹槽里是戒指的形状——本院确认:它是三层里唯一记得「这里曾经住过谁」的成员;凹槽是个不说话的户口本。"],"bigs":["11 秒的一生","留给您","不说话的户口本"]},{"label":"参观·收容登记","tag":"收容","lines":["收容登记:院方今日收容一枚散落耳钉——入住绒布托的凹槽。院方点评:凹槽新住户尺寸不合,半悬半靠,但总算有床睡了。","收容登记:又收容一颗备用表带销钉,安置于外盒与内盒的夹层——夹层是本院的「流动性客房」,专收各种「一时找不到位置」的小金属。","收容小结:本院编制原则:戒指盒再也不装戒指,这不叫失职,叫转型——从「戒指的家」转型为「零碎的收容所」,盒子们很满意:总算有人住,哪怕不是原主。"],"bigs":["总算有床睡","流动性客房","转型成功"]},{"label":"参观·院史陈词","tag":"院史","lines":["院史一节:本院成立源于一次大扫除——主人把「空盒子扔了吧」说出口之后,又在门口站了十秒,转身把盒子放回了抽屉。这十秒,后被定为院庆日。","院史又一节:全院三层盒,从未吵过架——外盒从不抱怨自己最占地方,绒布从不抱怨自己最不显眼;本院将这份安静认定为「包装界的职业道德」。","院史陈词:本院的最终立场写在门口——盒子的使命不是被需要,是「随时可以被需要」;它们守着一只空凹槽,就像家里守着一间空房:住不住人不要紧,有,心里就齐整。"],"bigs":["十秒院庆","职业道德","心里齐整"]}],"metrics":[["在院盒盒","3 层"],["收容小件","2 枚"],["凹槽原主","在主人手上"],["院训","空着,但铺好"]],"logTitle":"参观记录","logEn":"BOXES","logEmpty":"暂无参观。抽屉一角安静,绒布托敞着凹槽——今天也没有新住户来投。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

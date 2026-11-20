@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>环形灯管终末亮度评估站</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>评估对象 <b>卧吸顶灯环形灯管(32W,服役六年)</b></span>
+    <span>残存亮度 <b>左侧 100%,右侧 0%</b></span>
+    <span>更换拖延史 <b>平均 187 天</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">RING-LIGHT&nbsp;EOL</div>
+    <h1>环形灯管终末亮度评估站</h1>
+    <div class="sub">吸顶灯的环形灯管坏了,一半亮一半暗,像月亮缺了半边——没人会立刻换:全人类都靠「凑合亮着」又过半年。本站为这半边残光出具终末评估。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您家「半亮着」的灯,本站出具终末评估与拖延许可"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始评估</button><button class="btn" data-sample="0">客厅版</button><button class="btn" data-sample="1">卧室版</button><button class="btn" data-sample="2">厨房版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">灯管终末评估书</span><span class="en">EOL&nbsp;REPORT</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">评估站按语</div>
+    <p>灯管的一生极简:通电,发光,衰竭,等一次更换。难的不是换,是「决定换」——那半边暗掉的光不碍事,不费电(其实费),只是每晚都轻轻提醒您:有件小事,您一直没做。本站出具的全部评估,说到底只有一句话:别让半亮的灯变成习惯。亮就亮全,暗就换新——家里那盏值得的亮堂,值得您搬一次梯子。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">评估完毕。今晚抬头看一眼,再决定拖多久。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 276 号藏品 · 本站与 10 号(系统更新中心)结成「拖延双璧」:一个让您陪更新,一个让您陪暗灯<br>站内冷知识:全人类换灯管的平均耗时是 15 分钟,而决定换灯管的平均耗时是 187 天——比例 750:1,冠绝全屋家务
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您家「半亮着」的灯,本站出具终末评估与拖延许可","btnLabel":"开始评估","sampleLabels":["客厅版","卧室版","厨房版"],"samples":["客厅吸顶灯一闪一闪,像夜店,但没人去蹦","卧室环形灯管只剩半圈亮,看书要坐到左边去","厨房的灯坏了三个月,切菜全靠手机手电"],"num":"终末评估:可拖,但别拖过夏天","verdict":"评估结论:半亮的灯是家里的「待办事项之王」——它不吵不闹,每晚准时提醒您一件没做完的小事,提醒周期:每晚。","breakdown":[["亮度层","残光的性格","半圈亮的灯管自带一种诚实的节俭感:它用一半的功率撑起全屋的体面,像一个工资减半还坚持上班的老员工——本站对残光致敬,但致敬不等于不必换。"],["拖延层","187 天的由来","换灯管的完整流程是:想起—记下—忘记—想起—再忘记。真正的障碍不是高度,不是型号,是「现在正在吃饭」——全人类的换灯时机,永远排在一切之后。"],["心理层","暗半边的哲学","人眼对半亮的适应速度惊人:三天后您开始绕着亮的那半走,一个月后把它当成房间的「默认布局」——适应是天赋,也是拖延的帮凶。"],["安全层","闪烁的红线","评估站的唯一红线是「频闪」:一闪一闪不是浪漫,是灯管在求救。频闪灯管按规程应在两周内更换——本站破例不签拖延许可。"],["行动建议","今晚就换","购买渠道已备好,型号就是灯罩里那一行小字。更换全程十五分钟,其中十分钟在找梯子——本站预祝您顺利完成,并提醒:换下的旧灯管,别当普通垃圾扔。"]],"empty":{"num":"评估暂停","verdict":"没有具体的灯没法评估——但本站可以先行告知:您家那盏「一闪一闪」的,请优先处理;那盏「半边暗着」的,可以再陪您一个季度。","breakdown":[["分级","红黄绿","频闪=红,半亮=黄,完好=绿"],["建议","顺手立约","下次买灯管,一次买两根——备用的那根,是给未来的您留的援军"]]},"reportTitle":"灯管终末评估书","reportEn":"EOL&nbsp;REPORT"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

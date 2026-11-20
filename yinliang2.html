@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>音箱音量的开机仪式筹备处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>筹备对象 <b>「音量加」的那一下(时长 0.4 秒)</b></span>
+    <span>历史数据 <b>日均按下 3.2 次</b></span>
+    <span>筹备立场 <b>音量是家的表情</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">VOLUME-UP&nbsp;RITUAL</div>
+    <h1>音箱音量的开机仪式筹备处</h1>
+    <div class="sub">每次开机,音量都停在昨晚的 18 格;今天想听的歌需要 24 格——按加号的那一下,轻,短,却是全家声音生活的开幕式:本处为这一按,筹备全流程。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">仪式筹备中</div><div class="status" id="status">筹备处已就位。音箱待机,指示灯呼吸,音量停在昨晚的 18 格——今天的第一首歌,正在等您按那一下加号。</div><div class="metrics"><div class="m"><div class="k">今日仪式</div><div class="v">0 场</div></div><div class="m"><div class="k">默认音量</div><div class="v">18 格</div></div><div class="m"><div class="k">日均按下</div><div class="v">3.2 次</div></div><div class="m"><div class="k">筹备预算</div><div class="v">0.4 秒</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">筹备·按下加号</button><button class="btn" id="btn1">筹备·全家音量史</button><button class="btn" id="btn2">筹备·仪式结语</button></div></div><div class="log"><div class="sec-tag"><span class="zh">仪式记录</span><span class="en">RITUAL</span></div><ul id="log"><li style="color:var(--muted)">暂无仪式。音箱沉默,音量停在昨晚,今天还没被按下开始。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">筹备处按语</div>
+    <p>开机调音量,是全人类重复了几十年的小动作:按一下,或者两下,从昨天的数字出发,调到今天的心情。本处筹备这个仪式,不是要把小事变大,是想替您发现:那些每天自动发生、从不需要决定的小动作,才是一个家的骨架——音量如此,灯如此,水温如此。它们不声不响地重复着,像钟摆。愿您的音量永远调得动,愿您家里的声音,永远由您的手指决定大小。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">筹备完毕。今天的第一首歌,请按下加号。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 282 号藏品 · 本处与 156 号(智能音箱装聋实录)、239 号(音量键终身成就奖颁奖礼)同属「声音事务三联办」:一个装聋,一个领奖,一个办开幕式<br>处内冷知识:全人类「开机第一件事调音量」的执行率是 89%——剩下 11% 直接跳到歌单,他们的仪式感,交给歌了
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"仪式筹备中","stat0":"筹备处已就位。音箱待机,指示灯呼吸,音量停在昨晚的 18 格——今天的第一首歌,正在等您按那一下加号。","btns":[{"label":"筹备·按下加号","tag":"开幕","lines":["仪式执行:加号按下,18 到 24,扬声器轻轻「嗡」了一声——那是它清嗓子的声音。开幕式完成,今天的声音生活,正式开始。","仪式加场:歌到副歌,您又按了一下加号——本处记录在案:副歌加音量,是全人类不约而同的仪式分支,无需培训,天生就会。","仪式收尾:某天深夜,您按下减号而不是加号——本处同样记录:开幕式可以是热闹,也可以是安静。音量的仪式感,不在大小,在「是您按的」。"],"bigs":["清嗓子","副歌加量","是您按的"]},{"label":"筹备·全家音量史","tag":"编史","lines":["编史一:清晨 7 点,音量 12 格——那是晨间新闻的音量,属于家里那位起得最早的人。","编史二:晚间 8 点,音量 26 格——做饭时段,抽油烟机轰鸣,音量被迫上调:这是「对抗厨房」的音量,十年未变。","编史三:深夜 11 点后,音量 6 格,有时干脆静音——家把音量调小,不是音乐不好听,是有人睡了。全家的音量史,其实是一部体贴史。"],"bigs":["晨间 12 格","厨房 26 格","体贴史"]},{"label":"筹备·仪式结语","tag":"结语","lines":["结语一:音量数字本身毫无意义——18 和 24 的区别,只有您家听得出来。本处认为:这正是仪式的本质,为只对自己有意义的事,郑重其事。","结语二:设备会换,音箱会老,但「开机先调音量」这个动作,十年没变过——它比任何播放列表都持久,是这个家的听觉肌肉记忆。","结语三:本处的最终建议——今晚开机时,慢一点按那一下加号,听清扬声器「嗡」的那一声:那是您家里,最便宜也最诚实的掌声。"],"bigs":["郑重其事","听觉肌肉","诚实的掌声"]}],"metrics":[["今日仪式","0 场"],["默认音量","18 格"],["日均按下","3.2 次"],["筹备预算","0.4 秒"]],"logTitle":"仪式记录","logEn":"RITUAL","logEmpty":"暂无仪式。音箱沉默,音量停在昨晚,今天还没被按下开始。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

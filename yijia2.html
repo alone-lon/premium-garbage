@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>衣架数量普查办</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>普查范围 <b>衣柜挂杆、飘窗、落地衣帽架</b></span>
+    <span>上期数据 <b>37 个(其中 6 个下落不明)</b></span>
+    <span>普查难点 <b>衣架会自我繁殖与自我蒸发</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">HANGER&nbsp;CENSUS</div>
+    <h1>衣架数量普查办</h1>
+    <div class="sub">衣柜里到底有多少个衣架,没人说得准:买衣服送几个,干洗店回来多几个,凭空又少几个——本办十年普查一次,请全体衣架配合点名。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">十年大普查</div><div class="status" id="status">普查办挂牌于衣柜门前。本期普查口径:凡带钩的、能挂的、塑料金属皆算;裤夹折半;衣架的「魂」不算。</div><div class="metrics"><div class="m"><div class="k">本期核定</div><div class="v">46 个</div></div><div class="m"><div class="k">较上期</div><div class="v">净增 10</div></div><div class="m"><div class="k">下落不明</div><div class="v">7 个</div></div><div class="m"><div class="k">普查周期</div><div class="v">十年一遇</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">普查·衣杆段</button><button class="btn" id="btn1">普查·散落段</button><button class="btn" id="btn2">普查·增量段</button></div></div><div class="log"><div class="sec-tag"><span class="zh">普查记录</span><span class="en">CENSUS</span></div><ul id="log"><li style="color:var(--muted)">暂无普查。挂杆上空架与满架错落站列,等一次点名。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">普查办按语</div>
+    <p>衣架是这个家最没存在感的常住人口:没人记得买过它,没人记得扔过它,它却撑起了衣柜的全部秩序。普查办十年只出一次勤,数字永远对不上——多的来历不明,少的去向不明。本办后来想通了:对不上就对了,家不是仓库,家是活的;衣架的增增减减,就是生活的来来去去。唯一的建议:下次干洗店多给的那两个,收下,别客气——它们本就是这个家的编外人员,回家只是报到。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">普查结项。46 个衣架,一个都不能少——少也没事。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 274 号藏品 · 本办与 130 号(洗衣机袜子失踪研究院)联合办案多年:一个查袜子,一个查衣架,两案至今未破<br>办内冷知识:全人类衣架的自然增长率与网购频率严格正相关——您买的不是衣服,是衣架的购房资格
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"十年大普查","stat0":"普查办挂牌于衣柜门前。本期普查口径:凡带钩的、能挂的、塑料金属皆算;裤夹折半;衣架的「魂」不算。","btns":[{"label":"普查·衣杆段","tag":"衣杆","lines":["衣杆段普查:挂杆从头数到尾,空架 9 个,带衣 21 个,另有一个缠着三年前的干洗袋——袋里的衣服早忘了是哪件,衣架不敢擅自处置。","衣杆段复勘:发现连环架现象——五个衣架首尾相扣,成因不详,推测与某次慌乱晾衣有关。本办尊重它们结成的共同体,不予拆散。","衣杆段终核:另有异形架 4 个(裤夹、裙夹、多爪),数量核定折算为 6 个标准架。全段合计 36 个——十年前的 37,少了一个,不知名,不立案。"],"bigs":["干洗袋","连环架","折算 36"]},{"label":"普查·散落段","tag":"散落","lines":["散落段普查:飘窗上 3 个,床底摸出 2 个,沙发底 1 个——它们离开挂杆的方式无人目击,散落的路线至今成谜。","散落段解密:本办还原了衣架的典型出逃路径——从衣杆到阳台(晾晒),从阳台到飘窗(忘记收回),从飘窗到床底(岁月)。全程无人押送,全是惯性。","散落段收容:上述 6 个全部押回收容,重新挂杆。它们归队时与老同事相扣在一起,发出塑料轻响——那是衣架界久别重逢的语言。"],"bigs":["床底","出逃路径","久别重逢"]},{"label":"普查·增量段","tag":"增量","lines":["增量段普查:本期新增来源三处——买衣服赠 5 个,干洗店白嫖 4 个,网购凑单 2 个。全人类都一样:衣架从不主动购买,只会自动增多。","增量段统计:新增 11 个,失踪 1 个,净增 10——十年普查结论恒定:衣架总量只涨不跌,像这个家的善意,攒着攒着就多了。","普查结项:本期核定总数 46 个,其中常年在岗 30,编制空挂 9,下落不明 7。本办最终裁定:衣架不是家务用品,是家庭人口——只添不减,方为兴旺。"],"bigs":["白嫖 4 个","净增 10","方为兴旺"]}],"metrics":[["本期核定","46 个"],["较上期","净增 10"],["下落不明","7 个"],["普查周期","十年一遇"]],"logTitle":"普查记录","logEn":"CENSUS","logEmpty":"暂无普查。挂杆上空架与满架错落站列,等一次点名。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

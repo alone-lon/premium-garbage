@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>水壶与底盘分居事务处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在册壶身 <b>3 只,底盘 2 只</b></span>
+    <span>配对现状 <b>1 对在岗,其余分居</b></span>
+    <span>处内立场 <b>壶底分离,情分不散</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">KETTLE&nbsp;SEPARATION</div>
+    <h1>水壶与底盘分居事务处</h1>
+    <div class="sub">电热水壶换了新壶身,旧底盘还在原岗;新底盘到货,旧壶身又成了遗孀——本处受理水壶家族的分居、再配与守寡登记,并主持每季度一次的「合体试烧」。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">配对成功率 33%</div><div class="meter"><div class="fill" id="fill" style="width:33%"></div></div><div class="status" id="status">本处设在厨房台面东侧。管辖对象:一切壶身与底盘。办事原则:能合则合,不合不强——通电不出水,就是缘分尽了。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入待配对壶身编号,例如:3 号" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">主持合体试烧</button></div><div class="metrics"><div class="m"><div class="k">在册壶身</div><div class="v">3 只</div></div><div class="m"><div class="k">在册底盘</div><div class="v">2 只</div></div><div class="m"><div class="k">在岗配对</div><div class="v">1 对</div></div><div class="m"><div class="k">红娘成功率</div><div class="v">33%</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">试烧记录</span><span class="en">KETTLE</span></div><ul id="log"><li style="color:var(--muted)">暂无试烧。壶在底盘上坐着,水是凉的——今天还没人烧水,秩序井然。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">处长手记</div>
+    <p>电热水壶是人类少有的「可拆分的家电」:壶身负责盛水,底盘负责通电,合起来是一个家,分开是两个零件。处长观察多年,发现各家各户对壶底分居的态度出奇一致——坏了不修,直接买套新的;旧壶身留着,旧底盘也留着,像两桩没了结的婚。手记想说的真心话:您留着的哪里是零件,是「这台壶烧过多少个加班的深夜」的物证。本处不催您配对成功,只求每季度试烧一次:能响,就好;不能响,就好好送别——壶与底盘的感情,值得一个正式的散伙饭。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">试烧完毕。今晚的水,记得烧透——壶和底盘都听着呢。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 253 号藏品 · 本处与 229 号(插线板孔位分配法庭)同属「厨房电力民事庭」:一个管孔位,一个管配对<br>处内冷知识:一对壶底的平均婚龄是 4.6 年——散伙原因高度一致:不是性格不合,是发热盘老化,爱断了电
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"配对成功率 33%","pct":33,"stat0":"本处设在厨房台面东侧。管辖对象:一切壶身与底盘。办事原则:能合则合,不合不强——通电不出水,就是缘分尽了。","inputPh":"输入待配对壶身编号,例如:3 号","btnLabel":"主持合体试烧","reasons":["3 号壶身 × 2 号底盘:首次试烧成功,水量 1.2 升,沸腾时间 5 分 40 秒——本处当场颁证:它们是后组成的家庭,烧水速度比原配慢 11%,但胜在彼此珍惜。","3 号壶身 × 1 号底盘:试烧失败——底盘指示灯亮,壶身纹丝不动,典型的「一厢情愿」。本处意见:1 号底盘该退休了,它烧了一万壶水,值得一个带薪下岗。","2 号壶身 × 1 号底盘:试烧失败,且出现异味——本处紧急终止,并出具安全通报:底盘不可「广撒网」,乱配对的代价由全家的鼻子承担。","1 号壶身(原配已故):单身登记完成。备注:它等的新底盘还没买到——型号停产,全网缺货,本处将其状态登记为「守寡,等复刻」。守寡期间享受洗碗池东侧永久居住权。","季度相亲总结:三场试烧,一场成功——本处的红娘业务成功率常年三分之一。处里想通了:壶与底盘的适配比人类婚姻更严苛——它俩只认电压和接口,连性格磨合的余地都没有。","处务总评:厨房里最被忽视的感情,是壶与底盘的——好时浑然一体,坏时各奔东西,中间没有一个道歉仪式。本处的存在,就是替人类补上这一课:每一次试烧,都是一次郑重的提亲。"],"empty":"不输入壶身编号,本处按「全体现役」默认办理——壶底合体是厨房的默认秩序,只有坏掉那天,您才会想起它们是两个个体。","metrics":[["在册壶身","3 只"],["在册底盘","2 只"],["在岗配对","1 对"],["红娘成功率","33%"]],"logTitle":"试烧记录","logEn":"KETTLE","logEmpty":"暂无试烧。壶在底盘上坐着,水是凉的——今天还没人烧水,秩序井然。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

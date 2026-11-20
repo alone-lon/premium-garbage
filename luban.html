@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>地板专用袜收容所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在所功勋袜 <b>16 只(配对 4 对,散员 8 只)</b></span>
+    <span>降级原因 <b>破洞 6 只,起球 7 只,失弹 3 只</b></span>
+    <span>所内立场 <b>出了门丢了脸,回了家暖了脚</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FLOOR&nbsp;SOCKS</div>
+    <h1>地板专用袜收容所</h1>
+    <div class="sub">每一双袜子的一生,都要经历从「出街」到「居家」的降级:破洞了、起球了、失去弹性了——本所收容这批地板功勋袜,为它们颁发「居家服役证书」,并统计全家的地板舒适度。</div>
+  </div>
+
+  <div class="console"><div class="input"><input id="src" type="text" placeholder="输入一只待降级的袜子(花色与伤情),本所颁发服役证书" maxlength="60"></div><div class="ctrl" style="margin-top:16px"><button class="btn accent" id="goBtn">办理降级</button><button class="btn" data-ev="灰色条纹,脚跟破洞">示例·破洞</button><button class="btn" data-ev="黑色纯棉,整体起球">示例·起球</button><button class="btn" data-ev="藏青羊毛,洗后失弹">示例·失弹</button></div><div class="output" id="out"><div class="fact" id="fact"></div><div class="deep" id="deep"></div></div></div>
+
+  
+
+  <div class="note">
+    <div class="title">所长颁发词</div>
+    <p>袜子的一生分两段:前半段是社交资产——颜色、花色、牌子,样样要紧;后半段是家庭财产——破洞、起球、松紧,样样没人看。所长颁发词想说:人类对袜子的处置,意外地展现了残缺的用处——我们不扔破袜,因为我们记得它们曾经完好;我们把它们留在地板编制里,像留一批退役老兵在家门口站岗。这份心软,让家里永远有柔软的一层。至于那 8 只散员——别催它们配对,散着就散着,反正地板不挑,脚也不挑,这个家挑的只是「别光脚」。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">颁证完毕。今晚光脚踩地板前,先去所里领一只。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 254 号藏品 · 本所与 130 号(洗衣机袜子失踪研究院)同属「袜子户籍管理总署」:一个查失踪,一个管退休<br>所内冷知识:一只袜子的居家服役期平均是 1.8 年——比它的出街服役期还长 40%:袜子的一生,大部分时间在为家服务,而不是为脸
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入一只待降级的袜子(花色与伤情),本所颁发服役证书","btnLabel":"办理降级","presets":[{"ev":"灰色条纹,脚跟破洞","label":"示例·破洞"},{"ev":"黑色纯棉,整体起球","label":"示例·起球"},{"ev":"藏青羊毛,洗后失弹","label":"示例·失弹"}],"defaultEv":"灰色条纹,脚跟破洞","tmpl":"袜子「{ev}」的降级手续已办妥:{a}服役证书附则:{b}","a":["自即日起,该袜退出「出街序列」,转入「地板编制」,主要职责为:冬季地板通勤、沙发登陆作战、以及深夜起夜的地暖缓冲。","降级仪式庄重而不张扬:所里为它拍照存档,记录它最后一次完整花纹的模样——进了地板编制,花纹就不再是社交资本,只是自家的风景。","本所在册统计:该袜的袜龄 2.4 年,出勤 300 余次,破洞位置在脚跟——伤在要害,退得体面,符合「功勋袜」的评定标准。","特别说明:该袜的原配仍在现役名单里。所方建议不强行拆散——原配先降级,它可以单飞一阵;若原配先破,则双双降级,并入地板编制,团圆。"],"b":["地板编制袜禁止出街——出门丢的是它,丢的是您的脸;在家踩的是它,暖的是您的脚,分工必须分明。","破洞位置每季度复核一次:洞穿过 2 厘米即退役——地板编制也讲究贡献上限,不搞终身制。","若与另一只降级袜凑成新配对,所里补办「二婚登记」,仪式从简,温暖从严。","所有地板袜最终去向为「抹布预备役」——但预备役期限上不封顶:踩得越久,走得越体面。"]};
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function fill(t,ev){
+return t.replace(/\{ev\}/g,ev||"").replace(/\{a\}/g,rnd(D.a)).replace(/\{b\}/g,rnd(D.b)).replace(/\{c\}/g,rnd(D.c||D.b));
+}
+$("goBtn").addEventListener("click",function(){
+var ev=$("src").value.trim()||D.defaultEv;
+$("fact").textContent="原始素材:"+(ev||"(空)");
+$("deep").innerHTML=fill(D.tmpl,ev);
+$("out").style.display="block";
+});
+document.querySelectorAll("[data-ev]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=b.getAttribute("data-ev");$("goBtn").click();});
+});
+})();
+</script>
+</body>
+</html>

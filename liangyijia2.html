@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>晾衣夹性格归档处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在编夹子 <b>24 只(缺口 5 只,原因不详)</b></span>
+    <span>考核指标 <b>开口顺滑度与抗风甩性</b></span>
+    <span>档案立场 <b>夹子无罪,风太大</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">CLOTHESPIN&nbsp;PERSONNEL</div>
+    <h1>晾衣夹性格归档处</h1>
+    <div class="sub">一只塑料晾衣夹,夹力 4 牛,寿命十年,性格千差万别:有的口松,有的脆,有的老当益壮——本处为阳台全体夹子建立人事档案。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">在编 24 只</div><div class="status" id="status">归档处开在阳台栏杆旁。晒衣绳上挂着一排夹子,像一支没发工资却常年出勤的队伍——请逐只点名。</div><div class="metrics"><div class="m"><div class="k">在编夹子</div><div class="v">24 只</div></div><div class="m"><div class="k">年流失率</div><div class="v">约 2 只</div></div><div class="m"><div class="k">骨干工龄</div><div class="v">9 年</div></div><div class="m"><div class="k">集体活动</div><div class="v">起风时</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">点名·骨干</button><button class="btn" id="btn1">点名·问题夹</button><button class="btn" id="btn2">点名·集体活动</button></div></div><div class="log"><div class="sec-tag"><span class="zh">点名记录</span><span class="en">ROSTER</span></div><ul id="log"><li style="color:var(--muted)">暂无点名。夹子们咬着各自的衣角,在绳上站岗。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">归档处按语</div>
+    <p>没人给晾衣夹发过任何荣誉:它便宜,易碎,丢了没人找。可您想想——衣服不掉,全靠它咬住的那 4 牛力气;被子不飞,全靠它陪您站在风里。本处建档不为表彰,只为记录一个事实:这个家的干燥与体面,有一半挂在绳上,由一群塑料小东西,用它们短短的一生,替您咬着。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">点名完毕。收衣服时,对夹子轻一点。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 264 号藏品 · 本处与 227 号(晾衣架日照产权办公室)同属「晾晒秩序管理委员会」:一个管地盘,一个管人事<br>处内冷知识:全人类每年失踪的晾衣夹连起来,够从阳台铺到楼下花坛——它们大多死于拆卸瞬间的手滑
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"在编 24 只","stat0":"归档处开在阳台栏杆旁。晒衣绳上挂着一排夹子,像一支没发工资却常年出勤的队伍——请逐只点名。","btns":[{"label":"点名·骨干","tag":"骨干","lines":["骨干档案:红色老夹,服役九年,开口依然紧实,夹得住湿床单的边角。全处的评语只有一句:它从没让一件衣服掉下去。","骨干续档:它被晒得褪色发白,弹性下降三成——但没人敢让它退休。阳台的秩序,一半是它撑起来的。","骨干终评:老夹的存在让其他夹子有恃无恐——反正兜底的老同志在。本处提醒:骨干也是会累的,晒被时请亲手扶一把。"],"bigs":["九年","褪色发白","兜底"]},{"label":"点名·问题夹","tag":"问题夹","lines":["问题夹一号:开口偏松,夹袜子行,夹牛仔裤悬。档案批注:不是它不努力,是裤腰太厚重——岗位错配。","问题夹二号:有裂纹,晴天正常,雨天罢工。它的职业规划很清晰:靠天气吃饭,天好出勤,天坏请假,从不解释。","问题夹三号:去年新入职,今年查无此夹。失踪地点:阳台。本处郑重澄清:夹子失踪与 130 号袜子失踪研究院无关——那是洗衣机的事,这是风的事。"],"bigs":["岗位错配","靠天气吃饭","查无此夹"]},{"label":"点名·集体活动","tag":"集体","lines":["集体活动记录:起风那天,24 只夹子在绳上集体弹跳,啪嗒作响——那是它们全年唯一的大合唱,曲目自定,观众是云。","活动解读:夹子的一生极其安静:闭合,咬住,被遗忘。唯有起风时,它们响一阵——像在提醒:我们还在,衣服也在。","活动尾声:风停,合唱结束,阳台恢复肃静。本处在档案里写下一行小字:它们不是工具,是阳台上最沉默的编制内员工。"],"bigs":["大合唱","闭合,咬住,被遗忘","编制内"]}],"metrics":[["在编夹子","24 只"],["年流失率","约 2 只"],["骨干工龄","9 年"],["集体活动","起风时"]],"logTitle":"点名记录","logEn":"ROSTER","logEmpty":"暂无点名。夹子们咬着各自的衣角,在绳上站岗。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

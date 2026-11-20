@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>好纸打草稿委员会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在委好纸 <b>23 张(全部已服役为草稿)</b></span>
+    <span>立案事由 <b>「舍不得用」与「用得很废」并存</b></span>
+    <span>委内立场 <b>好纸的死法,应该是写满</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DRAFT&nbsp;PAPER</div>
+    <h1>好纸打草稿委员会</h1>
+    <div class="sub">那张纸厚实、雪白、挺括——写废一个字就撕了?不,委员会的决议是:留作草稿纸。全人类都把最好的纸省给「以后」,结果以后全用来打草稿:本委对这一行为进行立案存照。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">本委设在书桌抽屉,管辖区是一叠雪白的纸。委员们约定:谁也不许把好纸省成发黄——发黄的纸,是纸界的失职。</div><div class="metrics"><div class="m"><div class="k">累计立案</div><div class="v" id="took"><span id=took>0</span> 件</div></div><div class="m"><div class="k">在委好纸</div><div class="v">23 张</div></div><div class="m"><div class="k">已写满</div><div class="v">17 张</div></div><div class="m"><div class="k">委员会格言</div><div class="v">写满即体面</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交立案</button><button class="btn" id="callBtn">颁布决议</button></div></div><div class="log"><div class="sec-tag"><span class="zh">立案记录</span><span class="en">DRAFT</span></div><ul id="log"><li style="color:var(--muted)">暂无立案。抽屉里那叠纸还雪白着——委员会不催,但看得心疼。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">委员长批注</div>
+    <p>人类有一种病:把最好的纸供起来,把最烂的纸用到底——日记写在随手撕的便签上,草稿打在最贵的纸上,正稿永远在「等我状态好点再写」。委员长批注想说:纸没有贵贱,空着才是最大的糟蹋。您以为把好纸留给「重要的将来」,其实是把将来吓跑了——纸越好,越不敢下笔;纸越旧,越写得自由。所以本委的建议只有一句:拿您最好的那张纸,写今天最想说的话——哪怕写废,废纸也比藏品强:它活过。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">决议生效。今晚就写,就从那张最贵的开始。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 255 号藏品 · 本委与 90 号(收藏夹考古队)同属「先存着监察委员会」:一个查链接,一个查纸张<br>委内冷知识:好纸转草稿的平均等待期是 2.3 年——比大多数「重要计划」的保质期还长,纸等得起,人等不起
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"稿号","stat0":"本委设在书桌抽屉,管辖区是一叠雪白的纸。委员们约定:谁也不许把好纸省成发黄——发黄的纸,是纸界的失职。","takeLabel":"提交立案","callLabel":"颁布决议","takeLines":["立案受理:收到举报一张——某张好纸在抽屉里躺了两年,以「太好了舍不得用」为由拒绝服役。本委裁定:罚它立即上岗,从草稿做起。","立案受理:又收到举报——某笔记本整本崭新,主人买了三年只用过扉页。本委按「纸类闲置」并入本案,处罚相同:写,随便写,写废更好。","立案受理:特殊案由——某人用一本硬壳笔记本只记了三行字,每行都极认真。本委酌情轻判:允许保留,但须每月翻一次,不许供着不用。"],"scenes":["决议颁布:全委一致通过《好纸服役令》——凡是舍不得用的纸,一律先打草稿;草稿的尊严由本委担保:写满的草稿纸,比空白的信纸更体面。","决议颁布:补充条款通过——草稿内容不设门槛,算式、涂鸦、购物清单、深夜胡话皆可;唯一禁止的是「留白等大作」:等,是纸的一生中最浪费的死法。","决议颁布终审版:本委宣布,当您在一张「太好了」的纸上写下第一个字时,仪式即告完成——那一刻,纸从藏品降回纸,而纸,终于又成了纸。委员会向您的第一笔致以敬意:它救了这张纸的一生。"],"metrics":[["累计立案","\u003cspan id=took>0\u003c/span> 件","took"],["在委好纸","23 张"],["已写满","17 张"],["委员会格言","写满即体面"]],"logTitle":"立案记录","logEn":"DRAFT","logEmpty":"暂无立案。抽屉里那叠纸还雪白着——委员会不催,但看得心疼。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

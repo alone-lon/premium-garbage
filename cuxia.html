@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>赠品马克杯收容馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在馆杯数 <b>7 只(常用 0 只)</b></span>
+    <span>来源 <b>全为赠品,自购 0 只</b></span>
+    <span>馆内立场 <b>杯无罪,标志有主</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">MUG&nbsp;EXILE</div>
+    <h1>赠品马克杯收容馆</h1>
+    <div class="sub">买一提咖啡送马克杯,三年攒下七只——全印着别家标志:本馆对赠品杯实施收容登记:不碎、不用、不外送,按印字分馆陈列。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述一只您闲置的赠品杯(印字与来历),本馆出具收容登记"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">办理收容</button><button class="btn" data-sample="0">咖啡版</button><button class="btn" data-sample="1">银行版</button><button class="btn" data-sample="2">会议版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">赠品杯收容登记</span><span class="en">MUG&nbsp;REGISTRY</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长按语</div>
+    <p>赠品杯暴露了人类的一种好客错觉:总觉得「总有一天会用到那个杯子」——可人的嘴只有一张,胃只有一个,杯却有七个。馆长见过最坦白的家庭:七只赠品杯,六只种了多肉,一只插着勺子——多肉不需要杯子的容量,只需要杯子的体面,这大概是它们最好的再就业。馆长的真心话:收容不是罪,物尽其用也不是义务;有些杯子的使命,就是站在柜子里,替某次「买一送一」的好心情,站一辈子岗。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">登记完毕。下次领赠品杯前,先想想柜子。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 247 号藏品 · 本馆与 114 号(美食推荐黑洞观测台)同属「消费惯性观察总会」:一个管嘴,一个管杯<br>馆内冷知识:全人类赠品杯的启用率不足 26%——最常被端起的那只,往往是多年前自费买的那只:花钱的才叫宠
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述一只您闲置的赠品杯(印字与来历),本馆出具收容登记","btnLabel":"办理收容","sampleLabels":["咖啡版","银行版","会议版"],"samples":["买咖啡送的杯,印着「第二杯半价」","银行开户礼杯,杯壁厚得像保险柜","某峰会纪念杯,开会的人早散了,杯还端着"],"num":"收容结论:馆藏登记,第 8 位候补","verdict":"鉴定结论:赠品杯是商业社会塞给您的「每日用不上」——它足够好,好到扔了心虚;又足够多,多到用不过来,于是一起退休。","breakdown":[["印字层","别家的名字","杯身上印的从来不是您,是「送您杯子的那家」——您每天捧着喝水的,本该是自己的生活;这些杯连这个机会都没有,直接进入编制外养老。"],["杯量层","一只送,七只存","赠品杯的繁殖规律:每次都说「这只好用」,每次都有新的一只更好用——好用从来不是收下它的理由,「免费」才是;免费,是囤积的敲门砖。"],["釉色层","出厂级光亮","杯釉亮得能照人:因为从未泡过茶。本馆对「全新退役」另有评级——越亮,越说明它被珍藏;越珍藏,越说明它失业。"],["归属层","若有若无的情分","送杯的人,多半已不再联系;杯子却按赠别礼的标准留着——杯是那段交往的存根,扔杯像销账,留着像对账。"],["处置意见","轮流上岗制","本馆不劝扔:建议七只杯轮值——每周换一只,让每只标志都见见您的生活。轮过一圈您就明白哪只是真爱,其余的,再去养老不迟。"]],"empty":{"num":"收容暂停","verdict":"没有描述没法登记——不过您家橱柜深处那只「拿来垫锅」的厚杯,本馆凭行业经验已将其列入在册。","breakdown":[["判定","垫锅岗","所有赠品杯的终极岗位是垫锅:从茶水岗调任锅垫岗,降级使用,永不退休"],["建议","放过它","垫锅也别忘了它——有朝一日锅换了,它的编制问题还得您亲自处理"]]},"reportTitle":"赠品杯收容登记","reportEn":"MUG&nbsp;REGISTRY"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>遥控器缝硬币财政局</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>辖区范围 <b>遥控器 4 只(电视、空调、盒子、风扇)</b></span>
+    <span>上年度入库 <b>硬币 2 枚、指甲刀 1 把、瓜子壳若干</b></span>
+    <span>财政原则 <b>只进不出,来历不查</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">COUCH&nbsp;REMOTE&nbsp;TREASURY</div>
+    <h1>遥控器缝硬币财政局</h1>
+    <div class="sub">换电池时从遥控器缝里倒出一枚一块钱,来源不明,年份不详——本局对遥控器缝隙内的全部资产进行清点、入库与冻结。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">财政局常设于遥控器翻面的一瞬。倒一倒,听一听,缝里的资产自己会来报到——请提交本季度盘点申请。</div><div class="metrics"><div class="m"><div class="k">累计盘点</div><div class="v"><span id="took">0</span> 次</div></div><div class="m"><div class="k">在库硬币</div><div class="v">2 枚</div></div><div class="m"><div class="k">年化收益</div><div class="v">0,从未亏损</div></div><div class="m"><div class="k">库房地址</div><div class="v">沙发扶手</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交盘点</button><button class="btn" id="callBtn">查询入库</button></div></div><div class="log"><div class="sec-tag"><span class="zh">库务日志</span><span class="en">TREASURY</span></div><ul id="log"><li style="color:var(--muted)">暂无盘点。遥控器躺在茶几上,缝里的国库静默运营。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">局长致辞</div>
+    <p>每个家都有一笔说不清的钱:沙发缝里一枚,遥控器缝里一枚,冬装口袋里一枚——它们从主人的记忆里出逃,各自建立小型政权。本局只收编遥控器辖区,政策是宽大的:不追问,不没收,不花销。局长想说的真心话是:那枚在缝里躺了三年的硬币,其实是生活留给您的小惊喜——哪天倒出来,您会笑一下。为了这一下,国库值得一直开着。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">盘点完毕。换电池时,记得先倒一倒。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 265 号藏品 · 本局与 116 号(沙发缝隙文明展)是邻邦:一个考古,一个理财,互不干涉内政<br>局内冷知识:遥控器缝隙的硬币回收率是 100%——只要您肯拆后盖;而全人类拆后盖的概率,和除霜动议的执行率持平
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"库单","stat0":"财政局常设于遥控器翻面的一瞬。倒一倒,听一听,缝里的资产自己会来报到——请提交本季度盘点申请。","takeLabel":"提交盘点","callLabel":"查询入库","takeLines":["库单已受理:电视遥控器倒出硬币一枚,一块,2019 年版。它是怎么进去的,没人知道——本局惯例:不查来历,只办入库。","库单已受理:空调遥控器晃出声响,资产在缝内滚动。取出需拆后盖,拆后盖需螺丝刀,螺丝刀在 223 号仓库——入库程序暂缓,资产先行冻结。","库单已受理:本次盘点净增资产为零,但收获瓜子壳一枚、头发若干。本局确认:遥控器缝隙的财政职能运转正常,亏损从来不是它的业务。"],"scenes":["入库通报:那枚一块钱已登记入册,存放位置——遥控器旁边的玻璃烟灰缸(它退休后改行的做法)。至此,它的十年旅程划上句点:口袋、缝隙、国库。","入库通报:风扇遥控器的滚动资产经震动测试,判定为「电池仓弹簧」误报。本局为本次乌龙立案又销案,全程两分钟,未产生任何费用。","入库通报:年度审计结论——遥控器缝隙是全家唯一敢收硬币又不花的地方。银行有利息,这里没有;但这里也从不亏空,从不跑路,从不催您存款。"],"metrics":[["累计盘点","\u003cspan id=\"took\">0\u003c/span> 次"],["在库硬币","2 枚"],["年化收益","0,从未亏损"],["库房地址","沙发扶手"]],"logTitle":"库务日志","logEn":"TREASURY","logEmpty":"暂无盘点。遥控器躺在茶几上,缝里的国库静默运营。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>不带走衣物名录登记处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>登记对象 <b>每次出行「以防万一」的衣物</b></span>
+    <span>上期数据 <b>出行 5 天,白带 3 件</b></span>
+    <span>登记处立场 <b>不带心慌,带了不穿</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">LEFT-BEHIND&nbsp;ROSTER</div>
+    <h1>不带走衣物名录登记处</h1>
+    <div class="sub">每次出差回来,行李箱里总躺着几件没穿过的衣服;而真正每天穿的,还是家里那几件旧的——本处为「带了没穿」的衣物设立名录,并研究它们的沉默。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您上次旅行「白带」的衣物,本处出具名录登记与沉默解读"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始登记</button><button class="btn" data-sample="0">外套版</button><button class="btn" data-sample="1">鞋子版</button><button class="btn" data-sample="2">仪式版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">白带名录登记簿</span><span class="en">ROSTER</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">名录处按语</div>
+    <p>行李箱是人类乐观主义的行军包:装得下换季、装得下宴席、装得下所有想象中的场合,唯独装不下「我自己这几天到底会怎么过」。本处登记了太多「白带」的衣物,结论只有一条:带,是因为心慌;不穿,是因为日子比你预计的朴素。这不丢人——为想象中的自己多带一件,是对未知的礼貌;但行李箱的真理是少:轻的箱子走得快,少带的行李回得来。愿您下次出行,只带三件,穿三件,回来时箱底那点空,装的是路上买的开心。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">登记完毕。下次出行,清单减半,快乐加倍。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 281 号藏品 · 本处与 178 号(购物车里「等打折」清单)同属「出行经济学研究会」:一个等打折,一个白带——都是对未来的投资<br>处内冷知识:全人类出行的白带率是 42%,白带前三名——厚外套、第二双鞋、健身服(以及永远不会去的健身房)
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您上次旅行「白带」的衣物,本处出具名录登记与沉默解读","btnLabel":"开始登记","sampleLabels":["外套版","鞋子版","仪式版"],"samples":["带了件厚外套,五天没穿,天天三十度","带了两双鞋,全程一双,另一双原样往返","带了正式的衬衫,以防万一,万一来的是外卖"],"num":"名录登记:以防万一,万一无一","verdict":"登记结论:白带的衣物是行李箱里的沉默贵族——它们全程占用 30% 的空间,执行 0% 的任务,最后原样返家,毫无怨言。","breakdown":[["心理层","安全感的实体化","「以防万一」是旅行的核心焦虑:您带的不是衣服,是「万一冷」「万一正式」「万一被请去吃饭」时的底气——白带的每一件,都是您为想象中的另一个自己预留的戏服。"],["重量层","实付的成本","它们以克计重,以角计钱(超重的行李费),以寸计空间——沉默地让您每次拉链更费一点力。本处提示:这种成本没处报销,但值得记录。"],["规律层","白带定律","数据显示:旅行越短,白带率越高;目的地越陌生,白带越多——您对世界的把握越少,行李越沉。白带率,是不确定性的体重。"],["例外层","那件真穿上的","名录也要给例外留位:十年里总有那么一次,「以防万一」的那件真的被穿上了——那一次的庆幸,足以支撑您继续白带十年。"],["处置建议","减半打包","本处的官方建议只有一条:下次出行,白带清单减半——把省下的空间,留给一定吃得上的胃和一定回得来的家。"]],"empty":{"num":"登记暂停","verdict":"没有具体的衣物没法登记——但本处可以先行认定:您上次旅行白带的那件,正躺在行李箱夹层里,等下一次继续白带。","breakdown":[["判定","行李箱的常驻民","白带的衣物有惯性:这次没穿,下次更会带——它们在箱子里建立了自己的户口"],["建议","出行前夜清点","把「以防万一」删掉一半,把「一定每天穿」放进去——行李箱的真理,是少"]]},"reportTitle":"白带名录登记簿","reportEn":"ROSTER"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

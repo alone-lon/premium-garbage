@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>好声按键取证科</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>取证对象 <b>5 类按键(按响次数不可考)</b></span>
+    <span>建档原则 <b>只取证,不诊断</b></span>
+    <span>科内立场 <b>耳朵饿了,喂它一声咔哒</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SOUND&nbsp;EVIDENCE</div>
+    <h1>好声按键取证科</h1>
+    <div class="sub">有些按键的「咔哒」就是好听,忍不住一遍遍按——台灯开关、圆珠笔尾、打火机盖:本科对这类「无意义重复按」行为正式取证,并建档声明:按的人没有病,只是耳朵饿了。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">取证计数 0 次</div><div class="meter"><div class="fill" id="fill" style="width:0%"></div></div><div class="status" id="status">本科仪器:一支圆珠笔(尾按式)、一副耳朵。请按响它,然后如实申报当时的状态——申报内容不会影响任何事,这正是本科的温柔。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入按键类型,例如:圆珠笔尾" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">开始取证</button></div><div class="metrics"><div class="m"><div class="k">取证对象</div><div class="v">5 类</div></div><div class="m"><div class="k">今日按响</div><div class="v">0 次</div></div><div class="m"><div class="k">回应延迟</div><div class="v">0.1 秒以内</div></div><div class="m"><div class="k">科内结论</div><div class="v">耳朵饿了</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">取证记录</span><span class="en">EVIDENCE</span></div><ul id="log"><li style="color:var(--muted)">暂无取证。笔安静躺在桌上,尾键朝上——等一只闲下来的手。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">科长按语</div>
+    <p>「咔哒」是物理世界给人类的最小奖赏:不费电,不花钱,不解决问题,但清脆、即时、可重复。科长按语想说:爱按这些键的人,多半是心事多、手闲不下来的人——按的时候您在想事,声音替您把节奏稳住了。本科取证多年,最感动的一例备案:一位老人每天按响台灯十几次,家人以为灯坏了,修理工检查后说灯没坏,是人喜欢听。灯没坏,人也没病——有些声音,是这个嘈杂世界里,仅剩的、只属于您的回音。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">取证完毕。想按就按——本科不记录次数,只记录心安。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 256 号藏品 · 本科与 143 号(气泡膜捏爆中心)同属「指尖声学总会」:一个爆泡,一个按键<br>科内冷知识:人类平均每天按响无功能键 23 次——其中 19 次发生在「想事情」的时候:咔哒声,是思考的节拍器
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"取证计数 0 次","pct":0,"stat0":"本科仪器:一支圆珠笔(尾按式)、一副耳朵。请按响它,然后如实申报当时的状态——申报内容不会影响任何事,这正是本科的温柔。","inputPh":"输入按键类型,例如:圆珠笔尾","btnLabel":"开始取证","reasons":["圆珠笔尾:全人类按响率最高的「无功能键」——笔能写,尾也能按,按了不写字。取证结论:这声咔哒是思考的伴奏,写字的人手上得有点节奏。","台灯开关:按一下亮,再按一下灭——第三下是多余的,而多余的才是好听的。取证结论:开关的第三响,属于「确认世界还在响应」的心理体检。","打火机盖:开盖一声「叮」,合盖一声「嗒」——不抽烟的人也爱玩,取证结论:这是手掌里的门铃,开合之间,是一个人的独奏会。","冰箱门:吸合声「噗嗤」——取证记录:有人开冰箱不拿东西,只为听这声。本科不评价饮食问题,只认证声学价值:这声「噗嗤」,是厨房在应答。","锁车键:一声「嘀」,车灯闪两下——取证结论:按下之后您总会回头看一眼车。这一眼,本科定性为「确认感刚需」:锁没锁不重要,回头看了才安心。","总案卷摘要:所有被反复按响的键,共性只有一条——它们都会立刻回应。这个世界里,回应得最快最脆的东西不多:咔哒一声,算一件。本科为所有按不停的手正名:您不是在按,是在等一句回音。"],"empty":"不输入按键类型,本科按「圆珠笔尾」默认受理——它是人类按响史上的总冠军,没有之一。","metrics":[["取证对象","5 类"],["今日按响","0 次"],["回应延迟","0.1 秒以内"],["科内结论","耳朵饿了"]],"logTitle":"取证记录","logEn":"EVIDENCE","logEmpty":"暂无取证。笔安静躺在桌上,尾键朝上——等一只闲下来的手。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

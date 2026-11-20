@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>微波炉加热不均匀申诉委</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受理事由 <b>汤烫饭凉 · 外热内冰 · 中间还是生的</b></span>
+    <span>技术背景 <b>驻波原理,转盘背锅</b></span>
+    <span>判决尺度 <b>一律支持,不设驳回</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">UNEVEN-HEAT&nbsp;TRIBUNAL</div>
+    <h1>微波炉加热不均匀申诉委</h1>
+    <div class="sub">同一碗饭,左半边滚烫,右半边凉透——微波炉的物理如此,您的生活偶尔也如此:本委受理全部冷热不均申诉,判决一律赔一杯温水。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">公平:待评估</div><div class="meter"><div class="fill" id="fill" style="width:12%"></div></div><div class="status" id="status">输入您最近一次被辜负的食物,本委将评估这顿饭遭受的冷热不公——补偿方案即刻生成。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入受害食物,例如:隔夜炒饭" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">递交申诉</button></div><div class="metrics"><div class="m"><div class="k">累计申诉</div><div class="v">0 件</div></div><div class="m"><div class="k">胜诉率</div><div class="v">100%</div></div><div class="m"><div class="k">物理责任</div><div class="v">驻波</div></div><div class="m"><div class="k">补偿标准</div><div class="v">温水一杯</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">申诉台账</span><span class="en">TRIBUNAL</span></div><ul id="log"><li style="color:var(--muted)">暂无申诉。微波炉嗡嗡待命,下一碗不均,正在路上。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">委员会章程</div>
+    <p>微波炉的不均匀,是这个家里最持久的物理课:它教会我们「翻个面」「停一下」「搅一搅」——这些动作看起来多余,其实是成年人为对抗概率做的全部努力。本委的真心话是:热得不均匀不是故障,是常态;生活的热也一样——有人先暖起来,有人慢半拍。判令只有一条:别把凉的那半倒掉,搅一搅,它也会热。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">申诉通过。下顿饭,记得中途搅一搅。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 267 号藏品 · 本委与 39 号(泡面等待计时研究所)同属「加热玄学联席会」:一个管时间,一个管公道<br>委内冷知识:全人类对付冷热不均的头号方案是「用手背试温」——手背,是这个家最古老的温度计
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"公平:待评估","pct":12,"stat0":"输入您最近一次被辜负的食物,本委将评估这顿饭遭受的冷热不公——补偿方案即刻生成。","inputPh":"输入受害食物,例如:隔夜炒饭","btnLabel":"递交申诉","reasons":["申诉成立:隔夜炒饭左侧 82℃,右侧 11℃——一碗中两个季节。本委判令:搅拌一次,复热 40 秒,并承认翻炒的必要性。","申诉成立:您热的是带汤的,汤已沸腾,肉还是凉的——微波炉只对水殷勤,对脂肪冷淡。本委建议:中途停一次,把肉翻个身,让它也晒到太阳。","申诉成立:包子外皮烫手,馅心冰凉,与您的期待完全相反。判词:包子的委屈在于结构——热从外向里走,耐心不够,就只能烫嘴。","申诉成立:牛奶杯口冒烟,杯底冰凉——您喝一口烫,搅一搅凉,全杯没有一个正好温的温度。本委认定:这是早晨最大的小事,也是最大的委屈。","申诉成立:转盘在转,饭没在热——转盘只是让冷热不均换个位置轮岗,并未消灭不均。本委在此为转盘正名:它尽力了,物理不配合。","终审陈词:微波炉的本质是「概率性热情」——它把热洒向食物的某些部分,其余部分自求多福。本委无法改造物理,只能在此设座:凡被凉饭凉过的人,坐下,喝口温水,申诉自动通过。"],"empty":"不输入受害食物也受理——默认您刚被一碗汤烫了嘴又冰了心。本委先赔一杯温水。","metrics":[["累计申诉","0 件"],["胜诉率","100%"],["物理责任","驻波"],["补偿标准","温水一杯"]],"logTitle":"申诉台账","logEn":"TRIBUNAL","logEmpty":"暂无申诉。微波炉嗡嗡待命,下一碗不均,正在路上。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

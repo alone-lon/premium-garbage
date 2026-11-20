@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>捏皱又展平纸情结研究所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究样本 <b>11 张(均已展平)</b></span>
+    <span>展平工时 <b>平均 4 分 40 秒</b></span>
+    <span>所内立场 <b>攥下去是脾气,展出来是修养</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WRINKLE&nbsp;IRONING</div>
+    <h1>捏皱又展平纸情结研究所</h1>
+    <div class="sub">那张纸生气时被攥成一团,冷静后又一点一点展开、压平——研究所专门研究这套动作:抚平折痕的手速、留存的毛边、以及压在台面玻璃下的最后归宿。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">展平进度 0%</div><div class="meter"><div class="fill" id="fill" style="width:0%"></div></div><div class="status" id="status">本所仪器:一张被您攥过的纸、一块玻璃板。研究流程:输入当时的火气等级,本所同步播报展平手记。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入当时火气等级,例如:8" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">开始展平观测</button></div><div class="metrics"><div class="m"><div class="k">样本总数</div><div class="v">11 张</div></div><div class="m"><div class="k">平均展平</div><div class="v">4 分 40 秒</div></div><div class="m"><div class="k">玻璃下陈列</div><div class="v">7 张</div></div><div class="m"><div class="k">再攥次数</div><div class="v">0,已长记性</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">观测记录</span><span class="en">IRONING</span></div><ul id="log"><li style="color:var(--muted)">暂无观测。玻璃板干干净净——今天火气还没找到纸。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">所长手记</div>
+    <p>一张被攥皱又展平的纸,是人类情绪最诚实的标本:褶皱的走向记录着火气的大小,展平的手速记录着后悔的深浅,玻璃下的陈列记录着「不想再犯」的决心。所长想说:别小看这四分半——人愿意花四分半救一张纸,就会愿意花四个半小时救一段关系;纸是练习场,生活是正式考试。至于玻璃下那几张——它们不是垃圾,是您给自己发的「当时年轻」证书,所方建议永久陈列,到期不换。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">观测完毕。下次攥之前,想想四分半的工期。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 246 号藏品 · 本所与 80 号(人生误差修正液)同属「情绪善后处理局」:一个涂字,一个烫纸<br>所内冷知识:被展平的纸中 73% 后来被正式丢弃——但丢弃发生在展平之后:人要先原谅,才肯放手
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"展平进度 0%","pct":0,"stat0":"本所仪器:一张被您攥过的纸、一块玻璃板。研究流程:输入当时的火气等级,本所同步播报展平手记。","inputPh":"输入当时火气等级,例如:8","btnLabel":"开始展平观测","reasons":["火气 3 级:轻度攥握,褶皱呈放射状。展平耗时约 1 分钟,手法为「掌根推压」——纸面恢复 92%,心事恢复 88%,人先恢复了。","火气 5 级:中度攥握,出现十字主褶。展平需两道工序:先手展,后玻璃压。所方提示:十字褶是纸的骨折,愈合后留有纹路——纹路也是纪念。","火气 8 级:重度攥握,纸已成球。展平进入慢工流程:摊开、对折、再摊开、掌温焐软——全程 4 分半,比生气时长还长,这是本学科的核心发现:展平比发火贵 40 倍。","火气 10 级:纸球被撕去一角后展开。所方记录:缺角是「损毁留痕」,不做修补——那张纸以残缺形态进入展平册,像一份带着勘误表的检讨。","展平终章:所有纸的最后一步完全一致——压进台面玻璃下。所方结论:展平从来不是为了再用,是为了「看得见」:您每天扫一眼那团纹路,等于每天给自己复一次盘。","学科总评:攥纸是全人类通用的情绪出口,而展纸是同一批人的自我修复——一张纸走完「攥紧—展开—压平—陈列」的一生,恰似每一段后悔的完整工序。本所只研究,不劝阻:能被一张纸接住的火气,都不算大事。"],"empty":"不输入火气等级,本所按「随手一攥」默认受理——全人类攥纸的平均火气是 6.4 级,欢迎对号入座。","metrics":[["样本总数","11 张"],["平均展平","4 分 40 秒"],["玻璃下陈列","7 张"],["再攥次数","0,已长记性"]],"logTitle":"观测记录","logEn":"IRONING","logEmpty":"暂无观测。玻璃板干干净净——今天火气还没找到纸。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

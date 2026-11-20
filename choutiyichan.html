@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>抽屉异响声纹档案馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏范围 <b>全屋 11 个抽屉</b></span>
+    <span>声纹类型 <b>顺滑 · 吱声 · 哐当 · 卡顿四型</b></span>
+    <span>归档周期 <b>每半年补录一次</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DRAWER&nbsp;ACOUSTICS</div>
+    <h1>抽屉异响声纹档案馆</h1>
+    <div class="sub">每个抽屉都有自己的声音:有的顺滑无声,有的「吱——」,有的「哐当」到底——本馆采集全屋抽屉声纹,建立声音档案,年年归档。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">采声中</div><div class="status" id="status">点击采集一个抽屉的声纹。请回想它被拉开的声音——档案馆按音入库,不收音,收记忆。</div><div class="ctrl"><button class="btn accent" id="goBtn">采集一条声纹</button><button class="btn" id="moreBtn">换一个抽屉再采</button></div><div class="metrics"><div class="m"><div class="k">馆藏声纹</div><div class="v">11 条(目标)</div></div><div class="m"><div class="k">最吵选手</div><div class="v">筷笼抽屉</div></div><div class="m"><div class="k">最安静</div><div class="v">顶层那个</div></div><div class="m"><div class="k">归档声明</div><div class="v">只采音,不上蜡</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">声纹归档</span><span class="en">ACOUSTIC</span></div><ul id="log"><li style="color:var(--muted)">暂无采声。全屋抽屉合着,声音们安静地睡在轨道里。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长按语</div>
+    <p>抽屉的声音是家里的方言:吱——是老人的关节,哐当是孩子的莽撞,哗啦是厨房的热闹,无声是刚被照顾过。本馆采集声纹,不为维修,只为证明:一个家好不好,耳朵比眼睛先知道——您闭着眼拉开每个抽屉,如果听到的全是熟悉的、不刺耳的、带着惯性的声音,那这个家,就被认真住着。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">归档完毕。下次拉开抽屉,听一下它的嗓音。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 278 号藏品 · 本馆与 239 号(音量键终身成就奖颁奖礼)同属「家庭声学表彰体系」:一个颁奖给按键,一个归档给轨道<br>馆内冷知识:人类对自家抽屉声纹的辨识准确率高达 96%——蒙上眼,您也能摸出那是家里哪一个抽屉;家,是可以听的
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"采声中","why0":"点击采集一个抽屉的声纹。请回想它被拉开的声音——档案馆按音入库,不收音,收记忆。","btnLabel":"采集一条声纹","moreLabel":"换一个抽屉再采","pools":[{"q":"声纹:餐边柜第一层「吱——」","w":"入库评注:最长的一个吱声,持续 1.2 秒,音高稳定。它的轨道缺蜡已有三年——全家人都听过,全家人都没上蜡,这个吱声成了家的背景音。"},{"q":"声纹:床头柜「哐当」","w":"入库评注:干脆的哐当,收尾利落。床头柜的抽屉天生懒——只装两样东西,开关全靠甩。本馆认证:这是全屋唯一「性格直爽」的抽屉。"},{"q":"声纹:书桌第三层「卡——顿」","w":"入库评注:中段卡顿,需二次发力。卡点在轨道中段一颗歪了的滚珠——修它需要抽出来倒过来,没人做;绕过它需要技巧,全家已熟练掌握。"},{"q":"声纹:电视柜「顺滑无声」","w":"入库评注:罕见的高分声纹——无声不代表健康,代表上个月刚被您顺手擦过轨道。本馆建议:珍惜这种顺滑,它是家务的即时回报,保质期约三个月。"},{"q":"声纹:玄关鞋柜「咯噔咯噔」","w":"入库评注:节奏型选手,咯噔两声一个来回。成因是抽屉里的钥匙串——声音不属于抽屉,属于内容物。本馆特批:借物声纹,一并归档。"},{"q":"声纹:厨房筷笼抽屉「哗啦」","w":"入库评注:全屋最热闹的声纹——每次拉开都是一次餐具集会。哗啦声里没有毛病,只有日子;抽得越勤,家里越有饭香。"},{"q":"声纹:衣柜顶层「吱呀——啪」","w":"入库评注:复合音效:先吱呀(高,够不着得踮脚),后啪(合上时松手太早)。这个声纹一年只录两次——换季时。它是全屋唯一带季节性的声音。"},{"q":"声纹:那个谁都不开的抽屉","w":"入库评注:采集失败——太久了,没人记得它响不响。本馆在档案里如实记下:「声音失传,内容成谜」。它可能锁着一个家十年的秘密,也可能只是空着。"}],"metrics":[["馆藏声纹","11 条(目标)"],["最吵选手","筷笼抽屉"],["最安静","顶层那个"],["归档声明","只采音,不上蜡"]],"logTitle":"声纹归档","logEn":"ACOUSTIC","logEmpty":"暂无采声。全屋抽屉合着,声音们安静地睡在轨道里。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

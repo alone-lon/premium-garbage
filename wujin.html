@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>五金袋沉底博物院</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏袋数 <b>6 袋(重量合计约 340 克)</b></span>
+    <span>动用记录 <b>1 次,为书架换了一颗螺丝</b></span>
+    <span>院内立场 <b>不缺它们一天,缺它们一天就完</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SCREW&nbsp;MUSEUM</div>
+    <h1>五金袋沉底博物院</h1>
+    <div class="sub">那只在抽屉底部躺了六年的塑料袋,装着家具自带的备用螺丝、内六角和一颗来历不明的膨胀栓——博物院对这批「以备拆卸」的金属小队实施永久沉底保存,并授予「家庭基础设施预备役」称号。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">沉底 6 袋</div><div class="status" id="status">本院设在抽屉最底层,与说明书们为邻。院藏均为家具配送的五金袋:搬家时跟着纸箱走,开箱后被塞进抽屉,从此进入沉底生涯。</div><div class="metrics"><div class="m"><div class="k">馆藏袋数</div><div class="v">6 袋</div></div><div class="m"><div class="k">金属件数</div><div class="v">57 件</div></div><div class="m"><div class="k">七年战功</div><div class="v">1 次</div></div><div class="m"><div class="k">院训</div><div class="v">沉底,但叫得应</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">参观·藏品普查</button><button class="btn" id="btn1">参观·唯一战功</button><button class="btn" id="btn2">参观·沉底哲学</button></div></div><div class="log"><div class="sec-tag"><span class="zh">参观记录</span><span class="en">MUSEUM</span></div><ul id="log"><li style="color:var(--muted)">暂无参观。抽屉底一片安静,金属们在黑暗里列队——今天也没有家具晃。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">院长致辞</div>
+    <p>每个家里都有一只不敢扔的五金袋:扔的时候特别确定没用,留的时候特别说不清理由——本院的成立,就是为了给这份说不清一个说法。院长致辞想说:备用螺丝是人类「总有一天」心理的金属形态:木头会松,螺丝会退,生活会在某个傍晚突然晃一下;那一刻,翻遍全屋找一颗 M6 的您,会由衷感谢六年前那个没有扔袋子的自己。本院的馆训只有八个字——沉底不弃,叫谁谁到。请务必把袋子放回抽屉底:那不是乱,那是国防。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">闭馆。袋子放回原位——压舱,不压心。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 260 号藏品 · 本院与 223 号(螺丝刀套装使用记录馆)同属「家庭五金联合指挥部」:一个管刀头出勤,一个管螺丝沉底<br>院内冷知识:家具备用五金的动用率仅 6%——但没有人敢扔:全人类心照不宣,扔掉的那天,一定是需要它的前一天
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"沉底 6 袋","stat0":"本院设在抽屉最底层,与说明书们为邻。院藏均为家具配送的五金袋:搬家时跟着纸箱走,开箱后被塞进抽屉,从此进入沉底生涯。","btns":[{"label":"参观·藏品普查","tag":"普查","lines":["普查记录:一号袋,四颗 M6 螺丝加一把内六角,出身:某书架——书架已转手,螺丝留下,本院备注:装备比主人长情。","普查记录:三号袋,膨胀栓两颗,来历不明——全院考证半年无果,最终按「无名烈士」入册:不知道它固定过什么,只知道它还在待命。","普查小结:六袋藏品清点完毕,合计 57 件,无一枚锈蚀严重——抽屉底的干燥,替金属们守住了最后的体面。本院决定给这只抽屉记一次集体三等功。"],"bigs":["装备长情","无名烈士","集体三等功"]},{"label":"参观·唯一战功","tag":"战功","lines":["战功档案:2019 年秋,书架晃动,全家翻箱倒柜——最终从二号袋里请出一颗备用螺丝,10 分钟修复,战功记入院志。","战功解读:那次动用被全院视为里程碑——它证明了「留着」的合法性:六年沉默,一朝救场,一枚螺丝顶得上一次上门维修费。","战功余波:可惜好景不长——此后七年,再无战事。二号袋重新沉底,但院志为它保留了一个「随时归队」的编制:英雄不在大小,在于叫得应。"],"bigs":["10 分钟","合法性","叫得应"]},{"label":"参观·沉底哲学","tag":"哲学","lines":["哲学陈列:本院不主张清点造册、分类上架——沉底的意义就是沉底:它们必须躺在找不到也不丢失的地方,像压舱石。","哲学陈列:有人问,这些螺丝大概率永远用不上,留着图什么?本院答:图一个「万一」——「万一」不发生,它们是废铁;发生一次,它们是恩人。这笔保险,保费为零。","哲学结语:本院的终极观点:一个家庭的底气,一半来自存款,一半来自抽屉底——存款应对大事,五金袋应对小难;大事十年一遇,小难说来就来,而五金袋,从来都在。"],"bigs":["压舱石","保费为零","抽屉底"]}],"metrics":[["馆藏袋数","6 袋"],["金属件数","57 件"],["七年战功","1 次"],["院训","沉底,但叫得应"]],"logTitle":"参观记录","logEn":"MUSEUM","logEmpty":"暂无参观。抽屉底一片安静,金属们在黑暗里列队——今天也没有家具晃。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

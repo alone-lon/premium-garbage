@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>洗衣筒自洁后的漂浮演出纪念馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>演出名称 <b>「白色漂浮物」(学术名:残留絮团)</b></span>
+    <span>演出场地 <b>洗衣机内筒,演出后清场</b></span>
+    <span>馆藏立场 <b>它洗不干净自己,但演得很认真</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">POST-SELF-CLEAN&nbsp;FLOAT</div>
+    <h1>洗衣筒自洁后的漂浮演出纪念馆</h1>
+    <div class="sub">筒自洁跑完两小时,开盖一瞧:内壁上漂着一层白屑,像雪,像絮,像一场没人请的演出——本馆为每次演出建馆收藏,馆藏按次陈列。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">馆藏筹备中</div><div class="status" id="status">纪念馆建在开盖的那一瞬。请回忆您最近一次筒自洁后的目击——每一次目击,都是一场演出的谢幕照。</div><div class="metrics"><div class="m"><div class="k">馆藏演出</div><div class="v">3 场</div></div><div class="m"><div class="k">演出票价</div><div class="v">两小时电费</div></div><div class="m"><div class="k">白屑成分</div><div class="v">水垢加纤维</div></div><div class="m"><div class="k">下次演出</div><div class="v">一个月后</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">馆藏·演出实录</button><button class="btn" id="btn1">馆藏·来源考</button><button class="btn" id="btn2">馆藏·谢幕处置</button></div></div><div class="log"><div class="sec-tag"><span class="zh">馆藏登记</span><span class="en">FLOAT</span></div><ul id="log"><li style="color:var(--muted)">暂无馆藏。内筒干净,水面平静,下一场演出正在排期。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长按语</div>
+    <p>筒自洁是人类对洗衣机最体面的安排:每月一次,高温两小时,给这个常年泡在脏水里的劳模放个假。假放完,它交出来的却是一层白屑——仿佛在说:我洗不了自己,但我知道该洗。本馆收藏这些白屑的目击记录,其实是想收藏一种心情:家务的尽头不是干净,是郑重——您为机器办的这场仪式,机器不领情,白屑照样漂,但您心里清楚:这个家,有人在管。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">登记完毕。开盖那一下,记得看一眼雪。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 279 号藏品 · 本馆与 130 号(洗衣机袜子失踪研究院)同属「洗衣机文明研究双馆」:一个查失踪,一个收演出<br>馆内冷知识:筒自洁的官方建议频次是每月一次,全人类的实际执行率是 38%——剩下 62% 的洗衣机,自洁键落灰中
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"馆藏筹备中","stat0":"纪念馆建在开盖的那一瞬。请回忆您最近一次筒自洁后的目击——每一次目击,都是一场演出的谢幕照。","btns":[{"label":"馆藏·演出实录","tag":"实录","lines":["演出实录一:某次筒自洁(高温两小时),开盖——内筒水面浮着一层细密白屑,均匀,安详,像刚下过一场室内的雪。观众:您,一名。","演出实录二:另一次自洁,白屑 PLUS 版——除絮团外,另有黑色小片三枚,身份不明。馆方按语:洗衣机洗出来的东西,连洗衣机自己都不认识。","演出实录三:第三次目击,水面干净,无一漂浮物——您甚至有点失落。馆方安抚:偶尔的干净场,是演出界的正常波动,不必怀疑人生。"],"bigs":["室内的雪","身份不明","干净场"]},{"label":"馆藏·来源考","tag":"考据","lines":["考据一:白屑的主流出身是「洗衣粉没化开」与「水的硬度」的合谋——两小时高温,把它们请出了藏身之处,聚众谢幕。","考据二:部分白屑的真实身份是「絮状残留」——旧衣服掉落的纤维,洗了十年,终于攒够了一场演出的体量。","考据三:最扎心的考证——筒自洁的产出物,就是它没能洗干净的部分。本馆对这句考据的处理:挂在馆正中央,配一个烫金框。"],"bigs":["合谋","攒够了体量","烫金框"]},{"label":"馆藏·谢幕处置","tag":"处置","lines":["处置规程一:演出结束后,请用抹布擦净内筒与胶圈——这是观众对演出的基本礼仪,叫做「送客」。","处置规程二:开盖通风两小时,让筒内回到人间湿度——封着盖的洗衣机,内部自成气候,是霉的温床。","处置规程三:馆方长期立场——筒自洁不是清洁,是仪式:它证明您「有在管」这台机器,这就够了;剩下的白屑,是仪式收的门票。"],"bigs":["送客","自成气候","门票"]}],"metrics":[["馆藏演出","3 场"],["演出票价","两小时电费"],["白屑成分","水垢加纤维"],["下次演出","一个月后"]],"logTitle":"馆藏登记","logEn":"FLOAT","logEmpty":"暂无馆藏。内筒干净,水面平静,下一场演出正在排期。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

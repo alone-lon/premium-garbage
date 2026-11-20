@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>节庆酒瓶流通停滞局</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在柜酒瓶 <b>5 瓶(平均滞留 3.2 年)</b></span>
+    <span>流通记录 <b>0 瓶开瓶,2 瓶转赠又转回</b></span>
+    <span>局内立场 <b>酒在柜里,节就在柜里</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FESTIVAL&nbsp;SPIRITS</div>
+    <h1>节庆酒瓶流通停滞局</h1>
+    <div class="sub">柜子最深处站着一排酒:春节的、中秋的、乔迁的、升职的——每一瓶都「留着重要日子喝」,而重要日子永远不如这瓶酒贵重:本局对这批酒的流通停滞进行立案,并出具「不喝,也在庆祝」的证明。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">本局设在餐边柜第二层,湿度天然达标。全局业务只有一个:登记,再登记——开瓶属于重大事项,须局长(您)亲自批准,而局长从不批。</div><div class="metrics"><div class="m"><div class="k">累计登记</div><div class="v" id="took"><span id=took>0</span> 瓶</div></div><div class="m"><div class="k">柜龄合计</div><div class="v">16 年</div></div><div class="m"><div class="k">开瓶数</div><div class="v">0 瓶</div></div><div class="m"><div class="k">流通率</div><div class="v">12%,且是回环</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">登记入柜</button><button class="btn" id="callBtn">流通播报</button></div></div><div class="log"><div class="sec-tag"><span class="zh">流通记录</span><span class="en">SPIRITS</span></div><ul id="log"><li style="color:var(--muted)">暂无登记。柜门关着,酒瓶们站得笔直——今晚的饭桌,喝的是普通的那瓶。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">局长批文</div>
+    <p>家里的柜子深处,总有一批不敢喝的酒:它们太「像样」了,像样到任何一顿晚饭都配不上。局长批文想说:这份「配不上」里,藏着最朴素的仪式观——好东西要等大事,可大事的定义越等越严:孩子考上大学?那是三年后的事;父母大寿?得挑整寿;于是酒一年年站着,大事一年年不来,日常的晚饭,永远喝那瓶「随时可以喝」的。批文的最终建议:其实哪天您把那瓶贵的开了,配一桌家常菜——酒不会委屈,它只会庆幸:原来我等的日子,就是平常的日子。只不过,本局依然不催——柜子深处,总要有一排站着的期待,家里才像个一直有喜事的样式。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">播报完毕。柜门合上,喜事继续攒着——酒,替您站岗。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 261 号藏品 · 本局与 170 号(「改天约饭」计划博物馆)同属「改天事务联合局」:一个管改天约饭,一个管改天开瓶<br>局内冷知识:家庭珍藏酒的平均「站柜年限」是 4.1 年——大多数的结局不是被喝掉,而是在某次大扫除里被郑重地挪去更深的柜子:连退休都是加级待遇
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"酒号","stat0":"本局设在餐边柜第二层,湿度天然达标。全局业务只有一个:登记,再登记——开瓶属于重大事项,须局长(您)亲自批准,而局长从不批。","takeLabel":"登记入柜","callLabel":"流通播报","takeLines":["入柜登记:白酒 1 瓶,春节亲戚所赠——登记事由:舍不得喝。备注:瓶身端正,标签崭新,像一位刚到任就退休的官员。","入柜登记:红酒 2 瓶,乔迁时朋友送的——登记事由:等个特别的日子。本局按惯例追问「什么算特别」,对方答「想不出来」,照收。","入柜登记:洋酒 1 瓶,升职那月自购——登记事由:留着庆祝。本局备注:入职到现在已升两次,庆祝用的酒一瓶未动——喜事攒着,酒也攒着。"],"scenes":["流通播报:编号 002 红酒曾于去年中秋转赠他人——三个月后,对方乔迁,原瓶回赠。本局确认:这是全球酒类最短的一次旅行,门票免费,起点终点同一格柜子。","流通播报:编号 001 白酒被父亲的客人看中过一次——父亲说「这瓶不喝,还有好的」;客人走后,父亲把那瓶往里推了推,推到了最深的位置。本局记录:这是酒界最高礼遇——被藏得更深。","流通播报终审:全局五瓶酒,柜龄合计 16 年,开瓶 0 次。本局终审意见:请各位安心服役——你们的名字叫「留着」,你们的岗位叫「柜子深处」,你们的荣休仪式,大概是一场多年后的家庭聚餐:届时开瓶,你们才真正上岗。"],"metrics":[["累计登记","\u003cspan id=took>0\u003c/span> 瓶","took"],["柜龄合计","16 年"],["开瓶数","0 瓶"],["流通率","12%,且是回环"]],"logTitle":"流通记录","logEn":"SPIRITS","logEmpty":"暂无登记。柜门关着,酒瓶们站得笔直——今晚的饭桌,喝的是普通的那瓶。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

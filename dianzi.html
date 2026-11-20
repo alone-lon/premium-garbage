@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>差一分钟电子表时区馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏时差 <b>快 60 秒,九年未归零</b></span>
+    <span>调表次数 <b>2 次,均告失败</b></span>
+    <span>馆内立场 <b>快一分钟,是表的性格</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ONE&nbsp;MINUTE&nbsp;LAG</div>
+    <h1>差一分钟电子表时区馆</h1>
+    <div class="sub">那块戴了九年的电子表,比标准时间快一分钟——调过一次,又自己快回去:本馆宣布这快着的一分钟为「表的主权时区」,并为它设立单独的历法注记。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">当前 +60 秒</div><div class="status" id="status">本馆陈列对象即那块表。展品说明:机芯老化,走时偏快,每日漂移约 4 秒——您每月调一次,它每月再跑回去,像一场长期谈判。</div><div class="metrics"><div class="m"><div class="k">当前时差</div><div class="v">快 60 秒</div></div><div class="m"><div class="k">自治时长</div><div class="v">9 年</div></div><div class="m"><div class="k">调表谈判</div><div class="v">2 轮,全败</div></div><div class="m"><div class="k">跨年时刻</div><div class="v">提前 1 分钟</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">陈列·调表谈判史</button><button class="btn" id="btn1">陈列·一分钟主权</button><button class="btn" id="btn2">陈列·退役预案</button></div></div><div class="log"><div class="sec-tag"><span class="zh">时区记录</span><span class="en">ONE&nbsp;MINUTE</span></div><ul id="log"><li style="color:var(--muted)">暂无记录。表在手腕上走着它自己的路——今天它又快了 4 秒。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长后记</div>
+    <p>人对表的期待是准,表对人的回馈是走。这块表九年来从没准过,可您一天也没摘过它——馆长在这里看到了一件比「准」更重要的事:您接受了一个不完美却忠诚的东西,并且为它的毛病专门建了一座馆。后记想留一句真心话:我们这一生戴过的表、用过的人、处过的日子,大抵都带着自己的偏差;能把偏差供起来的,是深情。这块快一分钟的表,请继续戴着——世界慢它一分钟,它就替您把每一天,多过一分钟。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">闭馆。今晚跨年,记得提前一分钟举杯。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 252 号藏品 · 本馆与 101 号(时间感知扭曲实验室)同属「时间异轨研究院」:一个研究心理时差,一个研究物理时差<br>馆内冷知识:老化机芯的漂移方向 87% 是走快——人类的旧物里,连时间都舍不得落后,全都抢着往前赶
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"当前 +60 秒","stat0":"本馆陈列对象即那块表。展品说明:机芯老化,走时偏快,每日漂移约 4 秒——您每月调一次,它每月再跑回去,像一场长期谈判。","btns":[{"label":"陈列·调表谈判史","tag":"谈判","lines":["谈判档案一:第九年年初,您把它调准了。三周后,它又快出 12 秒——谈判破裂,您放弃,史称「第一次妥协」。","谈判档案二:去年换电池,师傅顺手调准了。一个月后,快 40 秒——师傅叹气说「这机芯有性格」,您当场决定尊重性格,史称「永久停战」。","谈判结语:两次谈判的失败让本馆确认:这块表的快,不是故障,是立场——它按自己的节拍走,您戴了九年,等于在手腕上豢养了一个不服从管理的小时区。"],"bigs":["第一次妥协","机芯有性格","小时区"]},{"label":"陈列·一分钟主权","tag":"主权","lines":["主权宣言:本馆正式确认「快一分钟」为该表的主权特征。在它的时区里,会议早一分钟开始,饭点早一分钟开饭,除夕早一分钟跨年——过它的日子,永远比世界抢先一步。","主权换算:按快 60 秒计,九年来它比全世界多走了约 5.5 个小时——这 5.5 个小时里没有发生任何事,但本馆认为:多出来的时间,本身就值得庆祝。","主权边界:唯一的不便是坐高铁要心算。您在站台看它的表,永远要默默扣掉一分钟——本馆将这个动作命名为「时差税」,税率固定,九年不变。"],"bigs":["抢先一步","5.5 小时","时差税"]},{"label":"陈列·退役预案","tag":"预案","lines":["预案一:某天它彻底停走——本馆预案为「原样封存」,不换电池,不修机芯:停在几时几分,就永远几时几分,像一个把话说完的人。","预案二:某天您把它调准了——本馆预案为「入档纪念」:主权时区沦为普通时区,九年自治,一朝归顺。馆方届时将下半馆旗,以示哀荣。","预案结语:最优方案其实是现状——它快它的,您戴您的,互不改造,互相包容。本馆将这种关系定义为「人表相处的最高形态」:不试图改变对方,只配合对方的节拍。"],"bigs":["把话说完","下半旗","最高形态"]}],"metrics":[["当前时差","快 60 秒"],["自治时长","9 年"],["调表谈判","2 轮,全败"],["跨年时刻","提前 1 分钟"]],"logTitle":"时区记录","logEn":"ONE&nbsp;MINUTE","logEmpty":"暂无记录。表在手腕上走着它自己的路——今天它又快了 4 秒。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

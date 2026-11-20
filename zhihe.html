@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「重要纸张」鞋盒封存馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在馆鞋盒 <b>1 只(重量 1.3 公斤)</b></span>
+    <span>封存级别 <b>家庭最高(钥匙仅您持有)</b></span>
+    <span>馆内立场 <b>乱,是档案的原生地层</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SHOEBOX&nbsp;ARCHIVE</div>
+    <h1>「重要纸张」鞋盒封存馆</h1>
+    <div class="sub">每家都有一只这样的鞋盒:毕业证、合同、发票、车票、没寄出的信——外人看是废纸,您看是档案:本馆对这只盒实施最高规格封存:不开箱、不整理、不问内容。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您家鞋盒里的某件纸制品(类型与年头),本馆出具封存登记"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">办理封存</button><button class="btn" data-sample="0">证件版</button><button class="btn" data-sample="1">票据版</button><button class="btn" data-sample="2">信件版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">鞋盒封存登记簿</span><span class="en">SHOEBOX&nbsp;REPORT</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长祝词</div>
+    <p>鞋盒是全人类共有的民间档案馆:不需要恒温恒湿,不需要编号检索,靠一只鞋盒和「不敢扔」三个字,守住了一个人半生的凭证。馆长见过把盒分门别类装进文件袋的狠人——半年后文件袋又乱回了盒里,足证乱是它的天道。馆长的祝词是:这只盒,请原样传下去。哪天您的后人打开它,会在最底层翻到一张发脆的车票和一封没寄的信——那一刻,他们会突然读懂您的一生:原来你把重要的东西,都留成了这样。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">封存完毕。盒盖合上,钥匙还是那把——在您心里。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 251 号藏品 · 本馆与 150 号(收货地址考古学)同属「个人档案地理志」:一个考地址,一个考纸张<br>馆内冷知识:家庭鞋盒纸张的「最后清点」平均间隔是 9.3 年——通常发生在搬家,清点的结论高度一致:还在,都没丢,继续封存
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您家鞋盒里的某件纸制品(类型与年头),本馆出具封存登记","btnLabel":"办理封存","sampleLabels":["证件版","票据版","信件版"],"samples":["毕业证原件,底下压着学位证,再底下还有一张结业证","一张 2014 年的火车票,行程是单程","一封信,写好了,没寄,信封都没封口"],"num":"封存编号:盒内第 39 件","verdict":"封存结论:鞋盒是家庭的低配档案馆——没有编号系统,没有检索功能,但每个物件都因为「当时觉得重要」而获得永久居住权。","breakdown":[["地层学","按时间自然叠压","盒里的纸按「想起就塞进去」的顺序叠压:最底下是学生时代的证件,中间是头几年的合同,最上面是上周的车票——地层越深,纸张越脆,青春浓度越高。"],["票据层","没报成销的账","一沓发票当时想着「说不定要报销」——单位没让报,票留下了:它们从财务凭证降格为物价纪念,2014 年的一碗面,收据上写得清清楚楚。"],["证件层","压轴的居民","毕业证、资格证、获奖证书——它们平时压在盒底,只在搬家时露一次面。每次露面,全家都要惊呼「还在啊」,像检阅一支从不出操的老部队。"],["信件层","未寄出的邮资","写着名字却没封口的信,是盒里最轻也最重的一层——邮资没贴,心意足额;本馆对未寄信执行「只登记封皮,不查内容」的分级保密制度。"],["保管意见","不整理,即最稳","本馆反对任何整理行为:一整理,就要重读;一重读,就要取舍;一取舍,就要告别——鞋盒的原生乱序,是这批纸张最安全的生存环境。不整理,即封存;不翻动,即常安。"]],"empty":{"num":"封存暂停","verdict":"没有描述没法登记——但您家一定有这么一只盒,可能在衣柜顶,可能在床底,可能在「等有空再理」的清单上挂了七年。","breakdown":[["判定","全民标配","一只装着「重要纸张」的鞋盒,是家庭的隐形基础设施"],["建议","原地封存","别整理——乱的盒是活的档案,理过的盒只是纪念品"]]},"reportTitle":"鞋盒封存登记簿","reportEn":"SHOEBOX&nbsp;REPORT"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

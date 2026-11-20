@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>冷冻馒头时间胶囊库</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在库馒头 <b>3 只(手工,老面)</b></span>
+    <span>封存时长 <b>94 天,无解冻计划</b></span>
+    <span>库内立场 <b>馒头冻着,日子就还有余粮</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BAO&nbsp;CAPSULE</div>
+    <h1>冷冻馒头时间胶囊库</h1>
+    <div class="sub">冰箱冷冻层深处,三只馒头裹着塑料袋,登记日期是三个月前——「留着,回头蒸蒸还能吃」:本库对这批面粉文物实施胶囊式封存,并出具「冻着,即是保存」的证书。</div>
+  </div>
+
+  <div class="console"><div class="input"><input id="src" type="text" placeholder="输入一只冷冻面食(种类与冻龄),本库开具胶囊证书" maxlength="60"></div><div class="ctrl" style="margin-top:16px"><button class="btn accent" id="goBtn">开具证书</button><button class="btn" data-ev="老面馒头,冻龄 94 天">示例·馒头</button><button class="btn" data-ev="自家包的饺子,冻龄半年">示例·饺子</button><button class="btn" data-ev="半个花卷,冻龄不明">示例·花卷</button></div><div class="output" id="out"><div class="fact" id="fact"></div><div class="deep" id="deep"></div></div></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长签发词</div>
+    <p>冷冻层是每个家庭的战略后方:腊肉、饺子、半袋汤圆,还有几只说不清来历的馒头——它们冻在那里,像一群沉默的储备兵。馆长签发词想说:人类囤冻馒头,囤的其实是安全感——「家里还有吃的」这句话,比食物本身更能安神;那三只馒头哪怕永远不被吃,它们在场,冰箱就有底气,您就有底气。至于解冻那天——馒头未必如初,日子未必如昨,但蒸汽升起来的时候,您会发现:冻了多久不重要,热乎的那一刻,才是馒头的一生所求。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">证书签发完毕。冷冻层合上——余粮在,底气在。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 257 号藏品 · 本库与 222 号(存钱罐沉睡基金)同属「家庭战略储备局」:一个存钱,一个存粮<br>库内冷知识:家庭冷冻层里有 31% 的面食冻龄超过 90 天——它们不是被遗忘,是被信任:您相信家里永远有热乎的退路
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入一只冷冻面食(种类与冻龄),本库开具胶囊证书","btnLabel":"开具证书","presets":[{"ev":"老面馒头,冻龄 94 天","label":"示例·馒头"},{"ev":"自家包的饺子,冻龄半年","label":"示例·饺子"},{"ev":"半个花卷,冻龄不明","label":"示例·花卷"}],"defaultEv":"老面馒头,冻龄 94 天","tmpl":"面食「{ev}」的胶囊证书开具如下:{a}库内附则:{b}","a":["封存确认:该面食已转入「时间胶囊」状态——不催解冻,不占正餐计划,只在每次开冷冻层时,以坚硬的沉默提醒您:家里有余粮,心里就不慌。","状态评估:袋面结霜均匀,无异味串染,结霜等级为「良性」——本库鉴定:它冻得很认真,像一封冻在冰里的信,内容不变,寄出日期待定。","历史考据:库志显示,人类冷冻面食的最高冻龄纪录为 14 个月——解冻后主人评价「还行,就是没了刚出锅那股魂」。本库据此认定:冷冻可保命,不能保魂,魂在出锅那天就散了,冻住的只是身体。","心理分析:您留着它,不是因为它好吃,是因为「扔食物」这三个字在您心里过不了审——本库批准:过不了审的,一律入库,胶囊待遇,永不过期。"],"b":["解冻指南:蒸锅上气后 8 分钟——但本库建议您想清楚再动手:解冻是胶囊的终点,冻着才是它的常态。","若决定不吃,请办理「光荣退役」:拆袋,投入厨余,默念一句「辛苦了」——本库要求仪式感,食物的一生,值得一句道别。","同类面食入库时,请标注日期——无日期的馒头,冻龄成谜,谜面越久越不敢解。","库容上限:5 只——超编的馒头将触发「必须蒸一顿」条款,这是本库对囤积的唯一强制。"]};
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function fill(t,ev){
+return t.replace(/\{ev\}/g,ev||"").replace(/\{a\}/g,rnd(D.a)).replace(/\{b\}/g,rnd(D.b)).replace(/\{c\}/g,rnd(D.c||D.b));
+}
+$("goBtn").addEventListener("click",function(){
+var ev=$("src").value.trim()||D.defaultEv;
+$("fact").textContent="原始素材:"+(ev||"(空)");
+$("deep").innerHTML=fill(D.tmpl,ev);
+$("out").style.display="block";
+});
+document.querySelectorAll("[data-ev]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=b.getAttribute("data-ev");$("goBtn").click();});
+});
+})();
+</script>
+</body>
+</html>

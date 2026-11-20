@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>冷热水适应期调度台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>调度对象 <b>从拧开龙头到水温到位的 40 秒</b></span>
+    <span>水温曲线 <b>13℃ 起步,每秒升 1 度</b></span>
+    <span>台内立场 <b>凉水无罪,只是先来</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TEMPER-UP&nbsp;DISPATCH</div>
+    <h1>冷热水适应期调度台</h1>
+    <div class="sub">热水器离浴室七米,热水要走四十秒才到——这段「先凉后热」的等待,被本台正式命名为「适应期」,并纳入全屋水温调度体系。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">适应期:第 0 秒</div><div class="meter"><div class="fill" id="fill" style="width:5%"></div></div><div class="status" id="status">请描述您今天与凉水初遇的场景,本台为您调度心态,并出具「适应期」认定书。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入场景,例如:早起洗头" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">开始调度</button></div><div class="metrics"><div class="m"><div class="k">今日调度</div><div class="v">0 次</div></div><div class="m"><div class="k">适应期时长</div><div class="v">约 40 秒</div></div><div class="m"><div class="k">水温爬升</div><div class="v">每秒 1 度</div></div><div class="m"><div class="k">台的服务费</div><div class="v">免费,但收四十秒</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">调度记录</span><span class="en">DISPATCH</span></div><ul id="log"><li style="color:var(--muted)">暂无调度。管道里静悄悄,热水按兵不动,凉水值早班。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">调度台章程</div>
+    <p>热水走得慢,是因为路远;凉水来得快,是因为它一直在管子里等——这是全屋最朴素的物理,也是最像人生的一课:您想要的都在路上,只是要先接住先到的。本台成立的目的,不是把水管改成零等待,是给那四十秒一个正当的名分:适应期不是浪费,是过渡;不是故障,是节奏。您的一生会有很多个四十秒——学会等水的人,等得起别的事。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">调度完毕。今晚开淋,先让水淋进桶里。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 273 号藏品 · 本台与 197 号(微信运动步数攀爬营)同属「居家体能研究会」:一个练腿,一个练等<br>台内冷知识:人类在适应期的四十秒里,平均抱怨 1.4 声——那是与凉水达成的口头谅解,自古有之
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"适应期:第 0 秒","pct":5,"stat0":"请描述您今天与凉水初遇的场景,本台为您调度心态,并出具「适应期」认定书。","inputPh":"输入场景,例如:早起洗头","btnLabel":"开始调度","reasons":["调度认定:早起洗头的适应期最难熬——凉水浇头的一瞬,您比任何时候都清醒。本台判词:这是全屋唯一免费提神项目,效果强过咖啡,建议偶尔珍惜。","调度认定:洗碗的适应期最平静——凉水刷两只碗的工夫,热水恰好赶到。这个节奏人类用了几十年,手已经学会了在凉热之间无缝换挡。","调度认定:冬天洗澡的适应期最惊险——您把花洒举得远远的,手臂伸直,身体后仰,像在调试一颗炸弹。本台建议:先把水淋进桶里,别直接对自己开火。","调度认定:夏天的适应期形同虚设——凉水就是正解。同一根水管,冬天是考验,夏天是恩赐:水温没变,是您变了。","调度认定:适应期的四十秒里,人类通常完成以下动作——抱怨一声、活动一下肩膀、思考一次人生。本台认证:这段水管走廊,是全家最便宜的正念课堂。","终审认定:热水永远在路上,这是热水器与您之间的约定——它不爽约,只是住得远。本台的全部调度艺术,就是教您把「等热水」过成「缓缓来」:水会热,日子也会。"],"empty":"不输入场景也照常调度——默认您刚被早上第一把凉水激了一下。本台先敬您一句:辛苦了,热水已在七米外出发。","metrics":[["今日调度","0 次"],["适应期时长","约 40 秒"],["水温爬升","每秒 1 度"],["台的服务费","免费,但收四十秒"]],"logTitle":"调度记录","logEn":"DISPATCH","logEmpty":"暂无调度。管道里静悄悄,热水按兵不动,凉水值早班。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

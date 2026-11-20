@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>阳台角落杂物编制办</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>辖区面积 <b>阳台角落,约 0.6 平方米</b></span>
+    <span>常住人口 <b>7 件(常年只增不减)</b></span>
+    <span>户口性质 <b>永久暂住</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BALCONY-CORNER&nbsp;REGISTER</div>
+    <h1>阳台角落杂物编制办</h1>
+    <div class="sub">阳台角落住着一群没编制的闲置:坏了的花架、只剩一只的拖鞋、不知去向的挂钩——本办不清理、不驱逐,只给它们一一上户口。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">点名中</div><div class="status" id="status">点击为角落新住客登记户口。本办不做断舍离动员——动员没用,户口管够。</div><div class="ctrl"><button class="btn accent" id="goBtn">登记一位住客</button><button class="btn" id="moreBtn">再登记一位</button></div><div class="metrics"><div class="m"><div class="k">在册住客</div><div class="v">7 件</div></div><div class="m"><div class="k">清退率</div><div class="v">0%</div></div><div class="m"><div class="k">户口有效期</div><div class="v">永久</div></div><div class="m"><div class="k">本办口号</div><div class="v">来了就是角落地主</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">户口登记</span><span class="en">CORNER</span></div><ul id="log"><li style="color:var(--muted)">暂无登记。角落安静,住客们各守其位,户口本合着。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">编制办按语</div>
+    <p>断舍离的逻辑是「没用的扔掉」,本办的反向逻辑是「没用的先上户口」——因为您扔不掉的,从来不是东西本身,是它们替您保管的那点念想:花架上有那年的花园梦,拖鞋上有它的另一半,空罐子里有「以后」。本办不催您成长,只提供一个缓冲地带:想扔的那天,翻翻户口,和它们打个招呼,再走不迟。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">户口办好。角落里,又添一位老熟人。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 270 号藏品 · 本办与 231 号(快递箱改造成果展览馆)、232 号(购物袋收纳悖论博物馆)合署办公,统称「阳台三角户政所」<br>办内冷知识:全人类阳台角落的常住人口,五年翻一倍——角落,是家里唯一永远有编制的地方
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"点名中","why0":"点击为角落新住客登记户口。本办不做断舍离动员——动员没用,户口管够。","btnLabel":"登记一位住客","moreLabel":"再登记一位","pools":[{"q":"住客:断了一条腿的花架","w":"户口摘要:2019 年购入,2021 年骨折,此后以「靠墙站」的姿势继续服役至今。它托不住花盆了,但托得住一段回忆——留用,编制:荣誉住客。"},{"q":"住客:单只拖鞋","w":"户口摘要:它的另一半在洗衣机里失踪(详见 130 号案卷)。它拒绝改嫁,拒绝当拖把,每天在角落等一只永远不会回来的鞋——编制:痴情住客。"},{"q":"住客:三个不知用途的挂钩","w":"户口摘要:随某个家具附赠,规格不明,粘性成谜。全家没人敢用——挂重了怕掉,挂轻了没意义。编制:待命住客,候补期无限。"},{"q":"住客:干透的肥料袋","w":"户口摘要:三年前种花热潮的遗产,袋口扎得一丝不苟,内容物已板结如化石。它见证了您与园艺的三个月热恋——编制:纪念住客。"},{"q":"住客:一只空玻璃罐","w":"户口摘要:「以后可以装东西」——这句判词让它免于进入垃圾桶,一住四年。本办按语:玻璃罐的「以后」,是全人类最长的期货。"},{"q":"住客:半卷扎带","w":"户口摘要:上次修某物剩下的。它至今保持着被剪断时的形状,像一句没说完的话。编制:续篇住客——说不定哪天,又有东西需要绑。"},{"q":"住客:旧牙刷三支","w":"户口摘要:全部完成了刷牙使命,现转岗清洁缝角落役。牙刷是这个家最敬业的转业军人——编制:功勋住客,永不退编。"},{"q":"住客:您也不记得是什么的塑料件","w":"户口摘要:形状特殊,疑似某物的零件,但没人记得是哪件东西、哪年掉的。本办的处理意见:先上户口,再慢慢回忆——反正它也不着急。"}],"metrics":[["在册住客","7 件"],["清退率","0%"],["户口有效期","永久"],["本办口号","来了就是角落地主"]],"logTitle":"户口登记","logEn":"CORNER","logEmpty":"暂无登记。角落安静,住客们各守其位,户口本合着。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>替换装未拆封陈列架</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在架替换装 <b>14 袋(拆封 0 袋)</b></span>
+    <span>理论省钱 <b>每袋省 4.5 元</b></span>
+    <span>架上立场 <b>省是真的,囤也是真的</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">REFILL&nbsp;HOLD</div>
+    <h1>替换装未拆封陈列架</h1>
+    <div class="sub">「囤替换装便宜」——于是洗手液替换装囤了四袋,正装却只用完了半瓶:本架将所有未拆封替换装公开展陈,并公示一个数学事实:省下的差价,已全部转为库存。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">在架 14 袋</div><div class="status" id="status">点击抽取一袋替换装的库存档案。本架不拆封、不派用,只陈列「精打细算」的实物成果。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽取库存档案</button><button class="btn" id="moreBtn">再抽一袋</button></div><div class="metrics"><div class="m"><div class="k">在架库存</div><div class="v">14 袋</div></div><div class="m"><div class="k">理论省钱</div><div class="v">63 元</div></div><div class="m"><div class="k">库存周转</div><div class="v">预估 6 年</div></div><div class="m"><div class="k">架上格言</div><div class="v">省是真的,囤也是真的</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">库存记录</span><span class="en">REFILL</span></div><ul id="log"><li style="color:var(--muted)">暂无档案。替换装们整齐码放,队伍严整——今天也没有正装见底。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">架主备忘</div>
+    <p>替换装是人类和「未来自己」签的长期合同:现在的您精明地省下差价,未来的您负责逐袋消化——合同风险在于,未来的您可能换了口味、搬了家、甚至忘了这份合同。架主备忘想替双方说句公道话:囤错不怪您,怪促销的数学太好——「每袋省四块五」这个式子,谁算谁上头。真正的和解方式本架已经找到:别算总账,只用当用的——用完一袋,架上就轻一袋,轻到哪天架上只剩正装,这场旷日持久的省钱工程,就算光荣竣工。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">清点完毕。下一袋,等正装见底再拆。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 249 号藏品 · 本架与 178 号(购物车里「等打折」清单)同属「精打细算陈列馆」:一个等降价,一个等用完<br>架内冷知识:家庭替换装的平均消化周期是 4.8 年——省下的 63 元,按工时折算时薪约 0.4 元:经济学不承认这笔账,生活承认
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"在架 14 袋","why0":"点击抽取一袋替换装的库存档案。本架不拆封、不派用,只陈列「精打细算」的实物成果。","btnLabel":"抽取库存档案","moreLabel":"再抽一袋","pools":[{"q":"档案:洗手液替换装 ×4(同款)","w":"批注:同款四连是囤货的最高境界——第一袋用完时,后面三袋排着队接岗。按当前用量推算,库存可支撑到 2029 年,届时香味可能已停产,请提前做好怀旧准备。"},{"q":"档案:洗衣液替换装 ×2(加倍浓缩款)","w":"批注:浓缩款一袋顶两袋,等于家里同时存着四袋——本架称之为「库存套娃」。优点:超值;缺点:每回搬箱子都像在替超市打工。"},{"q":"档案:沐浴露替换装 ×1(旅行时顺手囤的)","w":"批注:旅行囤的日用品是最忠诚的库存——它记得您在异地超市比价的样子。建议保留原样,作为那次旅行的「日用纪念币」。"},{"q":"档案:洗发水替换装 ×3(换季囤货)","w":"批注:换季囤洗发水是经典操作——囤完发现换的不是季,是品牌偏好。三袋库存即刻转为「前任用品陈列」,不扔,也不启用,供着。"},{"q":"档案:洁厕灵替换装 ×2(促销凑单)","w":"批注:为了凑满减买的两袋洁厕灵,是全家最硬核的库存——它们像两位沉默的保安,守着卫生间,一守三年,从未转正。"},{"q":"档案:消毒液替换装 ×1(那年冬天囤的)","w":"批注:某年冬天的战略储备,如今仍在服役边缘——本架建议永久保留一瓶:它是一段全民历史的私人物证,比任何纪念册都具体。"},{"q":"档案:护手霜替换装 ×1(袋装,倒不出来)","w":"批注:袋装护手霜是个设计悖论:替换装省的钱,要用「剪袋、挖角、倒不净」的工时还回去。本架判定:它永远不会被替换进瓶里——它将作为「省钱的心意」长期在架。"}],"metrics":[["在架库存","14 袋"],["理论省钱","63 元"],["库存周转","预估 6 年"],["架上格言","省是真的,囤也是真的"]],"logTitle":"库存记录","logEn":"REFILL","logEmpty":"暂无档案。替换装们整齐码放,队伍严整——今天也没有正装见底。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

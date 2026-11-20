@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>盒子整套保存科</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>托管阵容 <b>18 套(设备在盒外的 11 套)</b></span>
+    <span>封存原则 <b>出厂阵容,一个不少</b></span>
+    <span>科内立场 <b>盒是设备的户口,不注销</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ORIGINAL&nbsp;BOX&nbsp;TRUST</div>
+    <h1>盒子整套保存科</h1>
+    <div class="sub">表买完了,盒没扔;鞋穿旧了,盒还在——本科对「设备已远,原盒健在」的家庭实施整套托管:盒、内衬、防潮珠、说明书,按出厂阵容原样封存。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">本科设在衣柜顶端,管辖范围与落灰半径重合。取号不等于能取出——本科只登记,不开盒。</div><div class="metrics"><div class="m"><div class="k">累计托管</div><div class="v" id="took"><span id=took>0</span> 套</div></div><div class="m"><div class="k">在世设备</div><div class="v">11 台</div></div><div class="m"><div class="k">失联设备</div><div class="v">7 台</div></div><div class="m"><div class="k">开盒次数</div><div class="v">0,科规森严</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交托管</button><button class="btn" id="callBtn">清点阵容</button></div></div><div class="log"><div class="sec-tag"><span class="zh">盒务记录</span><span class="en">TRUST</span></div><ul id="log"><li style="color:var(--muted)">暂无托管。柜顶安静,盒们整齐列队——今天也没有设备要「上市」。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">科长致辞</div>
+    <p>原盒情结是消费时代最温柔的尾巴:买的时候没想留,用的时候舍不得扔——盒子上印着型号与价钱,像设备的一张出生证。科长见过太多「设备丢了,盒还在」的家庭:盒子成了空户口,可没人舍得销。本科想说的真心话是:您留的从来不是纸盒,是「这件东西体面进入我生活」的那一瞬间——盒开着,内衬白着,一切还没开始。所以别急着清,也别急着骂自己恋物:每套原盒,都是一段生活的存根。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">清点完毕。搬家那天,盒要跟车——它们是编外家庭成员。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 244 号藏品 · 本科与 216 号(快递盒收纳学研究所)同属「纸盒户口管理局」:一个管改装,一个管原装<br>科内冷知识:原盒保存年限的中位数是 5.2 年——比同期设备的服役期还长,纸盒是家里最长寿的「体制内岗位」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"盒务","stat0":"本科设在衣柜顶端,管辖范围与落灰半径重合。取号不等于能取出——本科只登记,不开盒。","takeLabel":"提交托管","callLabel":"清点阵容","takeLines":["托管受理:手表原盒 1 套入册,含内衬、保卡、说明书与一小袋干燥剂——干燥剂已硬如鹅卵石,科方鉴定:它守住了它的一生。","托管受理:运动鞋原盒 2 套入册。备注:鞋已穿旧,盒崭新如初——盒对鞋的感情,是「您没混好,户口我先给您留着」。","托管受理:耳机原盒 1 套入册,内衬海绵完好,耳机线却已缠成鸟巢——盒内盒外,两种人生。"],"scenes":["阵容清点:18 套托管的盒,对应在世设备 11 台——7 台设备已下落不明,盒还在原地等户口注销申请。本科预计:等不到。","阵容清点:发现一套盒中盒——手机盒里叠着耳机盒,耳机盒里塞着数据线(不配套)。科方按「盒中盒传统」予以承认,不予拆解。","阵容清点终审:全柜盒体按体积从大到小排列,最顶层是冰箱级大盒。清点结论:这不是收纳,是编队——每套盒都是一支「随时可以重新上市」的队伍,可惜司令部从不检阅。"],"metrics":[["累计托管","\u003cspan id=took>0\u003c/span> 套","took"],["在世设备","11 台"],["失联设备","7 台"],["开盒次数","0,科规森严"]],"logTitle":"盒务记录","logEn":"TRUST","logEmpty":"暂无托管。柜顶安静,盒们整齐列队——今天也没有设备要「上市」。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小手巾任职资格评审台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>评审对象 <b>卫生间挂杆上的小手巾</b></span>
+    <span>晋升通道 <b>洗脸巾 → 擦手巾 → 抹布(单行道)</b></span>
+    <span>评审标准 <b>手感优先,逻辑靠边</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FACE-TOWEL&nbsp;REVIEW</div>
+    <h1>小手巾任职资格评审台</h1>
+    <div class="sub">每条毛巾的一生只有两站:先是洗脸,然后默默滑向抹布岗位——本台只做一件事:在滑落发生前,认真评审小手巾的任职资格。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述一条正在服役或即将转岗的小手巾,本台出具资格评审"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始评审</button><button class="btn" data-sample="0">新晋版</button><button class="btn" data-sample="1">资深版</button><button class="btn" data-sample="2">转岗版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">手巾资格评审书</span><span class="en">TOWEL&nbsp;REPORT</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">评审台致辞</div>
+    <p>毛巾是家里最没有怨言的用品:天天湿身,周周搓洗,从不请假,最后悄无声息地沦为抹布。本台评审了太多条毛巾后,想说的其实不是毛巾,是习惯——您对一条毛巾的态度,就是您对自己日常的态度。愿意认真洗脸的人,生活不会太潦草;连毛巾都舍不得换新的人,念旧,但也请记得:旧的留作抹布是美德,新的及时挂上杆,是疼自己。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">评审完毕。今晚洗脸,给它一次机会。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 268 号藏品 · 本台与 130 号(洗衣机袜子失踪研究院)同属「织物事务联合办公室」:一个查失踪,一个管编制<br>台内冷知识:一条毛巾从洗脸到抹布的平均任期是 22 个月——转岗那天没有任何文件,全凭您顺手的一擦
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述一条正在服役或即将转岗的小手巾,本台出具资格评审","btnLabel":"开始评审","sampleLabels":["新晋版","资深版","转岗版"],"samples":["刚买三个月,还硬挺,吸水快,但挂杆上已经排到第四位","用了两年,洗过无数次,越来越软,越来越薄,边角起了毛","脸都懒得用它擦了,现在专管擦洗手台的水渍"],"num":"评审结论:继续留用,岗位微调","verdict":"评审结论:手巾的资格与年龄无关,与「您还愿不愿意用它碰脸」直接挂钩——这是一个完全主观、完全诚实的标准。","breakdown":[["手感层","硬挺与柔软之间","新巾硬,老巾软——硬是因为纤维还站着,软是因为它被您的生活摸服帖了。硬巾擦脸像公事公办,软巾擦脸像熟人递纸:各有各的好,取决于您当天想被怎么对待。"],["吸水层","越来越懂水","毛巾的吸水性会先升后降:头一个月它还在适应您家的水质,半年后正是巅峰,两年后开始心有余而力不足——和所有职业生涯一模一样。"],["气味层","阳光与潮湿的拉锯","晒过太阳的手巾有「干净的味道」,连挂三天没见光就有「卫生间的诚实」——本台建议:别怪它,怪天气,然后把它挪到窗边。"],["岗位层","挂杆上的排位","挂杆第一位的永远是宠儿,第四位的是备胎。排位不靠资历,靠「您伸手时的第一选择」——毛巾界的地位,是手投票选出来的。"],["转岗建议","体面滑落","从洗脸到抹布,没有仪式,只有某一天您顺手用它擦了台面——单行道就此发车。本台建议:让它在转岗前,最后洗一次脸。这是毛巾界的荣退。"]],"empty":{"num":"评审暂停","verdict":"没有具体的手巾没法评审——但本台可以提前告知:您家卫生间那条「手感最熟悉」的,资格最深;那条「挂在最里面」的,已经转岗一个月了。","breakdown":[["判定","挂杆政治学","手巾的地位,由您湿手伸出的方向决定"],["建议","轮岗制","三条轮着用,每条都多活两年"]]},"reportTitle":"手巾资格评审书","reportEn":"TOWEL&nbsp;REPORT"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>
