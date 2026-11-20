@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>微信语音转文字灾难博物馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏 <b>灾难实录(原声已佚)</b></span>
+    <span>平均错字率 <b>31%(方言区加倍)</b></span>
+    <span>展陈原则 <b>只展不笑(尽力)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">VOICE-TO-TEXT&nbsp;MUSEUM</div>
+    <h1>微信语音转文字灾难博物馆</h1>
+    <div class="sub">六十秒语音转成文字,句读全碎、错字齐飞——本馆收藏历届灾难现场,观展请憋住笑。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">展厅入口</div><div class="status" id="status">本馆免费开放。请按展厅顺序观展——每个展品都是一段真实的语音,和一段更真实的误解。</div><div class="metrics"><div class="m"><div class="k">馆藏灾难</div><div class="v">9 件</div></div><div class="m"><div class="k">平均错字率</div><div class="v">31%</div></div><div class="m"><div class="k">笑声抑制</div><div class="v">失败</div></div><div class="m"><div class="k">原声抢救</div><div class="v">无</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">一号厅·方言区</button><button class="btn" id="btn1">二号厅·术语区</button><button class="btn" id="btn2">三号厅·深夜区</button></div></div><div class="log"><div class="sec-tag"><span class="zh">观展留言</span><span class="en">GUESTBOOK</span></div><ul id="log"><li style="color:var(--muted)">暂无观展。灾难们锁在展厅里,等一个憋笑的观众。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长说明</div>
+    <p>语音转文字的错,错得意外有诗意:它把方言听成了诗,把术语听成了仙。本馆收藏的不是技术的失败,是普通话与方言之间永恒的战争——而战报,每一份都好笑。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">观展完毕。下次发文字吧,亲。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 84 号藏品 · 本馆与 15 号(猫语翻译机)互补:一个翻译猫,一个翻译「人话」<br>观众留言:笑完之后,默默给妈妈打了个电话(用嘴)
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"展厅入口","stat0":"本馆免费开放。请按展厅顺序观展——每个展品都是一段真实的语音,和一段更真实的误解。","btns":[{"label":"一号厅·方言区","lines":["展品:原意「我要去逮饭,你吃了没」,转写成「我要去逮饭,你 eat 了没」——系统对方言的理解,充满国际视野。","展品:原意「这椒盐排骨好吃」,转写成「这娇艳排骨好吃」——吃个饭,吃出了诗意。","展品:原意「你冷静点」,转写成「你冷静店」——一句劝架,变成了选址建议。"],"bigs":["国际视野","诗意","选址"]},{"label":"二号厅·术语区","lines":["展品:原意「项目上线了」,转写成「项木上仙了」——打工人语料库里最玄学的一次飞升。","展品:原意「对齐一下颗粒度」,转写成「对齐一下颗粒肚」——会议从职场术语,变成了体重话题。","展品:原意「这个 bug 要闭环」,转写成「这个巴哥要闭环」——从工程问题,变成了养狗问题。"],"bigs":["飞升","颗粒肚","巴哥"]},{"label":"三号厅·深夜区","lines":["展品:原意「我睡了,你也早点睡」,转写成「我睡了,你也早点谁」——一句晚安,变成了一道哲学题。","展品:原意「我想你了」,转写成「我想你了。」(多一个句号)——标点学分析:那个句号,把深情变成了陈述。","三号厅结语:语音转文字灾难的最大受害者,是含蓄的中文——但换个角度,它替不会说情话的人,说了不少奇怪的情话。"],"bigs":["哲学题","句号学","奇怪情话"]}],"metrics":[["馆藏灾难","9 件"],["平均错字率","31%"],["笑声抑制","失败"],["原声抢救","无"]],"logTitle":"观展留言","logEn":"GUESTBOOK","logEmpty":"暂无观展。灾难们锁在展厅里,等一个憋笑的观众。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

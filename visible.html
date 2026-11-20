@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>朋友圈可见性工程师</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>设计对象 <b>一条朋友圈的可见性</b></span>
+    <span>复杂度上限 <b>企业级</b></span>
+    <span>翻车成本 <b>高(截图为证)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">VISIBILITY&nbsp;ENGINEER</div>
+    <h1>朋友圈可见性工程师</h1>
+    <div class="sub">「这条不给谁看」「仅三天可见」「家人排除工作」——发一条朋友圈需要的不是文笔,是架构设计。本工程师帮您画好权限拓扑图。</div>
+  </div>
+
+  <div class="console"><div class="input"><input id="src" type="text" placeholder="描述发布需求,例如:吐槽工作但不让同事看见" maxlength="60"></div><div class="ctrl" style="margin-top:16px"><button class="btn accent" id="goBtn">出设计方案</button><button class="btn" data-ev="吐槽工作但不让同事看见">吐槽工作</button><button class="btn" data-ev="深夜矫情但别让爸妈担心">深夜矫情</button><button class="btn" data-ev="晒娃但屏蔽前同事">晒娃</button></div><div class="output" id="out"><div class="fact" id="fact"></div><div class="deep" id="deep"></div></div></div>
+
+  
+
+  <div class="note">
+    <div class="title">工程师手记</div>
+    <p>可见性工程是人类社交边界的具象化:我们不是不想分享,是想「分对象分享」。工程师见过最复杂的一条权限设计:屏蔽 47 人、放行 12 人、仅三天可见——发的内容是「今天天气真好」。工程量与内容量的比值,就是这个时代的社交杠杆率。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">设计完毕。发,或者不发,你说了算。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 91 号藏品 · 本工程师与 42 号(步数道歉器)同属社交基建部<br>行业悲剧:最高级的可见性工程,是「发了,然后忘了屏蔽名单里有谁」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述发布需求,例如:吐槽工作但不让同事看见","btnLabel":"出设计方案","presets":[{"label":"吐槽工作","ev":"吐槽工作但不让同事看见"},{"label":"深夜矫情","ev":"深夜矫情但别让爸妈担心"},{"label":"晒娃","ev":"晒娃但屏蔽前同事"}],"defaultEv":"吐槽工作但不让同事看见","tmpl":"需求:「{ev}」\u003cbr>\u003cbr>工程方案:{a}{b}","a":["方案一:建立「工作屏蔽组」——成员:现同事、领导、HR。工程要点:新同事入职当天必须补录,漏一人,全组翻车。","方案二:定时发布 + 三天可见组合拳——深夜矫情发布于 23:50,凌晨 5 点自动进入「仅自己可见」。技术名称:悔过回滚机制。","方案三:双账号架构——大号给世界,小号给自己。工程量最大,稳定性最高:小号零好友,想给谁看都不行,绝对安全。","方案四:直接发,谁也不屏蔽——风险极高,但属于传说级操作:需要一颗「爱咋咋地」的心,全网不超过 3% 的用户持有。"],"b":["工程验收要点:发布 10 分钟内,检查屏蔽名单里的冷门好友有没有点赞——有,说明名单漏了,立即补救。","工程师忠告:可见性工程的尽头是「不想发了」。当一条朋友圈的设计工时超过内容本身,它就不值得发。","行业黑话:屏蔽前任叫「遗产隔离」;对领导开「三天前可见」叫「考古防御」。术语不多,记下就好。","终审意见:朋友圈的本意是分享,现在的功能是工程。偶尔试试方案四——你会发现,其实没那么多人在看,而「没那么多人在看」恰恰是自由。"]};
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function fill(t,ev){
+return t.replace(/\{ev\}/g,ev||"").replace(/\{a\}/g,rnd(D.a)).replace(/\{b\}/g,rnd(D.b)).replace(/\{c\}/g,rnd(D.c||D.b));
+}
+$("goBtn").addEventListener("click",function(){
+var ev=$("src").value.trim()||D.defaultEv;
+$("fact").textContent="原始素材:"+(ev||"(空)");
+$("deep").innerHTML=fill(D.tmpl,ev);
+$("out").style.display="block";
+});
+document.querySelectorAll("[data-ev]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=b.getAttribute("data-ev");$("goBtn").click();});
+});
+})();
+</script>
+</body>
+</html>

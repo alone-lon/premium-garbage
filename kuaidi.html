@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>快递驿站人间观察站</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>观察对象 <b>快递驿站 8 平方米</b></span>
+    <span>剧目类型 <b>人间轻喜剧</b></span>
+    <span>观察守则 <b>只看不评(忍不住)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PARCEL&nbsp;STATION&nbsp;OBSERVATORY</div>
+    <h1>快递驿站人间观察站</h1>
+    <div class="sub">驿站是当代社区的小剧场:「帮我拿一下」「这个是我的」「取件码多少」——本站观察货架间的众生相,全部真实,全部眼熟。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">观察员就位</div><div class="status" id="status">本站藏身货架第三层,观察一切。您取件时的每一个小动作,都已被温柔记录。</div><div class="metrics"><div class="m"><div class="k">观察场次</div><div class="v">0 场</div></div><div class="m"><div class="k">日均客流</div><div class="v">300 人次</div></div><div class="m"><div class="k">最常见台词</div><div class="v">帮我拿一下</div></div><div class="m"><div class="k">温情浓度</div><div class="v">中高</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">场景一·高峰期</button><button class="btn" id="btn1">场景二·取件百态</button><button class="btn" id="btn2">场景三·人间温情</button></div></div><div class="log"><div class="sec-tag"><span class="zh">观察实录</span><span class="en">SCENES</span></div><ul id="log"><li style="color:var(--muted)">暂无观察。驿站开门,第一个人正在找货架。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">观察站结语</div>
+    <p>驿站是当代生活最小的公共空间:8 平方米里,装着排队、误解、帮忙和「明天再来」。它没有戏剧冲突,只有日复一日的「取件码多少」——但正是这些重复,构成了一个社区的心跳。本站观察三年,结论只有一个:人类,在货架上展现出了惊人的耐心。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">观察完毕。取件码,别只截图,记一下。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 98 号藏品 · 本站与 49 号(红包收割机)都在「薅羊毛生态链」上<br>观察冷知识:驿站每天最紧张的时刻,是双十一后的第一周——货架的表情都是紧绷的
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"观察员就位","stat0":"本站藏身货架第三层,观察一切。您取件时的每一个小动作,都已被温柔记录。","btns":[{"label":"场景一·高峰期","lines":["观察实录:晚 7 点,队伍 11 人。队伍里有 3 人没找货架直接排队——他们将在最后一步才发现取件码忘了看,然后原地检索。","观察实录:一位大爷举着手机屏幕对准货架:「小伙子,码在这,你自己找,我眼神不行。」——货架区最朴素的信任交付。","观察实录:一个初中生踮脚够上层货架,够不着,左右看了看,把整个货架晃了晃——包裹们集体晃动,无人抗议。"],"bigs":["原地检索","信任交付","集体晃动"]},{"label":"场景二·取件百态","lines":["观察实录:女士取到 12 个包裹,问「能一起拍吗?」店员说能——她拿出手机拍了 12 张,逐个确认。这是责任心的最高形态。","观察实录:小哥取件,店员说「你的件上周就在了」——小哥:「我知道,我一直没想好怎么跟我妈说买了啥。」","观察实录:一个人拿着两个取件码,问了三次「这个是不是我的」——最终确认:都不是。他的包裹明天才到。"],"bigs":["逐个确认","没想好","都不是"]},{"label":"场景三·人间温情","lines":["观察实录:老人不会用取件码,出示身份证——店员看了一眼,报出「尾号 3197」,老人连声道谢。科技在这里放慢了一秒,等了等人。","观察实录:有人取完件,顺手把别人掉在地上的包裹捡回货架——没人看见,本站看见了。","观察实录:闭店前 1 分钟,一个满头汗的小哥冲进来:「2946!」——店员已经把件拿在手里等他了。每天如此。"],"bigs":["科技等了等","顺手","每日如此"]}],"metrics":[["观察场次","0 场"],["日均客流","300 人次"],["最常见台词","帮我拿一下"],["温情浓度","中高"]],"logTitle":"观察实录","logEn":"SCENES","logEmpty":"暂无观察。驿站开门,第一个人正在找货架。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
