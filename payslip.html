@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工资条解读器</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;align-items:center}
+.row input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:160px;text-align:center}
+.row input:focus{outline:none;border-color:var(--ink)}
+.row label{font-size:13px;color:var(--muted)}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.results{margin-top:30px;border-top:1px solid var(--faint);padding-top:24px;display:none;text-align:left}
+.results .headline{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:19px;font-weight:700;line-height:1.9}
+.results .headline b{color:var(--seal)}
+table{width:100%;border-collapse:collapse;margin-top:16px}
+th,td{text-align:left;padding:11px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td{font-size:14px}
+td:last-child{color:var(--muted)}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>解读对象 <b>每月最沉默的一张纸</b></span>
+    <span>术语库 <b>标准社保科目 · 全量收录</b></span>
+    <span>解读准确率 <b>工资没变,解读也不会变</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PAYSLIP&nbsp;DECODER</div>
+    <h1>工资条解读器</h1>
+    <div class="sub">输入应发工资,逐项还原它的去向:五险一金、个税、以及那个永远凑不整的实发数。</div>
+  </div>
+
+  <div class="console">
+    <div class="row">
+      <input id="gross" type="number" min="0" value="12000">
+      <label>元 · 应发(税前)</label>
+      <button class="btn accent" id="goBtn">解读这张工资条</button>
+    </div>
+    <div class="results" id="out">
+      <div class="headline" id="headline"></div>
+      <table>
+        <tr><th>科目</th><th>金额</th><th>去向解读</th></tr>
+        <tr><td>养老保险 8%</td><td id="r1">--</td><td>存在 30 年后的你那里。那位的财务状况,与你现在共用一个账户。</td></tr>
+        <tr><td>医疗保险 2%</td><td id="r2">--</td><td>换成你不常去的那家门诊的挂号费,约 N 次同类支出。</td></tr>
+        <tr><td>失业保险 0.5%</td><td id="r3">--</td><td>为「万一」投保。领它的条件苛刻到让人宁愿不失业。</td></tr>
+        <tr><td>住房公积金 12%</td><td id="r4">--</td><td>被锁进买房专属账户。不买房,它就是一段有编号的思念。</td></tr>
+        <tr><td>个人所得税</td><td id="r5">--</td><td>国家收走,用于各种你也在用的东西——这是工资条里唯一「看得见」的部分。</td></tr>
+        <tr><td>实发(税后)</td><td id="r6">--</td><td>真正到手的数字。房租属于它,外卖属于它,月底的沉默也属于它。</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="report">
+    <div class="sec-tag"><span class="zh">解读日志</span><span class="en">LOG</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无解读。工资条还躺在邮箱里,保持它一贯的低调。</li></ul>
+  </div>
+
+  <div class="note">
+    <div class="title">解读原则</div>
+    <p>工资条是最诚实也最残忍的文件:它精确记录了你的价值被拆分成多少份、各去了哪里。本机不改变任何数字——数字不归我们管——本机只负责把每个科目翻译成人话,让你在签字确认之前,知道自己同意了什么。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">解读完毕。数字不会骗人,数字只是让人沉默。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 29 号藏品 · 本机不提供涨薪服务,那属于另一个次元的工程<br>
+      比例为常见档位,各地各异——你的工资条比本机更懂你的城市
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var log=$("log");
+  function fmt(n){return n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,",")}
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  $("goBtn").addEventListener("click",function(){
+    var g=parseFloat($("gross").value)||0;
+    if(g<=0){
+      $("out").style.display="block";
+      $("headline").innerHTML="应发为 <b>0 元</b>:这张工资条不需要解读,需要的是一次谈话。";
+      record("解读 · 0 元","检测到空工资条。本机拒绝解读空气——空气没有五险一金。");
+      return;
+    }
+    var p=g*0.08,y=g*0.02,u=g*0.005,h=g*0.12;
+    var pre=g-p-y-u-h;
+    // 简化个税:起征 5000,速算粗略
+    var tb=Math.max(0,pre-5000);
+    var tax=tb<=3000?tb*0.03:(tb<=12000?tb*0.1-210:(tb<=25000?tb*0.2-1410:tb*0.25-2660));
+    tax=Math.max(0,tax);
+    var net=pre-tax;
+    $("out").style.display="block";
+    $("headline").innerHTML="应发 <b>"+fmt(g)+" 元</b>,实发 <b>"+fmt(net)+" 元</b>。中间消失的部分,都在下面找到了住处。";
+    $("r1").textContent=fmt(p)+" 元";$("r2").textContent=fmt(y)+" 元";$("r3").textContent=fmt(u)+" 元";
+    $("r4").textContent=fmt(h)+" 元";$("r5").textContent=fmt(tax)+" 元";$("r6").textContent=fmt(net)+" 元";
+    var notes=[
+      "本机点评:五险一金是工资的「分期存钱」计划,收益人是你——只是提款密码在你 60 岁那年的记忆力里。",
+      "本机点评:公积金按 12% 缴纳属于良心档。它不能取出来喝奶茶,但能在买房那天变成首付的一部分。",
+      "本机点评:个税部分,请欣赏工资条上「纳税」二字——它是你为社会上空的各位垫的一块砖。",
+      "本机点评:实发数与应发数的差距,是每个打工人都要修的一门课,课程名称:《成年人的算术》。"
+    ];
+    record("解读 · "+fmt(g)+" 元",notes[Math.min(3,Math.floor(g/10000))%notes.length]+" 实发 "+fmt(net)+" 元,已按科目归档完毕。");
+  });
+})();
+</script>
+</body>
+</html>

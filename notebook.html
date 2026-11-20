@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>正经记事本</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:26px 24px 24px;margin-top:8px}
+.console textarea{width:100%;min-height:260px;border:none;background:transparent;color:var(--ink);font:inherit;font-size:15px;line-height:2;resize:vertical}
+.console textarea:focus{outline:none}
+.statsbar{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--faint);padding-top:12px;font-size:12px;letter-spacing:.1em;color:var(--muted)}
+.ctrl{margin-top:16px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:11px 22px;font-size:14px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.banner{margin-top:18px;border:1px solid var(--seal);color:var(--seal);padding:12px 18px;font-size:13px;letter-spacing:.06em;text-align:center;display:none}
+.log{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:24%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>产品定位 <b>正经的记事本(名字即全部承诺)</b></span>
+    <span>存储介质 <b>当前页面内存</b></span>
+    <span>刷新后果 <b>格式化(不可恢复)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">A&nbsp;SERIOUS&nbsp;NOTEBOOK</div>
+    <h1>正经记事本</h1>
+    <div class="sub">一款界面极简、响应迅速、绝不卡顿的记事应用。唯一的功能缺陷以小字注明:刷新即蒸发。</div>
+  </div>
+
+  <div class="console">
+    <textarea id="ta" placeholder="开始记录。字数统计是真的,保存也是真的——保存在这一页里。"></textarea>
+    <div class="statsbar">
+      <span>字数 <b id="cc">0</b> · 行数 <b id="lc">1</b></span>
+      <span>已保存版本 <b id="vc">0</b> · 自动保存 无</span>
+    </div>
+    <div class="banner" id="banner">已保存到「本页内存」。刷新页面 = 硬盘格式化,数据随缘。</div>
+    <div class="ctrl">
+      <button class="btn accent" id="saveBtn">保存</button>
+      <button class="btn" id="saveAsBtn">另存为</button>
+      <button class="btn" id="clearBtn">清空</button>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">保存日志</span><span class="en">SAVE&nbsp;LOG</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无保存。文字们还悬在输入框里,无处落地。</li></ul>
+  </div>
+
+  <div class="log" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">存储能力一览</span><span class="en">STORAGE</span></div>
+    <table>
+      <tr><th>能力</th><th>支持情况</th></tr>
+      <tr><td>页面内保存</td><td>支持。保存到当前页面内存,刷新前绝对可靠。</td></tr>
+      <tr><td>本地存储</td><td>不支持。本机与 localStorage 无关,纯属网页界的有心人。</td></tr>
+      <tr><td>云同步</td><td>不支持。文字不上云——上云的文字,就不属于你了。</td></tr>
+      <tr><td>历史版本</td><td>不支持。本机认为每个版本的都该是对的。</td></tr>
+      <tr><td>自动保存</td><td>不支持。手动的才叫珍惜。</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">产品哲学</div>
+    <p>大多数笔记应用的问题,是想帮你记一辈子。本机正好相反:它只保证此刻——刷新之前,你写的每个字都在;刷新之后,它们去过哪里,连它们自己也不知道。想留住的,请抄在纸上;想忘记的,刷新即可。一款有始有终的记事本。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">写吧。趁这一页还没刷新。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 26 号藏品 · 字数统计功能达到工业级水准,经久耐用<br>
+      友情提示:别把密码存进来。虽然没人偷——包括本机自己,刷新后连证据都没有
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var ta=$("ta"),saved=0;
+  ta.addEventListener("input",function(){
+    var v=ta.value;
+    $("cc").textContent=v.length;
+    $("lc").textContent=v.split("\n").length;
+    $("banner").style.display="none";
+  });
+  var log=$("log");
+  function p2(x){return String(x).padStart(2,"0")}
+  function stamp(){var n=new Date();return p2(n.getHours())+":"+p2(n.getMinutes())+":"+p2(n.getSeconds())}
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+' <span style="color:var(--muted)">('+stamp()+')</span></span>';
+    log.prepend(li);
+  }
+  $("saveBtn").addEventListener("click",function(){
+    saved++;$("vc").textContent=saved;
+    $("banner").style.display="block";
+    record("SAVE #"+saved,"已保存 "+ta.value.length+" 字到页面内存。存储位置:RAM(浏览器版)。有效期:直到你手滑。");
+  });
+  $("saveAsBtn").addEventListener("click",function(){
+    saved++;$("vc").textContent=saved;
+    $("banner").style.display="block";
+    record("SAVE AS #"+saved,"另存成功。新位置:也是页面内存(本机只有一间房,另存是换了个姿势放)。");
+  });
+  $("clearBtn").addEventListener("click",function(){
+    var len=ta.value.length;
+    ta.value="";$("cc").textContent=0;$("lc").textContent=1;
+    record("CLEAR",len?("已清空。"+len+" 个字当场放生,游向内存的深处,不再回头。"):"已清空。本来就没有什么可清空的,这很禅。");
+    $("banner").style.display="none";
+  });
+})();
+</script>
+</body>
+</html>

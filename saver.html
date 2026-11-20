@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>手机省电模式</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.12em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.battery{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(44px,9vw,72px);font-weight:700;color:var(--seal);line-height:1.1}
+.bstatus{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.ctrl{margin-top:24px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.log{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>适用机型 <b>所有手机(包括没电的)</b></span>
+    <span>省电原理 <b>降低本页刷新率(粗略测算)</b></span>
+    <span>续航提升 <b>+0%(实测)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PHONE&nbsp;SAVER&nbsp;MODE</div>
+    <h1>手机省电模式</h1>
+    <div class="sub">一键进入深度省电:页面变素、动画归零、功能全关。续航提升经多轮实测,稳定为 0%。</div>
+  </div>
+
+  <div class="console">
+    <div class="battery" id="batt">省电模式:关闭</div>
+    <div class="bstatus" id="btext">当前为「全速耗电模式」——颜色鲜艳、交互流畅、毫无必要。</div>
+    <div class="metrics">
+      <div class="m"><div class="k">屏幕亮度</div><div class="v" id="m1">由你控制</div></div>
+      <div class="m"><div class="k">后台刷新</div><div class="v">本页无后台</div></div>
+      <div class="m"><div class="k">动画效果</div><div class="v" id="m3">少量</div></div>
+      <div class="m"><div class="k">实测续航</div><div class="v">+0%</div></div>
+    </div>
+    <div class="ctrl">
+      <button class="btn accent" id="onBtn">开启省电模式</button>
+      <button class="btn" id="offBtn">关闭省电模式</button>
+      <button class="btn" id="superBtn">超级省电</button>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">省电日志</span><span class="en">POWER&nbsp;LOG</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无操作。你的电池正在原地观看。</li></ul>
+  </div>
+
+  <div class="log" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">省电技术白皮书(摘要)</span><span class="en">WHITEPAPER</span></div>
+    <table>
+      <tr><th>技术</th><th>说明</th></tr>
+      <tr><td>色彩减负</td><td>页面转为素色,理论省电来源于「你盯着手机的时间变短」。</td></tr>
+      <tr><td>动画清零</td><td>关闭全部过渡效果。省电原理同上,叠加「页面没有可看的」。</td></tr>
+      <tr><td>功能精简</td><td>关闭一切功能。本页本来也没有功能,关闭动作零损耗。</td></tr>
+      <tr><td>续航实测</td><td>12 台设备、三个下午、四种握持姿势,实测提升 +0%。数据可靠。</td></tr>
+      <tr><td>推荐用法</td><td>放下手机。这是唯一真正省电的操作,本页只负责让你接近这一步。</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">研发说明</div>
+    <p>市面上所有省电模式都在撒谎——它们只是把卡顿包装成续航。本机坚持诚实:省电模式开启后,你获得的是一段彻底安静的页面,它不耗电的唯一原因,是你很快会退出它。退出动作本身,就是最大的省电。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">省电完毕。真正省下的电,是你没刷的那些短视频。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 28 号藏品 · 超级省电模式与普通模式的区别:名字<br>
+      充电建议:插上充电线,这是全系列唯一被验证有效的操作
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var mode=0; // 0 off, 1 on, 2 super
+  var log=$("log");
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  function apply(m){
+    mode=m;
+    var b=document.body;
+    if(m===0){
+      $("batt").textContent="省电模式:关闭";
+      $("btext").textContent="当前为「全速耗电模式」——颜色鲜艳、交互流畅、毫无必要。";
+      $("m1").textContent="由你控制";$("m3").textContent="少量";
+      b.style.background="";b.style.color="";
+      record("MODE OFF","已恢复全速耗电。颜色回来了,快乐也回来了,电量的心情未知。");
+    }else if(m===1){
+      $("batt").textContent="省电模式:开启";
+      $("btext").textContent="省电模式运行中。页面已素,动画已停。实测续航提升 +0%,观感提升 -40%。";
+      $("m1").textContent="已降低(心理上)";$("m3").textContent="已关闭";
+      b.style.background="#EFEAE0";b.style.color="#3A3730";
+      record("MODE ON","省电模式已开启。所有省电措施均已执行,电量曲线保持它一贯的尊严。");
+    }else{
+      $("batt").textContent="超级省电:启用";
+      $("btext").textContent="超级省电运行中。页面已极简到只剩一句话。建议:现在放下手机,达成真正的 +100% 省电。";
+      $("m1").textContent="不重要了";$("m3").textContent="无";
+      b.style.background="#E7E2D6";b.style.color="#2A2823";
+      record("SUPER MODE","超级省电已启用。本模式与普通模式的唯一区别:更敢于承认没用。");
+    }
+  }
+  $("onBtn").addEventListener("click",function(){apply(1)});
+  $("offBtn").addEventListener("click",function(){apply(0)});
+  $("superBtn").addEventListener("click",function(){apply(2)});
+})();
+</script>
+</body>
+</html>

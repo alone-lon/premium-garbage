@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>365 天天气预报 · 今天凑合</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.1em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.console .day{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.08em}
+.console .wx{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(40px,8vw,64px);font-weight:700;color:var(--seal);margin-top:10px}
+.console .detail{font-size:14px;color:var(--muted);margin-top:8px;min-height:2.2em}
+.ctrl{margin-top:24px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:28px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.log{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>预报范围 <b>全球任一地点(精度:凑合)</b></span>
+    <span>数据来源 <b>编的,但很认真</b></span>
+    <span>更新频率 <b>你查几次更几次</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">365-DAY&nbsp;WEATHER&nbsp;·&nbsp;TODAY&nbsp;WILL&nbsp;DO</div>
+    <h1>365 天天气预报</h1>
+    <div class="sub">输入任意日期,获得权威天气:全年统一「今天凑合」。不测降水概率——下雨与否,由天和你的伞决定。</div>
+  </div>
+
+  <div class="console">
+    <div class="day" id="dayLabel">今日</div>
+    <div class="wx" id="wx">凑合</div>
+    <div class="detail" id="detail">体感温度:介于冷和不冷之间 · 穿衣建议:穿点 · 出行建议:出门</div>
+    <div class="metrics">
+      <div class="m"><div class="k">降水概率</div><div class="v">有或没有</div></div>
+      <div class="m"><div class="k">温差</div><div class="v">早晚比中午凉</div></div>
+      <div class="m"><div class="k">空气质量</div><div class="v">呼吸级</div></div>
+      <div class="m"><div class="k">紫外线</div><div class="v">白天有</div></div>
+    </div>
+    <div class="ctrl">
+      <input id="dateIn" type="date" style="border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:200px">
+      <button class="btn accent" id="goBtn">查询天气</button>
+      <button class="btn" id="rainBtn">追加降雨</button>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">预报日志</span><span class="en">FORECAST&nbsp;LOG</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无查询。天色尚不明朗,也不打算明朗。</li></ul>
+  </div>
+
+  <div class="note">
+    <div class="title">预报模型说明</div>
+    <p>主流天气预报追求准确率,本机追求稳定性:无论你查 2026 年哪一天,结果都是「今天凑合」——这是唯一一个永远不会被证伪的预报。被雨天淋过的都会承认:凑合,是对天气最诚实的评价。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">预报完毕。带伞,天知道你会不会用上。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 21 号藏品 · 本台与老天爷无业务往来,纯属单方面发布<br>
+      特别鸣谢:所有「局部地区」——它们永远在下雨,永远不在你身边
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var details=[
+    "体感温度:介于冷和不冷之间 · 穿衣建议:穿点 · 出行建议:出门",
+    "体感温度:不冷不热,就是不舒服 · 穿衣建议:随便,反正会后悔 · 出行建议:早去早回",
+    "体感温度:屋里屋外两个季节 · 穿衣建议:洋葱式,一层层赌 · 出行建议:看心情",
+    "体感温度:风比预报有诚意 · 穿衣建议:压得住风的那种 · 出行建议:扶稳"
+  ];
+  var logs=[
+    "已发布。本预报与实际天气如有雷同,纯属老天爷抄我们的。",
+    "已发布。误差范围:全天。建议出门前亲自看一眼天,那是唯一的官方渠道。",
+    "已发布。该日期太远,采用超长期模型:凑合,且大概率凑合。",
+    "已发布。注意:查询不影响天气。天不看预报,天只看心情。"
+  ];
+  var n=0;
+  var log=$("log");
+  function p2(x){return String(x).padStart(2,"0")}
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var now=new Date();
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+' <span style="color:var(--muted)">('+p2(now.getHours())+':'+p2(now.getMinutes())+':'+p2(now.getSeconds())+')</span></span>';
+    log.prepend(li);
+  }
+  $("goBtn").addEventListener("click",function(){
+    var v=$("dateIn").value;
+    var label="今日";
+    if(v){
+      var d=new Date(v+"T00:00:00");
+      if(!isNaN(d.getTime())){
+        var diff=Math.round((d-new Date(new Date().toDateString()))/86400000);
+        label=diff===0?"今日":(diff===1?"明日":(diff>1?"未来第 "+diff+" 天":Math.abs(diff)+" 天前"));
+      }
+    }
+    $("dayLabel").textContent=label;
+    $("wx").textContent="凑合";
+    $("detail").textContent=details[n%details.length];
+    record("预报 · "+label,logs[n%logs.length]);
+    n++;
+  });
+  $("rainBtn").addEventListener("click",function(){
+    
+    $("detail").textContent="体感温度:偏湿 · 穿衣建议:防水的 · 出行建议:伞——现在听劝了?";
+    record("人工降雨","降雨申请已批准(仅限本页)。现实中的雨仍由云负责,本台不越权。");
+  });
+})();
+</script>
+</body>
+</html>

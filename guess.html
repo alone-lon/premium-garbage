@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>猜数字 · 高级版</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.console .reply{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(34px,7vw,54px);font-weight:700;color:var(--seal);min-height:1.3em;line-height:1.3}
+.console .foot{font-size:14px;color:var(--muted);margin-top:8px;min-height:2.2em}
+.ctrl{margin-top:20px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.ctrl input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:180px;text-align:center}
+.ctrl input:focus{outline:none;border-color:var(--ink)}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.log{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>答案范围 <b>任意实数(含负数与小数)</b></span>
+    <span>答案公开状态 <b>不公开</b></span>
+    <span>判定精度 <b>绝对精确,零误判</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">GUESS&nbsp;THE&nbsp;NUMBER&nbsp;·&nbsp;PRO</div>
+    <h1>猜数字 · 高级版</h1>
+    <div class="sub">经典猜数字游戏的高级形态:范围不限、次数不限、提示管够。判定环节经过本系列 17 号检测仪认证。</div>
+  </div>
+
+  <div class="console">
+    <div class="reply" id="reply">就绪</div>
+    <div class="foot" id="foot">答案已经想好了(内部保有,不公开)。输入任何数字,立即获得权威判定。</div>
+    <div class="ctrl">
+      <input id="guess" type="text" placeholder="输入你的猜测">
+      <button class="btn accent" id="goBtn">判定</button>
+      <button class="btn" id="hintBtn">要个提示</button>
+    </div>
+    <div class="metrics">
+      <div class="m"><div class="k">已猜次数</div><div class="v" id="tries">0</div></div>
+      <div class="m"><div class="k">正确率</div><div class="v" id="acc">--%</div></div>
+      <div class="m"><div class="k">剩余次数</div><div class="v">无限</div></div>
+      <div class="m"><div class="k">已获得提示</div><div class="v" id="hints">0 条</div></div>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">判定记录</span><span class="en">RECORDS</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无猜测。答案安静地待在一个你没有输入的地方。</li></ul>
+  </div>
+
+  <div class="note">
+    <div class="title">判定机制</div>
+    <p>本机采用「零知识判定」架构:答案不落盘、不比对、不外泄——严格来说,连本机自己都不知道答案是多少。因此任何输入都无法被判定为正确,这在数学上无可指摘。你永远「差一点」,而差的那一点,恰好是全部。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">再猜一次?反正它还是会说「不对」。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 27 号藏品 · 高级之处:范围无界、次数无界、正确无期<br>
+      <!-- 答案不在这里 -->
+      温馨提示:查看网页源码也找不到答案——这句话是真的,不信可以试试,浪费时间也算互动
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var tries=0,hints=0;
+  var log=$("log");
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  function wrongEcho(v){
+    var list=[
+      "不对。",
+      "不对。离答案很近了(该说法对每次猜测均成立)。",
+      "不对。换一个数试试——不换也行,反正结果我已经想好了。",
+      "不对。这个数很有个性,可惜答案更有个性。",
+      "不对。你的坚持令人敬佩,答案不为所动。"
+    ];
+    return list[tries%list.length];
+  }
+  $("goBtn").addEventListener("click",function(){
+    var raw=$("guess").value.trim();
+    tries++;
+    $("tries").textContent=tries;
+    $("acc").textContent="0%";
+    if(raw===""){
+      $("reply").textContent="不对";
+      $("foot").textContent="空白也判定过了:不对。空白虽然抽象,但没有抽象到正确的程度。";
+      record("第 "+tries+" 猜","输入:空白 → 判定:不对。空白不在答案的范围内(范围内有什么,不公开)。");
+    }else if(!/^-?\d+(\.\d+)?$/.test(raw)){
+      $("reply").textContent="不对";
+      $("foot").textContent="「"+raw+"」不是数字,但本机秉持包容原则,照样判定:不对。";
+      record("第 "+tries+" 猜","输入:"+raw.replace(/</g,"&lt;")+"(非数字) → 判定:不对。连类型检查都省了。");
+    }else{
+      if(raw==="404"){
+        $("reply").textContent="不对";
+        $("foot").textContent="该数字与本机编号撞号,有亲近感,但仍不对。本机拒绝解释为什么有亲近感。";
+        record("第 "+tries+" 猜","输入:404 → 判定:不对(但被记录为「有缘」)。");
+      }else{
+        $("reply").textContent="不对";
+        $("foot").textContent=wrongEcho(raw);
+        record("第 "+tries+" 猜","输入:"+raw+" → 判定:不对。置信度 100%,本机从不误判「不对」。");
+      }
+    }
+    $("guess").value="";
+    $("guess").focus();
+  });
+  $("guess").addEventListener("keydown",function(e){ if(e.key==="Enter") $("goBtn").click(); });
+  $("hintBtn").addEventListener("click",function(){
+    hints++;
+    $("hints").textContent=hints+" 条";
+    var hs=[
+      "提示 1:答案是一个数。(该提示的置信度为 100%,是本机开业以来最诚实的一句话)",
+      "提示 2:答案不是你刚才输的那个。(每次适用,常换常新)",
+      "提示 3:答案不随你的猜测变化。(答案很专一,专一到没法验证)",
+      "提示 4:继续猜。正确率目前 0%,距离 100% 还差一次奇迹。",
+      "提示 5:提示已给完。后面的提示都是这条的复述。"
+    ];
+    record("提示 #"+hints,hs[Math.min(hints-1,4)]);
+    $("foot").textContent="已发放第 "+hints+" 条提示。提示不缩小答案范围,只扩大你的执着。";
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会议时长换算器 · 人生折旧</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.12em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;align-items:center}
+.row input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:90px;text-align:center}
+.row input:focus{outline:none;border-color:var(--ink)}
+.row label{font-size:13px;color:var(--muted)}
+.ctrl{margin-top:18px}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.results{margin-top:30px;border-top:1px solid var(--faint);padding-top:24px;display:none;text-align:left}
+.results .headline{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;line-height:1.8}
+.results .headline b{color:var(--seal)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:20px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>换算对象 <b>「简单同步一下」的时间成本</b></span>
+    <span>汇率基准 <b>1 场会 = 多集剧</b></span>
+    <span>参会人数 <b>建议 1 人(你),其余按沉默折算</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">MEETING&nbsp;TIME&nbsp;EXCHANGE</div>
+    <h1>会议时长换算器</h1>
+    <div class="sub">输入会议人数与时长,按官方汇率折算成你本可以拥有的东西:剧集、睡眠、专注、人生。</div>
+  </div>
+
+  <div class="console">
+    <div class="row">
+      <input id="people" type="number" min="1" max="999" value="8">
+      <label>人</label>
+      <input id="hours" type="number" min="0" max="24" step="0.5" value="1.5">
+      <label>小时</label>
+      <button class="btn accent" id="goBtn">开始折算</button>
+    </div>
+    <div class="results" id="out">
+      <div class="headline" id="headline"></div>
+      <div class="metrics">
+        <div class="m"><div class="k">总人力消耗</div><div class="v" id="mh">--</div></div>
+        <div class="m"><div class="k">折合剧集</div><div class="v" id="tv">--</div></div>
+        <div class="m"><div class="k">折合睡眠</div><div class="v" id="sleep">--</div></div>
+        <div class="m"><div class="k">产出决议</div><div class="v">0<small> 项(惯例)</small></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="report">
+    <div class="sec-tag"><span class="zh">折算日志</span><span class="en">LOG</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无折算。日历上的「同步会」安静地等着被折价。</li></ul>
+  </div>
+
+  <div class="report" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">会议类型折价率速查</span><span class="en">RATES</span></div>
+    <table>
+      <tr><th>会议类型</th><th>折价率</th><th>备注</th></tr>
+      <tr><td>同步会</td><td>1:1</td><td>同步的内容,一份文档就够;文档没写,会也说不清</td></tr>
+      <tr><td>评审会</td><td>1:1.2</td><td>溢价部分为「再对齐一下」,持续约 20 分钟</td></tr>
+      <tr><td>头脑风暴</td><td>1:1.5</td><td>风暴 10 分钟,收尾 40 分钟,纪要发给没来的人</td></tr>
+      <tr><td>复盘会</td><td>1:2</td><td>复的是上次开会没完成的事,顺便定下次开会</td></tr>
+      <tr><td>周会</td><td>复利计息</td><td>每周固定产生,利息滚入下周的周会</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">折算原理</div>
+    <p>会议的成本从来不在会议室里,而在所有参会人「本可以做的事」里。本机不反对开会——有些会确实值得开——它只是坚持把机会成本摆上台面:当你花两个小时和八个人确认一个标题,标题没变,人生变了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">折算完毕。这个会,本来一封邮件就能结束。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 23 号藏品 · 汇率由本台单方面制定,不接受讨价还价<br>
+      温馨提示:把折算结果发进会议群,可能获得下一次折算素材
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var log=$("log");
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  $("goBtn").addEventListener("click",function(){
+    var p=Math.max(1,parseInt($("people").value)||1);
+    var h=Math.max(0,parseFloat($("hours").value)||0);
+    var manH=(p*h);
+    var eps=manH*45/60;      // 每人每小时 45 分钟为个人专注当量
+    var sleep=manH/8;        // 8 小时 = 1 晚
+    $("out").style.display="block";
+    $("headline").innerHTML=p+" 人 × "+h+" 小时 = <b>"+manH.toFixed(1)+" 人时</b>的会议投入,相当于全员聚在一起,共同确认了一件事:下次再约个会。";
+    $("mh").innerHTML=manH.toFixed(1)+"<small> 人时</small>";
+    $("tv").innerHTML=eps.toFixed(1)+"<small> 集</small>";
+    $("sleep").innerHTML=sleep.toFixed(1)+"<small> 晚</small>";
+    var verdicts=[
+      "本台点评:该会议折价率已达 1:1,建议将其中一半改为沉默,效果相同。",
+      "本台点评:人数超过 7 人时,有效发言自动集中于 2 人,其余为气氛组,可按气氛价折算。",
+      "本台点评:该时长已跨过「站会」与「坐会」的界线,建议中场供应点心,至少点心有产出。",
+      "本台点评:折算出的睡眠晚数已超过多数城市的午休配额,请酌情透支,后果自负。"
+    ];
+    record("折算 · "+manH.toFixed(1)+" 人时",verdicts[Math.min(3,Math.floor(manH/8))%verdicts.length]+" "+verdicts[(Math.floor(manH/8)+1)%verdicts.length]);
+  });
+})();
+</script>
+</body>
+</html>

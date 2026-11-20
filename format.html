@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>防格式化生产线</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.console input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.console input:focus{outline:none;border-color:var(--ink)}
+.ctrl{margin-top:16px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .before{font-size:13px;color:var(--muted);letter-spacing:.06em;word-break:break-all}
+.output .after{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:18px;line-height:2;margin-top:12px;word-break:break-all}
+.log{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:24%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>生产对象 <b>任何输入(来者不拒)</b></span>
+    <span>质检标准 <b>越不像话,越合格</b></span>
+    <span>格式化残留 <b>0%(本厂拒绝干净)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">UN-FORMATTED&nbsp;OUTPUT&nbsp;LINE</div>
+    <h1>防格式化生产线</h1>
+    <div class="sub">把你的名字交给本厂,获得一个无法被任何表格格式化的形状:全角空格、不可见字符、零宽连接,全部安排。</div>
+  </div>
+
+  <div class="console">
+    <input id="src" type="text" placeholder="输入会被格式化的内容:姓名、口令、编号" maxlength="20">
+    <div class="ctrl">
+      <button class="btn accent" id="goBtn">启动生产线</button>
+      <button class="btn" id="demoBtn">示例 · 张三</button>
+    </div>
+    <div class="output" id="out">
+      <div class="before" id="before"></div>
+      <div class="after" id="after"></div>
+      <div class="ctrl" style="margin-top:16px">
+        <button class="btn" id="copyBtn">复制成品</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">生产记录</span><span class="en">PRODUCTION</span></div>
+    <ul id="log"><li style="color:var(--muted)">生产线停机中。等一个会被 Excel 拆碎的名字上门。</li></ul>
+  </div>
+
+  <div class="log" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">格式化受害者名录(节选)</span><span class="en">VICTIMS</span></div>
+    <table>
+      <tr><th>受害者</th><th>遭遇</th></tr>
+      <tr><td>姓名「陆垚垚」</td><td>生僻字直接变「?」。全家福变成全家问号。</td></tr>
+      <tr><td>编号 001</td><td>被自动转成 1。头两个 0 当场殉职,序列感荡然无存。</td></tr>
+      <tr><td>日期 2026-01-07</td><td>变成「Jan-7」。年份还在,尊严没了。</td></tr>
+      <tr><td>长数字 6222020</td><td>科学计数法接管一切:「6.22202E+6」。卡号第一次觉得人间不值得。</td></tr>
+      <tr><td>口令「1234 5678」</td><td>中间空格被吃掉。口令从两个词,变成一个通畅但错误的词。</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">厂志</div>
+    <p>每一份数据都有权保持它原本的样子——头部的 0、中间的空格、看不懂的生僻字,都是它的骨肉。本厂业务,是在数据进表格之前,给它穿上一层「不可见」的铠甲:格式看得见你,拆不动你。副作用是,人眼也看不见这层铠甲——但格式看得见,这就够了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">从此,你的名字连 Excel 都拆不散。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 32 号藏品 · 复制成品粘贴进任何表格,都是一次成功的越狱<br>
+      使用提示:成品看起来一模一样——这正是重点。注意别自己也认不出来
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var log=$("log");
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  function armor(ch){
+    // 在每个字符之间插入零宽字符,并把首字符前加全角空格,尾部加不可见连接符
+    var ZWJ="\u200B";
+    var chars=ch.split("").join(ZWJ);
+    return "\u3000"+chars+ZWJ;
+  }
+  var last="";
+  function produce(){
+    var v=$("src").value.trim();
+    if(!v){ record("空投","输入为空。生产线拒绝生产「无」——那是 3 号藏品(什么都没有博物馆)的业务。"); return; }
+    var out=armor(v);
+    $("before").textContent="原始数据(会被格式化):"+v;
+    $("after").textContent="防格式化成品(肉眼看不出区别):"+out;
+    $("out").style.display="block";
+    last=out;
+    record("生产 · "+v.length+" 字符","成品已下线。内含 "+(v.length+1)+" 个零宽字符与 1 个全角空格,Excel 见了会沉默,自动补零见了会绕路。");
+  }
+  $("goBtn").addEventListener("click",produce);
+  $("demoBtn").addEventListener("click",function(){ $("src").value="张三"; produce(); });
+  $("copyBtn").addEventListener("click",function(){
+    if(!last) return;
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(last).then(function(){
+        record("出库","成品已复制。去粘贴吧——它将原样穿过任何表格,一个字节都不少。");
+      },function(){
+        record("出库","复制被浏览器拦下了。铠甲太隐形,连剪贴板都要确认一下,请手动选中复制。");
+      });
+    }else{
+      record("出库","当前环境不支持一键复制。请手动选中「成品」区域复制,效果完全相同。");
+    }
+  });
+})();
+</script>
+</body>
+</html>

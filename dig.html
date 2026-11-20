@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>深挖坑工程 · 挖了再说</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.depth{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(44px,9vw,72px);font-weight:700;color:var(--seal);line-height:1.1}
+.depth small{font-size:.4em;color:var(--muted);font-weight:400}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.ctrl{margin-top:24px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.log{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>工程性质 <b>基建(用途后补)</b></span>
+    <span>挖掘深度 <b>持续加深,暂无停止计划</b></span>
+    <span>填回概率 <b>0%(填回去也是土,何必)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DEEP&nbsp;DIGGING&nbsp;PROJECT</div>
+    <h1>深挖坑工程</h1>
+    <div class="sub">一个只负责「向下」的严肃工程:没有图纸、没有用途、没有完工日期,只有深度——和不断加深的深度。</div>
+  </div>
+
+  <div class="console">
+    <div class="depth"><span id="dnum">0.00</span><small> 米 · 当前坑深</small></div>
+    <div class="status" id="dstatus">工程尚未开工。土地平整,岁月静好——这种状态对坑来说很陌生。</div>
+    <div class="metrics">
+      <div class="m"><div class="k">挖掘次数</div><div class="v" id="digs">0</div></div>
+      <div class="m"><div class="k">出土方量</div><div class="v" id="soil">0 m³</div></div>
+      <div class="m"><div class="k">用途</div><div class="v">待定(先挖后想)</div></div>
+      <div class="m"><div class="k">回填计划</div><div class="v">无</div></div>
+    </div>
+    <div class="ctrl">
+      <button class="btn accent" id="digBtn">挖一铲</button>
+      <button class="btn" id="deepBtn">连挖十铲</button>
+      <button class="btn" id="whyBtn">思考用途</button>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">工程日志</span><span class="en">SITE&nbsp;LOG</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无施工。这里还没有坑,只有一片可能性。</li></ul>
+  </div>
+
+  <div class="log" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">工程里程碑(规划)</span><span class="en">MILESTONES</span></div>
+    <table>
+      <tr><th>深度</th><th>里程碑</th></tr>
+      <tr><td>1 米</td><td>超过一般宠物掩埋玩具的深度。正式具备「坑」的法律地位。</td></tr>
+      <tr><td>5 米</td><td>超过普通树根。开始有路人驻足,问「这是要干啥」。</td></tr>
+      <tr><td>20 米</td><td>形成回声。任何问题丢进去,都会得到一个更空洞的自己。</td></tr>
+      <tr><td>100 米</td><td>气温恒定。坑内不再关心地面上的季节与热点。</td></tr>
+      <tr><td>更深处</td><td>未规划。工程精神:先到达,再定义。</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">工程宣言</div>
+    <p>人类的所有工程,都是先有用途再挖坑;只有本工程反其道而行——先挖,用途在路上。这不是低效,这是对「目的」二字的祛魅:坑的意义不在深处,在挖掘本身。每一铲下去,世界就多一个确定的凹痕,而凹痕从不需要理由。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">挖到地心之前,先挖到明天。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 30 号藏品 · 出土的土堆在旁边,构成了本工程的全部副产品<br>
+      安全提示:坑是真的坑,别真的跳——本工程只挖坑,不负责善后
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var depth=0,digs=0;
+  var log=$("log");
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  function milestone(d){
+    if(d>=1&&d-0.2<1) return "跨过 1 米:正式取得「坑」的资质,路人开始投来尊重的目光。";
+    if(d>=5&&d-0.2<5) return "跨过 5 米:超过普通树根,有路人问「这是要干啥」,无人回答,继续挖。";
+    if(d>=20&&d-0.2<20) return "跨过 20 米:坑内出现回声。试着问了一句「为什么挖」,回声比问题更空洞。";
+    if(d>=100&&d-0.2<100) return "跨过 100 米:坑内气温恒定。从此不关心地面上的季节、热点与 KPI。";
+    return null;
+  }
+  function dig(n){
+    for(var i=0;i<n;i++){
+      digs++;
+      depth+=0.15+Math.random()*0.12;
+    }
+    $("dnum").textContent=depth.toFixed(2);
+    $("digs").textContent=digs;
+    $("soil").textContent=(depth*2.5).toFixed(1)+" m³";
+    var st=[
+      "已挖 "+digs+" 铲。坑壁整齐,土方在旁边堆成小山,山和坑是一对双胞胎。",
+      "已挖 "+digs+" 铲。深度持续增加,用途持续沉默,工程精神持续在线。",
+      "已挖 "+digs+" 铲。这个深度已经让「填回去」变成一个更大的工程,只好继续挖。",
+      "已挖 "+digs+" 铲。挖掘已成为习惯,坑已成为风景,风景不需要意义。"
+    ];
+    $("dstatus").textContent=st[Math.min(3,Math.floor(depth/3))];
+    var ms=milestone(depth);
+    if(ms) record("里程碑",ms);
+    else record("施工 · 第 "+digs+" 铲","当前深度 "+depth.toFixed(2)+" 米。离上一个里程碑越来越远,离下一个越来越近。");
+  }
+  $("digBtn").addEventListener("click",function(){dig(1)});
+  $("deepBtn").addEventListener("click",function(){dig(10)});
+  $("whyBtn").addEventListener("click",function(){
+    record("工程会议","第 "+(Math.floor(depth)+1)+" 次用途评审会结论:先挖着,用途下一会上再议。该结论适用于历次会议。");
+    $("dstatus").textContent="用途评审完毕:继续挖。每一次「再想想」,坑都会先深一点。";
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>今日份自我怀疑</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.quote{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(22px,5vw,32px);font-weight:700;line-height:1.8;min-height:3.6em}
+.qwhy{font-size:13px;color:var(--muted);margin-top:12px;min-height:2.2em}
+.ctrl{margin-top:20px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.log{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>供应内容 <b>高质量自我怀疑(每日现磨)</b></span>
+    <span>引用来源 <b>你昨天说过的话(授权:默认)</b></span>
+    <span>对抗方案 <b>无。怀疑不接受反驳</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DAILY&nbsp;SELF&nbsp;DOUBT</div>
+    <h1>今日份自我怀疑</h1>
+    <div class="sub">每天一句,精准踩在你的痒处。句子全部取材于人类的日常言论——毕竟最好的怀疑,都来自最普通的时刻。</div>
+  </div>
+
+  <div class="console">
+    <div class="quote" id="q">点击按钮,领取今日份。</div>
+    <div class="qwhy" id="why">每次一句,不重叠、不重复、不留情面——也不留疤,反正明天的怀疑会盖住今天的。</div>
+    <div class="ctrl">
+      <button class="btn accent" id="goBtn">领取今日份</button>
+      <button class="btn" id="moreBtn">今天的份量不够</button>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">领取记录</span><span class="en">INTAKE</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无领取。今天的你暂时完整,请珍惜。</li></ul>
+  </div>
+
+  <div class="log" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">怀疑浓度分级</span><span class="en">GRADES</span></div>
+    <table>
+      <tr><th>级别</th><th>典型句式</th><th>影响时长</th></tr>
+      <tr><td>轻度</td><td>「刚才那句话,是不是不该说?」</td><td>30 分钟</td></tr>
+      <tr><td>中度</td><td>「别人三分钟做完的事,我做了三天。」</td><td>半天</td></tr>
+      <tr><td>重度</td><td>「我此刻做的所有事,五年后还重要吗?」</td><td>一个周末</td></tr>
+      <tr><td>特级</td><td>「五年后的我,会感谢现在这个连五分钟后都决定不了的我吗?」</td><td>一个月起</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">研发动机</div>
+    <p>市面上全是教你自信的产品,没人管另一群人——他们不缺鼓励,缺的是一份有质感的怀疑,来确认自己的敏感没有白费。本机郑重填补这个市场空白:怀疑全部手工打磨,保证句句合身。怀疑完记得吃饭,本机管不了后面的部分。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">领完了?现在你可以开始怀疑领得对不对。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 31 号藏品 · 本机不提供解药——解药在朋友那里,一顿饭就生效<br>
+      免责声明:所有怀疑均无事实依据,杀伤力全靠你自己补完
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var pool=[
+    {q:"你昨天说「没问题」的时候,真的想清楚了吗?",w:"取材:昨天 18:47 的你。"},
+    {q:"那个你研究了三小时的问题,别人可能根本没注意到它存在。",w:"取材:认真,以及认真没有观众。"},
+    {q:"你的待办清单上,最早的一条,是什么时候写的?",w:"取材:清单本身。清单不会提醒你它已经过期了。"},
+    {q:"你收藏的那些「以后看」的文章,刚刚又老化了一天。",w:"取材:收藏夹。它是坟场,不是书架。"},
+    {q:"今天说「改天聚聚」的那些人,上一次「改天」是什么时候?",w:"取材:社交辞令的折旧率。"},
+    {q:"你在意的那句评价,对方可能说完就忘了。你在替别人的遗忘打工。",w:"取材:记忆的不对称性。"},
+    {q:"你确定的那些事里,有几件是「因为大家都这么说」?",w:"取材:共识。共识很省力,也很可疑。"},
+    {q:"上周的自己如果看到本周的你,会放心吗?会问什么?",w:"取材:时间差带来的审计权。"},
+    {q:"你「随便」点的那顿饭,和你「想了很久」点的那顿,区别大吗?",w:"取材:决策通胀。很多决策,配不上它消耗的你。"},
+    {q:"睡前刷手机的那一小时,是你在休息,还是手机在处理你?",w:"取材:电量曲线。它比你诚实。"},
+    {q:"你的努力里,有多少是在靠近目标,有多少是在躲避「停下来想想目标」?",w:"取材:忙碌的舒适区。"},
+    {q:"如果今天没有任何记录,你做的哪些事会留下痕迹?",w:"取材:存在感。以及存在感对记录的依赖。"}
+  ];
+  var used=[],n=0;
+  var log=$("log");
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  function serve(){
+    if(used.length>=pool.length){ used=[]; record("补给","本轮库存已领完,已自动补货。怀疑是可再生资源,本机负责可持续发展。"); }
+    var idx;
+    do{ idx=Math.floor(Math.random()*pool.length); }while(used.indexOf(idx)>-1);
+    used.push(idx);
+    $("q").textContent="「"+pool[idx].q+"」";
+    $("why").textContent=pool[idx].w+" 本句为第 "+(++n)+" 份,保质期:到你想通为止(通常次日作废,自动更新)。";
+    record("领取 #"+n,"已交付今日份怀疑。请在合适场合服用——工位、深夜、澡堂,疗效相同。");
+  }
+  $("goBtn").addEventListener("click",serve);
+  $("moreBtn").addEventListener("click",function(){
+    serve();
+    record("加量","已追加一份。温馨提示:怀疑无上限,一天两份属于超量服用,后果是睡前的胡思乱想时间变长。");
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>二维码生成器(扫不出版)</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.12em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.console input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.console input:focus{outline:none;border-color:var(--ink)}
+.ctrl{margin-top:16px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.qrbox{margin:28px auto 0;width:240px;height:240px;border:1px solid var(--ink);padding:14px;background:#fff;display:none}
+.qrbox canvas{width:100%;height:100%;image-rendering:pixelated}
+.qrnote{font-size:13px;color:var(--muted);margin-top:14px;display:none}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:24%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>生成标准 <b>ISO 18004(艺术化偏离)</b></span>
+    <span>扫码成功率 <b>0% · 反复验证</b></span>
+    <span>容错等级 <b>L·低到没有</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">UNSCANNABLE&nbsp;QR&nbsp;GENERATOR</div>
+    <h1>二维码生成器</h1>
+    <div class="sub">输入任何内容,生成一枚构图严谨、黑白分明、极具二维码气质的图案。唯一的缺席项:信息。</div>
+  </div>
+
+  <div class="console">
+    <input id="src" type="text" placeholder="输入要编码的内容(将不会被编码)" maxlength="80">
+    <div class="ctrl">
+      <button class="btn accent" id="goBtn">生成二维码</button>
+      <button class="btn" id="retryBtn">换个构图</button>
+    </div>
+    <div class="qrbox" id="qrbox"><canvas id="cv" width="480" height="480"></canvas></div>
+    <div class="qrnote" id="qrnote">生成完毕。已用三台手机、一台平板、一只手表交叉验证:均提示「无效二维码」。稳定性业界领先。</div>
+  </div>
+
+  <div class="report">
+    <div class="sec-tag"><span class="zh">生成日志</span><span class="en">LOG</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无生成。像素们还在排队,等待一次不会被扫出的命运。</li></ul>
+  </div>
+
+  <div class="report" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">与技术二维码对比</span><span class="en">SPEC</span></div>
+    <table>
+      <tr><th>指标</th><th>技术二维码</th><th>本机出品</th></tr>
+      <tr><td>外观</td><td>黑白方块,观感一般</td><td>黑白方块,构图更随机,更随性</td></tr>
+      <tr><td>能扫出</td><td>能</td><td>不能(核心卖点)</td></tr>
+      <tr><td>信息泄露</td><td>有风险</td><td>绝对安全:本来就没放信息</td></tr>
+      <tr><td>三个角上的方块</td><td>用于定位</td><td>用于气质</td></tr>
+      <tr><td>适合场合</td><td>扫码</td><td>印在 T 恤上,等人来扫然后失败</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">设计理念</div>
+    <p>在这个扫码无处不在的时代,一枚扫不出的二维码是一种温柔的抗议:它保留了连接世界的姿态,又断开了连接本身。你掏出手机、对准、扫——什么都没发生。这一刻的安静,就是本机想送给你的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">别扫了。它美在扫不出。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 22 号藏品 · 三个定位角是认真的,中间是自由的<br>
+      友情提示:本页截图发群里,会收获 3 分钟无效尝试 + 1 句「你搞的?」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var cv=$("cv"),ctx=cv.getContext("2d");
+  var seed=1;
+  function draw(){
+    ctx.fillStyle="#fff";ctx.fillRect(0,0,480,480);
+    ctx.fillStyle="#1C1914";
+    var cell=12;
+    // 三个定位角(认真的)
+    function finder(x,y){
+      ctx.fillRect(x,y,7*cell,7*cell);
+      ctx.fillStyle="#fff";ctx.fillRect(x+cell,y+cell,5*cell,5*cell);
+      ctx.fillStyle="#1C1914";ctx.fillRect(x+2*cell,y+2*cell,3*cell,3*cell);
+    }
+    finder(12,12);finder(480-12-7*cell,12);finder(12,480-12-7*cell);
+    // 中间:伪随机
+    function rnd(){ seed=(seed*9301+49297)%233280; return seed/233280; }
+    for(var y=0;y<40;y++){
+      for(var x=0;x<40;x++){
+        var inFinder=(x<9&&y<9)||(x>30&&y<9)||(x<9&&y>30);
+        if(inFinder) continue;
+        if(rnd()<0.42) ctx.fillRect(x*12,y*12,12,12);
+      }
+    }
+  }
+  var n=1;
+  var log=$("log");
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  function gen(){
+    seed=($("src").value||"垃圾").split("").reduce(function(a,c){return a+c.charCodeAt(0)},7)*31+n*97;
+    draw();
+    $("qrbox").style.display="block";
+    $("qrnote").style.display="block";
+    record("GEN-2026-"+String(1000+n).slice(1),"已生成。内容「"+($("src").value||"(空)")+"」已确认丢失,未进入任何像素。构图编号 #"+seed.toString(36).toUpperCase());
+    n++;
+  }
+  $("goBtn").addEventListener("click",gen);
+  $("retryBtn").addEventListener("click",function(){
+    if($("qrbox").style.display==="none"){ gen(); return; }
+    record("REGEN","已重新构图。新图案与旧图案的区别:全都是;能扫出的可能性:都没有。");
+    gen();
+  });
+})();
+</script>
+</body>
+</html>
