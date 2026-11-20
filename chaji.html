@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>茶几杂物暂存流转站</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>流转对象 <b>茶几台面在押物 11 件</b></span>
+    <span>流转规则 <b>随手放即入库,随用随取,滞留自担</b></span>
+    <span>站内立场 <b>茶几不生产杂物,只做杂物的中转</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">COFFEE&nbsp;TABLE&nbsp;TRANSIT</div>
+    <h1>茶几杂物暂存流转站</h1>
+    <div class="sub">茶几台面,是这个家最大的「随手放」特区:遥控器、水果盘、半包纸巾轮番过境——流转站逐批登记,只记暂存,不催离场。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">流转站设在茶几正下方,与沙发扶手国库(见 265 号局)互通关口。请提交本次流转记录。</div><div class="metrics"><div class="m"><div class="k">累计流转</div><div class="v" id="took"><span id="took">0</span> 次</div></div><div class="m"><div class="k">在押物</div><div class="v">11 件</div></div><div class="m"><div class="k">最久滞留</div><div class="v">药盒 17 天</div></div><div class="m"><div class="k">清台周期</div><div class="v">每周一次</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">登记过境</button><button class="btn" id="callBtn">宣布流转</button></div></div><div class="log"><div class="sec-tag"><span class="zh">流转台账</span><span class="en">TRANSIT</span></div><ul id="log"><li style="color:var(--muted)">暂无流转。台面空着,第一批过境客还在路上。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">站长过境手记</div>
+    <p>茶几是这个家的自由贸易区:不设门槛,不限品类,来了就住,走了不留名。站长登记过无数批次,发现台面物品有一条铁律——伸手能到的距离,决定停留的时长:越近,越久。手记想说,茶几上的乱,其实是一种生活的地貌:水果盘说明家里有健康自觉,遥控器说明有共同的消遣,药盒说明有人在惦记长辈。每次清台之前,站长都建议看一眼再收——那一眼,是您与自家日常唯一对账的机会;收走的是物件,留下的是日子,茶几都替您记着。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">过境登记完毕:台面即天下,暂存即日常。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 336 号藏品 · 本站与 130 号(洗衣机袜子失踪研究院)同属「客厅失踪物分流中心」:一个查洗衣机里的悬案,一个流转茶几上的滞留<br>站内冷知识:茶几台面物品的平均停留时间是 3.7 天——全屋最长,因为它是唯一「伸手就到」的仓库;距离,决定懒惰的合法范围
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"批次","stat0":"流转站设在茶几正下方,与沙发扶手国库(见 265 号局)互通关口。请提交本次流转记录。","takeLabel":"登记过境","callLabel":"宣布流转","takeLines":["过境受理:晚八点,一批入库——遥控器两只、削好的苹果一盘、充电线一根——记录结论:本批次含「必需品」与「赖着不走型」各半;苹果盘属当日往返,遥控器常年候批。","过境受理:次日晨,苹果盘离境,纸巾包顶替上岗——记录备注:台面实行「一缺一补」制度,空位存续时间不超过 10 分钟;茶几的物理学:真空不存在,只有轮换。","过境受理:某药盒滞留 17 天,主人每次伸手都绕过它——记录批语:滞留物不催离,但本站有权在台账上记一笔「最久在押」;药盒表示:我在这儿,你们才安心。"],"scenes":["流转宣布:本批离场物为三颗核桃壳与一沓广告单——宣布附言:核桃壳是过境物的自然代谢,广告单是被随手拿起又被随手放下的典型;茶几上没有垃圾,只有暂住的客人。","流转宣布:遥控器完成本周第 41 次位移,始终未离台面——宣布备注:遥控器是茶几的原住民,别的物件都是过客;它与台面的从属关系,比户主与房产证更牢固。","流转宣布终审:周日晚大清台,在押物归位,台面光洁 22 小时——宣布结语:清台是茶几的法定假日,假日一过,周一晚照常开闸;别嫌它乱,台面的乱,是这个家手够得着的体面。"],"metrics":[["累计流转","\u003cspan id=\"took\">0\u003c/span> 次","took"],["在押物","11 件"],["最久滞留","药盒 17 天"],["清台周期","每周一次"]],"logTitle":"流转台账","logEn":"TRANSIT","logEmpty":"暂无流转。台面空着,第一批过境客还在路上。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

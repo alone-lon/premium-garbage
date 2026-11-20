@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鞋柜换季整编委员会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>整编对象 <b>在册鞋 19 双(常备 14 · 轮休 5)</b></span>
+    <span>整编周期 <b>每年 4 月与 10 月各一次</b></span>
+    <span>会内立场 <b>换季即调防,旧鞋不退役</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SHOE&nbsp;RACK&nbsp;REORG</div>
+    <h1>鞋柜换季整编委员会</h1>
+    <div class="sub">鞋柜一年两次大整编:凉鞋退居底层,雪地靴进驻顶层,谁上谁下,全看节气——委员会主持整编,只调防,不裁员。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">在册鞋:19 双</div><div class="status" id="status">本会设在鞋柜顶层,与门口安检线(见 275 号)前后哨协同。请登记本次整编。</div><div class="metrics"><div class="m"><div class="k">累计整编</div><div class="v" id="took"><span id="took">0</span> 次</div></div><div class="m"><div class="k">在册鞋</div><div class="v">19 双</div></div><div class="m"><div class="k">年内退役</div><div class="v">1 双</div></div><div class="m"><div class="k">整编耗时</div><div class="v">40 分钟</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">整编·调防</button><button class="btn" id="btn1">整编·清点</button><button class="btn" id="btn2">整编·编成</button></div></div><div class="log"><div class="sec-tag"><span class="zh">整编台账</span><span class="en">REORG</span></div><ul id="log"><li style="color:var(--muted)">暂无整编。鞋柜合着,凉鞋还在顶层想不通,靴子在等霜降。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">主任整编令</div>
+    <p>鞋柜是全家的军营:谁驻顶层,谁守底层,编制全看出勤与节气。主任整编多年,最感慨的是清点环节——每一双鞋的鞋底,都是一段路的存根:通勤的磨外沿,遛弯的磨后跟,孩子那几双,永远小得最快。整编令想说,「进一出二」是鞋柜的和平法:鞋进得越来越快,柜子却只有那么大,不给旧鞋找出路,新鞋就住不安稳;所谓换季,其实就是给生活腾地方——凉鞋明年还会回来,靴子也只是轮值,走了一双,来了一双,鞋柜永远满员,日子永远向前。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">整编完毕:凉鞋轮休,靴子接防,柜门一关,岁岁平安。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 341 号藏品 · 本会与 275 号(鞋柜前气味安检线)同属「玄关军备整编署」:一个安检出门的气味,一个整编在册的鞋军<br>会内冷知识:鞋柜深处是全屋温度最稳定的角落之一,冬夏温差不足 5 度——皮鞋在这里过冬,比在衣柜里睡得踏实
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"在册鞋:19 双","stat0":"本会设在鞋柜顶层,与门口安检线(见 275 号)前后哨协同。请登记本次整编。","btns":[{"label":"整编·调防","tag":"调防","lines":["调防登记:十月整编启动,凉鞋 6 双撤至底层,雪地靴 2 双进驻顶层——本会批注:调防不看心情,看节气;霜降前后,靴子自动晋升,凉鞋自动轮休,鞋柜的军制比日历还准。","调防续录:运动鞋常年不调防,占据黄金层已三年——本会记录:常备军不参加换防,是鞋柜的通例;运动鞋是全年无休的戍边部队,位子稳,功劳也稳。","调防三录:调防中发现凉鞋一双,去年一夏未出勤——本会裁定:原地留用,降档轮休;鞋不因闲置问罪,只按出勤记录排位,鞋柜不养闲鞋,但养偶尔想歇的鞋。"],"bigs":["节气军制","戍边部队","降档轮休"]},{"label":"整编·清点","tag":"清点","lines":["清点登记:在册 19 双,报废申请 1 双(鞋底开胶)——本会批复:批准退役,退役仪式从简;它走过 4 万步,鞋底的纹路就是它的履历,履历写满,荣归鞋盒。","清点续录:柜底发现单只皮鞋一只,配对鞋失踪逾半年——本会联署移交:单只鞋按失踪人口处理,移交客厅失踪物分流线(参见 130 号院);找到了是团圆,找不到,单只也安老。","清点三录:鞋油、干燥剂、鞋刷在杂物格混居——本会整编:后勤三件套单列一格,杂物格限高三厘米;后勤进编,前线才能整齐。"],"bigs":["履历写满","单只安老","后勤进编"]},{"label":"整编·编成","tag":"编成","lines":["编成登记:顶层靴队 2 双 · 中层常备 8 双 · 底层轮休 6 双 · 门外拖鞋 3 双——本会批注:层层设防,各司其职;鞋柜的编制学,就是全家的出行史,一看便知谁常出门。","编成续录:增补申请 2 双待批——本会意见:按「进一出二」原则办理:新鞋入伍,旧鞋至少转岗一双,柜容恒定;鞋柜不扩编,扩编的是日子。","编成三录:整编完成,耗时 40 分钟,全家出动——本会结语:换季整编是鞋柜的春天与秋天:40 分钟的挪动,换来半年的顺手;这买卖,全家年年做,年年不亏。"],"bigs":["出行史","进一出二","年年不亏"]}],"metrics":[["累计整编","\u003cspan id=\"took\">0\u003c/span> 次","took"],["在册鞋","19 双"],["年内退役","1 双"],["整编耗时","40 分钟"]],"logTitle":"整编台账","logEn":"REORG","logEmpty":"暂无整编。鞋柜合着,凉鞋还在顶层想不通,靴子在等霜降。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>沙发毯盖腿时令调令所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受理对象 <b>沙发毯两条(薄毯 · 厚毯各一)</b></span>
+    <span>签发依据 <b>室温 · 体感 · 追剧时长</b></span>
+    <span>所内立场 <b>毯子护的是腿,暖的是心</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">LEG&nbsp;BLANKET&nbsp;ORDER</div>
+    <h1>沙发毯盖腿时令调令所</h1>
+    <div class="sub">沙发毯是客厅的时令公文:几月开毯,盖多厚,盖到哪,全由体感签发——调令所按温度受理申请,盖腿不盖心,冷暖自裁。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述当前室温与盖毯需求(开没开空调、盖哪条、盖到哪),本所出具调令"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">签发调令</button><button class="btn" data-sample="0">空调薄毯版</button><button class="btn" data-sample="1">追剧裹身版</button><button class="btn" data-sample="2">四季常盖版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">盖腿时令调令</span><span class="en">BLANKET&nbsp;ORDER</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">所长签发手记</div>
+    <p>沙发毯是客厅里最民主的一件家什:不设门槛,谁冷谁盖,先到先盖。所长签发了无数张调令,发现盖毯行为远比想象中深情——孩子裹着毯子看动画片,是安全感;老人盖着毯子打盹,是怕浪费暖气;年轻人盖腿改文件,是成年人的将就与自持。手记想说,一条毯子盖下去,盖住的是腿,护住的是整个人的松弛:人在完全不设防的时候,才会往身上拉点什么。所以本所对开毯时令的最终解释是:不看节气,只看膝盖——膝盖说冷,那就是冷了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">签发完毕:毯盖到腿,暖到了心。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 342 号藏品 · 本所与 116 号(沙发缝隙文明展)同属「沙发织物双署」:一个管缝隙里的地层,一个管腿上的时令<br>所内冷知识:盖毯子的保温原理是锁住您自己散的热——毯子从不产热,它是体温的存储器;盖的不是毯,是自己的暖
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述当前室温与盖毯需求(开没开空调、盖哪条、盖到哪),本所出具调令","btnLabel":"签发调令","sampleLabels":["空调薄毯版","追剧裹身版","四季常盖版"],"samples":["空调 26 度,盖薄毯,只盖腿,上半身自由","追剧到深夜,厚毯从头裹到脚,只露眼睛看结局","夏天也盖,那条毯子四季在岗,盖的是习惯,不是冷"],"num":"调令结论:薄毯上岗 · 盖腿不盖心","verdict":"调令结论:室温 26 度,签发薄毯一条,盖至膝盖上方为佳——冷从脚起,腿是空调的第一受害者;上半身保持自由,以便随时伸手够零食。","breakdown":[["温度层","26 度临界","室温低于 26 度,盖毯申请自动获批——空调再智能,也管不了膝盖的体感;遥控器管全屋,毯子管个人,双轨制才是客厅的真相"],["厚度层","薄厚双轨","薄毯服役于夏秋,厚毯主政于深冬——两条毯换防的日期不固定,全看第一场冷风的到岗时间;毯子的时令,比日历准"],["覆盖层","盖腿不盖心","盖腿是需求,裹身是宠爱——只盖腿的人还在坚持体面,裹到眼睛的人已经与沙发签订终身契约;两种盖法,都是正解"],["归属层","毯子的私产化","沙发毯名义上公用,实际上人人有专座——谁的角上有折痕,毯就认谁;用久的毯子,会记住每个人的坐姿"],["处置建议","入夏封存","本所建议:入夏后厚毯洗净封存,薄毯常驻沙发扶手——封存要留缝,别抽真空;毯子也需要呼吸,来年开毯,它才香如初盖"]],"empty":{"num":"调令缓发","verdict":"没有毯况没法签发——不过本所可先公布一条通例:沙发毯的开毯日,历年都比首场冷空气晚三天——前三天全家人都在硬扛,第四天,毯子默默上岗,无人再提当年勇。","breakdown":[["判定","硬扛三天定律","人类对盖毯的抗拒期平均为三天——扛的不是冷,是「还没到盖毯的季节」这份体面;第四天,体面让位给膝盖"],["建议","毯常驻,别收","无论什么季节,沙发上常备一条毯,是这个家最高性价比的温柔——冷了盖,困了垫,哭了裹;毯子的编制,一年四季不空"]]},"reportTitle":"盖腿时令调令","reportEn":"BLANKET&nbsp;ORDER"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

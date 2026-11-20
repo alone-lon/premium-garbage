@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>筷子筒长短排序议会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>议员构成 <b>长短餐具 11 件(木瓷竹混编)</b></span>
+    <span>议事规则 <b>每餐一选,插筒即宣誓</b></span>
+    <span>议会立场 <b>筒里无小事,站位即政治</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">CHOPSTICK&nbsp;PARLIAMENT</div>
+    <h1>筷子筒长短排序议会</h1>
+    <div class="sub">长筷、短勺、汤勺、公筷,同居一筒,插法随缘:议会每顿饭后重新表决站位——谁居中,谁靠边,谁斜着,全看当餐插筒那只手的手感与心情。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">本议会开在水槽边的筷子筒旁。取号不等于发言,插筒才算宣誓——请提交本次饭后表决。</div><div class="metrics"><div class="m"><div class="k">累计表决</div><div class="v" id="took"><span id="took">0</span> 次</div></div><div class="m"><div class="k">在席议员</div><div class="v">11 件</div></div><div class="m"><div class="k">连任纪录</div><div class="v">汤勺 3 餐</div></div><div class="m"><div class="k">外交事件</div><div class="v">西餐叉入筒</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交表决</button><button class="btn" id="callBtn">宣布席次</button></div></div><div class="log"><div class="sec-tag"><span class="zh">席次台账</span><span class="en">CHOPSTICK</span></div><ul id="log"><li style="color:var(--muted)">暂无表决。筷子筒立在原地,议员们交头接耳,等下一顿饭开选。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">议长致辞</div>
+    <p>筷子筒是厨房里最被低估的民主实践:谁也不规定怎么插,但每顿饭后,人人都在无意识地「选」——顺手一插,就是一票。议长观察多年,发现这个选区有一条铁律:手感大于秩序。您永远按最顺手的角度插筷,而不是最整齐的角度——因为饭要凉了,民主必须给热度让路。筒里也讲资历:那双掉了漆的旧木筷,插位永远偏安一隅,却从不落选,因为家里人认它的手感,认它陪过的每一顿。议会因此得出结论:一个家的秩序,不求井井有条,只求随取随用——民主的最高形式,不是整齐,是顺手;而顺手,是爱最朴素的样子。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">表决完毕。插筒即宣誓,顺手即当选。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 346 号藏品 · 本议会与 260 号(五金袋沉底博物院)同属「筒袋沉底户口总会」:一个管抽屉底的五金,一个管筒里的长短<br>议内冷知识:全家筷子筒里的筷子平均任期是 4 年——比大多数公职任期稳定,选区只有水槽那么大,民意全靠顺不顺手
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"席次","stat0":"本议会开在水槽边的筷子筒旁。取号不等于发言,插筒才算宣誓——请提交本次饭后表决。","takeLabel":"提交表决","callLabel":"宣布席次","takeLines":["表决受理:木筷四双提议按长短排序,瓷勺以「我是圆的」为由申请豁免——议会裁定:豁免驳回,圆也要往筒里圆;筒内立法,筒外无效。","表决受理:公筷申请常驻中央,理由是「代表卫生与体面」——议会备注:公筷的中央位历来不稳,谁家来了客人,它就是第一排;没客时,它靠边静养。","表决受理:汤勺迟到,饭已上桌——议会按「缺席当选」处理:它不用插筒,直接上岗;本议会名言:筒是编制,碗是战场,当选不在筒里,在汤里。"],"scenes":["席次播报:本次当选阵容——长筷稳坐「C 位」,短勺靠边,漏勺斜插,西餐叉意外当选,当选理由是「上周切过一次蛋糕」,政绩虽旧,依旧有效。","席次播报:筒口出现拥堵,两双筷头相抵——议会裁定:属正常摩擦,不予调解;餐具的矛盾,洗洁精会出面,泡沫是最好的仲裁庭。","席次播报终审:饭后再选,次次不同——议会结语:别小看一只筷子筒,它是这个家最小的选区,每顿饭都在重新划界;选票是一顺手,计票是一转身。"],"metrics":[["累计表决","\u003cspan id=\"took\">0\u003c/span> 次","took"],["在席议员","11 件"],["连任纪录","汤勺 3 餐"],["外交事件","西餐叉入筒"]],"logTitle":"席次台账","logEn":"CHOPSTICK","logEmpty":"暂无表决。筷子筒立在原地,议员们交头接耳,等下一顿饭开选。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

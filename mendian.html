@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>门口地垫蹭泥绩效评估台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>评估对象 <b>入户地垫一块(丝圈,服役 10 个月)</b></span>
+    <span>绩效指标 <b>拦泥率 · 磨损度 · 蹭泥步数</b></span>
+    <span>台内立场 <b>垫在门前,功在垫底</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DOORMAT&nbsp;RATING</div>
+    <h1>门口地垫蹭泥绩效评估台</h1>
+    <div class="sub">进门前那三下蹭鞋,是全家无师自通的规定动作:评估台逐月测算地垫的拦泥绩效、磨损进度与「死角系数」,只评绩效,不换垫子。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您家门口地垫的材质、服役时长与地板泥印情况,本台出具绩效评估"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始评估</button><button class="btn" data-sample="0">丝圈新垫版</button><button class="btn" data-sample="1">老胶垫版</button><button class="btn" data-sample="2">无垫裸奔版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">蹭泥绩效评估单</span><span class="en">DOORMAT&nbsp;RATING</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">台长评估意见</div>
+    <p>地垫是全屋最没有存在感的功臣:它蹲在门口,风雨无阻,接住每一双鞋底从世界带回的泥。台长评估过无数块垫子,发现绩效好坏与价格无关,与「掀开垫底的频率」严格相关——勤翻晒的垫,十年如新;从不掀的垫,底下能考古出一部通勤史。评估意见想替地垫提一个小要求:下回进门前,多蹭那半下——它一天接住全家的泥,只求别让它守不住最后那道门;门里是干净的客厅,门外是热闹的世界,它就站在两者的国境线上,一站一年。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">评估完毕:垫在门前,功在无人看见的垫底。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 333 号藏品 · 本台与 274 号(衣架数量普查办)同属「门户普查系统」:一个普查衣架的人口,一个评估地垫的绩效<br>台内冷知识:一块入户地垫年均拦下约 4 公斤泥沙——按十年算,它替您的地板挡下 40 公斤「外面的世界」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您家门口地垫的材质、服役时长与地板泥印情况,本台出具绩效评估","btnLabel":"开始评估","sampleLabels":["丝圈新垫版","老胶垫版","无垫裸奔版"],"samples":["丝圈地垫新换三个月,进屋蹭三下,地板无泥印,垫底藏土不少","橡胶长条垫用了一年半,边缘翘起,蹭泥靠缘分,地板每周补拖两次","家里没地垫,全靠鞋底自觉,门口一圈泥印已成「客厅年轮」"],"num":"评估结论:拦泥绩效 B+ · 尚可留任","verdict":"评估结论:地垫拦泥绩效 B+——它拦下了大部分泥沙,漏掉的部分由拖把托底;本台建议:暂不换新,但请每月翻晒一次,垫底藏土,是该让它放放风了。","breakdown":[["拦泥层","B+","地垫的职责是把户外的泥沙留在门外——丝圈垫拦泥率约八成,漏网的两成由拖鞋与拖把接力;防线没有满分,接力才是常态"],["磨损层","边缘翘起","地垫的衰老从四个角开始——翘边不影响功能,只影响体面;压平的土办法是反过来压两天,让它记住自己该有的形状"],["蹭泥层","三下为限","人类蹭鞋的标准动作是左右各一至两下,合计三下——蹭少了泥进门,蹭多了像跳舞;三下,是全人类无师自通的公约数"],["死角层","垫底藏土","地垫底下是全屋最隐秘的土层——每季度掀开一次,你会看见这个家从外面带回的全部重量;看完记得擦地,再放回"],["处置建议","翻晒轮岗","本台建议:晴天把地垫立在阳台晒半天——泥沙会自己掉下来大半,异味随日光散尽;地垫也要休假日,放风之后,拦泥更卖力"]],"empty":{"num":"评估暂停","verdict":"没有垫况没法评估——不过本台可先公布一条行业数据:一块家门口的地垫,年均拦下约 4 公斤泥沙;它是这个家最底层的防线,战功全部写在垫底的土里。","breakdown":[["判定","功在垫底","地垫的绩效不看表面看垫底——表面的干净是假象,垫底的土层才是它的战绩;评估一线员工,要看它的库存"],["建议","先晒再判","评估之前先翻晒——晒过的垫与没晒的垫,判若两垫;不带它放个风就打分,是评估界的冤案"]]},"reportTitle":"蹭泥绩效评估单","reportEn":"DOORMAT&nbsp;RATING"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

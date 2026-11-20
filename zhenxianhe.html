@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>针线盒纽扣收容局</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>收容对象 <b>备用纽扣 23 枚(年代横跨 15 年)</b></span>
+    <span>收容原则 <b>随衣附送,剪牌入局,终生收容</b></span>
+    <span>局内立场 <b>小东西有大编制,一枚都不能少</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BUTTON&nbsp;SHELTER</div>
+    <h1>针线盒纽扣收容局</h1>
+    <div class="sub">每件新衣服附送的备用扣,最终都流落到同一只针线盒:收容局逐枚登记,不裁决用途,只保证——需要的那天,它一定在。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">在收容扣:23 枚</div><div class="status" id="status">本局设在针线盒第三格,与顶针、拆线器同院办公。请登记本次收容。</div><div class="metrics"><div class="m"><div class="k">在收容扣</div><div class="v">23 枚</div></div><div class="m"><div class="k">年内出动</div><div class="v">5 次</div></div><div class="m"><div class="k">建局时长</div><div class="v">15 年</div></div><div class="m"><div class="k">顶针状态</div><div class="v">已寻回</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">收容·入局</button><button class="btn" id="btn1">收容·库房</button><button class="btn" id="btn2">收容·出动</button></div></div><div class="log"><div class="sec-tag"><span class="zh">收容台账</span><span class="en">SHELTER</span></div><ul id="log"><li style="color:var(--muted)">暂无收容。针线盒合着,纽扣们分袋安睡,各自等着各自的衣服。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">局长收容训令</div>
+    <p>针线盒是家庭的军械库:平日无人问津,战时全员待命。局长清点多年,发现盒里的构成惊人一致——半卷线、一枚顶针、一包各年代的备用扣,以及一两枚来历不明的「野扣」。训令想说,收容局的伟大在于「无用之用」:23 枚扣,一年出动不过五次,可谁也不敢裁撤这个局——因为掉扣从不挑时间,深夜、出门前、洗完澡,它专挑您来不及的当口。一盒扣在手,全家衣服的腰杆都硬三分:这就是收容的价值——不是天天有用,是要用的时候,它一定在。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">收容完毕:扣在盒里,衣服就有底气。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 339 号藏品 · 本局与 228 号(遥控器电池舱考古队)同属「小盒收容联合会」:一个考古电池舱的地层,一个收容纽扣的户口<br>局内冷知识:新衣附送的备用扣,九成终生未被使用——但没人敢扔:收容本身,就是它们的岗位
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"在收容扣:23 枚","stat0":"本局设在针线盒第三格,与顶针、拆线器同院办公。请登记本次收容。","btns":[{"label":"收容·入局","tag":"入局","lines":["入局登记:新外套剪牌,备用扣两枚入盒,附小塑封袋——本局批注:剪牌入局是家庭缝纫法的第一条:扣与衣分离之时,就是它开始服役之日;袋上的衣名,是它的籍贯。","入局续录:本次入局含 2009 年的米色扣一枚,来源衬衫早已退休——本局记录:衣走了,扣留下,是收容局的常态;扣的寿命远长于衣,它等的那件衣,可能永远不会回来,也可能下周就出现。","入局三录:孩子问「这些扣子为什么不扔」——本局结语:不扔的理由只有一条:衣服掉扣的时刻,从来不等您去商店;收容局的全部意义,是把「来不及」三个字,提前收进盒里。"],"bigs":["剪牌入局","衣走扣留","把来不及收进盒"]},{"label":"收容·库房","tag":"库房","lines":["库房盘点:23 枚分装四袋,黑 9 · 米 6 · 彩 8,另散扣 2 枚无袋——本局批注:分袋是收容的体面,散扣是库房的流浪汉;下次入局请自带袋,本局只收有籍贯的扣。","库房续录:发现透明线轴三卷,余量半卷上下——本局记录:线与扣是同院邻居,线管缝合,扣管门面;半卷线是缝补界的刚好够用,针线盒里从不许出现「整卷新线」,那是铺张。","库房三录:顶针失踪一周,在沙发缝(见 116 号展)被寻回——本局联署:顶针是本局编制内人员,出勤别过界;沙发缝虽是文物层,不归本局管。"],"bigs":["只收有籍贯的","刚好够用","编制别过界"]},{"label":"收容·出动","tag":"出动","lines":["出动登记:外套掉扣,按籍贯调取同款,色号一致,扣眼吻合——本局战报:出动一枚,归位一件,历时 4 分钟;这 4 分钟,是收容局建局 15 年来全部存在的意义。","出动续录:同款扣缺位,调近似扣一枚顶岗——本局批语:近似上岗是缝补界的惯例:远看一致,近看将就;衣服不会投诉,主人大度,补上就是胜利。","出动三录:年内出动 5 次,出动率 22%,其余 18 枚继续待命——本局结语:收容局的考勤不看出动,看「在」:那盒安静躺在抽屉里的扣,是全家衣服的底气。"],"bigs":["历时 4 分钟","近似顶岗","底气在盒"]}],"metrics":[["在收容扣","23 枚"],["年内出动","5 次"],["建局时长","15 年"],["顶针状态","已寻回"]],"logTitle":"收容台账","logEn":"SHELTER","logEmpty":"暂无收容。针线盒合着,纽扣们分袋安睡,各自等着各自的衣服。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

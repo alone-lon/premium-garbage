@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>最后一颗鸡蛋归属法庭</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>管辖对象 <b>蛋盒现存最后一颗(编号不详)</b></span>
+    <span>法理依据 <b>先占原则 · 补购预期 · 良心条款</b></span>
+    <span>庭内立场 <b>蛋无主,心有秤</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">LAST&nbsp;EGG&nbsp;COURT</div>
+    <h1>最后一颗鸡蛋归属法庭</h1>
+    <div class="sub">蛋盒里剩最后一颗蛋,谁都有资格吃,谁都不敢吃——法庭输入蛋盒现存数,裁定最后一颗蛋的法律地位、占用资格与全家良心,判例随身。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述蛋盒现状(现存几颗、谁想动它、家里的补蛋计划),本庭出具裁定"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开庭审理</button><button class="btn" data-sample="0">独蛋版</button><button class="btn" data-sample="1">补货版</button><button class="btn" data-sample="2">僵持版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">最后一颗蛋裁定书</span><span class="en">EGG&nbsp;VERDICT</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">庭长判后语</div>
+    <p>最后一颗蛋是这个家最小的公共财产:它没有名字,却人人都认得;没有归属,却谁都不好意思独占。庭长审理过无数蛋案,发现僵局的本质是客气——家人之间,谁先动「最后的」,谁就像占了便宜;于是这颗蛋一躺好几天,从新鲜躺到存疑。判后语想留一句实在话:蛋是拿来吃的,不是拿来供的——真正的家,不该连一颗蛋都推让到底。更好的做法是学那些高效的家庭:蛋盒见二就补,永远让「最后一颗」不曾出现;大家庭的舒服,就藏在这种不动声色的周全里——有人总在蛋见底之前,悄悄把新蛋放进了冰箱门。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">闭庭宣判:蛋是吃掉的,不是供起来的。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 357 号藏品 · 本庭与 229 号(插线板孔位分配法庭)同属「家庭资源裁决两院」:一个分插孔,一个分鸡蛋<br>庭内冷知识:全世界最后一颗蛋的头号归宿是蛋炒饭——它的一生,往往终结于一次加班晚归后的深夜饥饿
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述蛋盒现状(现存几颗、谁想动它、家里的补蛋计划),本庭出具裁定","btnLabel":"开庭审理","sampleLabels":["独蛋版","补货版","僵持版"],"samples":["蛋盒只剩一颗,炒饭在等蛋,人在冰箱前徘徊","蛋盒剩一颗,但主人宣布「明天就去买新的」,这颗暂时受保护","蛋盒剩一颗,全家僵持两天:谁也不吃,谁也不扔,谁也不提"],"num":"裁定结果:最后一颗蛋 · 受保护地位","verdict":"裁定结论:最后一颗蛋自动进入「受保护地位」——任何人动它之前,须完成一次自我审问:我是不是那个不想下楼买蛋的人;审问通过,方可占用,占用者良心自证。","breakdown":[["权属层","无主有主","最后一颗蛋法律上无主,事实上有主——它属于下一个真的要做饭的人,而「真的要做饭」由饿决定;饿,是本庭唯一承认的诉讼资格"],["良心层","自我审问","拿最后一颗蛋前的那三秒犹豫,是厨房里最高频的道德时刻——这三秒的成本,约等于下楼买一盒蛋的一半;多数人当场认栽,穿鞋下楼"],["惯例层","留蛋传统","「给赶时间的人留一颗」是许多家庭不成文的族规——这颗蛋是全家人的备用勇气,平时不动,急时救命;它守的是门,不是冰箱"],["僵持层","蛋的养老金","全家僵持不吃的蛋,会一直躺到过期为止——它像一笔谁都不敢动的养老金,最后以「闻一下再说」收场;养老金破了产,全家默哀三秒"],["处置建议","今天买蛋","本庭最省事的判法:今天就补一盒蛋——新蛋到盒那一刻,旧蛋自动卸任,全家的良心同时放假;蛋政的要义,在于永远别让「最后一颗」出现"]],"empty":{"num":"休庭","verdict":"没有蛋况没法开庭——不过本庭可先行公告一项通例:冰箱里最后一颗蛋的平均滞留时长是 4 天,比它前面所有蛋都长寿,因为它最被舍不得。","breakdown":[["判定","越少越贵重","鸡蛋的价值与存量成反比——最后一颗的价值,是「家里还有蛋」这句话的本身;它不是食材,是底气"],["建议","别让蛋过期","舍不得的最后,往往是坏了的最后——想吃就吃,吃完就买;家庭蛋政,贵在流通,败在僵持"]]},"reportTitle":"最后一颗蛋裁定书","reportEn":"EGG&nbsp;VERDICT"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

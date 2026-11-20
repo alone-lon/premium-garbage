@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>冰箱贴承重美学评审台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>评审对象 <b>冰箱门板(正面全境)</b></span>
+    <span>承重指标 <b>贴数 · 均衡度 · 留言条曝光率</b></span>
+    <span>台内立场 <b>冰箱门是这个家的公告栏</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">MAGNET&nbsp;LOAD&nbsp;REVIEW</div>
+    <h1>冰箱贴承重美学评审台</h1>
+    <div class="sub">冰箱门是家里唯一允许贴满东西的墙:号码牌、留言条、旅游纪念挤作一团——评审台输入冰箱贴数量,评定门板的美学承重与留言条的曝光率,只评审,不摘除。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">当前贴数:未登记</div><div class="meter"><div class="fill" id="fill" style="width:62%"></div></div><div class="status" id="status">本台贴在冰箱门侧。请输入您家冰箱贴的大致数量,本台出具门板承重与美学评估。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入冰箱贴数量,例如:23" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">出具评审意见</button></div><div class="metrics"><div class="m"><div class="k">门板贴数</div><div class="v">待登记</div></div><div class="m"><div class="k">美学评级</div><div class="v">超载无罪</div></div><div class="m"><div class="k">留言曝光</div><div class="v">每日开门 12 次</div></div><div class="m"><div class="k">掉落风险</div><div class="v">自担</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">评审记录</span><span class="en">MAGNET</span></div><ul id="log"><li style="color:var(--muted)">暂无评审。冰箱门关着,门后的贴纸大军整装待发,静候开门。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">评审长意见</div>
+    <p>冰箱门是这个家最诚实的一面墙:它不装,不修饰,有什么贴什么。评审长见过最动人的门板,贴着孩子的涂鸦、过期的菜单、一张写着「粥在锅里」的纸——磁力各不相同,重量却一致:都是「家」。有人问,贴太多会不会显得乱?评审长的答复是:乱是表面,底下是秩序——每枚贴都对应一个日期、一张脸、一件小事,外人不识,家里人门儿清。所以别整理冰箱门,让它满着:一扇干净的冰箱门,反而让人担心——这个家是不是太久没留下话了;门板满一点,心里满一点。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">评审完毕:门板超载无罪,回忆满格光荣。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 344 号藏品 · 本台与 263 号(冰箱第二层结霜档案)同属「冰箱门面研究会」:一个管门上的贴,一个管层里的霜<br>台内冷知识:一枚普通冰箱贴的磁力可吸 300 克——但没有任何一枚是靠吸力留在门上的,留住它们的是「舍不得」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"当前贴数:未登记","pct":62,"stat0":"本台贴在冰箱门侧。请输入您家冰箱贴的大致数量,本台出具门板承重与美学评估。","inputPh":"输入冰箱贴数量,例如:23","btnLabel":"出具评审意见","reasons":["5 枚以下评估:门板大量留白,曝光率严重过剩——本台建议:要么多贴几枚,要么承认这个家的消息都走手机,冰箱只负责制冷,不负责知情。","10 至 20 枚评估:进入健康承重区,纪念与实用五五开——本台批注:这个比例最宜人,每枚贴都有一寸领地,留言条有地方站,纪念品有地方躺。","30 枚以上评估:门板进入超载美学区间——本台认定:贴到这个数量已不追求秩序,追求的是「全家岁月」的密度;乱得越匀,越见功力,外人不解,家人门儿清。","含留言条评估:检测到手写字迹入场——本台自动上调评级:冰箱贴可以网购,留言条不行,它是门板上唯一的长篇文学,每次开门都值得被读一遍。","含旅游纪念评估:异地贴纸占比过半——本台批注:冰箱门是一张贴出来的地图,开一次门等于环游一次没去成的地方;没出发的旅行,都改道来了厨房。","终审意见:冰箱贴从不承重,承重的是回忆——门板每公斤磁力,吸住的都是「舍不得扔」;本台因此裁定:超载无罪,掉落自担,捡起来再贴上即可。"],"empty":"不输入数量没法评审——默认您家门板处于「数不清」状态;本台经验:数不清的,一律评为优,因为数得清的门板,往往故事不多。","metrics":[["门板贴数","待登记"],["美学评级","超载无罪"],["留言曝光","每日开门 12 次"],["掉落风险","自担"]],"logTitle":"评审记录","logEn":"MAGNET","logEmpty":"暂无评审。冰箱门关着,门后的贴纸大军整装待发,静候开门。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

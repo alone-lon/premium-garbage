@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「今晚吃什么」家庭圆桌推诿大赛</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>参赛规模 <b>按家庭人数生成(2 至 6 人)</b></span>
+    <span>赛制核心 <b>人人发言,无人签责</b></span>
+    <span>赛内立场 <b>推诿不是冷漠,是礼貌的接力</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DINNER&nbsp;DEFLECTION&nbsp;GAMES</div>
+    <h1>「今晚吃什么」家庭圆桌推诿大赛</h1>
+    <div class="sub">今晚吃什么,是全人类家庭每晚的必备赛事:人人有建议,无人肯拍板——大赛输入家庭人数,生成一套人人满意、无人负责的推诿流程,赛制公平,冠军内定。</div>
+  </div>
+
+  <div class="console"><div class="input"><input id="src" type="text" placeholder="输入家庭人数,例如:4" maxlength="60"></div><div class="ctrl" style="margin-top:16px"><button class="btn accent" id="goBtn">生成推诿流程</button><button class="btn" data-ev="2">示例·两口之家</button><button class="btn" data-ev="4">示例·四口之家</button><button class="btn" data-ev="6">示例·三代同堂</button></div><div class="output" id="out"><div class="fact" id="fact"></div><div class="deep" id="deep"></div></div></div>
+
+  
+
+  <div class="note">
+    <div class="title">赛会主席致辞</div>
+    <p>「今晚吃什么」是全人类问得最多、答得最少的问题:它表面是点菜,内里是谦让——我想吃的怕你不爱,你爱吃的怕我破费,于是一句「随便」,把球温柔地踢了出去。主席观赛多年,想为「推诿」正个名:它不是没主见,是太把对方当回事。两口之家推来推去,推的是情趣;三代同堂推来推去,推的是周全。真正的答案往往朴素:谁先饿得受不了,谁就说「我来煮面」——那一刻,全场肃然起敬,推诿大赛自动闭幕,晚餐正式开演。所以别烦这场每天的赛事,它是家人之间最日常的礼让:愿意跟你推诿的人,都是打算跟你吃很多顿饭的人。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">流程生成完毕。随便都行,先开火的人最伟大。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 349 号藏品 · 本赛与 233 号(「饭好了叫我」传令台)同属「饭点通讯系统」:一个传饭好了,一个推吃什么<br>赛内冷知识:家庭晚餐决策的平均耗时是 9 分钟——比做一顿蛋炒饭还久,但没人觉得亏,因为推诿本身就是开胃菜
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入家庭人数,例如:4","btnLabel":"生成推诿流程","presets":[{"ev":"2","label":"示例·两口之家"},{"ev":"4","label":"示例·四口之家"},{"ev":"6","label":"示例·三代同堂"}],"defaultEv":"4","tmpl":"参赛规模「{ev}」人,推诿流程生成如下:{a}{b}","a":["流程一:开场发言——主持人(通常是最饿的那位)率先提议「随便」,随后每位参赛者依次附议「都行」。第一轮结束,共识为零,情绪良好,赛会宣布进入提案期。","流程二:交叉提案——{ev} 位选手轮流提名,每个提名立刻收到「昨天吃过」的精准狙击;三轮提案后,全场进入「要不点外卖」的观望期,无人表态,人人期待。","流程三:权威移交——全体一致望向掌勺者,眼神诚恳;掌勺者叹气回望,眼神更诚恳——推诿进入加时赛,比的不是口才,是谁先心软,谁先起身。","流程四:终极裁决——有人提议「石头剪刀布」,输的定菜;裁决落定,输家认赌服输,赢家如释重负——无论谁输,今晚的菜都有了着落,锅有了,火也有了。"],"b":["赛会判例:史上最长的推诿纪录为 47 分钟——其间无人做饭,无人点单,全家最终以一锅剩饭收场;判例注明:浪费的不是时间,是灯火,是灶台上白白亮着的那盏。","赛会观察:家庭人数越多,决策越慢,但氛围越暖——两人的「吃什么」是谈判,你来我往各有输赢;六人的「吃什么」是春晚,热闹本身就是一道菜。","赛会建议:与其每晚决出冠军,不如设轮值拍板——本周定菜权归谁,谁就拥有「被全家人抱怨但不被追责」的神圣豁免;抱怨照旧,责任豁免,这就是家的制度设计。"]};
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function fill(t,ev){
+return t.replace(/\{ev\}/g,ev||"").replace(/\{a\}/g,rnd(D.a)).replace(/\{b\}/g,rnd(D.b)).replace(/\{c\}/g,rnd(D.c||D.b));
+}
+$("goBtn").addEventListener("click",function(){
+var ev=$("src").value.trim()||D.defaultEv;
+$("fact").textContent="原始素材:"+(ev||"(空)");
+$("deep").innerHTML=fill(D.tmpl,ev);
+$("out").style.display="block";
+});
+document.querySelectorAll("[data-ev]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=b.getAttribute("data-ev");$("goBtn").click();});
+});
+})();
+</script>
+</body>
+</html>

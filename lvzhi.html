@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>绿植浇花轮值表公证处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>公证对象 <b>客厅绿植 5 盆(绿萝 3 · 龟背竹 1 · 富贵竹 1)</b></span>
+    <span>轮值规则 <b>周一三五归爸爸,二四六归孩子,周日全家共浇</b></span>
+    <span>处内立场 <b>轮值表贴墙上,良心长土里</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WATERING&nbsp;ROTA&nbsp;NOTARY</div>
+    <h1>绿植浇花轮值表公证处</h1>
+    <div class="sub">「今天浇了吗」,是绿植界的世纪悬问:公证处按轮值表逐日核对,谁浇谁签,浇多浇少各记一笔——只公证,不追责,枯了另议。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">公证处贴在冰箱侧(与 344 号台相邻办公)。浇前签到,浇后销签——请提交本次轮值记录。</div><div class="metrics"><div class="m"><div class="k">累计公证</div><div class="v" id="took"><span id="took">0</span> 次</div></div><div class="m"><div class="k">本月出勤</div><div class="v">爸爸 100%</div></div><div class="m"><div class="k">黄叶事故</div><div class="v">2 片</div></div><div class="m"><div class="k">植物存活</div><div class="v">5/5</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交轮值</button><button class="btn" id="callBtn">宣布公证</button></div></div><div class="log"><div class="sec-tag"><span class="zh">轮值台账</span><span class="en">ROTA</span></div><ul id="log"><li style="color:var(--muted)">暂无公证。水壶空着,土还潮着,轮值表停在昨天那一栏。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">公证人按语</div>
+    <p>浇花轮值表,是一个家最小型的公共治理实验:它把「顺手的事」变成「签了字的事」,看似多此一举,实则大有讲究。公证人核过无数轮值表,发现规律惊人地一致——写上墙的执行率,是口头约定的三倍:人可以骗自己的记性,但不好意思骗一张贴着的纸。按语想为那些黄叶说句公道话:养死植物的头号原因不是懒,是爱得太勤——水浇多了,根喘不过气。所以本处的最高公证原则是:宁可晚一天,不要多一壶;轮值表管的是人的勤快,植物要的其实是人的克制。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">公证完毕:浇的人签了字,活着的绿签了心。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 330 号藏品 · 本处与 47 号(电子仙人掌养殖场)同属「家庭园艺公证联盟」:一个养永远差一口气的电子仙人掌,一个公证永远差一壶水的真绿植<br>处内冷知识:室内绿植死亡的头号原因是浇水过多而非缺水——爱心超量,烂根告终;轮值表真正管的,是人的手
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"轮值","stat0":"公证处贴在冰箱侧(与 344 号台相邻办公)。浇前签到,浇后销签——请提交本次轮值记录。","takeLabel":"提交轮值","callLabel":"宣布公证","takeLines":["轮值受理:今日周一,爸爸浇绿萝两盆,水壶提手略斜,土面见湿即停——公证结论:操作规范,签收有效;「见湿即停」是浇水的黄金守则,本处为这四个字盖一次章。","轮值受理:周三孩子只浇了最大那盆,理由是「小的上周浇过」——公证备注:记忆偏差,记录在案:小盆土干如沙,大盆积水成塘;孩子的善良没有错,错的是凭印象执政。","轮值受理:周日全家共浇,一人一壶,场面壮观——公证批语:周日是绿植的法定节日:五盆同浇,水声哗哗,绿植过的是泼水节;节后三日,请各盆自行消化,恕不回访。"],"scenes":["公证宣布:本月出勤率统计——爸爸 100%,孩子 60%,妈妈 0%(但绿植状态最好)——宣布备注:零出勤者购入了全部营养土与陶粒,资本入股,同样合法;轮值表的尽头是分工,分工的尽头是各显神通。","公证宣布:绿萝三号出现黄叶两片,溯源结果为「周日泼水节积水」——宣布结论:过节有风险,狂欢需谨慎;黄叶已摘,责任不予追究,好事办坏,历来是全家共担。","公证宣布终审:轮值表执行满一季,五盆植物零死亡——公证结语:本处谨此认证:一个能坚持给植物浇水的家庭,日子坏不到哪里去;水是小事,坚持是大事。"],"metrics":[["累计公证","\u003cspan id=\"took\">0\u003c/span> 次","took"],["本月出勤","爸爸 100%"],["黄叶事故","2 片"],["植物存活","5/5"]],"logTitle":"轮值台账","logEn":"ROTA","logEmpty":"暂无公证。水壶空着,土还潮着,轮值表停在昨天那一栏。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

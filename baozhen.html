@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>抱枕归位格式化大赛</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>参赛对象 <b>抱枕 6 只(方枕 4 · 腰枕 2)</b></span>
+    <span>赛制规则 <b>晨归位 · 晚破坏 · 谁瘫谁负责</b></span>
+    <span>赛内立场 <b>队形是沙发的大门面</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PILLOW&nbsp;RESET&nbsp;GAMES</div>
+    <h1>抱枕归位格式化大赛</h1>
+    <div class="sub">晚上瘫倒时压扁的队形,早上要一枕一枕格式化归位:大赛受理每一次归位操作,评的是手艺,争的是沙发门面。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">赛程待抽</div><div class="status" id="status">点击抽取一项赛题。本赛不发奖牌,发「沙发体面」的日常积分。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽一道赛题</button><button class="btn" id="moreBtn">再抽一道</button></div><div class="metrics"><div class="m"><div class="k">已发赛题</div><div class="v">0 份</div></div><div class="m"><div class="k">在编抱枕</div><div class="v">6 只</div></div><div class="m"><div class="k">晚间毁阵</div><div class="v">每晚 1 次</div></div><div class="m"><div class="k">晨间归位</div><div class="v">约 2 分钟</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">赛务记录</span><span class="en">PILLOW</span></div><ul id="log"><li style="color:var(--muted)">暂无开赛。沙发平整,六枕列队,今晚的破坏还没开始。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">总裁判寄语</div>
+    <p>抱枕归位,是全家最日常的迷你工程:晚上的破坏人人有份,早上的重建却常落在一两个人头上。总裁判执裁多年,想为这位「晨间重建者」说句话:您每天顺手拍松、扶正、归位的那两分钟,家人未必看见,但沙发看见了——它每天以最饱满的队形,迎接第一个坐下的人。寄语想说,抱枕这东西,买的理由是好看,留下的理由是好用:看电视抱一个,午睡垫一个,腰酸靠一个;所谓家的舒服,一半是沙发给的,一半是这六只枕头顶住的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">完赛:晚毁晨立,沙发门面不倒。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 337 号藏品 · 本赛与 332 号(地毯绒向梳理管理局)同属「沙发织物运动会」:一个顺地毯的绒,一个排抱枕的阵<br>赛内冷知识:抱枕被真正抱着的时间,不足它摆在沙发上时间的 3%——但「抱」是它名字的全部职责,编制照旧,无人裁撤
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"赛程待抽","why0":"点击抽取一项赛题。本赛不发奖牌,发「沙发体面」的日常积分。","btnLabel":"抽一道赛题","moreLabel":"再抽一道","pools":[{"q":"赛题:标准三角阵","w":"大方枕靠背,中方枕压角,腰枕居中,三点成阵——评委点评:此阵是沙发的军容照,外人见了说体面,家里人见了说「一会儿就乱」;评委仍给满分,美要立过才算数。"},{"q":"赛题:扶手叠放术","w":"方枕叠放扶手,斜角朝天,可倚可靠——评委点评:扶手枕是沙发的实用主义流派,好看是副产品,好靠才是主业;叠得好的,午睡直接受益。"},{"q":"赛题:晚间格式化","w":"人一瘫,队形全毁,六枕各奔东西——评委点评:晚间格式化是全民免费项目,零门槛,零自觉;评委不扣分,只提醒:瘫可以,瘫完别装没事。"},{"q":"赛题:晨间归位赛","w":"晨起归位,先大后小,拍松扶正,两分钟完工——评委点评:归位手艺的巅峰是「看不出归过位」:枕形饱满,褶皱自然,像昨晚根本没人瘫过;此谓格式化的最高境界。"},{"q":"赛题:数量学","w":"四只起步,六只封顶,八只即灾难——评委点评:抱枕的数量与沙发的豪华度成正比,与落座自由度成反比;六只是黄金分割:够摆造型,还留得出一屁股位。"},{"q":"赛题:势力范围","w":"靠背归靠背,抱枕归抱枕,互不越界——评委点评:靠背是编制内,抱枕是雇佣军,编制决定站位;谁把抱枕塞进靠背缝里,谁负责明天把它们全拔出来。"},{"q":"赛题:清洗轮换","w":"枕套半月一洗,枕芯季度一晒——评委点评:晒过的枕芯有太阳味,是沙发区最治愈的气味;洗枕套不难,难的是把六只枕芯按原样塞回——塞反的那只,睡感立刻不对。"},{"q":"赛题:终局裁决","w":"家的标准不是整齐,是「一坐下就有得抱」——评委终语:格式化的终点不是样板间,是舒服;队形为让路,体面为让路,抱枕存在的意义,是让每个坐下来的人,都有地方放胳膊。"}],"metrics":[["已发赛题","0 份"],["在编抱枕","6 只"],["晚间毁阵","每晚 1 次"],["晨间归位","约 2 分钟"]],"logTitle":"赛务记录","logEn":"PILLOW","logEmpty":"暂无开赛。沙发平整,六枕列队,今晚的破坏还没开始。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

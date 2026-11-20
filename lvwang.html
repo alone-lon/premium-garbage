@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>抽油烟机滤网油量信托局</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受托资产 <b>滤网油膜一层(厚度保密)</b></span>
+    <span>核算周期 <b>每季度一次,净值为正</b></span>
+    <span>局内立场 <b>油在网中,网在岗上,岗在烟火里</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">GREASE&nbsp;FILTER&nbsp;TRUST</div>
+    <h1>抽油烟机滤网油量信托局</h1>
+    <div class="sub">滤网里的油,是厨房的石油储备:只进不出,永不结算——信托局逐月核算储量,不清洗、不赎回,只宣布净值,并致敬每一顿被它吸走的油烟。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">本局设在抽油烟机正下方。核账不等于清洗——清洗是年底大扫除的业务,本局只管记账与致敬。</div><div class="metrics"><div class="m"><div class="k">累计核算</div><div class="v" id="took"><span id="took">0</span> 次</div></div><div class="m"><div class="k">本季煎炸</div><div class="v">9 次</div></div><div class="m"><div class="k">储量评级</div><div class="v">厚重</div></div><div class="m"><div class="k">赎回窗口</div><div class="v">年底一次</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">登记核算</button><button class="btn" id="callBtn">宣布净值</button></div></div><div class="log"><div class="sec-tag"><span class="zh">信托台账</span><span class="en">TRUST</span></div><ul id="log"><li style="color:var(--muted)">暂无核算。滤网悬在灶台上方,油在网里,网在岗上,岗在等下一顿饭。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">局长信托报告</div>
+    <p>抽油烟机滤网是厨房里最沉默的资产管理者:每顿饭它吸走油烟,留下油膜,日积月累,聚成一笔谁也说不清数目的「家底」。局长核账多年,发现一个温暖的规律——滤网的厚度,和这个家开火的频率严格成正比:常年开伙的厨房,滤网油光可鉴;常年外卖的厨房,滤网干净得心慌。所以本局从不催洗:油在,说明饭在;饭在,说明人在。年底那场大清洗,与其说是卫生工程,不如说是年度结算仪式——冲掉旧账,来年再记:只要滤网还在继续变厚,这个家的日子,就还在继续冒热气。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">核账完毕:油厚一层,饭香一整年。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 350 号藏品 · 本局与 343 号(老抽瓶口永恒粘连管理局)同属「厨房沉积物信托总会」:一个存酱章,一个存油膜<br>局内冷知识:一张服役三年的滤网含油量可达 200 克——它是这个家三年烟火气的固态存款,利息按香味计
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"油号","stat0":"本局设在抽油烟机正下方。核账不等于清洗——清洗是年底大扫除的业务,本局只管记账与致敬。","takeLabel":"登记核算","callLabel":"宣布净值","takeLines":["核算受理:本季煎炸 9 次,爆炒 41 次,滤网增量稳定——登记结论:该滤网属稳健型资产,涨势全靠人间烟火;无泡沫,无虚增,每一克都是实打实炒出来的。","核算受理:某晚煎鱼,油烟瞬时激增,滤网单日入账达到季度峰值——登记备注:峰值资产不外泄,全数留存,以备后烟;煎鱼那顿的功勋,本局单独造册。","核算受理:住户申请年中小规模清洗,本局批复——可以,但请留下滤网「底油」:那是建局之初的第一笔本金,不可清零;底油在,账户就在。"],"scenes":["净值宣布:本季滤网储量评级为「厚重」——净值含义:这个季度,这家人吃得够香,火候够猛,烟火气对得起这台机器;机器不语,油替它记功。","净值宣布:滤网油色由浅黄转深褐,本局认定为「陈年佳酿」——提醒:颜色越深,油烟历史越长;历史越长,越舍不得洗;舍不得,是最高级别的信任。","净值宣布终审:年底大扫除即将启动,滤网将迎来一年一度的大额赎回——本局致辞:赎回愉快;请记住,洗掉的是油,洗不掉的是这一年的火候,账本会转世重生。"],"metrics":[["累计核算","\u003cspan id=\"took\">0\u003c/span> 次","took"],["本季煎炸","9 次"],["储量评级","厚重"],["赎回窗口","年底一次"]],"logTitle":"信托台账","logEn":"TRUST","logEmpty":"暂无核算。滤网悬在灶台上方,油在网里,网在岗上,岗在等下一顿饭。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

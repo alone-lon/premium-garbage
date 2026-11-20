@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>灯泡瓦数怀旧基金会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受藏对象 <b>历代灯泡瓦数档案(40 · 60 · 100 · 3 · 9 · 36)</b></span>
+    <span>收藏标准 <b>凡是照亮过这个家的,一律入档</b></span>
+    <span>会内立场 <b>省下的是电,念的是那圈暖黄</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WATTAGE&nbsp;MEMORIAL</div>
+    <h1>灯泡瓦数怀旧基金会</h1>
+    <div class="sub">60 瓦的白炽灯退役多年,3 瓦的 LED 主政客厅:基金会收藏每一代瓦数的故事,不发电,不省电,只管把「暖黄」存进档案。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">入档瓦数:6 代</div><div class="meter"><div class="fill" id="fill" style="width:44%"></div></div><div class="status" id="status">本会设在灯罩投影里。请输入客厅主灯的瓦数,本会出具照明代际简报。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入主灯瓦数,例如:36" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">出具代际简报</button></div><div class="metrics"><div class="m"><div class="k">入档瓦数</div><div class="v">6 代</div></div><div class="m"><div class="k">现役主灯</div><div class="v">待输入</div></div><div class="m"><div class="k">怀旧指数</div><div class="v">暖黄一级</div></div><div class="m"><div class="k">换灯频率</div><div class="v">十年一遇</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">收藏台账</span><span class="en">WATTAGE</span></div><ul id="log"><li style="color:var(--muted)">暂无收藏。灯罩里空着,瓦数的历史待照明续写。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">会长藏灯手记</div>
+    <p>灯泡是这个家最诚实的时代注脚:40 瓦的年代,一家人围着一盏灯,因为暗处没有别的可去;LED 的年代,每人都有一块自己的屏,灯再亮也照不齐人心。会长收藏了几代瓦数,最舍不得淘汰的,是记忆里那圈 60 瓦的暖黄——它微烫,费电,一年一换,却把晚饭的桌子照得像庆典。手记写到这里,想留一句给现在的 LED 时代:省下来的电是整个时代的功德,但请您偶尔,在晚饭时只开一盏暖光的小灯——瓦数可以省,那圈「全家都在」的橘色,别省。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">收藏完毕:瓦数在降,暖意别降。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 334 号藏品 · 本会与 160 号(空调遥控权战争纪念馆)同属「客厅电力听证会」:一个审遥控权的战争,一个怀旧灯泡的瓦数<br>会内冷知识:同样照亮一间客厅,白炽灯要 60 瓦,LED 只要 7 瓦——省下的是电费,没了的是那圈暖黄色的冬天
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"入档瓦数:6 代","pct":44,"stat0":"本会设在灯罩投影里。请输入客厅主灯的瓦数,本会出具照明代际简报。","inputPh":"输入主灯瓦数,例如:36","btnLabel":"出具代际简报","reasons":["40 瓦简报:老客厅的深夜档——一盏 40 瓦吊灯下,写作业、织毛衣、听收音机;本会批注:那个年代的亮度刚好够看清彼此的脸,不够看清远处的路,家因此显得格外近。","60 瓦简报:白炽灯的黄金标准——60 瓦是全人类客厅的集体记忆,暖黄、微烫、寿命一年;本会认定:它费的电换来了满屋的橘色,那一圈光,是几代人的「晚饭色」。","100 瓦简报:大瓦数的豪横年代——客厅大灯一开,亮如白昼,全家桌椅无所遁形;本会记录:亮有亮的好,查作业不费眼;但也有亮的代价——谁也别想躲在暗处偷懒。","9 瓦简报:节能灯的过渡王朝——「省电」二字第一次写上包装盒,灯却白得发青;本会批语:节能灯是一场照明革命的开端,青白的光里,藏着人类第一次为地球省钱的自觉。","3 瓦简报:LED 主政时代——3 瓦顶 25 瓦,寿命以十年计,灯泡从易耗品变成耐用品;本会感慨:灯泡不再频繁烧坏之后,「换灯泡」这个家庭传统节目,正式停播。","终审意见:瓦数的演进史,就是这个家的照明断代史——本会裁定:省电是功德,怀旧是权利;您家现在用的瓦数不重要,重要的是,灯一开,全家都愿意往客厅聚。"],"empty":"不输入瓦数没法出具简报——默认您家的灯「够亮就行」;本会经验:如今的灯泡聪明到让人忘了它的存在——可灯泡存在的全部意义,就是让人忘了它。","metrics":[["入档瓦数","6 代"],["现役主灯","待输入"],["怀旧指数","暖黄一级"],["换灯频率","十年一遇"]],"logTitle":"收藏台账","logEn":"WATTAGE","logEmpty":"暂无收藏。灯罩里空着,瓦数的历史待照明续写。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

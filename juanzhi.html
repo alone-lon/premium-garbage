@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>厨房卷纸消耗速度悬案组</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>立案范围 <b>厨房卷纸(挂式,一卷 80 节)</b></span>
+    <span>消耗数据 <b>月均 4 卷,账面与直觉严重不符</b></span>
+    <span>组内立场 <b>撕纸无罪,但账要有人认</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PAPER&nbsp;TOWEL&nbsp;MYSTERY</div>
+    <h1>厨房卷纸消耗速度悬案组</h1>
+    <div class="sub">一卷厨房纸三天见底,无人承认撕多了:擦手三张、擦台五张、擦锅沿不知几张——悬案组只立案、不破案,档案里全是用量,没有凶手。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">本月 4 卷</div><div class="status" id="status">悬案组贴在卷纸架旁。纸卷匀速变细,案情持续发生——请登记本次观察。</div><div class="metrics"><div class="m"><div class="k">月消耗</div><div class="v">4 卷</div></div><div class="m"><div class="k">单卷寿命</div><div class="v">约 7 天</div></div><div class="m"><div class="k">因公殉职</div><div class="v">日均 2 节</div></div><div class="m"><div class="k">破案率</div><div class="v">0,永恒</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">立案·用量</button><button class="btn" id="btn1">立案·去向</button><button class="btn" id="btn2">结案·悬置</button></div></div><div class="log"><div class="sec-tag"><span class="zh">悬案档案</span><span class="en">MYSTERY</span></div><ul id="log"><li style="color:var(--muted)">暂无立案。纸卷饱满地挂着,案情尚未发生,卷纸前途一片光明。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">组长办案手记</div>
+    <p>厨房卷纸是这个家最快乐的消耗品:它走得快,却没人为它难过——擦手、擦台、垫锅、吸汤,每一节都死得其所。组长查过所有卷纸案,从不试图抓凶手,因为根本没有凶手:只有一双双伸向纸卷的手,和一个个「顺手多撕一节」的瞬间。手记写到这里,想坦白一条组内共识:卷纸的消耗速度,其实是一个家烟火气的晴雨表——开火越勤,纸走得越快;纸走得快,说明灶台忙、汤水多、日子热。所以本案维持悬置:不装计量器,不定指标,让它自由地卷下去——一卷用得太慢的厨房纸,反而让人担心。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">立案完毕。纸走得快,说明日子热。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 359 号藏品 · 本组与 34 号(猫砂盆用量核算中心)同属「家中快耗品审计联盟」:一个算猫砂,一个算卷纸<br>组内冷知识:厨房卷纸三分之一的一生用在「垫」而不是「擦」——垫锅盖、垫沥水架、垫冰箱隔板,它是这个家最敬业的临时工
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"本月 4 卷","stat0":"悬案组贴在卷纸架旁。纸卷匀速变细,案情持续发生——请登记本次观察。","btns":[{"label":"立案·用量","tag":"用量","lines":["用量立案:某日擦台,一气连撕五节——当事人陈述「油太大,一张不够」,组内认可;批注:油污面前,纸永远委屈,撕五节不是浪费,是油的错。","用量续案:某夜煮面溅汤,纸巾以四节为代价救下灶台——组内立功认定:该四节属因公殉职,计入光荣册,不计入浪费;殉职的纸,每节都有名字。","用量三案:擦手环节被查实平均超用一节——当事人辩称「手大」,组内批复:受理;手大手小都是先天条件,不算过错;纸的定额,不该向骨头收税。"],"bigs":["纸永远委屈","因公殉职","不算过错"]},{"label":"立案·去向","tag":"去向","lines":["去向立案:卷纸消耗去向普查——擦手 30%,擦台 25%,垫锅 15%,吸汤汁 20%,去向不明 10%;组内批注:那不明的 10%,是卷纸的私房钱,谁也没见过,谁也没花过。","去向续案:发现半截纸被垫在水龙头下接滴漏——组内记录:此用法属「纸尽其用」,但根源是那只一直没人修的龙头;本案旁听转为水暖案,移交工具间,建议配扳手一只。","去向三案:抽油烟机滤网旁常年备纸一格,专供擦油——组内认证:厨房纸与滤网是固定搭档(见 350 号局),一个接油,一个擦油,班次严明;这对搭档,全年无休。"],"bigs":["私房钱","转为水暖案","班次严明"]},{"label":"结案·悬置","tag":"悬置","lines":["悬置结案:本月第 4 卷用尽,全组复盘无人认领超量——组长结语:撕纸的人不自知,正如花钱的人不复盘;悬案,悬着就悬着吧,悬着也是一种圆满。","悬置续案:家庭会议提议「限量撕纸」,表决未过——组内记录:限量提案在所有厨房的通过率为零,纸的自由,是这个家最后的自由;管制纸卷,等于管制体面。","悬置三案:组内终审意见——本案永不破案,理由充分:一卷纸换一整月的灶台干净、擦手方便、锅垫及时,值;账算不清,但日子算得清;算得清日子的家,不在乎一卷纸。"],"bigs":["悬着就悬着","最后的自由","日子算得清"]}],"metrics":[["月消耗","4 卷"],["单卷寿命","约 7 天"],["因公殉职","日均 2 节"],["破案率","0,永恒"]],"logTitle":"悬案档案","logEn":"MYSTERY","logEmpty":"暂无立案。纸卷饱满地挂着,案情尚未发生,卷纸前途一片光明。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

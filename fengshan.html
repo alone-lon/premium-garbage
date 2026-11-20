@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>落地扇摇头守望台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>守望对象 <b>落地扇一台(服役 9 年,摇头功能健在)</b></span>
+    <span>守望指标 <b>摆头弧度 · 噪音等级 · 风感覆盖带</b></span>
+    <span>台内立场 <b>会摇头的风扇,是公平的扇</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PEDESTAL&nbsp;FAN&nbsp;WATCH</div>
+    <h1>落地扇摇头守望台</h1>
+    <div class="sub">夏天客厅的风,一半来自空调,一半来自那台摇头的落地扇:守望台按班次记录它的摆头弧度、吱呀声与服役年功——风过留声,班班有账。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">守望台设在扇座旁。开机即上岗,摇头即巡逻——请提交本次班次记录。</div><div class="metrics"><div class="m"><div class="k">累计守望</div><div class="v" id="took"><span id="took">0</span> 次</div></div><div class="m"><div class="k">本月风时</div><div class="v">210 小时</div></div><div class="m"><div class="k">摆头弧度</div><div class="v">60 度</div></div><div class="m"><div class="k">入伏出勤</div><div class="v">28 天</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交班次</button><button class="btn" id="callBtn">宣布交班</button></div></div><div class="log"><div class="sec-tag"><span class="zh">班次台账</span><span class="en">FAN</span></div><ul id="log"><li style="color:var(--muted)">暂无班次。扇叶静止,摇头待命,风还没上任。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">台长守望手记</div>
+    <p>落地扇是这个家最讲原则的员工:空调可以对着人直吹,风扇不行——它坚持摇头,坚持把风匀给屋里每一寸。台长守了它九年,看它从新扇熬成老扇,按键磨得发亮,摇头轴吱呀作响,唯独公平的心没变。手记想说,会摇头的风扇,教的是一种朴素的处世:风不能总往一个人身上吹——它不懂道理,却把道理摇了出来。哪天它退役了,请别急着扔:擦干净,套上袋,立在阳台角落——季节性员工的最大体面,是来年还有人肯把它再搬回客厅。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">交班完毕:风摇过头,人人都轮到了。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 338 号藏品 · 本台与 180 号(会议室空调博弈论)同属「客厅风流调节会」:一个算会议室的纳什均衡,一个守望客厅的摇头公平<br>台内冷知识:风扇吹的从来不是冷风,是加速汗液蒸发——它不降室温,只降体感;屋里那两度的凉快,是您自己的皮肤结的账
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"班次","stat0":"守望台设在扇座旁。开机即上岗,摇头即巡逻——请提交本次班次记录。","takeLabel":"提交班次","callLabel":"宣布交班","takeLines":["班次受理:午后开机,一档慢转,摆头幅度 60 度,覆盖沙发至餐桌——受理结论:一档风是午睡的官配,力道刚够掀书页;摇头一摆,全屋雨露均沾,没有谁是风向死角。","班次受理:晚八点三档强风,摆头暂停,定向伺候看电视的爸爸——受理备注:定向模式是风扇的特批岗:一人受风,全家侧目;风扇认岗不认人,谁按的钮算谁的。","班次受理:吱呀声较上月加重,位判摇头轴缺油——受理批语:吱呀是老风扇的方言,翻译过来是「我还在」;一滴缝纫机油就能让它安静半夏,保养比换新体面。"],"scenes":["交班宣布:本月累计上岗 28 天,总风时 210 小时——宣布附言:这个出勤量,放在任何一个单位都是标兵;风扇不评先进,它用风声打卡,班班到岗。","交班宣布:空调(见 160 号馆)今晚主政,风扇降档辅助——宣布备注:双风合流是客厅的盛夏体制:空调管温度,风扇管流动;省电的秘诀就一句——空调调高一度,风扇补上一档。","交班宣布终审:立秋,风扇正式转岗阳台待命——宣布结语:季节性岗位不裁员,只轮休;来年入伏,它还会站在老地方,摇着头,把这个夏天还给您。"],"metrics":[["累计守望","\u003cspan id=\"took\">0\u003c/span> 次","took"],["本月风时","210 小时"],["摆头弧度","60 度"],["入伏出勤","28 天"]],"logTitle":"班次台账","logEn":"FAN","logEmpty":"暂无班次。扇叶静止,摇头待命,风还没上任。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

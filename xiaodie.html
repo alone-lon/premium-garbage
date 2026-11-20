@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>佐料小碟人类学博物馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏小碟 <b>9 只(花色各异,大小不一)</b></span>
+    <span>策展标准 <b>碟浅于 2 厘米,盛物少于 30 克</b></span>
+    <span>馆内立场 <b>小碟不盛饭,盛的是讲究</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TINY&nbsp;DISH&nbsp;ANTHROPOLOGY</div>
+    <h1>佐料小碟人类学博物馆</h1>
+    <div class="sub">一碟酱油、一撮蒜蓉、几粒花生:小碟是中餐最小的人工湖,每只都盛着一方文明——博物馆逐碟策展,不催上桌,只记录碟中风景。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">展碟待点</div><div class="status" id="status">点击领取一只小碟的策展说明。本馆不供品尝,只供会意——会意管饱。</div><div class="ctrl"><button class="btn accent" id="goBtn">点一只展碟</button><button class="btn" id="moreBtn">再点一只</button></div><div class="metrics"><div class="m"><div class="k">在馆展碟</div><div class="v">9 只</div></div><div class="m"><div class="k">服役最久</div><div class="v">豁口碟 12 年</div></div><div class="m"><div class="k">今日上桌</div><div class="v">3 只</div></div><div class="m"><div class="k">空碟待命</div><div class="v">1 只</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">策展日志</span><span class="en">DISH</span></div><ul id="log"><li style="color:var(--muted)">暂无策展。碗柜深处,小碟们叠着肩膀午睡,梦里都是佐料。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长策展手记</div>
+    <p>小碟是大碟的世外桃源:它不装主食,不担正餐,只在角落里盛一小口讲究——一碟酱油的深浅,决定一只饺子的命运;一撮蒜茸的浓淡,决定一盘白肉的格调。馆长策展多年,最爱那只豁口碟:按理早该淘汰,但全家人不约而同地留着它——豁口朝着墙,姜丝照旧盛,谁也不提为什么。手记想记下这个细节:家的口味传统,往往就藏在这些破旧的小碟里——新碟子买得再多,掌勺的手还是会先摸到那只旧的:它认得手,手也认得它。小碟极小,文明极大:一碟一世界,一蘸一乾坤。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">策展完毕。碟小乾坤大,一蘸一讲究。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 360 号藏品 · 本馆与 49 号(茶叶渣占卜馆)同属「饭桌玄学陈列带」:一个读茶渣,一个读佐料<br>馆内冷知识:酱油碟的标准容量是 30 毫升,但人类每次只倒 15 毫升——留一半,是蘸料界心照不宣的安全边际
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"展碟待点","why0":"点击领取一只小碟的策展说明。本馆不供品尝,只供会意——会意管饱。","btnLabel":"点一只展碟","moreLabel":"再点一只","pools":[{"q":"展碟:酱油碟 · 白瓷波纹","w":"碟沿一圈浅波,倒酱油刚好漫过波谷——策展词:它是小碟界的基准坐标,蘸多少,全靠这一圈波纹当刻度;波纹不动,分寸自现。"},{"q":"展碟:蒜泥碟 · 粗陶深灰","w":"蒜泥沉底,香油封顶,静置十分钟自成两层——策展词:这只碟懂得等待,蒜的辣要靠时间泡软,急不得;急出来的辣是刺,等出来的辣是香。"},{"q":"展碟:醋碟 · 蓝边小盅","w":"盅深过普通碟,专防饺子捞醋时溅衣——策展词:深一寸,是一代人对「吃饺子不湿袖」的工程学承诺;蓝边是装饰,深底是诚意。"},{"q":"展碟:辣椒碟 · 红釉敞口","w":"敞口宽沿,辣椒面铺成红毯,筷子头一点即着——策展词:它负责提醒:辣是自选动作,量力蘸取;红毯铺得越宽,越考验下筷人的自知。"},{"q":"展碟:花生碟 · 竹编浅盘","w":"油炸花生摊成单层,粒粒可见——策展词:单层摆放是给花生的体面,叠起来的花生,凉得不均匀;一粒一层,是碟对花的尊重。"},{"q":"展碟:糖蒜碟 · 裂纹釉","w":"釉面开片如冰裂,盛三粒糖蒜正好——策展词:裂纹里锁着多年醋香,这只碟已与糖蒜互相成全,难舍难分;碟养蒜,蒜也养碟。"},{"q":"展碟:姜丝碟 · 白碟豁口","w":"碟沿一处旧豁,全家一致同意留用——策展词:豁口是这只碟的勋章,掉的那一角,在某次年夜饭桌上;豁口朝着墙,体面朝着人。"},{"q":"展碟:未命名碟 · 空碟待命","w":"碟中无物,搁在灶边待命——策展词:空碟是小碟界的哨兵,哪位主厨忽然想加点什么,它第一个到场;空,不是没有,是随时有。"}],"metrics":[["在馆展碟","9 只"],["服役最久","豁口碟 12 年"],["今日上桌","3 只"],["空碟待命","1 只"]],"logTitle":"策展日志","logEn":"DISH","logEmpty":"暂无策展。碗柜深处,小碟们叠着肩膀午睡,梦里都是佐料。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

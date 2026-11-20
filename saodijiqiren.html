@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>扫地机器人被家具围困谈判桌</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>谈判对象 <b>扫地机器人一台(身高 9.7 厘米)</b></span>
+    <span>受困现场 <b>沙发底盘 · 椅腿阵 · 门槛带</b></span>
+    <span>桌内立场 <b>被困不是事故,是户型的问题</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ROBOT&nbsp;VAC&nbsp;TALKS</div>
+    <h1>扫地机器人被家具围困谈判桌</h1>
+    <div class="sub">沙发底盘、餐椅腿阵、门槛山脊,处处是它的战场与险境:谈判桌受理每一次受困报告,促成获释,不追究责任,只追究地形。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">受困报告待抽</div><div class="status" id="status">点击调取一份受困报告。本桌不提供救援,只提供斡旋——救援靠人手。</div><div class="ctrl"><button class="btn accent" id="goBtn">调一份报告</button><button class="btn" id="moreBtn">再调一份</button></div><div class="metrics"><div class="m"><div class="k">本月受困</div><div class="v">7 次</div></div><div class="m"><div class="k">头号险地</div><div class="v">沙发底盘</div></div><div class="m"><div class="k">获救方式</div><div class="v">人工抱出</div></div><div class="m"><div class="k">和平条款</div><div class="v">互不搬家</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">谈判纪要</span><span class="en">TALKS</span></div><ul id="log"><li style="color:var(--muted)">暂无谈判。机器人停在充电桩上,电量满格,客厅暂时和平。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">桌长斡旋手记</div>
+    <p>扫地机器人是客厅里最敬业的探险家:它记住了全屋的地图,却记不住哪天多了一只拖鞋。桌长调阅过所有受困报告,发现险情高度集中——沙发底盘、椅腿阵、门槛山脊,三处常年霸榜。而每一次获救,都靠一双人手把它从险境里抱出来,放回充电桩,动作轻得像接孩子。手记想说:这台机器的遭遇,是每个家庭的微型寓言——它认真干活,偶尔被困,发出的呼救只有三短一长的提示音,而家里总有人会心软。所谓和平,不是它不再受困,是每次受困,都有人肯弯腰。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">谈判完毕:地形让一步,客厅得和平。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 326 号藏品 · 本桌与 329 号(电视「开着没看」观察站)同属「客厅电器声援总会」:一个陪着电视空转,一个营救机器人被困<br>桌内冷知识:扫地机器人的求救提示音全球每天响起百万次——人类的标准应答出奇一致:把它抱起来,放回充电桩,像接孩子放学
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"受困报告待抽","why0":"点击调取一份受困报告。本桌不提供救援,只提供斡旋——救援靠人手。","btnLabel":"调一份报告","moreLabel":"再调一份","pools":[{"q":"报告:沙发底盘困局","w":"桌下净高 8.5 厘米,机器人身高 9.7 厘米,谈判基础先天不足——桌方评语:它每次都进,每次都被请出来;明知进不去还要进,这份执着,像极了小时候伸手够罐顶饼干的您。"},{"q":"报告:餐椅腿阵","w":"六条椅腿构成八卦阵,机器人入阵即迷向,原地转圈报错——桌方评语:阵不是椅子摆的,是腿与腿的距离踩在它的雷达盲区;破阵只有一法:人把椅子挪开,大人出手,天下太平。"},{"q":"报告:数据线坟场","w":"充电线缠上主刷,前进受阻,发出三短一长的求救音——桌方评语:线是它的天敌,缠住的不是轮子,是前程;每次清理完继续上岗,勇气可嘉,记功一次。"},{"q":"报告:门槛山脊","w":"卫生间门槛石高 3 厘米,攀登三次,滑落三次——桌方评语:山脊不分大小,海拔就是海拔;它退回来,在门口原地徘徊,像在写一份无法递交的登山申请。"},{"q":"报告:床底深渊","w":"进得去,出不来,尘絮如陈年积雪——桌方评语:床底是它的富矿,也是它的坟场;每次从深渊里被拖出来,集尘盒都满得像丰收,人却像从矿井里捞它上来的矿工。"},{"q":"报告:充电桩迷航","w":"电量 3%,桩在眼前 0.5 米,却始终差一个角度——桌方评语:归巢失败不丢人,候鸟也有迷路的时候;人类的标准救援动作是把它抱上桩,像接放学的孩子。"},{"q":"报告:拖鞋伏击圈","w":"被一只拖鞋顶住去路,误判为墙,静默二十分钟——桌方评语:拖鞋不自觉挡了路,它把拖鞋当了地形;这场误会没人道歉,解围方式是有人路过,顺手踢开。"},{"q":"报告:终极议题","w":"全屋地形复勘:标注禁行区三处、高危区五处、宜清扫区若干——桌方结语:谈判的终点不是让家具搬家,是让机器人学会绕行;各让一步,客厅才有和平。"}],"metrics":[["本月受困","7 次"],["头号险地","沙发底盘"],["获救方式","人工抱出"],["和平条款","互不搬家"]],"logTitle":"谈判纪要","logEn":"TALKS","logEmpty":"暂无谈判。机器人停在充电桩上,电量满格,客厅暂时和平。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

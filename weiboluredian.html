@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>微波炉热点地图测绘台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>测绘对象 <b>炉腔转盘(直径 270 毫米)</b></span>
+    <span>地形划分 <b>珠峰区 · 温带 · 永冻层</b></span>
+    <span>台内立场 <b>不均不是故障,是微波的脾气</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">MICROWAVE&nbsp;HOT&nbsp;MAP</div>
+    <h1>微波炉热点地图测绘台</h1>
+    <div class="sub">同一炉饭菜,中心滚烫,边缘冰凉——测绘台输入加热时长,绘制转盘上的熟度地形图:哪里是珠峰,哪里是盆地,哪里永远被热气绕过。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">当前地形:未测绘</div><div class="meter"><div class="fill" id="fill" style="width:48%"></div></div><div class="status" id="status">本台贴在微波炉侧面。请输入您常用的加热时长,本台出具对应的地形简报。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入加热时长,例如:2 分钟" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">测绘热点地形</button></div><div class="metrics"><div class="m"><div class="k">测绘时长</div><div class="v">待输入</div></div><div class="m"><div class="k">珠峰位置</div><div class="v">盘心</div></div><div class="m"><div class="k">永冻层</div><div class="v">盘沿一带</div></div><div class="m"><div class="k">和平手段</div><div class="v">中途搅拌</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">测绘日志</span><span class="en">HOT&nbsp;MAP</span></div><ul id="log"><li style="color:var(--muted)">暂无测绘。炉腔黑暗,转盘静止,地形尚未隆起。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">台长勘测记</div>
+    <p>微波炉是这个家唯一有地形的电器:同样两分钟,食物的命运天差地别——盘心的成了高原,盘沿的还是冻土。台长勘测多年,总结出一条治理经验:对付不均,靠的不是火力,是干预——中途开盖搅一拌,把珠峰铲平,把盆地填暖,一场人工季风胜过十分钟硬熬。其实家里的资源分布又何尝不是这样:总有人吃得多,总有人被剩下,分配不均不是恶意,是物理。好在家人和剩饭一样,可以随时被照顾:转一转,拌一拌,凉的变温,温的变暖——所谓过日子,就是不厌其烦地,把不均匀匀开。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">测绘完毕:搅一搅,山平了,饭好了。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 352 号藏品 · 本台与 267 号(微波炉加热不均匀申诉委)同属「炉腔地理研究会」:一个受理申诉,一个测绘地形<br>台内冷知识:转盘存在的全部意义就是替热场「转正」——可它转得再勤,盘心依然是珠峰;地理面前,做不到人人平等
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"当前地形:未测绘","pct":48,"stat0":"本台贴在微波炉侧面。请输入您常用的加热时长,本台出具对应的地形简报。","inputPh":"输入加热时长,例如:2 分钟","btnLabel":"测绘热点地形","reasons":["30 秒测绘:短程加热,地形平缓——仅汤类边缘微温,珠峰尚未隆起;本台批注:短加热最公平,可惜热不透;公平与熟透,微波只能选一样。","1 分钟测绘:地形初现——中心开始领先,边缘稳步跟随;本台记录:这是大多数剩饭的标准路径,温差可控,人心安定,属于温和地貌,宜直接开饭。","2 分钟测绘:珠峰隆起——盘心食物滚烫冒烟,盘沿仍是凉手;本台提示:此刻掀盖请避开中央,烫伤事故八成发生在珠峰顶;珠峰风景虽好,不可久留。","3 分钟测绘:地形剧变——珠峰继续抬升,盆地开始干裂,永冻层边缘出现融化迹象;本台建议:中途手动搅拌一次,人工造一场季风,地形立刻和缓,全民入春。","带汤测绘:液体地形特殊——碗沿翻滚,碗心冰凉,温差伪装得极深;本台警示:汤的热是骗人的,喝前请先搅三圈,舌头替全人类试过太多亏,别再让它出面。","终审意见:微波炉的热,从来不是雨露均沾——它偏爱中心,冷落边角,一如每张餐桌都有人坐上座;学会转一转碗的人,才算读懂了这台机器,也读懂了饭桌。"],"empty":"不输入时长没法测绘——默认您刚端出一份外热内凉的剩饭;本台先给结论:中间烫,边上凉,搅一搅,再开饭;这一口,急不得。","metrics":[["测绘时长","待输入"],["珠峰位置","盘心"],["永冻层","盘沿一带"],["和平手段","中途搅拌"]],"logTitle":"测绘日志","logEn":"HOT&nbsp;MAP","logEmpty":"暂无测绘。炉腔黑暗,转盘静止,地形尚未隆起。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

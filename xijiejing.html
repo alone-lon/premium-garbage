@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>洗洁精见底摇晃测算处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>测算对象 <b>洗洁精残量(瓶底一层)</b></span>
+    <span>计量单位 <b>一次成功摇晃 ≈ 一轮洗碗</b></span>
+    <span>处内立场 <b>摇瓶是节俭的最后体面</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SOAP&nbsp;SHAKE&nbsp;ESTIMATE</div>
+    <h1>洗洁精见底摇晃测算处</h1>
+    <div class="sub">洗洁精见底时,人类的本能是摇:摇一摇,又够洗两回——测算处输入瓶内余量描述,测算剩余摇次与「再撑一把」的成功率,不催购买,只算勇气。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您家洗洁精的残量现状(瓶身倾斜角度与出水情况),本处出具摇次测算"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始测算</button><button class="btn" data-sample="0">满瓶版</button><button class="btn" data-sample="1">见底版</button><button class="btn" data-sample="2">极限版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">残量摇次测算书</span><span class="en">SHAKE&nbsp;REPORT</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">处长批文</div>
+    <p>洗洁精见底的那一刻,是这个家最接近物理学的一刻:倾斜角度、重力加速度、表面张力,全在您的一摇之间。处长批阅过无数瓶底,最感慨的是人类那份固执——明明新瓶就在购物车里,偏要把旧瓶摇出最后一轮泡沫。这不是抠,这是对「物尽其用」的朴素忠诚:一瓶洗洁精,从开封到摇不出一滴,才算完成一生。所以本处把摇次写进测算书,把勇气写进结论——您摇的不是瓶子,是这个家过日子的底气:能省一轮是一轮,能撑一天是一天,厨房的账,就是这么一轮一轮算平的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">测算完毕:再摇两轮,一定撑到周末。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 347 号藏品 · 本处与 343 号(老抽瓶口永恒粘连管理局)同属「瓶底残留研究院」:一个研究擦不掉的,一个测算摇不净的<br>处内冷知识:见底洗洁精的最后 5% 残量,平均要花掉它全生命周期 20% 的摇晃次数——所有的尾声,都比正文费劲
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您家洗洁精的残量现状(瓶身倾斜角度与出水情况),本处出具摇次测算","btnLabel":"开始测算","sampleLabels":["满瓶版","见底版","极限版"],"samples":["新瓶开封,按压即出,泡沫丰沛,毫无压力","瓶身倾斜 45 度才有产出,按压十次出一次,泡沫靠回忆","倒立过夜,晨起按压,勉强渗出一滴,像某种告别"],"num":"测算结论:剩余摇次 11 次 · 成功率 74%","verdict":"测算结论:瓶内残量尚可支撑 11 次成功摇晃——每次摇晃约出一轮洗碗的量;按三餐计,可再撑四天。建议:摇晃时心怀敬意,它在用最后的水位,兑现全部的承诺。","breakdown":[["水位层","余量一成","残液沉在瓶底,像退潮后的最后一洼——它不动声色,但每次倾斜都在响应您的号召,一滴不欠,从不敷衍"],["摇次层","11 次","摇晃测算基于残量体积与管口吸附损耗——第 9 次之后进入玄学区,摇出来的可能是泡沫,也可能是运气,本处只保前十次"],["心理层","74% 成功率","人类对见底瓶子的信心普遍虚高一截——本处按实际出水率修正:信心保留,数字如实;乐观可以,账要分开算"],["勇气层","再撑一把","「再撑一把」是厨房的民间信仰——它省下的不是洗洁精,是「这周先不买」的决定成本;省下的钱不多,省下的心不少"],["处置建议","备一瓶","测算归测算,本处强烈建议:下单立减焦虑——新瓶到货那刻,旧瓶往往奇迹般又出了三轮;这是厨房著名的墨菲定律,百年不改"]],"empty":{"num":"测算暂停","verdict":"没有瓶况没法测算——不过本处可先行披露一条普遍规律:您觉得「还能摇两次」的时候,实际只能摇一次;您觉得「彻底没了」的时候,倒立还能再挤一轮。","breakdown":[["判定","摇一次,少一次","洗洁精的剩余量从不按您的乐观修正——它按物理出牌,按重力结账,从不赊账"],["建议","尊重每一次出水","见底期的每一滴都是超常发挥——请让它流进碗,别流进水池;流进碗是功,流进池是虚"]]},"reportTitle":"残量摇次测算书","reportEn":"SHAKE&nbsp;REPORT"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>
