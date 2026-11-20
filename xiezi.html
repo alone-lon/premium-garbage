@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「新鞋磨合期」骗术揭穿办</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>揭穿对象 <b>「磨磨就好了」话术</b></span>
+    <span>判定标准 <b>3 天红线</b></span>
+    <span>揭穿立场 <b>鞋不合适,脚最清楚</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SHOE-BREAKING&nbsp;SCAM&nbsp;BUST</div>
+    <h1>「新鞋磨合期」骗术揭穿办</h1>
+    <div class="sub">「新鞋都要磨脚,穿穿就好了」——本办揭穿:磨脚的鞋不是需要磨合,是不合适。真正的磨合期是 3 天,超过 3 天的,是您在为错付买单。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">揭穿未开始</div><div class="status" id="status">您脚后跟的水泡已经替您出庭作证。本办现在传唤被告:那双「穿穿就好了」的鞋。</div><div class="metrics"><div class="m"><div class="k">受理案</div><div class="v">1 件</div></div><div class="m"><div class="k">揭穿话术</div><div class="v">3 条</div></div><div class="m"><div class="k">判决</div><div class="v">降级使用</div></div><div class="m"><div class="k">新标准</div><div class="v">10 分钟不磨</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">揭穿话术</button><button class="btn" id="btn1">数据取证</button><button class="btn" id="btn2">结案陈词</button></div></div><div class="log"><div class="sec-tag"><span class="zh">结案记录</span><span class="en">CASES</span></div><ul id="log"><li style="color:var(--muted)">暂无结案。您的脚后跟还在默默忍耐——它太好说话了。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">揭穿办结语</div>
+    <p>「磨脚要磨合」是这个时代最温和的骗局:它让你相信不适是暂时的,付出会有回报。本办揭穿它,不是让您退货——是让您记住这个逻辑:任何需要长期忍耐才能「磨合」的东西,鞋子、工作、关系——都要重新审视。合适的,从来不需要那么痛。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结案。新鞋试穿,超过 10 分钟再买。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 115 号藏品 · 本办与 79 号(减肥加油站)共享原则:别为「想象中的自己」买单<br>揭办冷知识:所有磨脚的鞋,最后都变成了「偶尔穿一次」——它们在你的鞋柜里服着无期徒刑
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"揭穿未开始","stat0":"您脚后跟的水泡已经替您出庭作证。本办现在传唤被告:那双「穿穿就好了」的鞋。","btns":[{"label":"揭穿话术","lines":["揭穿一:「真皮都磨脚」——伪证。真皮磨的是「松紧感」,不是水泡。磨出水泡的,是版型与您的脚不符。","揭穿二:「穿穿就好了」——话术。鞋不会为您的脚变形,它只会磨到您放弃。真正的磨合期 3 天:3 天后还磨的,永远会磨。","揭穿三:「这鞋就这样,经典款都硬」——混淆视听。经典款硬是设计取舍,磨脚是版型失误——它对经典款没兴趣,对您的脚后跟有兴趣。"],"bigs":["伪证","3 天红线","混淆视听"]},{"label":"数据取证","lines":["取证一:您穿这双鞋出门 5 次,贴创可贴 4 次——这不是磨合,是酷刑。","取证二:您给这双鞋买了后跟贴、防磨贴、半码垫——花了 3 倍的钱,养一个不合适的对象。","取证三:这双鞋的穿着场景,已经从「通勤」降级为「拍照」——它从工具降格为摆设,是鞋界的最大贬职。"],"bigs":["创可贴 ×4","3 倍投入","降格为摆设"]},{"label":"结案陈词","lines":["结案:本办裁定,「磨脚要磨合」话术不成立。鞋与脚的关系,和人与人的关系一样:合适的,三天就顺了;不合适的,三百天还在磨。","判决执行:那双鞋,请降级为「拍照专用」或「地板陈列」——别扔,但要认清:它不会再好穿了。","本办终极提醒:以后买鞋,请以「走出店门 10 分钟不磨」为唯一标准——您的脚后跟,值得这个底线。"],"bigs":["裁定","降级","10 分钟标准"]}],"metrics":[["受理案","1 件"],["揭穿话术","3 条"],["判决","降级使用"],["新标准","10 分钟不磨"]],"logTitle":"结案记录","logEn":"CASES","logEmpty":"暂无结案。您的脚后跟还在默默忍耐——它太好说话了。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拖延症自白书</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>自白人 <b>所有拖到最后一天的人</b></span>
+    <span>核心话术 <b>「我deadline型选手」</b></span>
+    <span>自白效力 <b>写完继续拖</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PROCRASTINATION&nbsp;CONFESSION</div>
+    <h1>拖延症自白书</h1>
+    <div class="sub">我不是不想做,我只是想晚点开始——一份拖延症的完整自白:动机、借口、以及每次「就五分钟」的诈骗实录。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">自白未开始</div><div class="status" id="status">本自白书原定上月完成。写自白书这件事本身,我拖了 37 天——这个数据,比自白内容更真实。</div><div class="metrics"><div class="m"><div class="k">自白完成度</div><div class="v">拖了 37 天</div></div><div class="m"><div class="k">借口库存</div><div class="v">3 打包</div></div><div class="m"><div class="k">诈骗话术</div><div class="v">「就五分钟」</div></div><div class="m"><div class="k">和解进度</div><div class="v">部分达成</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">自白一·动机</button><button class="btn" id="btn1">自白二·借口</button><button class="btn" id="btn2">自白三·和解</button></div></div><div class="log"><div class="sec-tag"><span class="zh">自白记录</span><span class="en">CONFESSION</span></div><ul id="log"><li style="color:var(--muted)">暂无自白。你打开本页,就是在确认任务还在——欢迎入会。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">自白书后记</div>
+    <p>拖延症不是病,是人类的默认设置:大脑天生偏爱「即时奖励」,而所有正经事都是「延迟回报」。所以别再骂自己了——骂完只会更拖。本自白书的唯一建议:把「今天必须完成」改成「今天完成 10 分钟」。10 分钟很小,小到骗得过你的大脑——而它,是唯一能被骗着动的部分。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">自白完毕。就 10 分钟,试试?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 106 号藏品 · 本自白书与 39 号(泡面计时)共享同一哲学:等待是心理单位<br>自白冷知识:读完本页的你,刚才确实推迟了点什么事——本自白书祝你把那件事完成
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"自白未开始","stat0":"本自白书原定上月完成。写自白书这件事本身,我拖了 37 天——这个数据,比自白内容更真实。","btns":[{"label":"自白一·动机","lines":["自白:我不是不想做。打开文档,看一眼标题,合上。这一套动作我每天重复三次——它不叫逃避,叫「确认任务还在」。","自白补充:拖延的本质不是懒,是怕——怕开始之后发现自己做不好。躺平反而安全:不做,就永远不会做错。","自白终极:我最擅长的事,是把「开始」变成一个仪式:先擦桌子、先倒水、先搜个资料——仪式做完,该干的还在原地等我。"],"bigs":["确认还在","怕做不好","仪式感"]},{"label":"自白二·借口","lines":["借口库:①「我先睡一觉,醒来效率高」(醒来已晚)②「现在状态不行,状态好再做」(状态好的那天从未到来)③「就刷五分钟」(诈骗,共犯:手机)。","借口库补充:「等我有整块时间再做」——人生没有整块时间,只有被我切成碎片的时间。","借口终极形态:「我不是拖延,我是 deadline 型选手」——翻译:我喜欢在恐惧里工作,并把恐惧当咖啡。"],"bigs":["诈骗实录","整块时间","恐惧咖啡"]},{"label":"自白三·和解","lines":["和解尝试一:我把任务拆成 15 分钟一块——拆完确实开始了,开始了 15 分钟。然后我奖励自己刷了 40 分钟。拆分法:部分有效。","和解尝试二:我找了个「监督人」——她监督了三天,第四天她说「其实我也在拖」。监督法:双人拖延,陪伴升级。","和解结论:拖延没有根治办法,它和「明天早起」一样属于人类永远的计划。但我学会了一件事:拖可以,别拖到最后一天还骗自己「来得及」。——这句自白,我拖了 37 天才写完。"],"bigs":["15 分钟","双人拖延","别骗自己"]}],"metrics":[["自白完成度","拖了 37 天"],["借口库存","3 打包"],["诈骗话术","「就五分钟」"],["和解进度","部分达成"]],"logTitle":"自白记录","logEn":"CONFESSION","logEmpty":"暂无自白。你打开本页,就是在确认任务还在——欢迎入会。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

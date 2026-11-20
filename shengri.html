@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>生日当天心情指数台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>播报范围 <b>生日 0:00–24:00</b></span>
+    <span>情绪曲线 <b>三峰两谷</b></span>
+    <span>救场方案 <b>自己买蛋糕(保底)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BIRTHDAY&nbsp;MOOD&nbsp;INDEX</div>
+    <h1>生日当天心情指数台</h1>
+    <div class="sub">生日是情绪的过山车:上午「今天我是主角」,下午「怎么没人找我」,晚上「其实也没什么」——本台逐时段播报,并附救场方案。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">指数播报中</div><div class="meter"><div class="fill" id="fill" style="width:60%"></div></div><div class="status" id="status">本台全天值守。今天寿星是您吗?无论是不是,生日情绪曲线对所有人都成立——我们对号入座。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入当前时间,例如:15:30" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">获取当前指数</button></div><div class="metrics"><div class="m"><div class="k">当前指数</div><div class="v">待播报</div></div><div class="m"><div class="k">情绪曲线</div><div class="v">三峰两谷</div></div><div class="m"><div class="k">救场方案</div><div class="v">自己买蛋糕</div></div><div class="m"><div class="k">本台立场</div><div class="v">陪寿星过完</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">播报记录</span><span class="en">INDEX</span></div><ul id="log"><li style="color:var(--muted)">暂无播报。您的生日情绪,正在按剧本上演。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">指数台结语</div>
+    <p>生日情绪的三峰两谷,几乎人人一样:早上被记挂、下午被冷落、晚上被填满。本台播报它,是想告诉寿星:下午三点的失落不是您的错——那是「被记得」的时差。祝福在路上,蛋糕在烤箱里,您的主角感,会准时抵达。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">播报完毕。生日快乐,此刻也成立。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 120 号藏品 · 本台与 14 号(每日运势)联动:生日当天的运势,自动加 10 分<br>指数冷知识:全人类生日下午三点的情绪谷,高度一致——那是对「被记得」的集体渴望
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"指数播报中","pct":60,"stat0":"本台全天值守。今天寿星是您吗?无论是不是,生日情绪曲线对所有人都成立——我们对号入座。","inputPh":"输入当前时间,例如:15:30","btnLabel":"获取当前指数","reasons":["0:00 · 峰值:零点祝福降临,手机连震 6 下——此刻的您,是被世界记挂的人。指数 92。","8:00 · 平稳:正常起床,家人说了生日快乐,您说「谢谢」,然后去上班/上课——生日感暂时被日常覆盖。指数 61。","14:00 · 谷值:下午两点半,朋友圈还没有动静,您开始怀疑「是不是没人记得」。指数 38。救场方案:先给别人点个赞——祝福是循环的。","18:00 · 回升:第一条蛋糕照出现,祝福开始滚动。您回复「谢谢谢谢」,手指比昨天勤快。指数 71。","21:00 · 峰值:蛋糕、蜡烛、许愿,或者一顿好的——今天的主角感达到顶点。指数 88。","23:00 · 自洽谷:热闹散场,您一个人洗漱,忽然有点安静。指数 55。本台祝语:生日的意义不是热闹,是「今天,我被记得」——被记得这件事,已经完成了。"],"empty":"不输入时间没法播报——但生日的情绪,总在某个时段等您对号。","metrics":[["当前指数","待播报"],["情绪曲线","三峰两谷"],["救场方案","自己买蛋糕"],["本台立场","陪寿星过完"]],"logTitle":"播报记录","logEn":"INDEX","logEmpty":"暂无播报。您的生日情绪,正在按剧本上演。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

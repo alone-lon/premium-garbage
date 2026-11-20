@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「喝热水」处方学研究院</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>万能处方「喝热水」</b></span>
+    <span>处方来源 <b>长辈 · 直男 · 客服</b></span>
+    <span>疗效评级 <b>说不清,但从不缺席</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">HOT-WATER&nbsp;PRESCRIPTION</div>
+    <h1>「喝热水」处方学研究院</h1>
+    <div class="sub">感冒了?喝热水。胃疼?喝热水。心情不好?……喝热水。本研究院严肃研究这句万能处方:它的疗效、它的敷衍感、以及它为何永远没错。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">研究院开题</div><div class="status" id="status">本研究院不否定热水——热水确实无害。我们研究的是:为什么所有病症的答案,都汇入同一条河流。</div><div class="metrics"><div class="m"><div class="k">研究样本</div><div class="v">0 例</div></div><div class="m"><div class="k">疗效评级</div><div class="v">60 分</div></div><div class="m"><div class="k">敷衍感</div><div class="v">可清零</div></div><div class="m"><div class="k">处方温度</div><div class="v">恒温</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">处方史研究</button><button class="btn" id="btn1">疗效分析</button><button class="btn" id="btn2">升级方案</button></div></div><div class="log"><div class="sec-tag"><span class="zh">研究记录</span><span class="en">RESEARCH</span></div><ul id="log"><li style="color:var(--muted)">暂无研究。您的保温杯此刻正温着,等着一句「多喝热水」。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">研究院结语</div>
+    <p>「喝热水」被吐槽了几十年,但它依然是最长情的处方:说的人未必专业,但几乎都真心。本研究院的最终结论:别再嘲笑这句处方了——它笨拙、万能、永远在线,像极了那些不会说漂亮话,却一直在你身边的人。水凉了可以再续,人别凉。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">研究完毕。水,趁热喝。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 117 号藏品 · 本院与 96 号(表情包翻译署)同一课题:翻译长辈的爱<br>研究院冷知识:「多喝热水」在恋爱里的疗效,取决于说话人是谁——同一个字,暖和凉,两个世界
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"研究院开题","stat0":"本研究院不否定热水——热水确实无害。我们研究的是:为什么所有病症的答案,都汇入同一条河流。","btns":[{"label":"处方史研究","lines":["处方史考证:「多喝热水」的处方权,横跨长辈、直男与客服三代——它是汉语里唯一三界通用的医嘱。","处方史补充:长辈说它,是真信;直男说它,是真没辙;客服说它,是话术模板——同一句水,三种温度。","处方史终极考证:全人类喝过的热水,如果汇在一起,能再建一个西湖——水的疗效未知,但水量是真的。"],"bigs":["三界通用","三种温度","一个西湖"]},{"label":"疗效分析","lines":["疗效一:生理层面——热水促进血液循环、缓解痉挛,对胃疼和痛经确有辅助作用。此处方,医学背书 60 分。","疗效二:心理层面——「有人让你喝热水」的意思是「有人关心你」。处方的水不值钱,开处方的心意值钱。","疗效三:玄学层面——热水是中国人的安慰剂:它的疗效 70% 来自「喝下去那一刻,觉得自己被照顾了」。"],"bigs":["60 分","心意","安慰剂"]},{"label":"升级方案","lines":["升级一:把「喝热水」改成「我给你倒了热水,趁热」——同一句话,加了动作,敷衍感清零。","升级二:把「喝热水」换成「热水在上,药我也买了」——处方的完整性,决定它的疗效。","研究院终极方案:热水永远没错,但请配上具体行动——没有行动的热水,是白开水;有行动的,才是药引子。"],"bigs":["趁热","完整性","药引子"]}],"metrics":[["研究样本","0 例"],["疗效评级","60 分"],["敷衍感","可清零"],["处方温度","恒温"]],"logTitle":"研究记录","logEn":"RESEARCH","logEmpty":"暂无研究。您的保温杯此刻正温着,等着一句「多喝热水」。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
