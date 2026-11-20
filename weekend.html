@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>周末倒计时(自动续期版)</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(32px,6vw,52px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:44px 30px 36px;margin-top:8px;text-align:center}
+.timer{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;font-size:clamp(40px,9vw,72px);line-height:1.15;letter-spacing:.04em}
+.timer small{font-size:.42em;color:var(--muted);font-weight:400;letter-spacing:.1em}
+.status{font-size:14px;color:var(--muted);margin-top:12px}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:30px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.ctrl{margin-top:26px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.log{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>计量对象 <b>距离最近的周六 00:00</b></span>
+    <span>精度 <b>毫秒级(无实际意义)</b></span>
+    <span>调休支持 <b>不支持(超纲,拒算)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WEEKEND&nbsp;COUNTDOWN&nbsp;·&nbsp;AUTO-EXTENDING</div>
+    <h1>周末倒计时</h1>
+    <div class="sub">精确到毫秒的周末倒计时,到点自动续期。设备运行多年从未出错——周末也从未按时到账。</div>
+  </div>
+
+  <div class="console">
+    <div class="timer"><span id="d">--</span><small> 天 </small><span id="h">--</span><small>:</small><span id="m">--</span><small>:</small><span id="s">--</span><small>.</small><span id="cc">--</span></div>
+    <div class="status" id="status">状态:计时中。周末即将抵达——一如既往地,不。</div>
+    <div class="metrics">
+      <div class="m"><div class="k">本周已消耗</div><div class="v" id="pct">--%</div></div>
+      <div class="m"><div class="k">距周末</div><div class="v" id="dshort">-- 天</div></div>
+      <div class="m"><div class="k">周末续航</div><div class="v">预计 0 小时</div></div>
+      <div class="m"><div class="k">上次到账</div><div class="v">上上周</div></div>
+    </div>
+    <div class="ctrl">
+      <button class="btn accent" id="applyBtn">申请提前过周末</button>
+      <button class="btn" id="forceBtn">手动触发周末</button>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="sec-tag"><span class="zh">计时日志</span><span class="en">TIMING&nbsp;LOG</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无事件。倒计时平静地走着,像每个工作日一样。</li></ul>
+  </div>
+
+  <div class="note">
+    <div class="title">计算说明</div>
+    <p>本机采用「卷式计时法」:周末并非不存在,而是每次到达时,都被自动兑换为对下周末的期待。该机制经长期运行验证:计时从未出错,周末从未确认到账,双方维持了体面的默契。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">时间是连续的,班是周期性的。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 18 号藏品 · 倒计时归零不是结束,是新一周的开场<br>
+      关于调休:调休会让本机算到宕机。出于自我保护,一律按不存在处理
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  function p2(n){return String(n).padStart(2,"0")}
+  function nextSat(){
+    var now=new Date();
+    var add=(6-now.getDay()+7)%7;
+    if(add===0) add=7;
+    return new Date(now.getFullYear(),now.getMonth(),now.getDate()+add,0,0,0,0);
+  }
+  var target=nextSat();
+  var rolled=false;
+  var log=$("log");
+  function record(tag,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+    log.prepend(li);
+  }
+  function tick(){
+    var now=new Date();
+    var left=target-now;
+    if(left<=0){
+      target=nextSat();
+      if(!rolled){ record("自动顺延","周末已到期。经核验,内容与上周完全一致,已原样退回,并重新计时。"); rolled=true; }
+      left=target-now;
+    }
+    var ms=left;
+    var d=Math.floor(ms/86400000); ms-=d*86400000;
+    var h=Math.floor(ms/3600000); ms-=h*3600000;
+    var m=Math.floor(ms/60000); ms-=m*60000;
+    var s=Math.floor(ms/1000);
+    var cc=Math.floor((ms-s*1000)/10);
+    $("d").textContent=String(d).padStart(2,"0");
+    $("h").textContent=p2(h);$("m").textContent=p2(m);$("s").textContent=p2(s);$("cc").textContent=p2(cc);
+    $("dshort").textContent=d+" 天 "+h+" 时";
+    var mondayOffset=(now.getDay()+6)%7;
+    var weekStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()-mondayOffset,0,0,0,0);
+    var pct=(now-weekStart)/(7*86400000)*100;
+    $("pct").textContent=pct.toFixed(1)+"%";
+  }
+  setInterval(tick,100);tick();
+  $("applyBtn").addEventListener("click",function(){
+    record("提前申请","申请已提交。审批人:时间。审批意见:不批。批注:大家都想要,请排队。");
+  });
+  $("forceBtn").addEventListener("click",function(){
+    record("手动触发","周末已加载 0.3 秒。因内容与上周完全一致,系统已自动回滚,不产生补偿。");
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>老板画饼翻译器</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(32px,6vw,52px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.original{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:22px;font-weight:700;line-height:1.6;min-height:1.6em}
+.trans{font-size:15px;color:var(--seal);min-height:2.4em;margin-top:10px}
+.ctrl{margin-top:24px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:11px 20px;font-size:14px;letter-spacing:.1em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{margin-top:22px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:11px 14px;font:inherit;font-size:14px;width:min(420px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.translate{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap;max-width:46%;overflow:hidden;text-overflow:ellipsis}
+.dict{margin-top:44px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:30%;font-size:14px;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{font-size:14px;color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>翻译方向 <b>老板话 → 人话(单向,敢怒不敢言)</b></span>
+    <span>语料库 <b>十年晨会 · 全员沉默贡献</b></span>
+    <span>外放功能 <b>无(保命设计)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BOSS-SPEAK&nbsp;TRANSLATOR</div>
+    <h1>老板画饼翻译器</h1>
+    <div class="sub">职场通用设备:把老板的每一句美好展望,翻译成它本来的意思。翻译结果请独自阅读,并管理好表情。</div>
+  </div>
+
+  <div class="console">
+    <div class="original" id="orig">待机中。今日晨会尚未开始,饼香四溢。</div>
+    <div class="trans" id="trans">点击下方任意一句原话,或自行投喂。</div>
+    <div class="ctrl">
+      <button class="btn accent" data-phrase="公司是个大家庭">「公司是个大家庭」</button>
+      <button class="btn accent" data-phrase="下个月给你涨薪">「下个月给你涨薪」</button>
+      <button class="btn" data-phrase="年轻人要多学习">「年轻人要多学习」</button>
+      <button class="btn" data-phrase="我从来不画饼">「我从来不画饼」</button>
+      <button class="btn" data-phrase="等公司上市就好了">「等公司上市就好了」</button>
+      <button class="btn" data-phrase="我都是把你们当兄弟">「我把你们当兄弟」</button>
+    </div>
+    <div class="input">
+      <input id="custom" type="text" placeholder="输入一句老板语录,越原话越好" maxlength="60">
+      <button class="btn accent" id="goBtn">翻译</button>
+    </div>
+  </div>
+
+  <div class="translate">
+    <div class="sec-tag"><span class="zh">实时翻译记录</span><span class="en">LIVE&nbsp;TRANSCRIPT</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无翻译。饼还在烤箱里。</li></ul>
+  </div>
+
+  <div class="dict">
+    <div class="sec-tag"><span class="zh">高频画饼术语对照表</span><span class="en">PHRASEBOOK</span></div>
+    <table>
+      <tr><th>官方说法</th><th>实际含义(已破译)</th></tr>
+      <tr><td>大家庭</td><td>家庭成员不领工资,只有家庭义务。户口已迁入,辞职视为离家出走。</td></tr>
+      <tr><td>下个月</td><td>一个不存在于任何日历上的月份,专门用于兑现承诺。</td></tr>
+      <tr><td>风口</td><td>风从哪来未知。如果是猪,那头猪大概不是你。</td></tr>
+      <tr><td>期权</td><td>一张你看不懂、也拿不到的纸,前期主要起精神食粮作用。</td></tr>
+      <tr><td>扁平化管理</td><td>管理层级只有两层:老板,和所有人。</td></tr>
+      <tr><td>弹性工作</td><td>上班时间精确到分钟,下班时间精确到「忙完再说」。</td></tr>
+      <tr><td>对标大厂</td><td>福利不对标,加班先对标。</td></tr>
+      <tr><td>我看好你</td><td>看好是免费的,加钱是另议的。「另议」的意思是不议。</td></tr>
+      <tr><td>狼性</td><td>指干活的血性。分肉的时候,狼性自动切换为佛性。</td></tr>
+      <tr><td>复盘</td><td>把没做成的饼摊开,确认面粉还是面粉。</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">破译后记</div>
+    <p>饼并不难吃,难吃的是把饼当饭的自觉。本机不反对画饼——毕竟人类靠希望发电——它只是坚持在每一张饼上标注配料表:主要成分为未来,辅料为你的加班,保质期与你的耐心一致。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">翻译完毕。结论:饼没有错,错在你没带饭。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 16 号藏品 · 翻译结果不建议当面对照,后果自负<br>
+      特别感谢:十年晨会,一字未落,全部收录
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var dict={
+    "公司是个大家庭":"翻译:家人不谈钱,谈钱伤感情。所以每次谈工资,受伤的都是感情。",
+    "下个月给你涨薪":"翻译:该承诺涉及『下个月』——一个未在日历上架的月份。建议追问:是哪一年的下个月?",
+    "年轻人要多学习":"翻译:学费自理,课程内容为干活,结业证书为更多的活。",
+    "我从来不画饼":"翻译:否认,是画饼工艺的第一道工序。正宗的饼,从不承认自己是饼。",
+    "等公司上市就好了":"翻译:上市属于玄学范畴,兑现概率请参照本系列『每日运势』——准确率 0%,高度一致。",
+    "我都是把你们当兄弟":"翻译:兄弟意味着不签合同也能干活,散伙时不结算。亲兄弟明算账——本厂兄弟,不算。",
+    "钱不是最重要的":"翻译:对他不是,对你不是,对房东是。",
+    "扁平化管理":"翻译:所有汇报直达老板,包括你的,尤其是你的。",
+    "弹性工作制":"翻译:上班弹性为零,下班弹性无限,弹的方向永远是往后弹。",
+    "忙完这阵就好了":"翻译:『这阵』之后还有下一阵,阵与阵无缝衔接。轻松不属于任何一阵。"
+  };
+  var fallbacks=[
+    "翻译失败。该饼烘焙工艺过于先进,超出本机解析范围。建议直接反问一句:『所以,工资呢?』——此问可击穿 99% 的饼。",
+    "解析超时。这张饼层次过多,建议切片处理:先问时间,再问金额,最后问签字栏在哪。",
+    "翻译受阻。检测到高浓度愿景成分,已触发自我保护。请投喂更具体的饼,例如带金额的那种。"
+  ];
+  function keywordPick(text){
+    if(/涨薪|工资|加薪|钱/.test(text)) return dict["下个月给你涨薪"];
+    if(/上市|股票|期权/.test(text)) return dict["等公司上市就好了"];
+    if(/家庭|家人|家/.test(text)) return dict["公司是个大家庭"];
+    if(/兄弟|兄妹|伙计/.test(text)) return dict["我都是把你们当兄弟"];
+    if(/学习|成长|提升自己/.test(text)) return dict["年轻人要多学习"];
+    if(/画饼/.test(text)) return dict["我从来不画饼"];
+    if(/轻松|这阵|熬过/.test(text)) return dict["忙完这阵就好了"];
+    if(/扁平/.test(text)) return dict["扁平化管理"];
+    if(/弹性/.test(text)) return dict["弹性工作制"];
+    return null;
+  }
+  var log=$("log");
+  function record(phrase,t){
+    $("orig").textContent="原话:"+phrase;
+    $("trans").textContent=t;
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+phrase.replace(/</g,"&lt;")+'</span><span>'+t+'</span>';
+    log.prepend(li);
+  }
+  var n=0;
+  document.querySelectorAll(".ctrl .btn").forEach(function(b){
+    b.addEventListener("click",function(){ record(b.getAttribute("data-phrase"),dict[b.getAttribute("data-phrase")]); });
+  });
+  $("goBtn").addEventListener("click",function(){
+    var v=$("custom").value.trim();
+    if(!v){ record("(空白)", "翻译:沉默也是饼的一种,而且热量最低。"); return; }
+    var t=keywordPick(v)||fallbacks[n%fallbacks.length];
+    n++; record(v,t);
+    $("custom").value="";
+  });
+})();
+</script>
+</body>
+</html>

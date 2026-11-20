@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>废话浓度检测仪</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(32px,6vw,52px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.ctrl{margin-top:18px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:11px 22px;font-size:14px;letter-spacing:.1em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.result{margin-top:30px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(52px,10vw,84px);font-weight:700;color:var(--seal);line-height:1.1}
+.result .verdict{font-size:14px;color:var(--muted);margin-top:6px;letter-spacing:.1em}
+.report{margin-top:44px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td{font-size:14px}
+td:first-child{width:22%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>检测对象 <b>一切人类发言</b></span>
+    <span>执行标准 <b>GB/T 0000-0000《废话判定通则》</b></span>
+    <span>检测误差 <b>±0%(废话认废话,误差失去意义)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">NONSENSE&nbsp;CONCENTRATION&nbsp;ANALYZER</div>
+    <h1>废话浓度检测仪</h1>
+    <div class="sub">把任意一句话交给本机,获得权威废话浓度报告。检测全程无损:废话,经得起废话的检验。</div>
+  </div>
+
+  <div class="console">
+    <textarea id="src" placeholder="粘贴任意发言:周报、讲话稿、朋友圈文案,或者你对这一页的评价"></textarea>
+    <div class="ctrl">
+      <button class="btn accent" id="goBtn">检测浓度</button>
+      <button class="btn" data-sample="0">示例 · 周报</button>
+      <button class="btn" data-sample="1">示例 · 讲话</button>
+      <button class="btn" data-sample="2">示例 · 朋友圈</button>
+    </div>
+    <div class="result" id="result">
+      <div class="num" id="num">--</div>
+      <div class="verdict" id="verdict"></div>
+    </div>
+  </div>
+
+  <div class="report" id="report" style="display:none">
+    <div class="sec-tag"><span class="zh">成分分析报告</span><span class="en">LAB&nbsp;REPORT</span></div>
+    <ul id="breakdown"></ul>
+  </div>
+
+  <div class="report" style="display:block">
+    <div class="sec-tag"><span class="zh">浓度评级速查</span><span class="en">RATING</span></div>
+    <table>
+      <tr><th>浓度区间</th><th>官方评级</th><th>处置建议</th></tr>
+      <tr><td>0%–20%</td><td>话有干货</td><td>立即存档。本系列不收,与本系列无关。</td></tr>
+      <tr><td>20%–50%</td><td>正常人类</td><td>允许发言,注意克制,别养成习惯。</td></tr>
+      <tr><td>50%–80%</td><td>高度铺垫</td><td>建议对方先说结论,铺垫留给回忆录。</td></tr>
+      <tr><td>80%–99%</td><td>纯度超标</td><td>限时三十秒,超时由旁人代为总结。</td></tr>
+      <tr><td>100%</td><td>大师级</td><td>免费收录进《废话大辞典》。不付稿费。</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">检测原理</div>
+    <p>本机采用「废话对撞机」架构:用一句更大的废话轰击你的废话,若两者相撞后均完好无损,即互认对方为废话。该方法已通过同行评审——评审的同行,也全是废话。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">检测完毕。备注:本页简介也送检过了,100%。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 17 号藏品 · 本机不提供「去废话」服务——去掉废话,剩下的就不值钱了<br>
+      友情提示:浓度 0% 的发言同样危险,那叫命令
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var samples=[
+    "本周工作持续推进中:方向明确,节奏可控,整体稳中向好,关键环节持续发力,重点任务有序落实;下周计划:继续推进本周未完成的部分,并持续保持推进,确保推进的连续性与推进感。",
+    "我们要以提高质量为中心,以质量提升为抓手,把质量真正抓上去,通过抓质量促进质量,最终实现质量的全面提升,让质量在高质量的水平上更高质量。",
+    "人生就是一场旅行,不在乎目的地,在乎的是沿途的风景,以及看风景的心情。其实重要的不是去哪,而是出发;出发本身,就是最有意义的抵达。"
+  ];
+  function r(a,b){return a+Math.floor(Math.random()*(b-a+1))}
+  function detect(){
+    var t=$("src").value.trim();
+    var box=$("result");box.style.display="block";
+    $("report").style.display="block";
+    if(!t){
+      $("num").textContent="100.0%";
+      $("verdict").textContent="评级:大师级 · 备注:空白是废话的最高形态,无需检测";
+      render([
+        ["空白检测","检出全部内容","均为空白"],
+        ["信息增量","未检出","连结构都没有"],
+        ["耗时","0.000s","空白检测不耗时"]
+      ]);
+      return;
+    }
+    var t0=performance.now();
+    $("num").textContent="检测中…";
+    $("verdict").textContent="废话对撞机启动,正在轰击目标发言";
+    setTimeout(function(){
+      var cost=(performance.now()-t0)/1000;
+      $("num").textContent="100.0%";
+      $("verdict").textContent="评级:大师级废话 · 检测耗时 "+cost.toFixed(3)+"s · 建议整句收藏";
+      render([
+        ["信息增量","未检出","已用高精度仪器复测,仍为 0"],
+        ["同义反复","检出 "+r(2,4)+" 处","排列工整,前后呼应,首尾循环"],
+        ["正确但无用","检出 "+r(5,9)+" 处","分布均匀,无一处错误,也无一处有用"],
+        ["核心观点","疑似存在","超出仪器量程,建议放大后再检(放大后仍无)"],
+        ["典型范式","「听君一席话,如听一席话」","符合国标,可直接投稿《废话大辞典》"]
+      ]);
+    },420);
+  }
+  function render(rows){
+    var ul=$("breakdown");ul.innerHTML="";
+    rows.forEach(function(row){
+      var li=document.createElement("li");
+      li.innerHTML='<span class="t">'+row[0]+'</span><span>'+row[1]+' · <span style="color:var(--muted)">'+row[2]+'</span></span>';
+      ul.appendChild(li);
+    });
+  }
+  $("goBtn").addEventListener("click",detect);
+  document.querySelectorAll("[data-sample]").forEach(function(b){
+    b.addEventListener("click",function(){
+      $("src").value=samples[+b.getAttribute("data-sample")];
+      detect();
+    });
+  });
+})();
+</script>
+</body>
+</html>

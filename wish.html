@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>许愿池(枯水期版)</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(32px,6vw,52px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.well{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;color:var(--muted);letter-spacing:.3em}
+.input{margin-top:20px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:28px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.receipt{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:28%;font-size:14px;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{font-size:14px;color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>池水状态 <b>干涸(季节:长期)</b></span>
+    <span>愿望吞吐 <b>只进不出</b></span>
+    <span>历史兑现 <b>0 条 · 数据透明</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WISHING&nbsp;WELL&nbsp;(DRY&nbsp;SEASON)</div>
+    <h1>许愿池</h1>
+    <div class="sub">一口郑重运营的许愿池:收下你的硬币与愿望,承诺永久保管。保管的意思是——不看、不用、不还、不问。</div>
+  </div>
+
+  <div class="console">
+    <div class="well">· 池 ·</div>
+    <div class="input">
+      <input id="wish" type="text" placeholder="写下愿望(写清楚点,池方不看第二遍)" maxlength="50">
+      <button class="btn accent" id="tossBtn">投币许愿</button>
+    </div>
+    <div class="metrics">
+      <div class="m"><div class="k">累计收到愿望</div><div class="v" id="cnt">0 条</div></div>
+      <div class="m"><div class="k">已兑现</div><div class="v">0 条</div></div>
+      <div class="m"><div class="k">兑现率</div><div class="v">0% · 透明</div></div>
+      <div class="m"><div class="k">池内水位</div><div class="v">0 mm</div></div>
+    </div>
+  </div>
+
+  <div class="receipt">
+    <div class="sec-tag"><span class="zh">池方回执</span><span class="en">RECEIPTS</span></div>
+    <ul id="log"><li style="color:var(--muted)">暂无投递。池底很安静,愿望们互不打扰。</li></ul>
+  </div>
+
+  <div class="report" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">许愿池服务条款速览</span><span class="en">TERMS</span></div>
+    <table>
+      <tr><th>项目</th><th>条款</th></tr>
+      <tr><td>许愿费用</td><td>免费。免费的东西不办事,逻辑闭环。</td></tr>
+      <tr><td>愿望保密</td><td>绝对保密。主要因为没有人看。</td></tr>
+      <tr><td>兑现时限</td><td>不设时限,从而合法地无限期不兑现。</td></tr>
+      <tr><td>硬币退还</td><td>不退。硬币是本池唯一的实体收入。</td></tr>
+      <tr><td>投诉渠道</td><td>对着池子,把愿望再说一遍。会有回声。</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">池方声明</div>
+    <p>愿望投进池里的那一刻,就从「我要去做的事」变成了「我已经许过的事」。本池的全部业务,是收容这些被提前退休的愿望——它们在池底过得很安稳:不用努力,也不用面对现实。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">投币成功。祝你想起来的时候,已经不需要了。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 19 号藏品 · 本池不收超过十块钱的愿望,请自行努力<br>
+      干涸不是本池的错,是愿望的含水量不够
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var n=0;
+  var replies=[
+    "愿望已收到。池方已阅——阅后即忘,是本池的服务特色。",
+    "愿望已归档。档案室位于池底,钥匙由上一任池主保管,下落不详。",
+    "愿望已受理。请注意:受理不是办理,两者之间隔着一整个池底。",
+    "该愿望与本池经营方向不符。本池只经营期待感,不经营结果。",
+    "愿望太具体了。太具体容易被想起来,池方建议重写得更虚一点。",
+    "投币成功。硬币已沉底,与历代愿望的灰烬层完成对接。"
+  ];
+  var log=$("log");
+  function p2(x){return String(x).padStart(2,"0")}
+  function record(id,text){
+    if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1) log.innerHTML="";
+    var now=new Date();
+    var li=document.createElement("li");
+    li.innerHTML='<span class="t">'+id+'</span><span>'+text+' <span style="color:var(--muted)">('+p2(now.getHours())+':'+p2(now.getMinutes())+':'+p2(now.getSeconds())+')</span></span>';
+    log.prepend(li);
+  }
+  $("tossBtn").addEventListener("click",function(){
+    var v=$("wish").value.trim();
+    var id="WX-2026-"+String(1000+(++n)).slice(1);
+    $("cnt").textContent=n+" 条";
+    if(!v){
+      record(id,"空白愿望已接收。空白也是一种愿望——什么都不想要,是本池收到过的最高境界。");
+      $("wish").value="";return;
+    }
+    if(/一亿|暴富|发财|中彩票/.test(v)){
+      record(id,"该愿望重量超标,已触发池底结构预警。建议:拆分投递,或先降低一个数量级。");
+      $("wish").value="";return;
+    }
+    if(/世界和平|全人类/.test(v)){
+      record(id,"该愿望已转交。转交对象:所有人。池方能力有限,只能帮你到这里。");
+      $("wish").value="";return;
+    }
+    if(/脱单|对象|恋爱/.test(v)){
+      record(id,"愿望已登记。池方查阅了红娘业务线,发现该线干涸比池子更早,已原路退回期待。");
+      $("wish").value="";return;
+    }
+    record(id,replies[n%replies.length]);
+    $("wish").value="";
+  });
+})();
+</script>
+</body>
+</html>

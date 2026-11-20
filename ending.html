@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>强行升华结尾机</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(32px,6vw,52px);font-weight:700;letter-spacing:.14em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.input{margin-top:0;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.ctrl{margin-top:16px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:11px 20px;font-size:14px;letter-spacing:.1em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.output{margin-top:28px;border-top:1px solid var(--faint);padding-top:24px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:18px;line-height:2.1;margin-top:12px}
+.output .deep b{color:var(--seal);font-weight:700}
+.quote{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+.qbox{border:1px solid var(--ink);padding:36px 30px;text-align:center;margin-top:8px}
+.qtext{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:22px;font-weight:700;line-height:1.9;min-height:2em}
+.qby{margin-top:14px;font-size:13px;color:var(--muted);letter-spacing:.14em}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td{font-size:14px}
+td:first-child{width:16%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted);white-space:nowrap}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>加工对象 <b>任何平凡小事</b></span>
+    <span>升华层数 <b>最多三层</b></span>
+    <span>海拔变化 <b>+3000 米</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FORCED&nbsp;SUBLIMATION&nbsp;MACHINE</div>
+    <h1>强行升华结尾机</h1>
+    <div class="sub">把下楼取个快递,加工成值得发朋友圈的人生感悟。全程不改变事实——只改变事实的海拔。</div>
+  </div>
+
+  <div class="console">
+    <div class="input">
+      <input id="event" type="text" placeholder="输入一件小事,越普通越好" maxlength="40">
+      <button class="btn accent" id="goBtn">强行升华</button>
+    </div>
+    <div class="ctrl">
+      <button class="btn" data-ev="下楼取了个快递">示例 · 取快递</button>
+      <button class="btn" data-ev="午睡了二十分钟">示例 · 午睡</button>
+      <button class="btn" data-ev="接了今天第三杯水">示例 · 接水</button>
+    </div>
+    <div class="output" id="out">
+      <div class="fact" id="fact"></div>
+      <div class="deep" id="deep"></div>
+    </div>
+  </div>
+
+  <div class="quote">
+    <div class="sec-tag"><span class="zh">名人名言 · 均为佚名</span><span class="en">QUOTES</span></div>
+    <div class="qbox">
+      <div class="qtext" id="qtext">「生而为人,我很想先睡一觉。」</div>
+      <div class="qby" id="qby">—— 鲁迅(并未说过)</div>
+      <div class="ctrl" style="margin-top:22px">
+        <button class="btn accent" id="qBtn">再生成一句</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="report" style="margin-top:44px">
+    <div class="sec-tag"><span class="zh">升华层数对照表</span><span class="en">LAYERS</span></div>
+    <table>
+      <tr><th>层数</th><th>产出示范(以取快递为例)</th><th>适用场景</th></tr>
+      <tr><td>一层</td><td>「取快递让我学会了等待。」</td><td>配图发圈,安全</td></tr>
+      <tr><td>二层</td><td>「快递是终点,等待是修行。」</td><td>深夜emo,慎用</td></tr>
+      <tr><td>三层</td><td>「在无尽的时空里,每个取件码都是命运的暗号。」</td><td>仅限朋友圈,禁入周报</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="title">加工声明</div>
+    <p>升华的本质,是把「什么都没发生」翻译成「一切都在发生」。本机不生产感悟,本机只是感悟的搬运工——从虚无里搬,往朋友圈里搬,运费全免。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">升华完毕。你取的不是快递,是人生的盲盒。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 20 号藏品 · 本机输出的感悟不具备指导意义,仅供配图<br>
+      请勿在周报中使用三层升华——HR 会来和你对齐颗粒度
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var insights=[
+    "就在这个平凡的瞬间,我忽然明白:人这一生,就是在无数个不起眼的时刻里,悄悄练习与自己和解。",
+    "就在这个平凡的瞬间,我忽然明白:所有的抵达,都是为了下一次出发;而所有的出发,本质上都是在找插座。",
+    "就在这个平凡的瞬间,我忽然明白:真正的成长不是变强,而是学会在变强之前,先躺一会儿。",
+    "就在这个平凡的瞬间,我忽然明白:世界从不辜负认真生活的人——它只是从不回应。",
+    "就在这个平凡的瞬间,我忽然明白:我们终此一生,就是要摆脱他人的期待,以及闹钟。"
+  ];
+  var deepeners=[
+    "再回头看这件小事:它哪里只是小事,它分明是宇宙借你的手,给这一天盖了个邮戳。",
+    "再回头看这件小事:它哪里只是小事,它是生活递来的一封没有署名的信,而你已经读完了。",
+    "再回头看这件小事:它哪里只是小事,它是时间在你生命的档案里,轻轻按下的一枚确认键。",
+    "再回头看这件小事:它哪里只是小事——它是宏大叙事在人间的一处施工工地,今天如期完工。"
+  ];
+  var quotes=[
+    {t:"咖啡越苦,人生越清醒;人生越清醒,越需要咖啡。",by:"—— 佚名(也可能是你)"},
+    {t:"成年人的崩溃是静音的,充电是慢充的。",by:"—— 尼采(没说过这句)"},
+    {t:"你以为你在摸鱼,其实是鱼在摸你。",by:"—— 卡夫卡(生前未发布)"},
+    {t:"凡是过去,皆为序章;凡是明天,皆为调休。",by:"—— 莎士比亚(断章取义)"},
+    {t:"世界上并不缺少美,缺少的是把美修成九宫格的耐心。",by:"—— 罗丹(雕塑家,不负责文案)"},
+    {t:"每一种伟大的背后,都有一张没交的话费。",by:"—— 鲁迅(并未说过)"},
+    {t:"生活给你关上一扇门的时候,还会顺手把窗锁了,并收取改装费。",by:"—— 佚名(物业旁听生)"}
+  ];
+  function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+  $("goBtn").addEventListener("click",function(){
+    var ev=$("event").value.trim();
+    if(!ev) ev="什么也没干";
+    $("fact").textContent="原始素材(未加工):"+ev;
+    $("deep").innerHTML="<b>"+ev.replace(/</g,"&lt;")+"</b>。"+rnd(insights)+rnd(deepeners);
+    $("out").style.display="block";
+  });
+  $("qBtn").addEventListener("click",function(){
+    var q=rnd(quotes);
+    $("qtext").textContent="「"+q.t+"」";
+    $("qby").textContent=q.by;
+  });
+  document.querySelectorAll("[data-ev]").forEach(function(b){
+    b.addEventListener("click",function(){
+      $("event").value=b.getAttribute("data-ev");
+      $("goBtn").click();
+    });
+  });
+})();
+</script>
+</body>
+</html>
