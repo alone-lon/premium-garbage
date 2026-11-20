@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>下班关机三式抉择庭</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受理范围 <b>每日下班前 1 次</b></span>
+    <span>三式流派 <b>关机派 · 熄屏派 · 合盖派</b></span>
+    <span>判决依据 <b>心事存量(自报)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SHUTDOWN&nbsp;TRIVIA</div>
+    <h1>下班关机三式抉择庭</h1>
+    <div class="sub">下班合电脑,有三式:彻底关机、只熄屏、合盖装睡——选哪式,暴露的不止是电量,是您今天还剩多少没干完的心事。本庭受理每日抉择,出具判决。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">当前流派:合盖派</div><div class="meter"><div class="fill" id="fill" style="width:55%"></div></div><div class="status" id="status">17:58,工位进入「准备下班」状态。您的手指悬在电源键上方——本庭开庭,请申报今日心事存量。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入今日待办剩几件,例如:3" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">出庭判决</button></div><div class="metrics"><div class="m"><div class="k">今日出庭</div><div class="v">0 次</div></div><div class="m"><div class="k">主流流派</div><div class="v">合盖派(63%)</div></div><div class="m"><div class="k">最解压音效</div><div class="v">关机一声轻响</div></div><div class="m"><div class="k">判决执行力</div><div class="v">看明天</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">判决记录</span><span class="en">COURT</span></div><ul id="log"><li style="color:var(--muted)">暂无判决。您的电脑此刻还开着,或者已经装睡——本庭明天见。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本庭判词</div>
+    <p>关电脑的三式,是当代职场人的三种自我保护:彻底关机是与工作断联的勇气,熄屏待机是藕断丝连的诚实,合盖装睡是身不由己的默契。本庭不评判任何一式——每一式背后都是真实的处境——只想在判决书末尾加一行小字:无论哪一式,请给自己留一个「真正下班」的开关。它不在主机上,在您心里。那个开关今天要是没按下,明天也不会自动闭合。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">退庭。今天到此为止——这句,说给自己。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 299 号藏品 · 本庭与 132 号(「下班前最后一分钟」任务雷达)互为因果:雷达响完,就轮到本庭开庭<br>庭内冷知识:「彻底关机」的比例在周五最高——周末的引力,比电源键有力
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"当前流派:合盖派","pct":55,"stat0":"17:58,工位进入「准备下班」状态。您的手指悬在电源键上方——本庭开庭,请申报今日心事存量。","inputPh":"输入今日待办剩几件,例如:3","btnLabel":"出庭判决","reasons":["判决结果:待办清零——判「彻底关机」。主机断电的一声轻响,是打工人一天中最解压的一个音效:今天,物理性地结束了。","判决结果:剩 1-2 件——判「熄屏待机」。屏幕黑了,主机还醒着,和您的牵挂一个状态:不看,但在。明早见面,谁也不装不认识谁。","判决结果:剩 3-5 件——判「合盖装睡」。盖子合上的声音像鞠了一躬:身体下班了,任务留在梦里值夜班——这是本庭最常见,也最心酸的判决。","判决结果:剩 6 件以上——判「带电脑回家」。本庭附注:电脑进家门的那一刻,加班的边界就失效了——沙发、床和饭桌,从此都是工位的领土争议区。","流派观察:关机派睡得沉,熄屏派想得慢,合盖派周末会突然想起工作——这不是玄学,是您的潜意识在替您值班。本庭建议:每周至少彻底关机一次,让主机也放个假。","终审陈词:关机的形式不重要,关机的心意才重要——真正让下班成立的,是您在心里对自己说「今天到此为止」。机器关不关,只是仪式;这句说了,才算下班。"],"empty":"不报心事存量,本庭按「无所谓,反正都带回家」的第四式处理——那一式没有判决,只有叹息。","metrics":[["今日出庭","0 次"],["主流流派","合盖派(63%)"],["最解压音效","关机一声轻响"],["判决执行力","看明天"]],"logTitle":"判决记录","logEn":"COURT","logEmpty":"暂无判决。您的电脑此刻还开着,或者已经装睡——本庭明天见。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

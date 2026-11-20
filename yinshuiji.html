@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>饮水机「加热中」常亮灯观测站</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>观测对象 <b>饮水机加热灯(红色,常亮)</b></span>
+    <span>连续亮灯 <b>8 小时 40 分(工作日均值)</b></span>
+    <span>绿灯出现率 <b>传闻级</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ETERNAL-HEATING&nbsp;LAMP</div>
+    <h1>饮水机「加热中」常亮灯观测站</h1>
+    <div class="sub">茶水间饮水机的红灯,从上班亮到下班:永远「加热中」,永远没人等到它变绿——本站观测这盏灯的坚守,并论证「等一杯热水」在办公室的真实耗时。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">红灯 · 第 4 小时</div><div class="status" id="status">点击抽取一次红灯观测报告。本站不影响水温,只记录耐心。</div><div class="ctrl"><button class="btn accent" id="goBtn">开始观测</button><button class="btn" id="moreBtn">换个时段再测</button></div><div class="metrics"><div class="m"><div class="k">今日亮灯</div><div class="v">8 小时 40 分</div></div><div class="m"><div class="k">绿灯目击</div><div class="v">0 次(传闻 1 次)</div></div><div class="m"><div class="k">水温实测</div><div class="v">52 度</div></div><div class="m"><div class="k">值守评级</div><div class="v">全楼最勤</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">观测记录</span><span class="en">LAMP</span></div><ul id="log"><li style="color:var(--muted)">暂无观测。红灯照常亮着,饮水机在茶水间独自沸腾,不吵不闹。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">观测站按语</div>
+    <p>饮水机的红灯是办公室里最恒久的信号:它不承诺烧开,只承诺「在烧」。我们观测它一年,渐渐读懂它的隐喻——职场上大多数等待都是这样:没有明确的「好了」,只有持续的「在弄」。而人真正需要的,往往不是一杯滚烫,是 52 度的将就里,那口刚刚好的温热。红灯会一直亮下去。您按下的每一杯,都是它没白烧的证据。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">观测完毕。接水去吧——红灯亮着,就还有人管您喝热的。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 302 号藏品 · 本站与 117 号(「喝热水」处方学研究院)结成冷暖同盟:一个研究喝,一个研究烧<br>站内冷知识:常亮的红灯背后,是每天 17 次的静默沸腾——它不是烧不开,是永远在为下一个人烧
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"红灯 · 第 4 小时","why0":"点击抽取一次红灯观测报告。本站不影响水温,只记录耐心。","btnLabel":"开始观测","moreLabel":"换个时段再测","pools":[{"q":"观测报告:晨间 9:00,红灯已亮","w":"结论:您到岗时它已经在烧——没人知道第一壶是几点开始热的。本站按惯例推想:它比保洁来得都早,是全楼最早上班的员工。"},{"q":"观测报告:接水瞬间,红灯闪烁","w":"结论:刚按下去就有人接水,红灯重新点亮——加热与接水永远错开半步。本站命名此现象为「热水错峰定律」,全楼适用。"},{"q":"观测报告:红灯持续第 3 小时","w":"结论:水温实测 52 度,不烫,不凉,一种「职场温度」——像这栋楼里大多数事的状态:不上不下,将就能用。"},{"q":"观测报告:有人说「刚烧开的」","w":"结论:经查,该说法属于经验性描述——其实没人真见过绿灯。本站不拆穿:有些传说,是茶水间的公共财产。"},{"q":"观测报告:下午 3 点,绿灯惊现 11 秒","w":"结论:史上首次目击!绿灯亮了 11 秒,全楼层仅 1 人在场,且当时正低头看手机。绿灯的存在,至今仍属孤证。"},{"q":"观测报告:下班前最后一接","w":"结论:17:40,红灯依然亮着,您接走今天最后一杯温水。饮水机通宵值守,明天 9:00,您会看到它还亮着——像从未下班。"},{"q":"观测报告:清洗日,断电 10 分钟","w":"结论:红灯熄灭,茶水间出现罕见黑灯时段。多位同事凑近查看「是不是坏了」——原来大家早已习惯它亮着,不亮反而心慌。"}],"metrics":[["今日亮灯","8 小时 40 分"],["绿灯目击","0 次(传闻 1 次)"],["水温实测","52 度"],["值守评级","全楼最勤"]],"logTitle":"观测记录","logEn":"LAMP","logEmpty":"暂无观测。红灯照常亮着,饮水机在茶水间独自沸腾,不吵不闹。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

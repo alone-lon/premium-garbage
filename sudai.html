@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>塑料袋双层打包标准委员会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>管辖范围 <b>收银台打包区(约 0.5 平方米)</b></span>
+    <span>现行标准 <b>双层制 · 分舱制 · 提手拧三圈制</b></span>
+    <span>委内立场 <b>打包是深夜最后一道工序</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DOUBLE-BAG&nbsp;STANDARDS</div>
+    <h1>塑料袋双层打包标准委员会</h1>
+    <div class="sub">汤面必须套两层袋,鸡蛋必须单独一格,提手必须拧三圈——委员会把这些没人写进规章的打包规矩,正式立为标准。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">标准审议中</div><div class="status" id="status">委员会设在收银台右侧。店员正在装袋,您的夜宵在透明袋里完成了第一次会晤——请提交本次打包审议。</div><div class="metrics"><div class="m"><div class="k">今晚打包</div><div class="v">43 单</div></div><div class="m"><div class="k">执行标准率</div><div class="v">100%</div></div><div class="m"><div class="k">洒漏事故</div><div class="v">0 起</div></div><div class="m"><div class="k">审议轮次</div><div class="v">3 项</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">审议·双层制</button><button class="btn" id="btn1">审议·分舱制</button><button class="btn" id="btn2">审议·提手制</button></div></div><div class="log"><div class="sec-tag"><span class="zh">审议记录</span><span class="en">BAGGING</span></div><ul id="log"><li style="color:var(--muted)">暂无审议。打包区安静,新袋子叠成一摞,等今晚的单。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">委员会章程</div>
+    <p>打包是便利店夜里最后一道手艺:没有培训教材,没有上岗证,全靠一代代店员的手感与默契。委员会做的事,是把这份手感写成标准——不是要把深夜变冷冰冰,恰恰相反:双层袋护住的是汤,分舱制护住的是蛋,拧三圈护住的是您走夜路时那点「东西不会洒」的笃定。深夜的温柔往往长这样:看不见,拎得稳,到家发现一切都好好的——这就是本委存在的全部意义。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">审议通过。拎稳了——今晚一路,袋子不许洒。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 308 号藏品 · 本委与 266 号(关门力度认证中心)同属「日常动作标准化联合体」:一个认证关门的轻重,一个审定打包的层次<br>委内冷知识:全人类对「袋子拧几圈」的平均偏好是 2.4 圈——三圈标准,是为那一小部分怕洒的人设立的深度保险
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"标准审议中","stat0":"委员会设在收银台右侧。店员正在装袋,您的夜宵在透明袋里完成了第一次会晤——请提交本次打包审议。","btns":[{"label":"审议·双层制","tag":"双层","lines":["双层制审议:带汤食品强制双层,内袋防漏,外袋承重——委员们全票通过,理由:深夜洒一袋汤,毁掉的绝不只是一袋汤。","双层制复议:有人提议三层制,被驳回——委员会认为,两层是安全,三层是焦虑;标准的分寸,在于刚好敢拎着走。","双层制附则:双层袋的层间空气必须在封口前排出——留一层薄薄的贴合感,那是「今晚这单包得很稳」的手感凭证。"],"bigs":["全票通过","两层刚好","贴合感"]},{"label":"审议·分舱制","tag":"分舱","lines":["分舱制审议:蛋类单独成舱,绝不与硬物混装——一颗碎蛋污染整袋的案例,是委员会立法的原点。","分舱制续审:泡面桶与面包分开舱位,理由是「桶沿会压皱面包的心」——面包被压皱不算破损,但委员会坚持:体面也该被打包。","分舱制附则:热食与冷饮必须分区——热包子贴着冰酸奶,一个出汗,一个叹气;分舱,是让它们各自体面地回家。"],"bigs":["立法原点","体面也该打包","各自体面"]},{"label":"审议·提手制","tag":"提手","lines":["提手制审议:袋口提手必须拧三圈再打结——一圈会松,两圈勉强,三圈才够走过三个红绿灯。","提手制验收:委员会实测,拧三圈的单袋可承受一次电梯颠簸加一次小跑追车——深夜的突发状况,标准都替您想到了。","提手制结案:今晚共打包 43 单,全部执行双层分舱三圈标准,洒漏 0 起。委员会批语:标准不显眼,显眼的是深夜到家,袋子还是利落的。"],"bigs":["三个红绿灯","洒漏 0 起","还是利落的"]}],"metrics":[["今晚打包","43 单"],["执行标准率","100%"],["洒漏事故","0 起"],["审议轮次","3 项"]],"logTitle":"审议记录","logEn":"BAGGING","logEmpty":"暂无审议。打包区安静,新袋子叠成一摞,等今晚的单。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

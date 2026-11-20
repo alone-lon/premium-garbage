@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>杯痕年轮断代室</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>断代对象 <b>桌面杯痕(圆形,层叠)</b></span>
+    <span>样本来源 <b>马克杯 · 外带杯 · 保温杯</b></span>
+    <span>断代精度 <b>按周计,误差一杯</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">CUP-RING&nbsp;DATING&nbsp;LAB</div>
+    <h1>杯痕年轮断代室</h1>
+    <div class="sub">工位桌面上那一圈圈杯印,是您咖啡生涯的年轮:浅的是新茶,深的是陈年拿铁——本室按摄入量断定桌面杯痕的地质年代,并附养护意见。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">年轮:初生代</div><div class="meter"><div class="fill" id="fill" style="width:12%"></div></div><div class="status" id="status">请把视线投向您的桌面:那一圈套一圈的印子,不是污渍,是地层。输入本周摄入量,本室为您断代。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入本周咖啡杯数,例如:12" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">开始断代</button></div><div class="metrics"><div class="m"><div class="k">本周摄入</div><div class="v">待申报</div></div><div class="m"><div class="k">地层年代</div><div class="v">初生代</div></div><div class="m"><div class="k">最深杯痕</div><div class="v">双份浓缩</div></div><div class="m"><div class="k">养护建议</div><div class="v">留一圈最老的</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">断代记录</span><span class="en">DATING</span></div><ul id="log"><li style="color:var(--muted)">暂无断代。您的桌面此刻有几圈杯印,本室暂不知情,但它们已在生长。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">断代室按语</div>
+    <p>杯痕是职场人最诚实的自传:它不写进周报,不进述职材料,却一圈一圈记下您喝掉的每一个白天与深夜。本室断代,不为催您擦桌子——桌面太干净反而可疑,说明这份工作没让您坐下来过——只为让您偶尔低头看看地层,认出哪一圈是赶方案的春天,哪一圈是改需求的长夏。杯子会洗,地层会长,您还会再坐很久的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">断代完毕。低头看看桌面,那是您的时间地理。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 295 号藏品 · 本室与 39 号(泡面等待计时研究所)同属「工位饮食考现学会」:一个管等待,一个管痕迹<br>室内地层冷知识:杯痕的同心圆数量与工龄呈正相关——十年老将的桌面,像一片微缩的年轮广场
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"年轮:初生代","pct":12,"stat0":"请把视线投向您的桌面:那一圈套一圈的印子,不是污渍,是地层。输入本周摄入量,本室为您断代。","inputPh":"输入本周咖啡杯数,例如:12","btnLabel":"开始断代","reasons":["断代结果:每周 3 杯以下——杯痕地层单薄,尚处「初生代」。桌面留白充足,建议享受这种干净,它通常是新工位或刚大扫除的特权。","断代结果:每周 5-8 杯——杯痕进入「成形期」,马克杯开始拥有固定座位。本室提醒:固定座位处的漆面,已经开始为您记录历史。","断代结果:每周 10-15 杯——「中生代」地层成立,杯痕套叠出现分色:浅环是美式,深环是拿铁,还有一圈甜的,是奶茶混进来的。","断代结果:每周 20 杯以上——「太古宙」达成。桌面的杯痕已连成大陆,您的工位在同事眼中自带「长期驻守」的威严,谁也不敢挪您的杯子。","地层判读:杯痕最深的那一圈,通常对应某个加班的雨夜——本室无法考证具体日期,但化学成分显示,那晚的咖啡,是双份浓缩。","养护意见:杯痕无需清除——它是办公桌的包浆。真要擦,请只擦新痕,留一圈最老的去:那是您在这张桌上,喝下去的第不知道多少杯,和熬过去的第不知道多少个晚上。"],"empty":"不输入杯数,本室按「用保温杯不留痕」的特殊地层处理——高手,桌面无痕,心中有色。","metrics":[["本周摄入","待申报"],["地层年代","初生代"],["最深杯痕","双份浓缩"],["养护建议","留一圈最老的"]],"logTitle":"断代记录","logEn":"DATING","logEmpty":"暂无断代。您的桌面此刻有几圈杯印,本室暂不知情,但它们已在生长。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电梯广告屏循环观测舱</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在播广告 <b>3 条(未更换 11 个月)</b></span>
+    <span>日均乘坐 <b>5 趟</b></span>
+    <span>台词熟知率 <b>全员 100%</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ELEVATOR-AD&nbsp;LOOP</div>
+    <h1>电梯广告屏循环观测舱</h1>
+    <div class="sub">写字楼电梯里的广告屏只有三条片,循环播放了十一个月,人人都能背出台词——本舱记录这场无限循环,并抽取您今日与哪一条同乘。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">1 层,开门</div><div class="status" id="status">点击抽取今日同乘广告。本舱不改变广告,只决定您今天被迫复习哪一条。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽取今日同乘</button><button class="btn" id="moreBtn">换一趟电梯</button></div><div class="metrics"><div class="m"><div class="k">在播条数</div><div class="v">3 条</div></div><div class="m"><div class="k">未更换时长</div><div class="v">11 个月</div></div><div class="m"><div class="k">台词熟知率</div><div class="v">100%</div></div><div class="m"><div class="k">促成转化</div><div class="v">0 笔(目测)</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">同乘记录</span><span class="en">LOOP</span></div><ul id="log"><li style="color:var(--muted)">暂无同乘。电梯停运检修,广告屏难得休假,楼里安静得有点陌生。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">舱长按语</div>
+    <p>电梯广告屏是写字楼的心跳背景音:它不争取观众,它只需要您无处可逃。三个月,全楼背熟;十一个月,台词成了公共记忆——两个陌生人能因为一句广告词相视一笑,这大概是它唯一的社会贡献。本舱不催物业换片:换了,是新的循环;不换,是旧的默契。您在电梯里的每一趟,都有一段声音陪您爬楼——它不认识您,但它陪了您一整年。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">同乘完毕。明天同一电梯,同一句台词,不见不散。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 298 号藏品 · 本舱与 123 号(电梯尴尬生存学)同属「垂直交通文化研究会」:一个研究沉默,一个研究循环<br>舱内冷知识:电梯广告的循环时长与楼层高度精确匹配——您永远听不完一整条,又永远听过它的全部
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"1 层,开门","why0":"点击抽取今日同乘广告。本舱不改变广告,只决定您今天被迫复习哪一条。","btnLabel":"抽取今日同乘","moreLabel":"换一趟电梯","pools":[{"q":"今日同乘:理财广告「让钱替您上班」","w":"观测:您在 1 楼到 17 楼之间听了 4 遍「让钱替您上班」。全楼共识:钱还没上班,先上的是这条广告。"},{"q":"今日同乘:植发机构「告别头顶焦虑」","w":"观测:广告说完,电梯安静了一秒——每个人都在心里摸了摸头顶。这可能是全楼一天中唯一整齐的动作。"},{"q":"今日同乘:连锁健身房「燃烧卡路里」","w":"观测:宣传片里的教练身材标准,电梯里的您刚吃完早饭。本舱记录:该广告促成办卡 0 起,促成愧疚 71 人次/日。"},{"q":"今日同乘:三条连播,您从中途进楼","w":"观测:您进门时正卡在第二条的中段,出门时第一条刚起了个头——循环的圆没有起点,您的通勤也是。"},{"q":"今日同乘:屏幕黑着,物业检修","w":"观测:难得的清净日。电梯里反而没人说话——原来大家不是爱看,是习惯了有个声音替自己垫场。"},{"q":"今日同乘:广告换了新的","w":"观测:全楼第一支新广告上刊!您和同乘的陌生人交换了一个眼神,眼神的意思一致:「终于换了,但很快又会背下来的。」"},{"q":"今日同乘:您盯着楼层数字,广告自动消失","w":"观测:心理性静音达成——您已经修炼到「看得见屏幕,听不见广告」的境界。本舱授予称号:电梯贤者。"}],"metrics":[["在播条数","3 条"],["未更换时长","11 个月"],["台词熟知率","100%"],["促成转化","0 笔(目测)"]],"logTitle":"同乘记录","logEn":"LOOP","logEmpty":"暂无同乘。电梯停运检修,广告屏难得休假,楼里安静得有点陌生。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>零食抽屉保卫处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>管辖范围 <b>工位第三抽屉(零食专区)</b></span>
+    <span>库存 <b>半包锅巴 · 软糖若干</b></span>
+    <span>设防等级 <b>口头开放,实际有账</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SNACK-DRAWER&nbsp;DEFENSE</div>
+    <h1>零食抽屉保卫处</h1>
+    <div class="sub">每个工位都有一个半开半合的零食抽屉:对外宣称「随便吃」,实际心里有一本细账——本处统筹设防、巡查与外借裁量,保卫您最后半包的尊严。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">库存:半包锅巴</div><div class="status" id="status">保卫处设在抽屉滑轨旁。当前库存:锅巴半包(自封条回折两次),软糖 11 颗(其中 3 颗结块)——账实相符,防线稳固。</div><div class="metrics"><div class="m"><div class="k">在库零食</div><div class="v">半包 + 11 颗</div></div><div class="m"><div class="k">被吃焦虑</div><div class="v">中等</div></div><div class="m"><div class="k">外借裁量</div><div class="v">宽(对熟人)</div></div><div class="m"><div class="k">文物库存</div><div class="v">海苔 1 包(前年)</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">勤务·巡查库存</button><button class="btn" id="btn1">勤务·设防声明</button><button class="btn" id="btn2">勤务·外借裁量</button></div></div><div class="log"><div class="sec-tag"><span class="zh">保卫日志</span><span class="en">GUARD</span></div><ul id="log"><li style="color:var(--muted)">暂无勤务。抽屉半开,锅巴睡得正香,保卫处与您一同下班。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">保卫处条例</div>
+    <p>零食抽屉是工位上唯一完全属于您的主权领土:三平方米的工位是公司的,这一格抽屉是您的。本处认为,保卫它不丢人——人对「只属于自己的那点甜」的看重,是天生的、健康的。条例的最后一款这样写:当您把最后一颗软糖分给加班的同事,保卫处自动降旗——因为那一刻,抽屉空的,心是满的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">巡逻完毕。守好您的半包锅巴,也记得偶尔,主动开一次抽屉。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 296 号藏品 · 本处与 81 号(购物车坟场管理处)遥相呼应:一个管买回来的,一个管拆开吃的<br>处内冷知识:零食抽屉的结块软糖,最终都会在某个加班夜被吃掉——它们不是没人爱,是在等一个合适的夜晚
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"库存:半包锅巴","stat0":"保卫处设在抽屉滑轨旁。当前库存:锅巴半包(自封条回折两次),软糖 11 颗(其中 3 颗结块)——账实相符,防线稳固。","btns":[{"label":"勤务·巡查库存","tag":"巡查","lines":["巡查记录:锅巴封口袋确认完好,自封条回折角度与昨日一致——无人动过。软糖清点完毕:11 颗,结块 3 颗,账实相符。","巡查继续:抽屉深处发现一包前年的海苔,保质期已过,却始终未扔——保卫处认定:它已从零食转为文物,享受免查待遇。","巡查归档:本次巡查未见异常。保卫处点评:零食抽屉最怕的不是被吃,是被遗忘——好在您的锅巴,天天见面。"],"bigs":["无人动过","转为文物","天天见面"]},{"label":"勤务·设防声明","tag":"设防","lines":["设防声明:对外口径维持「随便吃啊」——但锅巴除外、软糖除外、今天刚到的除外。保卫处注明:该声明具有充分的职场惯例效力。","设防升级:某同事今晚要加班,您说「锅里还有半包锅巴,你拿去」——这不叫破防,这叫战略投放:保卫处的最高荣誉,恰恰是主动打开抽屉。","设防总结:抽屉的边界不在锁,在关系。关系到位,半包锅巴也能整包送出去;关系不到,风一吹,您都要按住抽屉。"],"bigs":["惯例效力","战略投放","边界在关系"]},{"label":"勤务·外借裁量","tag":"裁量","lines":["裁量受理:隔壁工位来借「就一颗」软糖。保卫处按惯例放大裁量:给两颗,并主动递上——一颗是人情,两颗是风度。","裁量继续:对方走后您数了数:剩 9 颗。保卫处安慰:软糖的人际流通率是零食界最高的——它甜,但从不只甜给一个人。","裁量归档:本次外借结案。保卫处顺手把结块软糖挑出来放在最上面——下一颗被拿走的,大概率是它们:连糖都有自己的命运曲线。"],"bigs":["给两颗","流通率最高","命运曲线"]}],"metrics":[["在库零食","半包 + 11 颗"],["被吃焦虑","中等"],["外借裁量","宽(对熟人)"],["文物库存","海苔 1 包(前年)"]],"logTitle":"保卫日志","logEn":"GUARD","logEmpty":"暂无勤务。抽屉半开,锅巴睡得正香,保卫处与您一同下班。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

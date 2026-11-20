@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>年会抽奖感言预备处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>预备范围 <b>一等奖至参与奖(全梯度)</b></span>
+    <span>感言时长 <b>15 秒(超时会被音乐压过)</b></span>
+    <span>预备原则 <b>惊喜要真,落选要稳</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">RAFFLE-SPEECH&nbsp;RESERVE</div>
+    <h1>年会抽奖感言预备处</h1>
+    <div class="sub">年会抽奖,中奖率 3%,但每一位上台的人都需要一篇 15 秒感言——本处按奖品等级预制感言模板:中了是惊喜发言,没中是体面鼓掌,两头都为您备好。</div>
+  </div>
+
+  <div class="console"><div class="input"><input id="src" type="text" placeholder="输入您抽中的奖品,例如:空气炸锅" maxlength="60"></div><div class="ctrl" style="margin-top:16px"><button class="btn accent" id="goBtn">生成感言</button><button class="btn" data-ev="空气炸锅">示例·炸锅</button><button class="btn" data-ev="最新款手机">示例·手机</button><button class="btn" data-ev="谢谢参与">示例·落选</button></div><div class="output" id="out"><div class="fact" id="fact"></div><div class="deep" id="deep"></div></div></div>
+
+  
+
+  <div class="note">
+    <div class="title">预备处说明</div>
+    <p>年会抽奖的真相是:九成八的人空手离开,但十成的人都需要一份得体的表情管理。本处预备感言,看似为中奖者服务,实为全体员工的心理装备——中了,有话可说,不冷场;没中,掌声照样响,心不酸。我们见过太多中奖者卡在台上,也见过太多落选者鼓掌鼓得比谁都真心。年会最动人的从来不是奖品,是一屋子人,为彼此的好运气,真心实意地欢呼。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">感言已备好。上台记得笑,下台记得签收。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 301 号藏品 · 本处与 52 号(年终奖占卜坛)构成「年会玄实双修」体系:一个问结果,一个备发言<br>处内冷知识:抽奖感言里出现频率最高的词不是「感谢」,是「没想到」——人类对好运的惊讶,重复了千万年还是同一款
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入您抽中的奖品,例如:空气炸锅","btnLabel":"生成感言","presets":[{"ev":"空气炸锅","label":"示例·炸锅"},{"ev":"最新款手机","label":"示例·手机"},{"ev":"谢谢参与","label":"示例·落选"}],"defaultEv":"空气炸锅","tmpl":"奖品「{ev}」的感言已备好,请按台上节奏取用:{a}{b}","a":["「感谢公司!这个{ev}来得太是时候了——我家正缺这么一位新成员,今晚就开箱,下周带成品来投喂同事!」——实拿版:热情饱满,落点具体,全场好感度拉满。","「说实话,我在公司三年,第一次抽中超过纸巾的东西——感谢{ev},感谢运气,感谢刚才让我先抽的同事!」——幽默版:自嘲开场,祸水东引,安全又讨喜。","「这个{ev}我要转赠给我妈——她念叨很久了。公司发的不是奖品,是我妈下半年的快乐。」——孝心版:杀伤力最大,行政部当场记下您的名字。","「中奖感言我就不说了,只想说一句:抽到我的时候,我正想去接水——你看,好事就是留给出门的人。」——玄学版:把中奖归功于走路,全场都会笑。"],"b":["备注:领奖下台前记得和行政核对签收——{ev}再诱人,流程不能省,这是职场感言的隐藏条款。","备注:若实际抽中的不是{ev},本感言通用性经测试依然成立——把奖名换成「这份好运」即可,逻辑自洽,情感不减。","备注:若您最终与{ev}擦肩,请切换备用稿:「恭喜同事!明年我提前三周开始攒运气。」——落选的体面,比中奖的惊喜更显功力。","备注:台上 15 秒是黄金时长——说到「感谢」就准备下台,音乐响起时不恋战,是获奖者的最后一课。"]};
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function fill(t,ev){
+return t.replace(/\{ev\}/g,ev||"").replace(/\{a\}/g,rnd(D.a)).replace(/\{b\}/g,rnd(D.b)).replace(/\{c\}/g,rnd(D.c||D.b));
+}
+$("goBtn").addEventListener("click",function(){
+var ev=$("src").value.trim()||D.defaultEv;
+$("fact").textContent="原始素材:"+(ev||"(空)");
+$("deep").innerHTML=fill(D.tmpl,ev);
+$("out").style.display="block";
+});
+document.querySelectorAll("[data-ev]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=b.getAttribute("data-ev");$("goBtn").click();});
+});
+})();
+</script>
+</body>
+</html>

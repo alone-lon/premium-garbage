@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>冷气逃逸审计站</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>审计对象 <b>立式冷柜两台(门开合日均 240 次)</b></span>
+    <span>逃逸计量 <b>门开 1 秒 ≈ 冷气 3 立方分米(估算)</b></span>
+    <span>站内立场 <b>冷气不是免费的,只是没人付钱</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">COLD-AIR&nbsp;ESCAPE&nbsp;AUDIT</div>
+    <h1>冷气逃逸审计站</h1>
+    <div class="sub">冷柜门每次敞开,冷气都在向过道逃逸:顾客挑三分钟,冷气跑三分钟——审计站逐次登记逃逸事件,并出具「冷气的辛苦费」估算。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">今日逃逸 0 次</div><div class="status" id="status">审计站站在冷柜门轴旁。门开的一瞬,白雾涌出——那是冷气在向您问好,顺便请假。</div><div class="metrics"><div class="m"><div class="k">今日开门</div><div class="v">0 次</div></div><div class="m"><div class="k">逃逸估算</div><div class="v">0 立方分米</div></div><div class="m"><div class="k">压缩机状态</div><div class="v">待命</div></div><div class="m"><div class="k">追缴金额</div><div class="v">0,永远</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">审计·开门事件</button><button class="btn" id="btn1">审计·雾气去向</button><button class="btn" id="btn2">审计·年终估算</button></div></div><div class="log"><div class="sec-tag"><span class="zh">审计记录</span><span class="en">AUDIT</span></div><ul id="log"><li style="color:var(--muted)">暂无审计。冷柜门关严,冷气全员在岗,压缩机安静地打盹。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">审计长报告</div>
+    <p>冷气是这个店里最没有存在感的员工:它上岗时无声,逃逸时无形,只有压缩机疲惫的嗡嗡声,替它申报工时。审计站登记逃逸,不为追责——没有一位顾客需要为挑酸奶的三分钟道歉——只为让一件事被看见:您感到的每一阵凉意,都是有人替您把热气挡在了门外。下次拉冷柜门,快一点,稳一点,那就是对这位无名员工最大的体谅:它凉快了您的深夜,请您别让它白白凉着。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">审计完毕。拉门,快拿,关门——冷气谢过。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 312 号藏品 · 本站与 153 号(办公室冰箱悬案侦查组)同属「制冷系统纪检序列」:一个查案子,一个查流失<br>站内冷知识:立式冷柜门每天开合 240 次,而「想清楚再开门」的执行率不足 40%——剩下 60% 的冷气,都替我们的犹豫买了单
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"今日逃逸 0 次","stat0":"审计站站在冷柜门轴旁。门开的一瞬,白雾涌出——那是冷气在向您问好,顺便请假。","btns":[{"label":"审计·开门事件","tag":"开门","lines":["开门审计:某顾客拉门挑酸奶,历时 2 分 41 秒——冷气流失估算 481 立方分米,压缩机组连夜加班 4 分钟补偿。本站记录:酸奶选得越久,压缩机越憔悴。","开门审计:孩童连续开关门 6 次,视作 6 起独立事件——本站不予处罚,但已通报其家长:冷柜不是冰箱贴,是劳模。","开门审计:店员补货,门敞开 11 分钟——本站按「职务逃逸」处理:职务行为,免计逃逸量,但计入压缩机工龄。"],"bigs":["481 立方分米","不是冰箱贴","职务逃逸"]},{"label":"审计·雾气去向","tag":"雾气","lines":["雾气审计:门开瞬间涌出的白雾,去向追查完毕——大部分升上天花板,小部分扑了您的眼镜,极少量凝在门封条上,深夜结成露。","雾气审计:审计员温馨提示——眼镜起雾的您,擦镜片的 3 秒里,冷气又逃了一批。本站建议:下次开柜先呼一口气,让眼镜做好准备。","雾气三查:天花板角落的水渍,是冷气的一生终点——它们逃逸,上升,凝结,滴落,最后被拖把抹去。审计站为它们出具了完税证明:冷气的一生,全部缴给了这个夏天。"],"bigs":["扑了眼镜","先呼一口气","完税证明"]},{"label":"审计·年终估算","tag":"估算","lines":["年终估算:全年冷气逃逸量折合电费约 800 元——本站强调:这笔钱没人付,也从不追缴,它属于「营业的礼貌」。","年终估算:压缩机的年工龄因逃逸增加 7%——本站建议顾客:想清楚再拉门,拉门就快拿,拿完就关门——对冷气最好的礼遇是果断。","估算结案:本站成立至今,逃逸零增长是不可能的,但「平均开门时长」下降了 9 秒——审计长批语:省下的 9 秒里,有冷气的辛苦费,也有地球的一点点凉快。"],"bigs":["营业的礼貌","增加 7%","一点点凉快"]}],"metrics":[["今日开门","0 次"],["逃逸估算","0 立方分米"],["压缩机状态","待命"],["追缴金额","0,永远"]],"logTitle":"审计记录","logEn":"AUDIT","logEmpty":"暂无审计。冷柜门关严,冷气全员在岗,压缩机安静地打盹。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

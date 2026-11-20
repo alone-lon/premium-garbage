@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>扫码枪滴声事故调查科</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>管辖对象 <b>扫码枪一把(日均 400 响)</b></span>
+    <span>立案标准 <b>凡连滴、长滴、滴而不响者</b></span>
+    <span>科内立场 <b>滴声无罪,疑罪从无</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BEEP&nbsp;INCIDENT&nbsp;BOARD</div>
+    <h1>扫码枪滴声事故调查科</h1>
+    <div class="sub">「滴」的一声,交易完成;「滴滴」两声,全员警觉:商品没码?会员掉线?袋子压住了枪口?——调查科对每一声异常滴声立案、排查、结案,不冤枉一支口红。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">今晚 0 案</div><div class="status" id="status">调查科设在扫码枪支架旁。枪口红外线常亮,像一枚不眨的眼睛——今晚的第一声异常,还没发生。</div><div class="metrics"><div class="m"><div class="k">今晚异常</div><div class="v">0 起</div></div><div class="m"><div class="k">平均结案</div><div class="v">19 秒</div></div><div class="m"><div class="k">头号元凶</div><div class="v">塑封反光</div></div><div class="m"><div class="k">枪口电量</div><div class="v">满格</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">立案·滴而不响</button><button class="btn" id="btn1">排查·连滴事故</button><button class="btn" id="btn2">结案·卷宗归档</button></div></div><div class="log"><div class="sec-tag"><span class="zh">调查卷宗</span><span class="en">BEEP</span></div><ul id="log"><li style="color:var(--muted)">暂无立案。扫码枪待命,红外线亮着,今晚的滴声都还清清白白。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">科长结案陈词</div>
+    <p>「滴」是当代交易文明最短的一句话:它替代了寒暄、找零与确认,一声即合同成立。可这声滴也有它的江湖——反光的塑封、没电的枪、压住的袋子,都能让它哑火半拍。调查科存在的意义,不是追究谁的错,而是让每一次哑火都在二十秒内恢复清脆。科长见过最深的深夜,店员对着一个扫不出的饭团较劲了半分钟,最后笑着说「我给您手输」——那一秒没有滴声,却比任何滴声都响:机器会有脾气,人不会。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结案归档。今晚的滴声,清清白白。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 309 号藏品 · 本科与 256 号(好声按键取证科)同属「指尖声学总会」:一个取证无意义的好听,一个调查有意义的不响<br>科内冷知识:全人类每天听到的扫码滴声约 12 声——其中只有一声属于自己,却最让人安心
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"今晚 0 案","stat0":"调查科设在扫码枪支架旁。枪口红外线常亮,像一枚不眨的眼睛——今晚的第一声异常,还没发生。","btns":[{"label":"立案·滴而不响","tag":"立案","lines":["立案一号:扫码三声,屏幕无反应——初步调查:条码被塑封反光遮蔽。处理:撕开一角重扫,滴声归位。结案,历时 11 秒。","立案二号:会员码迟迟不滴,顾客举着手机像举着证物——调查结论:屏幕亮度太低。调亮,秒滴。本案教训:深夜的手机,个个都困。","立案三号:枪口对着空气连滴两声——现场无物。科内鉴定:红外线感应到店员围裙的褶皱。本案定性:工伤未遂,不予深究。"],"bigs":["11 秒","个个都困","工伤未遂"]},{"label":"排查·连滴事故","tag":"排查","lines":["排查一号:某袋干脆面扫了五滴不响——排查发现:该商品是新入库,条码未建档。科内批语:不是枪的问题,是它还没上户口。","排查二号:整袋商品一次性三连响——结果少算一件。复盘:袋子压住了另一件。科内修订流程:大单必须逐件出袋,不许团灭式扫码。","排查三号:某声滴格外悠长,像叹气——技术鉴定:枪口电量不足。换电池后滴声清脆如初。科内备注:滴声是枪的心电图,别等它叹气才想起喂电。"],"bigs":["没上户口","团灭式扫码","心电图"]},{"label":"结案·卷宗归档","tag":"结案","lines":["结案一号:今晚累计异常 7 起,全部结案,平均用时 19 秒——科内自评:深夜的悬案,拖过一分钟就是事故,我们没拖。","结案二号:卷宗归档时发现,本月最高频原因是「塑封反光」——科内拟文上报:建议全体新商品入柜前先撕一角。报告预计石沉大海,照发。","结案三号:打烊前最后一滴,清脆,单响,屏幕跳出总价——科内结语:今晚所有滴声里,最好听的就是这一滴:它意味着,您终于可以拎着袋子回家了。"],"bigs":["19 秒","照发","最好听的一滴"]}],"metrics":[["今晚异常","0 起"],["平均结案","19 秒"],["头号元凶","塑封反光"],["枪口电量","满格"]],"logTitle":"调查卷宗","logEn":"BEEP","logEmpty":"暂无立案。扫码枪待命,红外线亮着,今晚的滴声都还清清白白。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黄底价签褪色档案馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏黄签 <b>23 张(最老挂龄 4.2 年)</b></span>
+    <span>鉴定依据 <b>褪色度 · 卷边度 · 字迹辈分</b></span>
+    <span>馆内立场 <b>黄签是店里最长寿的承诺</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">YELLOW-TAG&nbsp;FADING</div>
+    <h1>黄底价签褪色档案馆</h1>
+    <div class="sub">收银台旁那张黄底价签挂了多久了?「特价 3.5」的字迹已经晒成了淡黄——档案馆鉴定每张黄签的挂龄:真促销是几天,常驻优惠是几年,晒白的是岁月。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述一张您见过的黄底价签(内容与状态),本馆出具挂龄鉴定"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">送馆鉴定</button><button class="btn" data-sample="0">新签版</button><button class="btn" data-sample="1">老签版</button><button class="btn" data-sample="2">化石版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">黄签挂龄鉴定书</span><span class="en">TAG&nbsp;FADING</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长致辞</div>
+    <p>黄底价签是零售业最不起眼的公文:一张纸,一个数,一枚挂钩——它承诺的东西却重得惊人:这个价钱不会变。档案馆鉴定过上百张黄签,发现「真促销」的寿命通常只有一周,而真正动人的是那些「忘了摘」的:挂着挂着,促销变成了行情,行情变成了街坊的默契。馆长想说的是:一条街上总得有几样东西是不变的——价签褪色,正是「不变」的过程本身:数字没动,只是纸老了。下次见到发白的黄签,别嫌它旧——那是一个小店的信用,晒了两年太阳。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">鉴定完毕。老价钱还在,老街坊就还在。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 319 号藏品 · 本馆与 72 号(人生荧光笔)同属「黄色显学研究会」:一个画重点,一个晒承诺<br>馆内冷知识:价签黄底的色号全球统一——据说因为黄是「让人放心」的颜色:便宜要显眼,安心要低调
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述一张您见过的黄底价签(内容与状态),本馆出具挂龄鉴定","btnLabel":"送馆鉴定","sampleLabels":["新签版","老签版","化石版"],"samples":["崭新的黄签,「店庆特价 9.9」,墨迹发亮,四角平整","黄签微微卷边,「特价 3.5」,字迹发淡,边角起了毛","黄得几乎看不清字,依稀是「加 1 元换购」,谁也说不清它挂了几年"],"num":"挂龄鉴定:约 2 年 · 常驻优惠","verdict":"鉴定结论:这张黄签已从「促销」升格为「承诺」——它不再催您买,只是每天站在那里,替一件没人注意的商品,守着一个早就回本的价钱。","breakdown":[["褪色层","字迹发淡","黄签的褪色与日照时长严格相关——收银台旁的签褪得最匀,窗边的最花;褪色均匀的签,是被人认真贴过、很久没人动过的签"],["卷边层","边角起毛","卷边不是破相,是资历:风每一次经过,它就翻一次边——卷得越厚,说明它站过的夜晚越多"],["辈分层","特价变常价","新签写着「特价」,老签连「特价」都懒得写了——挂过两年的黄签,那个数就是这件商品在本店的合法身份,原价是传说"],["缘分层","总有买它的人","奇怪的是,挂着老黄签的商品从不滞销到下架——总有那么几个人,进店直奔它去:他们买的不止是东西,是「还在老价钱」的放心"],["处置建议","别撕","老黄签是店里的家具——撕了它,常客会迷路;本馆建议:继续挂,褪到看不清为止,那时它就是真正的文物了"]],"empty":{"num":"鉴定暂停","verdict":"没有具体黄签没法定龄——不过本馆可以先行备案:您常去的那家店里,肯定有一张「说不出挂了几年」的签,您甚至能背出它的价钱。","breakdown":[["判定","背得出的价钱","能被顾客背下来的黄签,挂龄必然超过一年——价钱进了记忆,签就成了坐标"],["建议","让它继续晒","别催店里换新签——褪色的价,是这条街上最稳定的东西之一"]]},"reportTitle":"黄签挂龄鉴定书","reportEn":"TAG&nbsp;FADING"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

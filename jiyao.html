@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会议纪要第 7 页守护馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>守护对象 <b>纪要第 7 页(含待办 6 条)</b></span>
+    <span>累计读者 <b>0 人(含作者)</b></span>
+    <span>展陈方式 <b>附件最底部,永不被点开</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">MINUTES&nbsp;PAGE&nbsp;SEVEN</div>
+    <h1>会议纪要第 7 页守护馆</h1>
+    <div class="sub">每份会议纪要都有第 7 页:字号忽大忽小、内容半截,「待跟进」事项躺在里面睡了三年——本馆守护这一页,并为其申请永久展陈。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">读者 0 人</div><div class="status" id="status">第 7 页静静躺在共享盘的附件里:前面六页人人在传,它从被生成那天起,就没被任何一块屏幕点亮过。</div><div class="metrics"><div class="m"><div class="k">页码</div><div class="v">第 7 页</div></div><div class="m"><div class="k">待办存留</div><div class="v">6 条</div></div><div class="m"><div class="k">办结数</div><div class="v">0 条</div></div><div class="m"><div class="k">守护等级</div><div class="v">永久(拟)</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">调阅·版面考古</button><button class="btn" id="btn1">研读·待办清单</button><button class="btn" id="btn2">申请·永久展陈</button></div></div><div class="log"><div class="sec-tag"><span class="zh">守护记录</span><span class="en">PAGE7</span></div><ul id="log"><li style="color:var(--muted)">暂无守护。第 7 页在附件最底部,睡得比谁都安稳。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长致辞</div>
+    <p>会议纪要的正文属于会议,第 7 页属于岁月:字号错乱、批注褪色、待办沉睡——它是一份公文最诚实的部分。人人都在「纪要已发,请查收」里完成了责任交接,只有第 7 页知道,哪些话被认真写过,又轻轻放下。本馆守护它,不为翻案,只为证明:那些没人看的页,也是有人一个字一个字敲出来的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">守护完毕。下次发纪要,记得瞥一眼第 7 页。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 284 号藏品 · 本馆与 157 号(「简单说两点」计时器)同属「会议文物保管委员会」<br>馆内冷知识:纪要超过 6 页的部分,被点开的概率随页码指数衰减——第 7 页,是衰减曲线的尽头
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"读者 0 人","stat0":"第 7 页静静躺在共享盘的附件里:前面六页人人在传,它从被生成那天起,就没被任何一块屏幕点亮过。","btns":[{"label":"调阅·版面考古","tag":"考古","lines":["调阅受理:第 7 页版面已核实——字号从五号突变为小四,行距忽紧忽松,页脚页码缺失:它是被两次合并、三次粘贴的幸存者。","痕迹鉴定:页面上有一行三年前的批注,颜色已经变浅,内容是「此处再核」——再核从未发生,批注成了本页唯一的来访痕迹。","考古结论:第 7 页的排版像一场没有谢幕的演出:道具还在台上,灯光早已散场——本馆认为,这恰是它的展陈价值。"],"bigs":["幸存者","「此处再核」","灯光散场"]},{"label":"研读·待办清单","tag":"研读","lines":["研读开始:第 7 页载有待办 6 条,格式工整,责任到人——「王老师跟进供应商报价」,落款三年前。王老师已离职两年,报价还在等他。","研读继续:第 4 条写着「下周对齐」——纪要学著名悬案:「下周」在第 7 页是一个永恒时态,不指向任何具体的星期。","研读完毕:6 条待办,0 条办结,0 条删除。它们以最标准的公文格式,完成了一次集体长眠。"],"bigs":["还在等他","永恒时态","集体长眠"]},{"label":"申请·永久展陈","tag":"申请","lines":["展陈申请提交:申请第 7 页转为「不可删除附件」,理由:它是全员默契的见证——人人知道它在,人人不去看它。","申请答辩:有委员提议「干脆删了」。全场沉默三秒——删,等于承认没人看过;不删,好歹是个体面。申请通过。","申请归档:第 7 页自此获得永久席位。馆长致辞:不是它需要被守护,是需要有个地方,替所有「写完就算完成」的公文,站着。"],"bigs":["三秒","体面","站着"]}],"metrics":[["页码","第 7 页"],["待办存留","6 条"],["办结数","0 条"],["守护等级","永久(拟)"]],"logTitle":"守护记录","logEn":"PAGE7","logEmpty":"暂无守护。第 7 页在附件最底部,睡得比谁都安稳。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

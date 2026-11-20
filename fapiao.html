@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>报销单贴票工艺评定委员会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>评审对象 <b>报销单贴票工艺</b></span>
+    <span>退回主因 <b>压边过宽 · 金额遮蔽</b></span>
+    <span>评审立场 <b>严于艺术,宽于人情</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">RECEIPT-GLUING&nbsp;ARTS</div>
+    <h1>报销单贴票工艺评定委员会</h1>
+    <div class="sub">发票要贴得平整、四角服帖、金额露白——贴票是职场隐形的手艺活,贴得好没人夸,贴得差必退回。本委员会受理您的工艺,并出具评审意见。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">评审待抽</div><div class="status" id="status">点击抽取一份工艺评审意见。本会不改变您的贴票水平,只决定它是被表扬,还是被退回。</div><div class="ctrl"><button class="btn accent" id="goBtn">送审贴票工艺</button><button class="btn" id="moreBtn">换一份再审</button></div><div class="metrics"><div class="m"><div class="k">送审份数</div><div class="v">0 份</div></div><div class="m"><div class="k">退回率</div><div class="v">约 60%</div></div><div class="m"><div class="k">最高工艺</div><div class="v">四角服帖</div></div><div class="m"><div class="k">评委心情</div><div class="v">不改结论,只改评语</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">评审记录</span><span class="en">REVIEW</span></div><ul id="log"><li style="color:var(--muted)">暂无送审。您的发票们还在裤兜和钱包里,过着散装生活。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">评委会章程</div>
+    <p>贴票工艺是职场的隐藏考核:它不出现在任何考核指标里,却决定了您和财务科的每一次见面氛围。评委们见过太多委屈——票是真的,事是办了的,只因贴得潦草,被退回三次。本会建议只有一条:贴的时候慢三十秒,四角按平,金额露白,横平竖直——这三十秒不是给财务的,是给您自己:证明这趟差,您从订票到贴票,都有始有终。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">评审完毕。下月贴票,横平竖直。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 288 号藏品 · 本会与 29 号(工资条解读器)同属「财务文书鉴赏联合会」:一个读收入,一个审支出<br>会内冷知识:全人类贴票最工整的时期,是入职后的第一个月——工艺与热情,同步衰减
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"评审待抽","why0":"点击抽取一份工艺评审意见。本会不改变您的贴票水平,只决定它是被表扬,还是被退回。","btnLabel":"送审贴票工艺","moreLabel":"换一份再审","pools":[{"q":"评审意见:四角服帖,准予报销","w":"评语:发票边缘齐整,胶水用量克制,金额一目了然。财务科罕见地没有皱眉——这是本月最高工艺水准,值得表扬(报销完撕掉之前,先拍张照)。"},{"q":"评审意见:压边过宽,退回重贴","w":"评语:上一张的票角压住了下一张的金额,财务要掀开三层才能核对——贴票不是盖楼,不需要结构强度。退回,重贴,注意留白。"},{"q":"评审意见:胶水过量,已透页","w":"评语:液体胶水慷慨地漫过票面,报销单与底页结为连理,撕开时发出纸张的惨叫。评委会提醒:贴票要的是固定,不是浇筑。"},{"q":"评审意见:票面褶皱,勉强通过","w":"评语:发票曾在裤兜里度过一个潮湿的周末,票面如风干陈皮。评委会认定:皱,但不影响辨认,通过——并附赠一句:票和人一样,都怕裤兜。"},{"q":"评审意见:金额涂改,性质存疑","w":"评语:金额处有涂改痕迹,评委会按规程多看了两眼,心跳漏了半拍。后经手写补充说明确认是笔误,有惊无险。提醒:金额是报销单的命门,涂改是命门上的刀。"},{"q":"评审意见:发票贴成金字塔,艺术加分,流程扣分","w":"评语:您把 17 张发票贴成了金字塔结构,层层叠叠,气势恢宏。评委会承认好看,但财务科翻页时翻出了颈椎病。艺术归艺术,报销归横向排列。"},{"q":"评审意见:忘贴了,直接夹了 23 张散票","w":"评语:散票夹在报销单里像一副没整理的牌。评委会受理时先叹气后受理。结论:人可以忙,票不能散——这是报销界的底线,也是生活的底线。"}],"metrics":[["送审份数","0 份"],["退回率","约 60%"],["最高工艺","四角服帖"],["评委心情","不改结论,只改评语"]],"logTitle":"评审记录","logEn":"REVIEW","logEmpty":"暂无送审。您的发票们还在裤兜和钱包里,过着散装生活。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

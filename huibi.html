@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>收银台前目光回避工程处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>工程范围 <b>收银台前 60 厘米(口香糖阵列带)</b></span>
+    <span>回避科目 <b>价签 · 广告 · 排队者视线</b></span>
+    <span>处内立场 <b>余光诚实,正眼难为</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">GAZE&nbsp;DEFLECTION&nbsp;WORKS</div>
+    <h1>收银台前目光回避工程处</h1>
+    <div class="sub">收银台前,口香糖与电池在您的余光里排队:不看,显得刻意;看了,像在惦记——工程处为您抽取一套「最后三秒」的余光管理方案。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">方案待抽</div><div class="status" id="status">点击领取一套回避方案。本处不贩卖口香糖,只贩卖「收银台前不尴尬」的技术。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽一套方案</button><button class="btn" id="moreBtn">再抽一套</button></div><div class="metrics"><div class="m"><div class="k">今日回避</div><div class="v">0 次</div></div><div class="m"><div class="k">方案存量</div><div class="v">7 套</div></div><div class="m"><div class="k">尴尬平摊率</div><div class="v">对视即 50%</div></div><div class="m"><div class="k">口香糖成交</div><div class="v">随缘</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">回避记录</span><span class="en">DEFLECT</span></div><ul id="log"><li style="color:var(--muted)">暂无回避。收银台前还没人排队,口香糖们各自站岗,不催不看。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">工程处验收报告</div>
+    <p>收银台前的最后三秒,是全店心理活动最密集的三秒:钱包、手机、找零、身后的队伍、以及那排「要不要顺手拿一包」的口香糖——每一秒都有三场内心戏。工程处研究后发现:回避的本质不是怕尴尬,是「不想被看出在犹豫」。而方法其实只有两种:给目光找活干(手机、找零、袋子),或者干脆承认自己在犹豫(直视法)。至于最后买了一包口香糖的人——工程处向您致敬:您没有回避,您直面了深夜的自己。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">验收通过。付款那三秒,愿您的目光有处安放。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 315 号藏品 · 本处与 137 号(奶茶甜度选择心理战)同属「柜台前灵魂三秒研究会」:一个争甜度,一个管余光<br>处内冷知识:收银台商品的平均成交率不足 3%——它们在那排队站了一年,等服务的就是您犹豫的那 3 秒
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"方案待抽","why0":"点击领取一套回避方案。本处不贩卖口香糖,只贩卖「收银台前不尴尬」的技术。","btnLabel":"抽一套方案","moreLabel":"再抽一套","pools":[{"q":"方案:天花板凝视法","w":"抬头看价目灯箱,神情专注——灯箱是全场唯一欢迎被凝视的东西。附注:凝视超过 8 秒会被误会在认字,请控制在 5 秒内。"},{"q":"方案:手机已读法","w":"掏出手机看一眼没有的消息——收银台前人人都在看手机,看手机等于隐身。附注:屏幕亮度调低,别让店员以为您在拍他。"},{"q":"方案:清点找零法","w":"盯着店员的手,清点找零的每一枚硬币——目光有了正经差事,余光里的口香糖自动退散。附注:找零只有一枚时此法失效,请切换方案。"},{"q":"方案:袋子整理法","w":"低头整理刚打好包的袋子,提手拧三圈(见 308 号标准)——有活干的人,不需要回避任何视线。附注:袋子太满时注意别拽破,工程处概不负责。"},{"q":"方案:坦然直视法","w":"高手方案:大大方方看口香糖阵列,看完不看——直视是最高级的回避:看了,没买,坦荡如砥。附注:该方法需要极强的心理素质,新手慎用。"},{"q":"方案:后面排队法","w":"回头看看队伍长度——排队者与您对视 0.3 秒,互相点头,尴尬瞬间平摊,人人减半。附注:仅限队伍三人以上,人太少对视等于社交。"},{"q":"方案:扫码专注法","w":"全程紧盯扫码区,像监工——「滴」声落定,付款完成,您全程无需与任何商品对视。附注:此法最稳,但放弃了口香糖的全部可能性。"}],"metrics":[["今日回避","0 次"],["方案存量","7 套"],["尴尬平摊率","对视即 50%"],["口香糖成交","随缘"]],"logTitle":"回避记录","logEn":"DEFLECT","logEmpty":"暂无回避。收银台前还没人排队,口香糖们各自站岗,不催不看。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>
