@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>亲戚问题防御指挥部</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>防御对象 <b>亲戚标准三连问</b></span>
+    <span>防御原则 <b>不接招,不翻脸</b></span>
+    <span>阵型有效期 <b>每年春节(常备)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">RELATIVE-QUESTION&nbsp;DEFENSE</div>
+    <h1>亲戚问题防御指挥部</h1>
+    <div class="sub">「有对象了吗」「工资多少」「什么时候买房」——过年回家,您的敌人不是亲戚,是他们的问题。本指挥部提供标准防御阵型:不接招,不翻脸,笑着转移。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">指挥部已设防</div><div class="status" id="status">点击抽取一个亲戚问题的防御方案。方案核心思想:亲戚的问题不是恶意,是「能聊的就这点了」——给他们台阶,也给自己留路。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽取防御方案</button><button class="btn" id="moreBtn">再抽一个</button></div><div class="metrics"><div class="m"><div class="k">已防御</div><div class="v">0 问</div></div><div class="m"><div class="k">阵型层数</div><div class="v">三层</div></div><div class="m"><div class="k">翻脸率</div><div class="v">0%</div></div><div class="m"><div class="k">撤退通道</div><div class="v">夸孩子</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">防御记录</span><span class="en">DEFENSE</span></div><ul id="log"><li style="color:var(--muted)">暂无防御。年夜饭还没开席,问题们正在路上。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">指挥部说明</div>
+    <p>亲戚的三连问不是恶意——大多数只是「能聊的就这点了」。他们不会聊你的爱好、你的项目、你的生活,只会聊人生标准答案。本指挥部的防御,不是反击,是给双方一个台阶:笑着说完,该干嘛干嘛。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">防御完毕。过个好年,问题退散。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 146 号藏品 · 本指挥部与 123 号(电梯尴尬生存学)同属「中国式沉默应对学院」<br>指挥部冷知识:所有亲戚问题都有同一个隐藏答案——「挺好的」——但没人肯只说这三个字
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"指挥部已设防","why0":"点击抽取一个亲戚问题的防御方案。方案核心思想:亲戚的问题不是恶意,是「能聊的就这点了」——给他们台阶,也给自己留路。","btnLabel":"抽取防御方案","moreLabel":"再抽一个","pools":[{"q":"「有对象了吗?」","w":"标准防御:「快了快了,缘分的事急不来——表妹有对象了吗?也没有?那咱俩一起等。」——抛回去的这一招,叫「同一战壕」。"},{"q":"「一个月工资多少?」","w":"标准防御:「不算高,主要图个成长——对了您家孩子在那边做什么的?」——用提问终结提问:亲戚的问题链,永远断在自己孩子身上。"},{"q":"「什么时候买房?」","w":"标准防御:「在看在看,等个合适的时机——您当年买房是哪年?那会儿真是好时候。」——把问题变成怀旧,怀旧无解,全场安全。"},{"q":"「怎么不考个编制?」","w":"标准防御:「想过,明年试试——您家那个考上了吧?太厉害了,怎么复习的?」——夸对方孩子,是最快的撤退通道,人人爱听。"},{"q":"「瘦了/胖了啊?」","w":"标准防御:「过年嘛,吃得好——婶婶这个气色是真不错,有什么保养秘诀?」——把外貌评论转化为养生话题,长辈的最爱。"},{"q":"「怎么不生二胎?」","w":"高难度防御:「顺其自然,顺其自然——哎这果盘是您自己切的?手艺真好。」——最高级的防御是岔开:不是躲,是「我看到了您」。"},{"q":"「在外面做什么工作?」","w":"标准防御:「互联网相关,说了您也听不懂——反正挺忙的。您最近身体怎么样?」——一句「身体怎么样」,是所有问题的休止符。"},{"q":"「隔壁小王都二胎了」","w":"标准防御:「那真好——每个人都有自己的节奏嘛。」然后微笑,夹菜,吃得香一点。吃得香是最好的回答:我过得挺好,不用替我急。"}],"metrics":[["已防御","0 问"],["阵型层数","三层"],["翻脸率","0%"],["撤退通道","夸孩子"]],"logTitle":"防御记录","logEn":"DEFENSE","logEmpty":"暂无防御。年夜饭还没开席,问题们正在路上。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>份子钱人情账本</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>账本范围 <b>婚宴 · 满月 · 乔迁 · 升学</b></span>
+    <span>十年流水 <b>¥23,000(样本)</b></span>
+    <span>账本立场 <b>记账不记仇</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">GIFT-MONEY&nbsp;LEDGER</div>
+    <h1>份子钱人情账本</h1>
+    <div class="sub">结婚随 800,满月随 600,乔迁随 500——十年下来,人情账户流水 ¥23,000。本账本不做道德判断,只帮您记清楚:谁欠谁,从来不是钱的事。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">流水 ¥23,000</div><div class="status" id="status">账本翻开。这一页是婚礼季:三个红本本,两场满月,一次乔迁——您的钱包在替您表达「我们关系好」。</div><div class="metrics"><div class="m"><div class="k">十年流水</div><div class="v">¥23,000</div></div><div class="m"><div class="k">今年支出</div><div class="v">¥3,200</div></div><div class="m"><div class="k">循环率</div><div class="v">78%</div></div><div class="m"><div class="k">账本立场</div><div class="v">记账不记仇</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">记一笔·婚礼</button><button class="btn" id="btn1">记一笔·满月</button><button class="btn" id="btn2">年度审计</button></div></div><div class="log"><div class="sec-tag"><span class="zh">人情流水</span><span class="en">LEDGER</span></div><ul id="log"><li style="color:var(--muted)">暂无流水。下一个红本本,正在某处等着您的名字。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">账本结语</div>
+    <p>份子钱是中国式人情的硬通货:它笨重、琐碎、还带点压力——但它撑起了每一个需要热闹的场合。本账本不劝您多随或少随,只提供一个视角:把它当「人生喜事基金」——您存进去的每一笔,终将在某个红本本上,连本带利地热闹回来。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">记完。下一场喜事,再见。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 154 号藏品 · 本账本与 69 号(「下次一定」银行)同属「人情金融监管局」:一个管承诺,一个管兑现<br>账本冷知识:份子钱的终极形态,是「两家孩子也认识了」——人情传到第二代,才算是真正的保值
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"流水 ¥23,000","stat0":"账本翻开。这一页是婚礼季:三个红本本,两场满月,一次乔迁——您的钱包在替您表达「我们关系好」。","btns":[{"label":"记一笔·婚礼","tag":"婚礼","lines":["婚礼随礼 ¥800——对象是大学室友。备注:他结婚时随了我 600,当年我毕业刚工作。这 200 的差额,是十年的利息,也是十年的情分。","账本批注:份子钱的数学从来不是等价交换——它算的是「我见证了你的人生大事」,见证本身,无法定价。","账本补充:这场婚礼您还随了「一句现场祝福」——账本记不了,但新人记得住:你特意请假飞过去的那个下午。"],"bigs":["¥800","十年利息","见证"]},{"label":"记一笔·满月","tag":"满月","lines":["满月酒随礼 ¥600——对象是前同事。备注:她生娃时你们还在一家公司,现在各换了东家,孩子都会打酱油了。","账本批注:满月酒的份子钱是流动的人情——同事可能散场,但孩子的照片会一直留在您的手机相册里,逢年过节还会更新。","账本补充:人情账最微妙的地方:有人十年不联系,份子钱照收;有人天天见面,份子钱免了——亲疏远近,不在频率,在心意。"],"bigs":["¥600","流动人情","心意"]},{"label":"年度审计","tag":"审计","lines":["年度审计:今年随出去 ¥3,200——相当于两个月房贷。您看着账本叹了口气,又笑了:这说明,您是个有朋友圈子的人。","审计补充:账本里还有一页「收到的」:您办事时收的份子钱 ¥6,800——其中 12 个人,当年您给他们随过。人情是循环的,不是单向的。","账本终语:份子钱不是债,是网——你随出去的每一笔,都在编织一张「有事时有人来」的网。这张网平时看不见,喜事时,它就是热闹本身。"],"bigs":["¥3,200","循环","人情网"]}],"metrics":[["十年流水","¥23,000"],["今年支出","¥3,200"],["循环率","78%"],["账本立场","记账不记仇"]],"logTitle":"人情流水","logEn":"LEDGER","logEmpty":"暂无流水。下一个红本本,正在某处等着您的名字。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

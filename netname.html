@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>网名进化史博物馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏年代 <b>2008 至今</b></span>
+    <span>进化方向 <b>越活越像真名</b></span>
+    <span>馆长结论 <b>网名是心理 X 光片</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">USERNAME&nbsp;EVOLUTION&nbsp;MUSEUM</div>
+    <h1>网名进化史博物馆</h1>
+    <div class="sub">「↘灬冷血灬杀手↙」→「看淡一切丶」→「阿伟」——一个人的网名,就是一部成长史。本馆按年代展出,请寻找您用过的那一层。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">展厅灯亮起</div><div class="status" id="status">点击抽取一个年代的网名风格。每一层都是一代人的 QQ 空间,每一个符号都是当时的心情。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽取一个年代</button><button class="btn" id="moreBtn">换个年代看</button></div><div class="metrics"><div class="m"><div class="k">馆藏年代层</div><div class="v">6 层</div></div><div class="m"><div class="k">馆长结论</div><div class="v">心理 X 光</div></div><div class="m"><div class="k">长青款占比</div><div class="v">3%</div></div><div class="m"><div class="k">您的网名</div><div class="v">第几层?</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">观展记录</span><span class="en">AGEX</span></div><ul id="log"><li style="color:var(--muted)">暂无观展。您的旧网名还躺在某个账号里,替您保管着当年。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长结语</div>
+    <p>网名是一部不用写的自传:符号期在找存在感,情伤期在练习情绪,佛系期在消化现实,真名期在回归生活。本馆不评判任何一层——每一层都是当时的您,认真活着的样子。下次改网名前,不妨想想:这一层,想给未来的自己看什么?</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">观展完毕。您的网名,进化到哪一层了?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 147 号藏品 · 本馆与 92 号(人生打字报告研究所)共用档案室:一个考古词库,一个考古网名<br>馆藏冷知识:所有「冷血杀手」的持有者,现实里多半不敢逃课——网名的功能,是替现实圆梦
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"展厅灯亮起","why0":"点击抽取一个年代的网名风格。每一层都是一代人的 QQ 空间,每一个符号都是当时的心情。","btnLabel":"抽取一个年代","moreLabel":"换个年代看","pools":[{"q":"2008–2010 · 符号轰炸期","w":"代表网名:「↘灬冷血灬杀手↙」「丶仰望丶天空」。特征:符号越多越酷,火星文是身份证。当时的心情:「全世界都不懂我」——其实只是打不出汉字。"},{"q":"2011–2013 · 情伤文学期","w":"代表网名:「一人一半、才是伴」「对你何止一句喜欢」。特征:歌词当网名,签名必伤感。当时的心情:多半没谈过恋爱,但先学会了失恋的语气。"},{"q":"2014–2016 · 英文简约期","w":"代表网名:「Solo.」「Wait」「-Nothing」。特征:以为英文显得高级,其实全班都是这几个词。当时的心情:「我在看世界」——其实在看别人的朋友圈。"},{"q":"2017–2019 · 佛系淡漠期","w":"代表网名:「。」「- 」「退休人士」。特征:一个句号走天下,名字越短越酷。当时的心情:「别问我,问就是无所谓」——其实挺有所谓,只是学会了不说。"},{"q":"2020–2022 · 整活快乐期","w":"代表网名:「已老实求放过」「精神状态领先」。特征:网名即段子,快乐是防御。当时的心情:用幽默消化焦虑——这代人的成长,是笑着完成的。"},{"q":"2023–至今 · 真名躺平期","w":"代表网名:真名。特征:不装了,摊牌了——工作群要认人,客户要称呼,网名的尽头是「像个正经人」。当时的心情:名字只是称呼,酷不酷,日子说了算。"},{"q":"隐藏展柜 · 长青款","w":"代表网名:「随缘」「顺其自然」或一个拼音缩写。特征:十年没换过——不是懒,是这个名字刚好接住了所有年纪的自己。馆长致敬:长青款是网名界的化石,也是自我和解的冠军。"}],"metrics":[["馆藏年代层","6 层"],["馆长结论","心理 X 光"],["长青款占比","3%"],["您的网名","第几层?"]],"logTitle":"观展记录","logEn":"AGEX","logEmpty":"暂无观展。您的旧网名还躺在某个账号里,替您保管着当年。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

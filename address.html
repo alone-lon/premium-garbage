@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>收货地址考古学</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>考古对象 <b>购物 App 的地址簿</b></span>
+    <span>馆藏年代 <b>2015 至今</b></span>
+    <span>考古发现 <b>地址即人生轨迹</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ADDRESS-BOOK&nbsp;ARCHEOLOGY</div>
+    <h1>收货地址考古学</h1>
+    <div class="sub">您的收货地址列表,是一部私人编年史:大学宿舍、第一份工作的公司、现在的家——每改一次地址,人生就翻一页。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">地址簿翻开</div><div class="status" id="status">您的地址簿里躺着 6 个地址:常用的 1 个,怀旧 3 个,不敢删的 2 个。本考古队开始逐层发掘。</div><div class="metrics"><div class="m"><div class="k">在册地址</div><div class="v">6 个</div></div><div class="m"><div class="k">常用</div><div class="v">1 个</div></div><div class="m"><div class="k">不敢删</div><div class="v">2 个</div></div><div class="m"><div class="k">考古价值</div><div class="v">极高</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">发掘·大学宿舍层</button><button class="btn" id="btn1">发掘·第一份工作层</button><button class="btn" id="btn2">发掘·现在的家</button></div></div><div class="log"><div class="sec-tag"><span class="zh">发掘记录</span><span class="en">DIG</span></div><ul id="log"><li style="color:var(--muted)">暂无发掘。您的地址簿安安静静,每一行都是一段半径。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">考古队结语</div>
+    <p>收货地址是最诚实的个人史:它不会说谎,不会美化,一笔一划都是当时的生活半径。本考古队不催您清理地址簿——那些不删的地址,是您给自己留的「回去的路」。哪天真删了,别难过:地址删得掉,走过的日子删不掉。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">考古完毕。您的地址簿,翻到哪一层了?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 150 号藏品 · 本考古队与 116 号(沙发缝隙文明展)联合办展:一个挖家里,一个挖线上<br>考古冷知识:全人类的地址簿里,都有一个「再也不用了,但就是不删」的地址——那是留在原地的自己
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"地址簿翻开","stat0":"您的地址簿里躺着 6 个地址:常用的 1 个,怀旧 3 个,不敢删的 2 个。本考古队开始逐层发掘。","btns":[{"label":"发掘·大学宿舍层","tag":"地层一","lines":["出土地址:「XX 大学 6 号楼 523」——该地址使用四年,收过 87 个包裹:教材、零食、给暗恋的人织到一半的围巾(毛线)。","地层解读:523 宿舍早已换了住户,但这个地址还在簿子里——删掉它,大学就正式散场了;不删,就还能假装自己随时回去。","出土文物补充:当时的收件人姓名是网名(见 147 号馆)——「丶仰望丶天空」收快递的那个年代,快递站喊的就是网名。"],"bigs":["87 个包裹","散场","网名收件"]},{"label":"发掘·第一份工作层","tag":"地层二","lines":["出土地址:「XX 科技园 B 座 12F」——第一份工作的公司地址。在这里收过 21 个包裹,大部分是加班时点的夜宵和办公室午睡枕。","地层解读:该地址的最后一次使用,是离职那天买的一箱纸箱——用来装工位上的私人物品。地址没删,是您对这座城市说的「以后常联系」。","考古备注:科技园的收货点位置,您至今记得——身体记路比脑子记路忠诚,虽然您再也没回去过。"],"bigs":["21 个包裹","离职纸箱","身体记路"]},{"label":"发掘·现在的家","tag":"地层三","lines":["常用地址:「XX 小区 3 栋 1502」——收货频率每周 5.3 次,签收人:快递柜。这个地址收过您网购的全部人生:家具、猫粮、以及上个月退掉的那把椅子。","地层解读:这是您第一个「写自己名字」的地址——不是宿舍,不是公司,是家。它还在收货,故事还在继续。","考古队结论:地址簿是一部倒叙的人生:最新的在最上面,最旧的在最下面——中间隔着的,是您搬过的每一次家。"],"bigs":["1502","第一个家","还在继续"]}],"metrics":[["在册地址","6 个"],["常用","1 个"],["不敢删","2 个"],["考古价值","极高"]],"logTitle":"发掘记录","logEn":"DIG","logEmpty":"暂无发掘。您的地址簿安安静静,每一行都是一段半径。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>早高峰地铁生态图鉴</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>观测车厢 <b>2 号线第 4 节(经典款)</b></span>
+    <span>拥挤密度 <b>1.2 人/平方米</b></span>
+    <span>您的角色 <b>图鉴主角</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">RUSH-HOUR&nbsp;METRO&nbsp;GUIDE</div>
+    <h1>早高峰地铁生态图鉴</h1>
+    <div class="sub">7:45 的地铁车厢是一座浮动的城市:抓吊环的、背门板的、靠人流借力的——本图鉴按区域收录,请对号入座。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">车门即将关闭</div><div class="status" id="status">您挤进车厢,完成了一次标准的「人形折叠」。本图鉴开始记录您方圆半米内的生态。</div><div class="metrics"><div class="m"><div class="k">观测时长</div><div class="v">一站地</div></div><div class="m"><div class="k">密度</div><div class="v">1.2 人/㎡</div></div><div class="m"><div class="k">生态区域</div><div class="v">3 个</div></div><div class="m"><div class="k">您的角色</div><div class="v">主角</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">区域一·吊环区</button><button class="btn" id="btn1">区域二·门板区</button><button class="btn" id="btn2">区域三·座位区</button></div></div><div class="log"><div class="sec-tag"><span class="zh">图鉴收录</span><span class="en">GUIDE</span></div><ul id="log"><li style="color:var(--muted)">暂无收录。下一班地铁 2 分钟后进站,生态即将刷新。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">图鉴结语</div>
+    <p>地铁车厢是城市每天运送两亿次的微型社会:它拥挤、沉默、各刷各的手机,却在「让一下」「借过」里维持着惊人的秩序。本图鉴不解决拥挤——拥挤无解——只负责记录:您每天的四十分钟,是这座城市最真实的呼吸。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">图鉴完毕。下一站,到您的了。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 145 号藏品 · 本图鉴与 57 号(BGM 点唱机)联动:早高峰请自行播放《命运交响曲》<br>生态冷知识:早高峰地铁里没有人抬头看风景——风景都在手机里,而手机里没有风景
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"车门即将关闭","stat0":"您挤进车厢,完成了一次标准的「人形折叠」。本图鉴开始记录您方圆半米内的生态。","btns":[{"label":"区域一·吊环区","tag":"吊环","lines":["吊环区实录:抓吊环的六个人里,四个在刷手机,一个在补觉(头随车晃,精准平衡),一个在观察谁要下车。","吊环区玄学:吊环的高度永远为高个子设计——165cm 以下的乘客发展出了「抓横杆」替代方案,以及「借力人流」高级技巧。","下车预判:吊环区的老手在到站前 30 秒就开始移动——他们不是挤,是流动。新手总在车门关上前一秒才醒悟。"],"bigs":["生态","玄学","老手"]},{"label":"区域二·门板区","tag":"门板","lines":["门板区实录:背靠门板的人获得短暂支撑,代价是每次停车被门「警告」一次——他们的后背,是最早知道到站的传感器。","门板区高手:靠门不挡门,停车时主动让出开门空间——他们是车厢里的礼仪担当,也是被挤最惨的。","门板区禁忌:千万别靠着门睡——过站的下场,是从终点站往回坐的 40 分钟人生复盘。"],"bigs":["传感器","礼仪担当","过站"]},{"label":"区域三·座位区","tag":"座位","lines":["座位区实录:有座的人分成两派——闭目养神派(进站即睡,到站即醒,生物钟精确到秒)和手机沉浸派(世界与我无关)。","座位区暗号:一个人坐两座并放包 = 「我有防备」;两个人中间留一条缝 = 「可以挤」——座位的社交语言,全靠间距。","座位区传说:传说中「给老人让座后一路站到底」的人,今天也在您的车厢里——他就是您,上周三那次。"],"bigs":["两派","间距暗号","就是您"]}],"metrics":[["观测时长","一站地"],["密度","1.2 人/㎡"],["生态区域","3 个"],["您的角色","主角"]],"logTitle":"图鉴收录","logEn":"GUIDE","logEmpty":"暂无收录。下一班地铁 2 分钟后进站,生态即将刷新。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

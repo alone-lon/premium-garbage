@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>气泡膜捏爆中心</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>素材 <b>气泡膜 100 枚(虚拟)</b></span>
+    <span>音效 <b>脑内音响(高清)</b></span>
+    <span>解压疗效 <b>1 分钟起效</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BUBBLE-WRAP&nbsp;POP&nbsp;CENTER</div>
+    <h1>气泡膜捏爆中心</h1>
+    <div class="sub">捏爆一枚,快乐一声。本中心提供无实体气泡膜——「啵」的一声由你的脑内音响播放,捏爆率 100%,副作用是上瘾。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">剩余 100 枚</div><div class="status" id="status">一整张气泡膜铺在桌上,一百枚气泡饱满挺立。今天,它们等着被你温柔地处决。</div><div class="metrics"><div class="m"><div class="k">总库存</div><div class="v">100 枚</div></div><div class="m"><div class="k">已处决</div><div class="v">0 枚</div></div><div class="m"><div class="k">哑弹率</div><div class="v">8%</div></div><div class="m"><div class="k">疗效</div><div class="v">1 分钟起效</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">捏一枚</button><button class="btn" id="btn1">连捏十枚</button><button class="btn" id="btn2">翻面找漏气的</button></div></div><div class="log"><div class="sec-tag"><span class="zh">处决记录</span><span class="en">POP&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无处决。一百枚气泡饱满挺立,像一排等待点名的新兵。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">中心声明</div>
+    <p>气泡膜的终极使命不是保护商品,是被捏爆。每一枚气泡从出厂那一刻,就在等一只手。本中心不生产气泡膜——本中心只提供「啵」的完整人生:等待、相遇、爆炸,以及爆炸之后那句轻飘飘的「好解压」。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">捏爆完毕。剩下那半张,留到明天。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 143 号藏品 · 本中心与 60 号(崩溃收纳盒)同属解压产业链:一个收崩溃,一个出快乐<br>行业冷知识:全世界没有人能把一整张气泡膜留到扔掉——它一定会在某个深夜被捏完
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"剩余 100 枚","stat0":"一整张气泡膜铺在桌上,一百枚气泡饱满挺立。今天,它们等着被你温柔地处决。","btns":[{"label":"捏一枚","tag":"单发","lines":["啵。","啵——(带一点回旋的余韵)。这一枚熟透了,爆得漂亮。","双指齐下,连爆两枚:啵啵。今天的快乐,翻倍结算。","这一枚是漏气件——捏了个寂寞。它把「啵」憋成了「噗」,遗憾也是一种体验。"],"bigs":["剩 99 枚","剩 98 枚","剩 96 枚","剩 95 枚"]},{"label":"连捏十枚","tag":"十连","lines":["连爆十枚:啵啵啵啵啵啵啵啵啵啵。手速可以,心态已飘。","十枚里有三枚哑弹——气泡膜的世界,也有躺平的,尊重它们的命运。","十连爆完成。你突然理解了为什么快递员永远在笑——他们每天捏的比谁都多。"],"bigs":["剩 85 枚","剩 82 枚","快递员的快乐"]},{"label":"翻面找漏气的","tag":"质检","lines":["翻面检查:这一面有三个瘪的——它们是被物流提前捏过的幸运儿,见证过运输的颠簸。","没找到漏气的,倒是顺手捏爆了两枚——解压这件事,不分先后,不分正反。","质检结论:气泡膜没有正反面,只有「还没爆」和「已经爆」两种状态。人生若也如此简单就好了。"],"bigs":["剩 80 枚","剩 78 枚","哲学爆"]}],"metrics":[["总库存","100 枚"],["已处决","0 枚"],["哑弹率","8%"],["疗效","1 分钟起效"]],"logTitle":"处决记录","logEn":"POP&nbsp;LOG","logEmpty":"暂无处决。一百枚气泡饱满挺立,像一排等待点名的新兵。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

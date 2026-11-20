@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>群名编年史</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>群名的生命周期</b></span>
+    <span>平均寿命 <b>4 个名字</b></span>
+    <span>编年史立场 <b>名字即群史</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">GROUP-NAME&nbsp;CHRONICLE</div>
+    <h1>群名编年史</h1>
+    <div class="sub">一个群的名字,记录了这个群的全部人生:「相亲相爱一家人」→「XX 项目临时群」→「哈哈哈哈哈哈」——本编年史收录群名变迁的完整标本。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">编年史翻开</div><div class="status" id="status">点击抽取一种群名命运。每个名字背后,都是一段群生——有的还在续写,有的已成遗址。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽取一种命运</button><button class="btn" id="moreBtn">再看一个群</button></div><div class="metrics"><div class="m"><div class="k">收录标本</div><div class="v">7 例</div></div><div class="m"><div class="k">平均改名</div><div class="v">4 次</div></div><div class="m"><div class="k">遗址群占比</div><div class="v">41%</div></div><div class="m"><div class="k">群名寿命</div><div class="v">看人情</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">编年记录</span><span class="en">CHRONICLE</span></div><ul id="log"><li style="color:var(--muted)">暂无记录。您的手机里躺着几十个群,每个都有自己的一生。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">编年史结语</div>
+    <p>群名是这个时代最诚实的社交档案:它记录着一段关系的起点、热度和归宿。本编年史不劝你退群——每个群都是一段时光的容器——只想说:偶尔翻翻那些沉默的群,看看旧群名,像翻旧相册。人没走远,只是换了种方式在群里住着。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">编年史完毕。您置顶的那个群,叫什么?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 149 号藏品 · 本编年史与 85 号(潜水员认证中心)联合研究:群名再热闹,潜水的人才是主体<br>编年史冷知识:改群名最勤的群,往往是活得最久的群——吵吵闹闹,才是真感情
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"编年史翻开","why0":"点击抽取一种群名命运。每个名字背后,都是一段群生——有的还在续写,有的已成遗址。","btnLabel":"抽取一种命运","moreLabel":"再看一个群","pools":[{"q":"家庭群:「相亲相爱一家人」","w":"该名十年未改——它不需要改。这个名字的全部使命,是在过年时提醒你:抢红包、发祝福、以及「收到请回复」。群名不变,爱也不变。"},{"q":"同学群:「XX 大学 15 届 2 班」→「失联枢纽站」","w":"毕业第一年:天天聊;第三年:生日祝福;第五年:只剩投票和砍价;第八年:改名「失联枢纽站」——名字改了,人都还在,只是都不说了。"},{"q":"同事群:「XX 项目冲锋队」→「二期攻坚」→「(已归档)」","w":"项目群的三个时代:冲锋、攻坚、归档。项目结束时群没解散——它成了数字遗址,偶尔有人发个表情,像在碑前放了束花。"},{"q":"朋友群:「周末爬山小分队」→「周末吃饭观察团」→「哈哈哈」","w":"群的退化史,也是友谊的进化史:爬不动山了,但饭还是要吃的;后来连饭都约不上,只剩「哈哈哈」——笑点还在,人就还在。"},{"q":"福利群:「3.8 元抽奖福利群」→「(全员静音)」","w":"该群的一生:拉人、抽奖、@全体成员、再拉人——最后在某个下午被全员静音。群名还是那个名字,群里已经没有活人了。"},{"q":"神秘群:「(无群名)」","w":"群主从未起名——这个群是三个人的小群,建群那天聊到凌晨三点,后来谁也没说过话。没名字,反而是它最响亮的名字:有些关系,不需要标签。"},{"q":"传奇群:「相亲相爱一家人」→「相亲相爱一家人(2)」","w":"原群 500 人满员,二群紧急开张。这个名字的复制,是中国式亲情的扩容——爱满出来了,就再建一个群装着。"}],"metrics":[["收录标本","7 例"],["平均改名","4 次"],["遗址群占比","41%"],["群名寿命","看人情"]],"logTitle":"编年记录","logEn":"CHRONICLE","logEmpty":"暂无记录。您的手机里躺着几十个群,每个都有自己的一生。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>
