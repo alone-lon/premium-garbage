@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>充电线抽屉考古队</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>考古对象 <b>抽屉充电线层</b></span>
+    <span>在编线材 <b>若干(状态堪忧)</b></span>
+    <span>考古难点 <b>分不清哪根是谁的</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">CABLE-DRAWER&nbsp;DIG</div>
+    <h1>充电线抽屉考古队</h1>
+    <div class="sub">抽屉里的充电线正在编队待检:一根两头都松,一根只能慢充,一根头都找不到。本考古队逐根鉴定,出具年代报告。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">出土 +1</div><div class="status" id="status">本队开箱。抽屉深处的线缆层层叠叠——每一根都「应该能用」,每一根都是谜。</div><div class="metrics"><div class="m"><div class="k">出土线材</div><div class="v">3 根</div></div><div class="m"><div class="k">可用比例</div><div class="v">2/3</div></div><div class="m"><div class="k">快充能力</div><div class="v">已失传</div></div><div class="m"><div class="k">并案单位</div><div class="v">130 号院</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">文物一·松头线</button><button class="btn" id="btn1">文物二·慢充线</button><button class="btn" id="btn2">文物三·无头线</button></div></div><div class="log"><div class="sec-tag"><span class="zh">考古日志</span><span class="en">CABLES</span></div><ul id="log"><li style="color:var(--muted)">暂无考古。您的抽屉深处,还有几根线在等一个鉴定。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">考古队结语</div>
+    <p>充电线是数字时代的日用品耗材,也是抽屉里最沉默的居民:它们不坏,只是老了;不是没用,只是慢了。本队的全部建议:每半年清一次线——留三根,扔三根。抽屉的空间是有限的,而每一根「万一用得上」,都在占用「现在就用得上」的位置。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">考古完毕。今晚,清一次抽屉。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 133 号藏品 · 本队与 105 号(指尖陀螺经济学)同一抽屉办公:都是被时代用旧的玩意<br>考古冷知识:全球抽屉里的充电线首尾相连,可绕地球五圈——其中一半,头已经没了
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"出土 +1","stat0":"本队开箱。抽屉深处的线缆层层叠叠——每一根都「应该能用」,每一根都是谜。","btns":[{"label":"文物一·松头线","tag":"松头","lines":["鉴定:能插上,但碰一下就断——它和手机的连接全凭缘分,充电时手机不能动,动了就断,像一份需要小心呵护的旧感情。","年代推测:三年前。松头的原因是您拔线时从来不捏头,直接拽线——每台手机的用户手册都写了别这样,没人看过。","处置建议:降级为「床头应急线」——只管让它活着,不指望它表现。"],"bigs":["靠缘分","拽线","应急"]},{"label":"文物二·慢充线","tag":"慢充","lines":["鉴定:能充,但只有 5W——充一夜,早上 60%。它不坏,只是慢,像一个永远「在努力」但不出成绩的老实人。","慢充线的心理价值:您舍不得扔——万一快充线坏了呢?它是「备用」,而备用的宿命,是永远备而不用。","处置建议:留在包里当旅伴——酒店的插座总有一个是坏的,那时它就是英雄。"],"bigs":["5W","备用","旅伴"]},{"label":"文物三·无头线","tag":"无头","lines":["鉴定:线体完好,充电头没了——头去了哪里?本队怀疑与袜子失踪案(第 130 号)并案:它们都被家里的黑洞收编了。","无头线的存在意义:它躺在抽屉里,代表一句没说出口的话——「改天买个头配一下」。这句话的「改天」,和「下次一定」同宗。","处置建议:要么今天配个头,要么承认它是一根「线」而不是「充电线」——给它一个身份,别让它悬着。"],"bigs":["并案","改天","身份"]}],"metrics":[["出土线材","3 根"],["可用比例","2/3"],["快充能力","已失传"],["并案单位","130 号院"]],"logTitle":"考古日志","logEn":"CABLES","logEmpty":"暂无考古。您的抽屉深处,还有几根线在等一个鉴定。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

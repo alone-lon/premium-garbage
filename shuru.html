@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「对方正在输入…」观测站</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>观测对象 <b>「正在输入」的生灭</b></span>
+    <span>最长纪录 <b>11 分钟</b></span>
+    <span>最终产出 <b>多为「哈哈」</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TYPING-INDICATOR&nbsp;OBSERVATORY</div>
+    <h1>「对方正在输入…」观测站</h1>
+    <div class="sub">那行小字已持续 8 分钟:对方正在输入……他会说什么?本站逐秒观测——观测的结论,通常是:什么也没有。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">正在输入…</div><div class="status" id="status">那行小字出现了。你放下手里的事,盯着对话框——这是当代最轻的绑架:它绑的不是人,是注意力。</div><div class="metrics"><div class="m"><div class="k">当前观测</div><div class="v">8 分钟</div></div><div class="m"><div class="k">最终产出</div><div class="v">待定</div></div><div class="m"><div class="k">信息熵</div><div class="v">0</div></div><div class="m"><div class="k">您的心态</div><div class="v">焦灼中</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">观测一·短暂输入</button><button class="btn" id="btn1">观测二·持久输入</button><button class="btn" id="btn2">观测三·薛定谔输入</button></div></div><div class="log"><div class="sec-tag"><span class="zh">观测记录</span><span class="en">TYPING</span></div><ul id="log"><li style="color:var(--muted)">暂无观测。那行小字此刻正在某人的屏幕上亮着——对方可能正在删字。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">观测站结语</div>
+    <p>「正在输入」是数字时代最微妙的状态:它承诺了内容,却常常什么都不给。本站观测多年,结论是:输入时长与最终内容的含金量,通常成反比——想说的都在被删掉,发出来的都是安全的话。所以,别等了。想说什么的人,总会说的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">观测完毕。放下手机,它响了自然会看。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 129 号藏品 · 本站与 37 号(已读不回机)联合观测:一个不回,一个在删<br>观测冷知识:全人类每天「打了又删」的字,摞起来比发出去的还多——沉默,是另一种发文
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"正在输入…","stat0":"那行小字出现了。你放下手里的事,盯着对话框——这是当代最轻的绑架:它绑的不是人,是注意力。","btns":[{"label":"观测一·短暂输入","tag":"3 秒","lines":["「正在输入」出现 3 秒,消失——对方打了几个字,又删了。那几个字是什么?永远没人知道——删掉的话,是最真的话。","消失之后,对话框安静得像什么都没发生过——但你知道:刚才,有人想说什么,又收回了。","本站判词:3 秒的输入,是当代最轻的心事。它没说出口,但屏幕替它记住了那 3 秒。"],"bigs":["3 秒","删了","心事"]},{"label":"观测二·持久输入","tag":"10 分钟","lines":["「正在输入」持续 10 分钟——你脑补了小作文、道歉信、表白稿。10 分钟后,对方发来:「哈哈」。","「哈哈」的物理学:10 分钟的输入压缩成两个字节——能量守恒被社交软件打破了。","本站判词:持久输入的「哈哈」,意思是「我想了很多,但都说不出口」。这不是敷衍——是慈悲:他不想让你担心。"],"bigs":["10 分钟","哈哈","慈悲"]},{"label":"观测三·薛定谔输入","tag":"猫态","lines":["玄学现象:你切出对话框,他就停止输入;你切回来,他正在输入——仿佛他看得见你。","本站研究:这不是玄学,是巧合——但巧合连续发生三次后,你俩都在防着对方。","判词:薛定谔输入态的本质,是两个人都在等对方先开口——谁都开着门,谁都不进屋。"],"bigs":["猫态","三次巧合","都不进屋"]}],"metrics":[["当前观测","8 分钟"],["最终产出","待定"],["信息熵","0"],["您的心态","焦灼中"]],"logTitle":"观测记录","logEn":"TYPING","logEmpty":"暂无观测。那行小字此刻正在某人的屏幕上亮着——对方可能正在删字。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

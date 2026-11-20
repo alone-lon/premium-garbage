@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>洗衣机袜子失踪研究院</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>袜子失踪之谜</b></span>
+    <span>累计失踪 <b>23 只(本院院长家)</b></span>
+    <span>理论数量 <b>三大假说</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SOCK-VANISHING&nbsp;INSTITUTE</div>
+    <h1>洗衣机袜子失踪研究院</h1>
+    <div class="sub">每次洗完,袜子总会少一只。十年下来,你买了 23 只不成对的袜——本院正式立项,研究这个家家都有的黑洞。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">失踪 +1</div><div class="status" id="status">晾衣完毕,清点:七只。早上明明放进八只。本院研究员(您)开始排查——排查范围:全家。</div><div class="metrics"><div class="m"><div class="k">累计失踪</div><div class="v">23 只</div></div><div class="m"><div class="k">找回率</div><div class="v">11%</div></div><div class="m"><div class="k">假说数量</div><div class="v">3 个</div></div><div class="m"><div class="k">院长结论</div><div class="v">再买十双</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">假说一·滚筒黑洞</button><button class="btn" id="btn1">假说二·量子分离</button><button class="btn" id="btn2">假说三·单只策略</button></div></div><div class="log"><div class="sec-tag"><span class="zh">研究记录</span><span class="en">SOCKS</span></div><ul id="log"><li style="color:var(--muted)">暂无研究。您的洗衣篮里,此刻正有一只袜子筹划失踪。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">研究院结语</div>
+    <p>袜子失踪是家家都有的未解之谜,本研究院不指望破案——只希望您读完这份报告,对那只配不成对的袜子温柔一点:它不是被抛弃,是在等待。等大扫除,等搬家,等某天您翻旧物时那声「原来在这」。失物的人生,也有重逢的剧本。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">研究完毕。今晚,翻翻洗衣机滤网。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 130 号藏品 · 本院与 116 号(沙发缝文明展)联合考古:一个挖缝,一个掏筒<br>院内冷知识:全人类每年失踪的袜子连起来,能从地球铺到月球——铺不到也没关系,反正没人铺过
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"失踪 +1","stat0":"晾衣完毕,清点:七只。早上明明放进八只。本院研究员(您)开始排查——排查范围:全家。","btns":[{"label":"假说一·滚筒黑洞","tag":"假说一","lines":["假说一:袜子被高速离心力卷进内筒与外筒之间的缝隙——那里是洗衣机的「私藏区」,藏着历代失踪袜子的遗骸。","验证方式:拆机。但没人真的会为一袜子拆洗衣机——所以该假说永远无法证伪,成为完美玄学。","本院评估:可能性 40%。每次洗衣机异响,您都会想起这个假说——那是袜子们在里面敲门的幻听。"],"bigs":["40%","私藏区","幻听"]},{"label":"假说二·量子分离","tag":"假说二","lines":["假说二:袜子在进洗衣机之前就分开了——一只在洗衣篮,一只在沙发底,一只在旅行箱夹层。失踪,发生在您看不见的日常里。","验证方式:大扫除。每次大扫除,总能出土 2-3 只「失踪多年」的袜——它们的另一半,有些已经扔了。","本院评估:可能性 55%。袜子不是失踪,是失散——失散的悲剧在于:重逢时,同伴可能已经不在了。"],"bigs":["55%","失散","重逢难题"]},{"label":"假说三·单只策略","tag":"假说三","lines":["假说三(社会学):袜子的终极生存策略就是「失散」——单只袜子会促使您购买新袜,这是袜类物种的繁衍智慧。","本假说的证据:您十年来买了 12 双新袜——平均每双的「失散率」正好维持袜柜的动态平衡。","本院终极结论:袜子失踪不是 bug,是 feature——它是居家生活的一部分,如同钥匙的失踪、充电线的失踪,共同构成「家庭失物宇宙」。"],"bigs":["繁衍智慧","动态平衡","失物宇宙"]}],"metrics":[["累计失踪","23 只"],["找回率","11%"],["假说数量","3 个"],["院长结论","再买十双"]],"logTitle":"研究记录","logEn":"SOCKS","logEmpty":"暂无研究。您的洗衣篮里,此刻正有一只袜子筹划失踪。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

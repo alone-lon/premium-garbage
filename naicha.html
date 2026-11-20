@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>奶茶甜度选择心理战</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>甜度的自我博弈</b></span>
+    <span>摇摆时长 <b>8 秒(均值)</b></span>
+    <span>最终甜度 <b>嘴上三分,心里全糖</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SUGAR-LEVEL&nbsp;PSYCHOLOGY</div>
+    <h1>奶茶甜度选择心理战</h1>
+    <div class="sub">站到柜台前,你在三分糖和五分糖之间摇摆了 8 秒——这不是点单,是灵魂拷问。本店全程围观,并记录下了您改口的全过程。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">三分糖?</div><div class="status" id="status">柜台前,店员在等。您的内心开庭:三分糖(自律的我)vs 全糖(诚实的我)——庭审开始。</div><div class="metrics"><div class="m"><div class="k">庭审时长</div><div class="v">8 秒</div></div><div class="m"><div class="k">最终甜度</div><div class="v">全糖</div></div><div class="m"><div class="k">自律宣言</div><div class="v">阵亡</div></div><div class="m"><div class="k">下次承诺</div><div class="v">三分(待定)</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">庭审一·三分糖发言</button><button class="btn" id="btn1">庭审二·改口时刻</button><button class="btn" id="btn2">庭审三·全糖诞生</button></div></div><div class="log"><div class="sec-tag"><span class="zh">点单记录</span><span class="en">SUGAR</span></div><ul id="log"><li style="color:var(--muted)">暂无庭审。下一杯奶茶的灵魂拷问,正在柜台前酝酿。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本店结语</div>
+    <p>奶茶甜度是普通人每天都能体验的小型人格分裂:点单的自己、放纵的自己、和解的自己,在一杯奶茶里轮流执政。本店的立场:别较劲——三分糖喝出仪式感,全糖喝出快乐,五分糖喝出「我尽力了」。甜度没有对错,喝下去那一刻舒服,就是对的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">庭审完毕。这杯,好喝就行。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 137 号藏品 · 本店与 41 号(咖啡因计算器)同属「饮品决策研究中心」<br>店内冷知识:自称「三分糖」的人,年度平均实际甜度是七分——数据不会说谎,人会给数据留面子
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"三分糖?","stat0":"柜台前,店员在等。您的内心开庭:三分糖(自律的我)vs 全糖(诚实的我)——庭审开始。","btns":[{"label":"庭审一·三分糖发言","tag":"三分","lines":["自律的我先发言:「三分糖,最近控糖。」——说出口的瞬间,您感到一种轻盈的、几乎像瘦了两斤的正义感。","店员点头记录。您看着前面排队的人点全糖加珍珠加奶盖,内心毫无波动——好吧,有一点波动。","庭审记录:三分糖的宣言,一半说给店员听,一半说给排队的人听——自律是需要观众的。"],"bigs":["控糖","正义感","要观众"]},{"label":"庭审二·改口时刻","tag":"改口","lines":["排队的三分钟里,您越想越亏:「偶尔放纵一次怎么了?」——改口的声音很小,像是怕被三秒前的自己听见。","「那个……还是五分糖吧。」——改口的音量,刚好够店员听见,刚好够自己保住体面。","庭审记录:从三分到五分,只隔一个「偶尔」——「偶尔」是甜度世界的赦免令,人手一张,无限次使用。"],"bigs":["偶尔","赦免令","小心声"]},{"label":"庭审三·全糖诞生","tag":"全糖","lines":["朋友凑过来:「喝全糖吧,人生苦短。」——您从了。三分糖的您,在 8 秒前阵亡;全糖的您,此刻上岗。","拿到奶茶的瞬间,您嘬了一口——甜,真甜,快乐也是真的。庭审的三分钟,像一场自己骗自己的闹剧。","本店总结:每个人心里都有一杯三分糖——它是给「理想中的自己」点的;而递到手里那杯的甜度,才是今天真实的您。两者都是您,别互相埋怨。"],"bigs":["人生苦短","真实的甜","都是您"]}],"metrics":[["庭审时长","8 秒"],["最终甜度","全糖"],["自律宣言","阵亡"],["下次承诺","三分(待定)"]],"logTitle":"点单记录","logEn":"SUGAR","logEmpty":"暂无庭审。下一杯奶茶的灵魂拷问,正在柜台前酝酿。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
