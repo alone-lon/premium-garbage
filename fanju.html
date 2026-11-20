@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>饭局座位玄学协会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>圆桌座次博弈</b></span>
+    <span>核心变量 <b>门的位置</b></span>
+    <span>协会宗旨 <b>坐对位置,少喝三杯</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DINNER-SEAT&nbsp;SOCIETY</div>
+    <h1>饭局座位玄学协会</h1>
+    <div class="sub">一张圆桌,八个座位,三种规矩:谁坐主陪、谁坐门边、谁假装「随便坐」然后坐错——本协会开课,传授中国饭局的座位玄学。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">协会开课</div><div class="status" id="status">点击抽取一个座位的玄学解读。记住:座位不是椅子,是身份——坐对了,是礼数;坐错了,是事故。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽取座位解读</button><button class="btn" id="moreBtn">换一个座位</button></div><div class="metrics"><div class="m"><div class="k">协会会员</div><div class="v">全员(不自愿)</div></div><div class="m"><div class="k">核心变量</div><div class="v">门的位置</div></div><div class="m"><div class="k">坐错代价</div><div class="v">多喝三杯</div></div><div class="m"><div class="k">新手税</div><div class="v">门边位</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">座次记录</span><span class="en">SEATS</span></div><ul id="log"><li style="color:var(--muted)">暂无记录。下一场饭局还没开席,椅子们已各就各位。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">协会结语</div>
+    <p>饭局座位是一门不写进任何教科书的学问:它全靠观察、挨坐、顿悟。本协会的全部总结:圆桌没有随机——每个座位都写着「谁该坐」。看懂了座位,就看懂了一桌人的关系图谱:谁掌权、谁干活、谁是新人、谁在买单。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结课。下次进包间,先看门。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 210 号藏品 · 本协会与 146 号(亲戚问题防御指挥部)合办「春节生存大学」<br>协会冷知识:全国饭局的「随便坐坐」,平均耗时 4 分钟——谦让的仪式感,比坐本身重要
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"协会开课","why0":"点击抽取一个座位的玄学解读。记住:座位不是椅子,是身份——坐对了,是礼数;坐错了,是事故。","btnLabel":"抽取座位解读","moreLabel":"换一个座位","pools":[{"q":"主陪位 · 正对门","w":"饭局的 C 位:主人或最大领导坐这,视野最好,掌控全场。坐这的人负责开场白和买单暗示——权力最大,责任也最大。"},{"q":"副陪位 · 背对门","w":"第二个辛苦的位置:负责点菜、催菜、张罗酒水,还要替主陪挡酒。副陪是饭局的发动机——看着不起眼,少了它全场熄火。"},{"q":"门边位 · 靠门坐","w":"新人专属位:离门最近,负责开门、传菜、倒茶——顺便负责每一次「服务员」的呼喊。坐这别委屈:这是约定俗成的「新人税」,交几年就毕业了。"},{"q":"上座谦让战 · 主陪旁","w":"主陪右手边是第一贵宾位——全场最尊贵的位置。谦让战通常上演 3 分钟:「您坐您坐」「哪敢哪敢」——最后谁坐,谁就是本场最大腕。"},{"q":"散人位 · 圆桌夹缝","w":"夹在两个大人物中间的位置,全程不敢乱动:筷子伸多远都要计算。坐这的人表面平静,内心已经做了八次 seat 调整。"},{"q":"买单预感位 · 离收银台近","w":"玄学现象:买单的人总是「恰好」坐在离收银台最近的那侧——不是巧合,是他们提前想好了「方便去结账」的动线。饭局的尽头,是walk to 收银台的从容。"}],"metrics":[["协会会员","全员(不自愿)"],["核心变量","门的位置"],["坐错代价","多喝三杯"],["新手税","门边位"]],"logTitle":"座次记录","logEn":"SEATS","logEmpty":"暂无记录。下一场饭局还没开席,椅子们已各就各位。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

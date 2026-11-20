@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>快递柜取件码默写考场</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>考场科目 <b>取件码默写(短期记忆)</b></span>
+    <span>高频失分点 <b>从看码到走到柜前,平均 40 秒</b></span>
+    <span>考场立场 <b>不是记性差,是码不该让人记</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PICKUP&nbsp;EXAM</div>
+    <h1>快递柜取件码默写考场</h1>
+    <div class="sub">「取件码 8-3-3077」——您在来路上背了三遍,站到柜前就忘:本考场为取件码默写提供模拟考环境,并将每次「到柜忘码」记入考勤。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">考场已布置:一部模拟快递柜,六个格口,若干题目。请自觉遵守考场纪律:不许截图,不许翻聊天记录——考的就是您那颗裸脑。</div><div class="metrics"><div class="m"><div class="k">累计发卷</div><div class="v" id="took"><span id=took>0</span> 份</div></div><div class="m"><div class="k">平均遗忘</div><div class="v">40 秒</div></div><div class="m"><div class="k">零失误秘诀</div><div class="v">再看一遍</div></div><div class="m"><div class="k">考场格言</div><div class="v">码不该让人记</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">领取考题</button><button class="btn" id="callBtn">提交答卷</button></div></div><div class="log"><div class="sec-tag"><span class="zh">考场记录</span><span class="en">EXAM</span></div><ul id="log"><li style="color:var(--muted)">暂无发卷。快递柜绿灯常亮,今天没有忘记的码——好日子。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">考务办结语</div>
+    <p>取件码是人类被「方便」反将一军的案例:柜子方便了快递员,码就成了收件人的作业。考务办不反对科技进步,只想记录一个事实——全人类每天有几百万人在柜前掏出手机看第二遍码,这个动作如此一致,一致到近乎仪式:低头,翻找,放大,念出,抬头,输入。考务办的结语:忘码不丢人,丢的是那个「以为自己能记住」的执念。科技越方便,人越可以理直气壮地记不住——把脑子省下来,记那些二维码替代不了的事。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">交卷。下次到柜前,大大方方看第二遍。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 240 号藏品 · 本考场与 187 号(门禁闸机道歉接收处)结成「通行仪式研究所」:一个考默写,一个收道歉<br>考务冷知识:人类对取件码的记忆保持时长平均 37 秒——从看码到站定柜前,恰好是遗忘抵达的时刻,精准得像出题人算好的
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"考号","stat0":"考场已布置:一部模拟快递柜,六个格口,若干题目。请自觉遵守考场纪律:不许截图,不许翻聊天记录——考的就是您那颗裸脑。","takeLabel":"领取考题","callLabel":"提交答卷","takeLines":["考题发放:「3-2-1056」——请默念三遍,然后走向柜区。提示:路上不要回消息,消息是本考场最大的考场事故。","考题发放:「8-4-2277」——本题为易忘题型:开头是格口数,结尾是四位数。历史数据:73% 的考生走到柜前,只记得「四位数」。","考题发放:「2-1-0000」——本题难度较高:四个零。考场提示:零多不等于好记——恰恰相反,零会让大脑怀疑这码是不是真的,然后开始自由发挥。"],"scenes":["答卷提交:系统判定——记住了格口,忘了号码。本卷评语:人类短期记忆的通行容量是七加减二位,而快递柜的设计容量,恰好是您的极限再加一个格口。","答卷提交:系统判定——记住了号码,插错了柜。本卷评语:号码对了柜子错了,说明您已是熟手;熟手翻车,都翻在「自信」这一格。","答卷提交终审:系统判定——全程零失误。恭喜!但考场统计显示,零失误考生的秘诀高度一致:走到柜前又看了一遍手机。本考场欢迎这种作弊——毕竟,真实的快递柜前,人人都是这么「考」过的。"],"metrics":[["累计发卷","\u003cspan id=took>0\u003c/span> 份","took"],["平均遗忘","40 秒"],["零失误秘诀","再看一遍"],["考场格言","码不该让人记"]],"logTitle":"考场记录","logEn":"EXAM","logEmpty":"暂无发卷。快递柜绿灯常亮,今天没有忘记的码——好日子。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

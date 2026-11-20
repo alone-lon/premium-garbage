@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>U 盘里的孤本档案馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏孤本 <b>9 份(无备份,无副本)</b></span>
+    <span>载体寿命 <b>8G,U 盘,2013 年产</b></span>
+    <span>馆藏立场 <b>孤本不上网,命运自担</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">USB&nbsp;RELICS</div>
+    <h1>U 盘里的孤本档案馆</h1>
+    <div class="sub">那只 8G 的 U 盘里,存着 2014 年的毕业论文终稿、一段 37 秒的视频和一封从未发出去的辞职信——本馆收录 U 盘里的孤本:全世界的唯一副本。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">在库孤本 9 份</div><div class="status" id="status">本馆设在那只 U 盘里,馆藏全部来自「没来得及」:没上传、没发送、没打印——孤本的定义,是全世界只有一份,作者本人还差点忘了。</div><div class="metrics"><div class="m"><div class="k">在库孤本</div><div class="v">9 份</div></div><div class="m"><div class="k">备份</div><div class="v">0 份,孤就是孤</div></div><div class="m"><div class="k">载体健康度</div><div class="v">尚可,勿摔</div></div><div class="m"><div class="k">馆训</div><div class="v">孤本即真话</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">开卷·论文孤本</button><button class="btn" id="btn1">开卷·视频孤本</button><button class="btn" id="btn2">开卷·信件孤本</button></div></div><div class="log"><div class="sec-tag"><span class="zh">开卷记录</span><span class="en">RELICS</span></div><ul id="log"><li style="color:var(--muted)">暂无开卷。U 盘安静待读,孤本们各自完整——世界不知道它们,这挺好。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长寄语</div>
+    <p>云端时代,「孤本」近乎绝迹:什么都有备份,什么都有副本,连相册都会替您回忆。可人心里最要紧的几样东西,往往只在一只旧 U 盘里——因为它们的作者当时拿不准:是给世界看,还是只给自己看。拿不准的东西,不配「上传」这么隆重,只配塞进 U 盘这么随便;而正是这份随便,让真话活了下来。馆长想说:那只 U 盘别格式化——8G 很小,装不下别的,装得下 2014 年的您。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">开卷完毕。U 盘收好,孤本无价,因为全世界只有一份。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 237 号藏品 · 本馆与 220 号(云文档「他人正在编辑」惊魂室)同属「孤本保卫科」:一个云端人满为患,一个盘里只有自己<br>馆内冷知识:全人类 U 盘的「从未读取时长」平均为 4.2 年——孤本们最好的保存方式,是没人想起,也就没人误删
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"在库孤本 9 份","stat0":"本馆设在那只 U 盘里,馆藏全部来自「没来得及」:没上传、没发送、没打印——孤本的定义,是全世界只有一份,作者本人还差点忘了。","btns":[{"label":"开卷·论文孤本","tag":"论文","lines":["孤本一号:《毕业论文·终稿·真终稿·打死不改》——它比云端那版多改了 11 处,包括把致谢里导师的名字写对了。可惜答辩用的是云端版。","孤本一号附注:论文里有一段被删掉的致谢:「感谢食堂三楼的酸辣粉」。本馆认为这段比正文真诚,建议补录——但孤本不改,改了就不孤了。","开卷小结:孤本的意义在于唯一:全世界只有这份 U 盘记得,您曾经把一段食堂写进学术圣殿——这是数字时代的手抄本。"],"bigs":["写对了名字","酸辣粉致谢","手抄本"]},{"label":"开卷·视频孤本","tag":"视频","lines":["孤本二号:37 秒视频,拍的是毕业那天宿舍窗外的云——没有配乐,没有字幕,镜头晃得厉害,因为拍的人一边拍一边在笑。","孤本二号附注:同一天拍的其他素材都发过群里,只有这 37 秒,当时想着「剪好再发」——一剪,就是十年。本馆判定:不剪了,晃着挺好。","开卷小结:未发送的素材是记忆的私生子:没有观众,没有点赞,却因孤独而完整——37 秒的云,只下给您一个人看过。"],"bigs":["一边拍一边笑","不剪了","只给您看过"]},{"label":"开卷·信件孤本","tag":"信件","lines":["孤本三号:《辞职信·草稿》——写于某个加班的凌晨两点,措辞激烈,文采飞扬,第二天没发,第三天舍不得删,第十年进了本馆。","孤本三号附注:信末有一行小字:「其实也怪我自己,没说清楚就赌气」。本馆认为这行字让整封信从檄文变成了日记——留得住的委屈,都是想通了一半的委屈。","开卷终语:三份孤本,三种「没来得及」:没传、没发、没删。本馆的馆训只有一句——孤本不是遗憾,是您替当年的自己,保管的那部分真话。"],"bigs":["文采飞扬","日记","真话"]}],"metrics":[["在库孤本","9 份"],["备份","0 份,孤就是孤"],["载体健康度","尚可,勿摔"],["馆训","孤本即真话"]],"logTitle":"开卷记录","logEn":"RELICS","logEmpty":"暂无开卷。U 盘安静待读,孤本们各自完整——世界不知道它们,这挺好。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

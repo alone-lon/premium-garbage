@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>视频会员弃考名册</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>名册范围 <b>2015 年至今,全员在册</b></span>
+    <span>弃考主因 <b>剧追完了,入口忘了</b></span>
+    <span>名册立场 <b>不骂人,只对账</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TRIAL&nbsp;EXILE</div>
+    <h1>视频会员弃考名册</h1>
+    <div class="sub">「首月 6 元,次月起 25 元自动续费」——当年为看一部剧开的会员,剧早看完,费还在交:本名册收录每一次「忘关自动续费」的试学与弃考。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="填写您名下仍在续费的视频会员(平台名与开了几年),本册出具档案"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">查出勤档案</button><button class="btn" data-sample="0">追剧版</button><button class="btn" data-sample="1">全家共享版</button><button class="btn" data-sample="2">僵尸版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">会员学籍档案</span><span class="en">TRIAL&nbsp;EXILE</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">名册主编按语</div>
+    <p>自动续费的本质,是把您的「一时想要」办成了「长期供给」:当年 6 元的首月,像一场试学;后来的 25 元,才是真实的学费——只是课早听完了,教室也换了,学费还在代扣。主编见过最清醒的用户,每年元旦把扣款列表过一遍,关掉一半,留下另一半——留下的那些,是她真在用的:一年一次的大扫除,比天天心疼管用得多。名册不批判冲动,冲动是活着的证据;名册只提醒:冲动可以,请给它设个到期日。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">查档完毕。今晚就关一个,从最没用的开始。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 235 号藏品 · 本名册与 176 号(自动续费收割机)同属「会员人生博物馆」:一个收割,一个对账<br>册内冷知识:全人类视频会员的平均「剧终在缴时长」是 14 个月——相当于剧都出续集了,您还在替第一部交学费
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"填写您名下仍在续费的视频会员(平台名与开了几年),本册出具档案","btnLabel":"查出勤档案","sampleLabels":["追剧版","全家共享版","僵尸版"],"samples":["某蓝色平台:追一部剧开的,剧完四年,费交到今天","全家共享版:爸妈弟弟三家共用一个会员,续费人至今是您","僵尸版:账号密码都忘了,扣款短信每月准时问候"],"num":"在册学籍:仍有效(可惜您不上了)","verdict":"名册结论:视频会员是人类「为一次冲动买单」的活标本——开通要 30 秒,取消要 15 步;学与不学随缘,交不交由不得您。","breakdown":[["入学档案","一部剧的学费","每个会员都对应一部剧:剧是主课,会员是学籍——剧终人散后,学籍没有自动注销,继续按月收费,像一位不点名却照扣学费的母校。"],["出勤记录","零出勤,全勤扣款","近 12 个月,您观影 0 次,扣款 12 次——出勤率 0%,缴费率 100%。这种学生,全世界只有会员系统喜欢。"],["取消流程","15 步的迷宫","「关闭自动续费」藏在四级菜单里,每一步都在挽留:确认弹窗、挽留礼包、客服问卷——平台把「留下」做成了学科,把「离开」做成了考试。"],["共享生态","一人缴费,全家观影","您的会员是全家的视频食堂:爸爸看抗战,妈妈看家庭剧,弟弟看动画——这份账单,某种意义上是一份家庭文化支出,只是走错了科目。"],["整改建议","一次性清算","本册不劝您戒剧,只劝您清账:把所有平台的续费关一遍,用到的再手动开——把「按月心疼」换成「按次决策」,钱包和良知同时清爽。"]],"empty":{"num":"查档暂停","verdict":"没填会员没法对账——但您刚才想起的那条扣款短信,本册已自动收录。","breakdown":[["判定","想起来就是缘分","每月 8 号扣您 25 元的那个平台,今天该处理了"],["建议","先关一个","不用全关,先关最没用那个——清算从一件开始"]]},"reportTitle":"会员学籍档案","reportEn":"TRIAL&nbsp;EXILE"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

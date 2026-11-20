@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>名片盒沉默考古队</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏名片 <b>84 张(呼叫通过率 3%)</b></span>
+    <span>考古断代 <b>纸名片 2016 年止,二维码接棒</b></span>
+    <span>队里立场 <b>名片没失效,是联系没发生</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">CARD&nbsp;SILENCE</div>
+    <h1>名片盒沉默考古队</h1>
+    <div class="sub">名片盒里躺着 84 张名片,能对上脸的不到 9 张——本队对沉默名片逐张考古:他们在哪场会上遇见过您,又在哪里和您失联。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描写一张您记不起主人的名片(头衔与场合),本队出具考古简报"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始考古</button><button class="btn" data-sample="0">总座版</button><button class="btn" data-sample="1">展会版</button><button class="btn" data-sample="2">谜面版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">名片考古简报</span><span class="en">CARD&nbsp;REPORT</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">考古队手记</div>
+    <p>名片盒是职场社交的沉船:每一次行业聚会,大家互相递出印得最体面的自己,然后各自沉入各自的日子。队里翻检过太多名片,最感慨的不是谁升了谁走了,而是背面那些「回头联系」——回头的含义,当时很具体,后来很模糊。手记想留一句真心话:真正的人脉从来不在名片盒里,在您帮过的人、认真回过的消息、和一场没爽约的饭局上;名片只是纪念品,纪念您曾经认真地把「未来」印在了纸上。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">考古完毕。名片盒盖上,缘分各安天命。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 241 号藏品 · 本队与 66 号(签字笔失踪案侦缉队)同属「职场沉默证物库」:一个查笔,一个查卡<br>队内冷知识:名片盒里能被再次联络的名片不足 5%——剩下的 95%,从「多多指教」直接进入了「再也不见」,没有中间站
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描写一张您记不起主人的名片(头衔与场合),本队出具考古简报","btnLabel":"开始考古","sampleLabels":["总座版","展会版","谜面版"],"samples":["某公司副总,名片背面手写了一个日期","展会上扫码加的「市场部联系人」,头像是一辆车","一张只有邮箱和英文名,公司名像缩写谜语"],"num":"年代判定:上一次行业年会前后","verdict":"考古结论:名片是职场的琥珀——印上去的头衔、邮箱与那句「多多指教」,都封存在遇到您的那一天,再也长不动了。","breakdown":[["头衔层","当时的职务","名片上的头衔永远停在印刷那天:卡片上的「总监」,可能早已是「前总监」——名片不更新,是它最诚实也最残忍的地方。"],["手写层","唯一的手迹","背面那行手写的日期或「回头联系」,是全片唯一有体温的部分——字是当场写的,「回头」是当场想的,事后都没兑现。"],["邮箱层","生僻域名","名片邮箱的域名,有的公司已经改名,有的网站已经停服——往这些地址发邮件,像往拆迁前的老地址寄信,退回率 100%。"],["场合层","相遇档案","每一张名片都对应一个场合:年会、展会、酒局、培训班——回忆不起人,但回忆得起场合;场合是名片的坐标,人是坐标上失踪的点。"],["处置建议","拍照后放手","本队建议:拍下要紧的几张存进通讯录,其余整盒拍一张全家福,然后放手——名片的意义在交换那一刻就完成了,留着的是纪念,不是人脉。"]],"empty":{"num":"考古暂停","verdict":"没有名片没法挖——但您手机里那些「通过验证再没说过话」的联系人,本队已将其认定为「电子名片」,一并列入待考古名单。","breakdown":[["判定","电子名片","加了没说话的联系人,就是数字时代递出去没接住的名片"],["建议","不动为敬","他们安安静静躺在列表里,不打扰,也是一种联系"]]},"reportTitle":"名片考古简报","reportEn":"CARD&nbsp;REPORT"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

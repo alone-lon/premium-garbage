@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>火锅涮序玄学协会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>裁定范围 <b>涮序 · 火候 · 下锅时辰</b></span>
+    <span>核心争议 <b>淀粉派 vs 鲜汤派</b></span>
+    <span>协会立场 <b>没有标准答案,但有标准锅</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">HOTPOT-ORDER&nbsp;SOCIETY</div>
+    <h1>火锅涮序玄学协会</h1>
+    <div class="sub">先涮肉还是先涮菜?毛肚七上八下还是直接煮?土豆什么时候下锅?——本协会裁定火锅界的百年争论,并颁发「涮序资格证」。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">协会锅已烧开</div><div class="status" id="status">点击抽取一派涮序心法。记住:涮序没有对错——但有鄙视链,本协会负责披露。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽取涮序心法</button><button class="btn" id="moreBtn">换一派学学</button></div><div class="metrics"><div class="m"><div class="k">流派数量</div><div class="v">6 派</div></div><div class="m"><div class="k">百年争议</div><div class="v">淀粉时机</div></div><div class="m"><div class="k">协会立场</div><div class="v">公开鄙视链</div></div><div class="m"><div class="k">资格证</div><div class="v">发放中</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">裁定记录</span><span class="en">HOTPOT</span></div><ul id="log"><li style="color:var(--muted)">暂无裁定。下一锅还没开,争论永不停息。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">协会结语</div>
+    <p>火锅是中国人最民主的餐桌:一锅汤,各涮各的,互不干涉。本协会披露鄙视链,不为统一涮序——火锅的魅力恰恰在「百家争涮」——只为让您下次涮毛肚时,理直气壮地七上八下:您是有师承的人。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结课。今晚,您站哪一派?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 212 号藏品 · 本协会与 210 号(饭局座位玄学)同属「中国餐桌礼仪研究院」<br>协会冷知识:全国火锅桌上的最高冲突,不是辣度——是「土豆什么时候下」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"协会锅已烧开","why0":"点击抽取一派涮序心法。记住:涮序没有对错——但有鄙视链,本协会负责披露。","btnLabel":"抽取涮序心法","moreLabel":"换一派学学","pools":[{"q":"先涮肉派 · 「汤要养」","w":"核心教义:肉先下锅,汤才有味;菜最后下,吸饱精华。派系评语:讲究人,懂汤——但等到涮菜时,锅已浑浊,蔬菜的灵魂死于乱汤。"},{"q":"先涮菜派 · 「先素后荤不腻」","w":"核心教义:蔬菜打底,肉慢慢来。派系评语:健康顾问型选手——但他们涮完菜,汤已飘着菜叶,肉的仪式感碎了一锅。"},{"q":"毛肚七上八下派","w":"核心教义:七上八下,15 秒,脆嫩巅峰。派系评语:火锅界的技术流——他们涮毛肚时的专注,像在做化学实验,倍儿专业。"},{"q":"土豆最后派 · 「淀粉毁汤论」","w":"核心教义:土豆、宽粉、年糕必须压轴——淀粉会让汤变稠,毁掉所有后来的涮物。派系评语:守锅卫士,值得尊敬。"},{"q":"先喝汤派 · 「锅底是灵魂」","w":"核心教义:开锅第一碗,先喝汤。派系评语:勇士——菌汤锅值得,辣锅千万别。他们用胃试出了一条真理:辣锅喝汤,舌头殉葬。"},{"q":"散人派 · 「夹到啥涮啥」","w":"核心教义:无序即自由。派系评语:他们是火锅界的道家——锅是公共的,快乐是自己的。协会不认同,但尊重。"}],"metrics":[["流派数量","6 派"],["百年争议","淀粉时机"],["协会立场","公开鄙视链"],["资格证","发放中"]],"logTitle":"裁定记录","logEn":"HOTPOT","logEmpty":"暂无裁定。下一锅还没开,争论永不停息。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共享充电宝归还逃逸案</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受理对象 <b>归还失败受害者</b></span>
+    <span>逃逸形态 <b>满仓 · 故障 · 失灵</b></span>
+    <span>台内原则 <b>先取证,再放弃</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">POWER-BANK&nbsp;ESCAPE</div>
+    <h1>共享充电宝归还逃逸案</h1>
+    <div class="sub">用完想还,机器满了;换一家,机器坏了;再换,弹「归还失败」——本台受理共享充电宝的归还逃逸案:它像回了家的钥匙,插进去就是不出来。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">您手握充电宝,站在归还机前。第一步:深呼吸——这场逃逸与追捕,可能持续三个街区。</div><div class="metrics"><div class="m"><div class="k">累计归还</div><div class="v" id="took">0 张</div></div><div class="m"><div class="k">逃逸距离</div><div class="v">平均 300 米</div></div><div class="m"><div class="k">计费封顶</div><div class="v">¥30</div></div><div class="m"><div class="k">取证照片</div><div class="v">人手一张</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交归还申请</button><button class="btn" id="callBtn">查询归还状态</button></div></div><div class="log"><div class="sec-tag"><span class="zh">逃逸记录</span><span class="en">ESCAPE</span></div><ul id="log"><li style="color:var(--muted)">暂无逃逸。您的充电宝此刻安全在家——它们总在您出门没带时找上门。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">受理台结语</div>
+    <p>共享充电宝的归还,是一场微型信任战:机器说没收,您说收了,客服在中间当法官。本台的全部建议:归还时,一定等屏幕跳「归还成功」——那一秒没出现,请立刻取证拍照。取证不是不信任科技,是科技教会我们的自保。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结案。下次还宝,等那句话。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 217 号藏品 · 本台与 158 号(无法上网观测台)同属「电子玄学受理中心」<br>台内冷知识:共享充电宝最常「到达附近」的时刻,是您快走到还机点时——它也开始漂移了
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"归还单","stat0":"您手握充电宝,站在归还机前。第一步:深呼吸——这场逃逸与追捕,可能持续三个街区。","takeLabel":"提交归还申请","callLabel":"查询归还状态","takeLines":["归还单已生成:本机机位已满。建议:换一家 300 米外的门店——您的逃逸,正式开始。","归还单已生成:插入失败,弹回。屏幕提示「请重试」——您重试三次,它弹回三次,像在逗您。","归还单已生成:本机故障,屏幕闪烁。您的充电宝像烫手山芋——它不贵,但租金每半小时 1.5 元,您的焦虑按时计费。"],"scenes":["归还状态:仍在租借中。系统显示「未检测到归还」——它明明在槽里!您拍了一张照留证:证据链,开始积累。","归还状态:已远程结束(客服操作)。您拨了客服电话,说了三分钟「它就在槽里」,客服说「帮您远程结算了」——科技以客服为本。","归还状态:已封顶计费。恭喜:本次逃逸案的最终代价,是一整天封顶租金 ¥30——您用 30 元,买了一个「下次早点还」的教训。"],"metrics":[["归还机满仓率","37%"],["逃逸距离","平均 300 米"],["计费封顶","¥30"],["取证照片","人手一张"]],"logTitle":"逃逸记录","logEn":"ESCAPE","logEmpty":"暂无逃逸。您的充电宝此刻安全在家——它们总在您出门没带时找上门。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>网速焦虑门诊</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>接诊对象 <b>测速软件的数字与转圈的圈</b></span>
+    <span>门诊结论 <b>带宽是带宽,体验是体验</b></span>
+    <span>第一处方 <b>重启路由器(安慰剂,全员有效)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BANDWIDTH&nbsp;CLINIC</div>
+    <h1>网速焦虑门诊</h1>
+    <div class="sub">测速 300M,看视频还是转圈;测速 500M,打团战还是 460——本门诊不修宽带,只治焦虑:您的网没病,病的是那个圈。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">焦虑指数 0</div><div class="meter"><div class="fill" id="fill" style="width:20%"></div></div><div class="status" id="status">请报出今晚的测速下载速率,门诊据此判读病情。温馨提示:测速时的坐姿与心情不影响网速,影响诊断。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入测速下载速率,例如:300" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">挂号问诊</button></div><div class="metrics"><div class="m"><div class="k">今晚挂号</div><div class="v">1 位</div></div><div class="m"><div class="k">众数症状</div><div class="v">看视频转圈</div></div><div class="m"><div class="k">第一处方</div><div class="v">重启路由器</div></div><div class="m"><div class="k">疗效</div><div class="v">心到病除</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">门诊病历</span><span class="en">CLINIC&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无病历。您的网此刻很稳——稳是它一贯的作风,焦虑是您自己的。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">门诊宣言</div>
+    <p>网速焦虑是这个时代的富贵病:带宽翻了千倍,耐心瘦了千倍。本门诊不开通带宽,不更换路由,只做一件事——把「卡了」从技术问题降级为生活问题:圈转的那三秒,正好是您今天唯一被强制放空的时刻。老病友都懂的终极姿势:把手机翻过去,屏幕朝下——圈,居然就转完了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">问诊完毕。今晚八点,少刷一会儿。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 191 号藏品 · 本门诊与 86 号(WiFi密码玄学预测台)、158 号(「已连接,无法上网」观测台)组成「家庭网络三甲」:一个管密码,一个管断连,一个管心慌<br>门诊冷知识:全人类处理网速问题的第一反应都是重启路由器——理论有效率为 0%,执行率为 100%
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"焦虑指数 0","pct":20,"stat0":"请报出今晚的测速下载速率,门诊据此判读病情。温馨提示:测速时的坐姿与心情不影响网速,影响诊断。","inputPh":"输入测速下载速率,例如:300","btnLabel":"挂号问诊","reasons":["判读一级(500M 以上):带宽无恙,焦虑自寻。这个速率看高清都绰绰有余,您还在转圈——问题出在路由器年事已高,或者您人在卫生间。处方:别怪宽带,怪墙。","判读二级(300-500M):健康区间。此带宽仍觉卡顿的,本门诊命名为「心理性卡顿」——您盯着圈的时间,比圈实际转的时间长。处方:圈转的时候起身倒杯水,回来它就完了。","判读三级(100-300M):达标,但有隐情。理论上够四台设备同时追剧,可您家连着 23 台:手机、平板、电视、扫地机器人,以及三台您早忘了密码的旧手机。处方:清点设备,劝退一批。","判读四级(50-100M):亚健康。单人使用流畅,全家晚高峰立刻原形毕露——这是带宽的社交恐惧:人一多,它就缩。处方:错峰,或升档,或接受。","判读五级(50M 以下):器质性病变。视频糊成油画,网页保持着 2010 年的加载节奏。但本门诊提醒:十年前这就是全人类的网速,当年没人焦虑——焦虑的从来不是速度,是别人比您快。","门诊终审:网速的尽头是玄学——同一间屋,同一台路由,有人流畅,有人转圈。技术问题终归技术解决,但在此之前,请先执行人类第一处方:重启路由器。它治不好网,治得了心。"],"empty":"不输入速率没法挂号——本门诊按「今晚很卡」默认收治,这是全人类晚间八点的众数,请落座。","metrics":[["今晚挂号","1 位"],["众数症状","看视频转圈"],["第一处方","重启路由器"],["疗效","心到病除"]],"logTitle":"门诊病历","logEn":"CLINIC&nbsp;LOG","logEmpty":"暂无病历。您的网此刻很稳——稳是它一贯的作风,焦虑是您自己的。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

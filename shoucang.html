@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>浏览器收藏夹失物招领处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受理对象 <b>收藏之后从未打开的链接</b></span>
+    <span>积压时长 <b>最长 5 年 2 个月</b></span>
+    <span>本处立场 <b>收藏即寄出,打开才签收</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BOOKMARK&nbsp;LOST-AND-FOUND</div>
+    <h1>浏览器收藏夹失物招领处</h1>
+    <div class="sub">您的收藏夹里躺着 1,340 条链接:「一篇讲透了的教程」「退休前必看」「下次旅行就去这里」——本处为您办理失物认领:每条收藏,都是当时的您寄给未来的您的快递,大部分查无此人。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">待认领 0 件</div><div class="status" id="status">失物招领处开张。请打开收藏夹,从最底下翻起——最底下那条,是您寄出时间最久的一件失物。</div><div class="metrics"><div class="m"><div class="k">收藏总数</div><div class="v">1,340 条</div></div><div class="m"><div class="k">从未打开</div><div class="v">1,306 条</div></div><div class="m"><div class="k">最长积压</div><div class="v">5 年 2 个月</div></div><div class="m"><div class="k">失物 404 率</div><div class="v">27%</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">认领·分类上架</button><button class="btn" id="btn1">认领·现场实录</button><button class="btn" id="btn2">结案·处置办法</button></div></div><div class="log"><div class="sec-tag"><span class="zh">认领记录</span><span class="en">FOUND&nbsp;DESK</span></div><ul id="log"><li style="color:var(--muted)">暂无认领。您的收藏夹又添了新收藏——本处随时开门。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本处招领启事</div>
+    <p>收藏夹是这个时代的仓库:我们不再把书囤在家里,改成把链接囤在云端——重量为零,占地为零,唯一的成本是「再也不打开」。本处的立场是温和的:不催您清理,不逼您阅读,只提醒一件事:每条收藏都带着当时的您的一点心意——「这个不错,回头细看」——那个「回头」,一拖就是几年。偶尔回头一次吧:您收藏的那些好文章、好地方、好方法,正在链接那头,耐心等您签收。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结案完毕。最底下那条,今天读了吗?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 202 号藏品 · 本处与 81 号(购物车坟场管理处)、178 号(「等打折」清单)合并成立「拖延仓储总署」:一个管车,一个管价,一个管链接<br>处内冷知识:全人类收藏夹里点击率最高的文章,标题都带「一篇讲透」——讲没讲透不好说,反正都收藏了
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"待认领 0 件","stat0":"失物招领处开张。请打开收藏夹,从最底下翻起——最底下那条,是您寄出时间最久的一件失物。","btns":[{"label":"认领·分类上架","tag":"上架","lines":["上架第一类:教程类——「三天入门」「神技五十招」,收藏四年,学习进度 0%:按下收藏的那一刻,您感觉自己已经学会了。","上架第二类:人生储备类——「三十岁前要懂的事」「体检报告怎么看」「退休理财指南」:这一类的收藏年龄,普遍大于您的阅读年龄——您在为还没到的日子囤货。","上架第三类:氛围类——「值得去的十二个小镇」「一个人旅行攻略」:收藏它们的时候您去不成,现在能去了,您又收藏了新的一批——这类失物的收件人,永远在下一站。"],"bigs":["进度 0%","为未来囤货","下一站"]},{"label":"认领·现场实录","tag":"认领","lines":["认领实录一:您点开一条三年前的收藏——文章标题《如何停止拖延》,您读完用了两分钟,然后把它留在收藏夹里,继续拖延:失物招领的完整闭环,就此达成。","认领实录二:某条收藏的原文已经 404——网站关了,文章没了,只剩标题还躺在收藏夹里,像一张失踪人口的照片。","认领实录三:一条「下次买家电前必看」的攻略,您上次打开是三年前买冰箱那天——用完即删是不可能的:您总觉得「以后还用得上」,于是它永远在等下一台家电。"],"bigs":["完整闭环","失踪人口","下一台家电"]},{"label":"结案·处置办法","tag":"结案","lines":["处置办法一:每周固定十五分钟,只做一件事——从最底下翻收藏夹:能删的删,想读的当场读完——十五分钟一篇,一年能清五十条。","处置办法二:接受现实——收藏夹不是书架,是许愿池:大部分愿望不会兑现,但许愿那一刻的您,是真的想变好。本处尊重每一个愿望。","结案陈词:收藏是当代人最廉价的上进心——花半秒钟,买一个「我会变好」的预感。本处不劝您戒掉:预感也是燃料——但请偶尔来认领一次:说不定哪件失物,真能改变您。"],"bigs":["十五分钟","廉价上进心","偶尔认领"]}],"metrics":[["收藏总数","1,340 条"],["从未打开","1,306 条"],["最长积压","5 年 2 个月"],["失物 404 率","27%"]],"logTitle":"认领记录","logEn":"FOUND&nbsp;DESK","logEmpty":"暂无认领。您的收藏夹又添了新收藏——本处随时开门。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

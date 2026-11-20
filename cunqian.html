@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>存钱罐沉睡基金</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>基金规模 <b>沉睡余额(待清点)</b></span>
+    <span>存款方式 <b>叮当(听觉记账)</b></span>
+    <span>支取难度 <b>需打碎,心理门槛极高</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PIG-BANK&nbsp;DORMANT&nbsp;FUND</div>
+    <h1>存钱罐沉睡基金</h1>
+    <div class="sub">存钱罐是您最早的金融机构:硬币投进去,叮当作响,永不见天日——本基金核算沉睡余额,并研究「打碎它」需要多大勇气。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">沉睡余额未知</div><div class="status" id="status">您的存钱罐坐在柜子角落,封存多年。摇一摇,沉闷的响声——基金规模,大约比想象的大。</div><div class="metrics"><div class="m"><div class="k">沉睡年限</div><div class="v">5 年(估)</div></div><div class="m"><div class="k">估算余额</div><div class="v">¥450</div></div><div class="m"><div class="k">支取方式</div><div class="v">打碎</div></div><div class="m"><div class="k">心理门槛</div><div class="v">高</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">基金一·存入史</button><button class="btn" id="btn1">基金二·沉睡账目</button></div></div><div class="log"><div class="sec-tag"><span class="zh">基金记录</span><span class="en">PIG&nbsp;BANK</span></div><ul id="log"><li style="color:var(--muted)">暂无记录。您的存钱罐还在柜子角落沉睡——叮当声,偶尔在梦里响起。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">基金结语</div>
+    <p>存钱罐是人类的第一堂金融课:它教您的不是理财,是「延迟满足」的最初体验——投进去的钱,看不见,但知道在。本基金不建议打碎——它万一哪天碎了,碎掉的不只是陶瓷,还有那段「一块钱也很开心」的岁月。让它继续睡,挺好。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">核算完毕。让它继续睡吧。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 222 号藏品 · 本基金与 178 号(等打折清单)相反相成:一个在等,一个在睡<br>基金冷知识:全人类的存钱罐,平均沉睡 6.4 年——比多数友谊的保鲜期都长
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"沉睡余额未知","stat0":"您的存钱罐坐在柜子角落,封存多年。摇一摇,沉闷的响声——基金规模,大约比想象的大。","btns":[{"label":"基金一·存入史","tag":"存入","lines":["存入史考证:您投的第一枚硬币,是因为「叮」的一声太好听——存钱罐的原始魅力,是声学而非金融。","存入史补充:后来的每一次投入,都变成了仪式:找零的一块、口袋的五毛、以及「投进去就当没有过」的自我安慰。","基金一结论:存钱罐的余额,是由无数个「就当没有过」堆出来的——它是最温和的强制储蓄。"],"bigs":["叮","仪式","就当没有过"]},{"label":"基金二·沉睡账目","tag":"账目","lines":["沉睡账目估算:按每月 15 枚硬币、沉睡 5 年计,余额约 ¥450——外加一个 2016 年投进去的、面值一元的纪念币(不知道还认不认)。","沉睡的哲学:这笔钱「不存在」于您的任何账目里——它不存在于支付宝、不存在于银行卡,只存在于罐子里。它是您数字生活之外唯一的实体财富。","基金二结论:存钱罐是「离线钱包」——它不联网、不生息、不提醒,但它的每一枚,都摸得到。"],"bigs":["¥450","离线","摸得到"]}],"metrics":[["沉睡年限","5 年(估)"],["估算余额","¥450"],["支取方式","打碎"],["心理门槛","高"]],"logTitle":"基金记录","logEn":"PIG&nbsp;BANK","logEmpty":"暂无记录。您的存钱罐还在柜子角落沉睡——叮当声,偶尔在梦里响起。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

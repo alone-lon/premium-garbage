@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WiFi 双频信仰辩论会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>辩论双方 <b>「快派」与「稳派」(人数对半)</b></span>
+    <span>辩题 <b>连 5G 还是连 2.4G</b></span>
+    <span>会内立场 <b>信号无神论,重启万能论</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WIFI&nbsp;FAITH</div>
+    <h1>WiFi 双频信仰辩论会</h1>
+    <div class="sub">路由器上同时写着 2.4G 与 5G,全家人却分成两派各执一词——本会承输名义上的技术辩论,实际记录一场持续多年的家庭信仰之争。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">辩论进行中</div><div class="status" id="status">辩论会每季一届,固定议题不变,固定僵局不变——本会存在的原因不是辩出胜负,是让两派有个地方各说各的。</div><div class="metrics"><div class="m"><div class="k">届数</div><div class="v">第 12 届</div></div><div class="m"><div class="k">辩题变更</div><div class="v">0 次</div></div><div class="m"><div class="k">胜方</div><div class="v">无</div></div><div class="m"><div class="k">路由器态度</div><div class="v">都开,都供着</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">辩论·快派陈词</button><button class="btn" id="btn1">辩论·稳派陈词</button><button class="btn" id="btn2">辩论·路由器陈词</button></div></div><div class="log"><div class="sec-tag"><span class="zh">辩论记录</span><span class="en">FAITH</span></div><ul id="log"><li style="color:var(--muted)">暂无辩论。两派各自安静上网——网络和平的样子,就是谁也不提频段。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">会长致辞</div>
+    <p>本会辩了十二季,会长看明白了:所谓频段之争,是家人之间少有的、安全的技术话题——它足够日常,足够无害,谁输谁赢都不伤感情,还能让饭桌不冷场。会长的真心话:家庭的辩论,胜负从来不是目的,参与才是;妈妈坚持 2.4G,儿子吹爆 5G,爸爸只会说「重启一下」——这三种声音凑在一起,才是家里网络真正稳定的原因:技术各信各的,路由器全都供着,日子照常过。本会明年继续,议题不变,欢迎携新设备入场。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">散会。今晚连哪个频段,您随意——路由器都接。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 238 号藏品 · 本会与 192 号(WiFi 密码玄学预测台)同属「无线路由玄学联合会」:一个猜密码,一个辩频段<br>会内冷知识:「你把路由器重启一下」是全人类家庭网络维修的终极方案——覆盖率 92%,成功率 89%,剩下 11% 是宽带欠费
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"辩论进行中","stat0":"辩论会每季一届,固定议题不变,固定僵局不变——本会存在的原因不是辩出胜负,是让两派有个地方各说各的。","btns":[{"label":"辩论·快派陈词","tag":"快派","lines":["快派立论:「5G 就是快!视频不卡,游戏不飘,下载起飞——换了 5G,人生都提速。」论据一:他们的手机确实这么显示。","快派举证:楼下老王家换了 5G,「孩子上网课都清楚多了」——本会核实:老王家清楚,是因为换了新路由,不是新频段。","快派漏洞自查:当被问「你连的哪个」时,快派常答不上来——他们信的不是频段,是「5G」这个数字本身的寓意:更快,更好,更体面。"],"bigs":["人生提速","已核实","更体面"]},{"label":"辩论·稳派陈词","tag":"稳派","lines":["稳派立论:「2.4G 穿墙!卧室阳台厕所,信号无死角——5G 一进卧室就装死,谈何信仰。」论据一:他们抱着手机在厕所刷了很久,信号确实没断。","稳派举证:全家的智能灯泡、音箱、扫地机都在 2.4G 上落户——设备用脚投票,稳派视为民心所向。","稳派漏洞自查:当被问「那 2.4G 慢怎么办」时,稳派答「慢点好,刷太快费眼」——本会记录:这是辩论史上第一次有人把缺点辩成养生。"],"bigs":["无死角","民心所向","养生论"]},{"label":"辩论·路由器陈词","tag":"路由","lines":["路由器陈词(由本会代读):「两派争的从来不是我给多少,是我卧室的信号格——我是这个家里最忙的公务员,轮休制度至今没有。」","路由器补充:「所谓 5G 快、2.4G 稳,都不如我重启一次——全家的网络纠纷,九成以『你把路由器重启一下』告终。这句台词,我听了一万次。」","辩论终局:本会宣布当季结果——无胜负。两派各回各屋,连各自信的网;路由器蹲在鞋柜顶上,把两个频段都开着,像一位从不表态的家长。"],"bigs":["公务员","一万次","不表态的家长"]}],"metrics":[["届数","第 12 届"],["辩题变更","0 次"],["胜方","无"],["路由器态度","都开,都供着"]],"logTitle":"辩论记录","logEn":"FAITH","logEmpty":"暂无辩论。两派各自安静上网——网络和平的样子,就是谁也不提频段。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>截图裁剪侦探社</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>勘查对象 <b>没裁干净的截图残留物</b></span>
+    <span>翻车高发区 <b>底部半行气泡</b></span>
+    <span>侦探立场 <b>截图会说话,只是不说全</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SCREENSHOT&nbsp;CSI</div>
+    <h1>截图裁剪侦探社</h1>
+    <div class="sub">每张截图都是一处仓促的现场:没裁干净的电量、露了半截的输入法、入镜的群名——本社逐帧勘查截图残留物,出具正式侦探报告。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="输入截图里没裁干净的残留物,本社出具勘查报告"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始勘查</button><button class="btn" data-sample="0">状态栏版</button><button class="btn" data-sample="1">气泡版</button><button class="btn" data-sample="2">电量版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">截图勘查档案</span><span class="en">SCREENSHOT&nbsp;CSI</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">侦探社结案词</div>
+    <p>截图裁剪是数字时代最普遍的自我审查:裁掉头像,是保护别人;裁掉电量,是保护自己;裁掉时间戳,是保护整个故事。本社不追究任何一张截图——侦查的目的从来不是定罪,是提醒:按下裁剪键之前,请先当一回自己的证人。所有没裁干净的截图,都会在某个群里替您补上您不想说的那部分。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">勘查完毕。下次截图,裁三遍再发。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 190 号藏品 · 本社与 153 号(办公室冰箱悬案侦查组)、66 号(签字笔失踪案侦缉队)并称「悬案三杰」:一个查冰箱,一个查笔,一个查截图<br>社内冷知识:全人类截图翻车率最高的残留物是群名——一张图,团灭一个群
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入截图里没裁干净的残留物,本社出具勘查报告","btnLabel":"开始勘查","sampleLabels":["状态栏版","气泡版","电量版"],"samples":["顶部状态栏没裁","底部露出半行气泡","电量 1% 入镜"],"num":"勘查完成:现场保全完好","verdict":"总结论:截图是当代人的随案证据——您以为裁掉的是边角,其实裁不掉的是故事。","breakdown":[["状态栏残留","时间即口供","截图顶部的电量与时间,是最诚实的背景调查:凌晨三点截图的人,自称「刚看到」——本社按惯例存疑。"],["半截气泡","欲盖弥彰","底部露出的半行「对方正在输入…」,是截图界最经典的翻车现场——裁图的人手一抖,证词多了一句。"],["电量 1% 入镜","动机强烈","电量只剩 1% 还坚持截图,说明截图动机极强:要么是铁证,要么是段子——本社对两种动机一视同仁。"],["群名入镜","误伤友军","没打码的群名是第二现场:多少人所在的群叫「互怼小分队」——截图那一刻,全员出庭。"],["终极建议","发出前再看一遍","把截图从头到尾、边角一寸一寸再看一遍再发。社里的老侦探说得好:所有大案,都栽在「应该没事」这四个字上。"]],"empty":{"num":"勘查暂停","verdict":"没有残留物就没法勘查——但一张完全干净的截图本身就很可疑:完美,都是策划过的。","breakdown":[["发现","过于干净","边角全无,疑似摆拍"],["建议","供出原图","原图,才是完整案情"]]},"reportTitle":"截图勘查档案","reportEn":"SCREENSHOT&nbsp;CSI"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

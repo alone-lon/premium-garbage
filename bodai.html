@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>购物袋收纳悖论博物馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏袋数 <b>一整柜(可数,不愿数)</b></span>
+    <span>出门可用 <b>0 只(都在柜里)</b></span>
+    <span>馆藏悖论 <b>袋子越多,越不带袋子</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BAG&nbsp;PARADOX</div>
+    <h1>购物袋收纳悖论博物馆</h1>
+    <div class="sub">家里有一整柜购物袋,出门时却永远「没有袋子」——本馆陈列这场悖论:袋在柜里,手在门口,中间隔着一次从来没发生的「顺手拿」。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">本馆开在厨房门后,展品按「大套小」的传统工艺陈列——最大一只袋,装着所有袋,是本馆的镇馆之宝。</div><div class="metrics"><div class="m"><div class="k">累计入藏</div><div class="v" id="took"><span id=took>0</span> 只</div></div><div class="m"><div class="k">馆藏总量</div><div class="v">不愿数</div></div><div class="m"><div class="k">出门成功率</div><div class="v">改革前 0%</div></div><div class="m"><div class="k">镇馆工艺</div><div class="v">大套小</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">登记新入藏</button><button class="btn" id="callBtn">出门申请</button></div></div><div class="log"><div class="sec-tag"><span class="zh">袋务记录</span><span class="en">PARADOX</span></div><ul id="log"><li style="color:var(--muted)">暂无记录。柜门关着,袋们叠着——今天的超市,您多半又买了袋子。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">馆长手记</div>
+    <p>购物袋是家庭里繁殖力最强的物种:一只进门,半年成柜。馆长研究多年,结论是——袋子的问题从来不是收纳,是流动:进得多,出得少,柜子就成了袋子的终点站而非中转站。本馆的改革方案朴素得很:门口挂钩,常驻三只,出门随手,回家归还。让袋子流动起来,悖论自然瓦解。至于柜里那一整柜的存量——不必愧疚,那是时代发给每个人的纪念品:我们都在「下次一定用上」的宏大叙事里,收藏过自己的生活。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">出馆提醒:门口挂钩,三只常驻。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 232 号藏品 · 本馆与 118 号(购物车坟场管理处)结成「囤积界双子馆」:一个囤车,一个囤袋<br>馆内冷知识:全人类购物袋的「留存对使用比」是 30:1——我们不是缺袋子,是被袋子淹没了,还总说没袋子
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"袋务","stat0":"本馆开在厨房门后,展品按「大套小」的传统工艺陈列——最大一只袋,装着所有袋,是本馆的镇馆之宝。","takeLabel":"登记新入藏","callLabel":"出门申请","takeLines":["入藏登记:今日新增袋 2 只,一大一小——大的来自超市,小的来自奶茶店。按传统工艺,小袋装入大袋,归队。","入藏登记:新增袋 1 只,提手断裂,馆方评估为「半残展品」:扔之可惜,用之不能——它将转入「情怀部」,与裂口的帆布包作伴。","入藏登记:新增袋 3 只,同款同色——这是会员日促销的产物。馆藏重复度上升,本馆决定不再点评,毕竟整馆都是这么来的。"],"scenes":["出门申请:申请袋 1 只装饭盒——审批结果:袋在柜里,人在玄关,申请驳回。驳回理由不是没有,是「忘了拿」,本馆对「忘了」不予处罚,毕竟全人类都忘。","出门申请:第二次申请,结果同上。本馆发现规律:出门时想不起柜里的袋,进超市时 0.5 元的袋子费毫不犹豫——人类的记性,是分场景供货的。","出门申请终审:本馆决定把三只袋挂在门口挂钩上——这是本馆建馆以来最大的改革。此后出门一伸手,袋就有了。悖论不靠想通解决,靠挂钩解决。"],"metrics":[["累计入藏","\u003cspan id=took>0\u003c/span> 只","took"],["馆藏总量","不愿数"],["出门成功率","改革前 0%"],["镇馆工艺","大套小"]],"logTitle":"袋务记录","logEn":"PARADOX","logEmpty":"暂无记录。柜门关着,袋们叠着——今天的超市,您多半又买了袋子。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>系统更新陪坐中心</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>服务对象 <b>正在更新的您(和您的电脑)</b></span>
+    <span>陪坐守则 <b>不催,不碰电源键</b></span>
+    <span>历史最长陪坐 <b>2 小时 17 分(占比 68%)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">UPDATE&nbsp;COMPANION</div>
+    <h1>系统更新陪坐中心</h1>
+    <div class="sub">「更新已完成 30%,请勿关闭计算机」——这句话一挂就是四十分钟。本中心不加速、不跳过,只提供陪坐服务:您盯着百分比发呆的每一分钟,都有专人在线共度。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">陪坐 0 分钟</div><div class="status" id="status">「正在配置更新,请勿关闭计算机」——屏上字迹已挂稳。请落座,本中心陪坐正式开始,计时以您眨眼的频率为准。</div><div class="metrics"><div class="m"><div class="k">陪坐时长</div><div class="v">0 分钟</div></div><div class="m"><div class="k">进度</div><div class="v">30% 起,100% 不算完</div></div><div class="m"><div class="k">电源键</div><div class="v">碰不得</div></div><div class="m"><div class="k">真实产出</div><div class="v">耐心</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">陪坐·前期</button><button class="btn" id="btn1">陪坐·中期</button><button class="btn" id="btn2">陪坐·终局</button></div></div><div class="log"><div class="sec-tag"><span class="zh">陪坐记录</span><span class="en">UPDATE&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无陪坐。您的电脑此刻很安分——安分,是下一场更新前最后的平静。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">中心守则</div>
+    <p>系统更新是数字时代最合法的软禁:它不需要您签字,就能把您按在椅子上四十分钟。本中心不与微软、苹果谈判——谈判无门——只提供陪坐:把一件被迫的等待,过成一段有人陪伴的时光。至于那些「百分比政治学」——记住一条就够:100% 不是结束,「回到桌面」才是。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">陪坐完毕。下次更新,还来这儿坐。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 188 号藏品 · 本中心与 71 号(进度条活体观察舱)、185 号(文件命名编年史)同属「系统更新受害者联合会」<br>中心冷知识:全人类陪坐更新的总时长,够人类文明重演一遍青铜时代——而每次更新日志,只写了两行
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"陪坐 0 分钟","stat0":"「正在配置更新,请勿关闭计算机」——屏上字迹已挂稳。请落座,本中心陪坐正式开始,计时以您眨眼的频率为准。","btns":[{"label":"陪坐·前期","tag":"前期","lines":["陪坐开始:百分比停在 30%,已 6 分钟。您起身倒了杯水,回来一看——还是 30%。中心备注:水喝得对,回来这个动作,让绝望有了具体刻度。","继续陪坐:35% 了!您把这个消息发给了朋友,朋友回:「我这边卡 51% 半小时了」。两个百分比隔空对峙,像两座互不援建的孤岛。","前期小结:更新的前期,人类普遍乐观——「再等等就能用」。中心不揭穿:这份乐观,每次更新都会重新发芽,每次都会枯在同一批百分比上。"],"bigs":["6 分钟","孤岛","再等等"]},{"label":"陪坐·中期","tag":"中期","lines":["中期陪坐:62%。您开始读更新日志——「改进了系统性能,修复了若干问题」。您读了三遍,想问:哪个性能?哪个问题?系统不答,只把百分比涨到 63%。","中期心理:您已经开始盘算「关机重启会怎样」,中心按陪坐守则劝阻:第 8% 死亡率的赌局,别开。您悻悻坐回,把怒气转移到了椅子上。","中期小结:更新的中期,是人类与进度条关系的试炼期——熬过去的,学会了等待;没熬过去的,重启之后从 0% 重熬一遍。中心尊重每一种熬法。"],"bigs":["哪个性","第 8% 死亡率","重新熬"]},{"label":"陪坐·终局","tag":"终局","lines":["终局陪坐:100% 之后还有 100%——「正在完成更新,请稍候」。中心提醒:这是百分比的政治学,数字到了,仪式还没完。","仪式继续:黑屏,白圈,重启,登录界面——您输入密码,桌面亮起,一切如旧。四十分钟,换来一次「看起来什么都没变」。","终局致辞:中心为您颁发陪坐纪念:「您完整经历了一次无人喝彩的等待。」系统没变快,您变稳了——这大概是更新真正的产出。"],"bigs":["百分比政治学","什么都没变","变稳了"]}],"metrics":[["陪坐时长","0 分钟"],["进度","30% 起,100% 不算完"],["电源键","碰不得"],["真实产出","耐心"]],"logTitle":"陪坐记录","logEn":"UPDATE&nbsp;LOG","logEmpty":"暂无陪坐。您的电脑此刻很安分——安分,是下一场更新前最后的平静。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

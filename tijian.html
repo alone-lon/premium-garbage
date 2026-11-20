@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>体检前养生冲刺营</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>冲刺周期 <b>体检前 7 天</b></span>
+    <span>突击科目 <b>早睡 · 戒糖 · 喝水</b></span>
+    <span>营地结论 <b>身体不吃突击,只吃习惯</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PRE-EXAM&nbsp;SPRINT&nbsp;CAMP</div>
+    <h1>体检前养生冲刺营</h1>
+    <div class="sub">体检前一周,人人都是养生大师:突然早睡、突然戒宵夜、突然喝两升水——身体表示:你礼貌吗?本营记录这场年度突击,以及它的无效性。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">营期第 1 天</div><div class="status" id="status">体检预约成功,您看着日期倒计时——还有 7 天。冲刺,开始了。</div><div class="metrics"><div class="m"><div class="k">营期天数</div><div class="v">7 天</div></div><div class="m"><div class="k">指标改善</div><div class="v">≈0</div></div><div class="m"><div class="k">身体反馈</div><div class="v">你礼貌吗</div></div><div class="m"><div class="k">明年预告</div><div class="v">继续冲刺</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">营期·第 1-3 天</button><button class="btn" id="btn1">营期·第 4-7 天</button><button class="btn" id="btn2">结营·成绩单</button></div></div><div class="log"><div class="sec-tag"><span class="zh">营期记录</span><span class="en">CAMP</span></div><ul id="log"><li style="color:var(--muted)">暂无营期。下一次体检预约还没来——身体暂时安全。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">营地结语</div>
+    <p>体检前冲刺,是人类最可爱的自欺:它没用,但它证明您在乎。本营不嘲讽这份在乎——它恰恰是改变的种子——只想把种子引到对的地方:与其体检前七天突击,不如把那七天的动作,匀到全年去。身体不认突击,认的就是「平时」。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结营。明年,试试不冲刺?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 209 号藏品 · 本营与 43 号(体重秤谈判专家)同属「身体年度事务管理局」<br>营内冷知识:体检前夜的您,是全年喝白开水最多、睡得最早、吃得最素的您——可惜,身体认的是 365 天
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"营期第 1 天","stat0":"体检预约成功,您看着日期倒计时——还有 7 天。冲刺,开始了。","btns":[{"label":"营期·第 1-3 天","tag":"前段","lines":["第一天:您 22:30 上床——身体懵了:「现在就睡?」您翻来覆去到一点,失眠的宿命没变,改变的只有入睡时刻的尴尬。","第二天:您戒了奶茶——下午三点,您盯着同事的奶茶杯,闻到了糖的香气。意志力撑住了,但嘴里全是苦的。","第三天:您喝了 2 升水——厕所跑了 9 次。同事以为您肾不好,您解释「体检」,她恍然大悟:「哦,那加油。」"],"bigs":["失眠","奶茶香","9 次厕所"]},{"label":"营期·第 4-7 天","tag":"后段","lines":["第四天:您开始「清淡饮食」——水煮菜配水煮鸡胸,吃着吃着,您突然理解了为什么有人体检前会崩溃。","第五天:您翻出去年的体检报告预习——看到「轻度脂肪肝」四个字,默默把宵夜从计划里划掉,又加回来,又划掉。","第七天:营期结束。您明早空腹抽血——今晚的您,是全年最自律的您。可惜,身体记不了这么快。"],"bigs":["水煮菜","预习报告","最自律一夜"]},{"label":"结营·成绩单","tag":"结营","lines":["结营报告:7 天冲刺,指标变化约 0——脂肪肝还是那个脂肪肝,尿酸还是那个尿酸。您的身体,不吃突击,只吃习惯。","结营反思:为什么不把体检日当成「下一次冲刺」的起点?——因为冲刺营年年办,年年散,您的体检报告年年像复读机。","结营终极建议:明年试试「不冲刺」——把体检当例行检查,平时该锻炼锻炼,该睡觉睡觉。身体要的是细水长流,不是大水漫灌。"],"bigs":["复读机","年年办","细水长流"]}],"metrics":[["营期天数","7 天"],["指标改善","≈0"],["身体反馈","你礼貌吗"],["明年预告","继续冲刺"]],"logTitle":"营期记录","logEn":"CAMP","logEmpty":"暂无营期。下一次体检预约还没来——身体暂时安全。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

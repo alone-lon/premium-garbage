@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>遥控器电池舱考古队</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>发掘对象 <b>电池舱(家庭最小遗址)</b></span>
+    <span>地层深度 <b>两节电池,一桩悬案</b></span>
+    <span>出土预期 <b>年份、牌子与一张忘了的便条</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BATTERY&nbsp;BAY&nbsp;DIG</div>
+    <h1>遥控器电池舱考古队</h1>
+    <div class="sub">空调遥控器罢工的那个晚上,您拆开电池舱,发现两层文明叠压:旧电池、更旧的电池,和一张 2019 年的售后小票——本队对电池舱实施抢救性发掘。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您家电池舱里的地层,本队出具发掘报告"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始发掘</button><button class="btn" data-sample="0">空调版</button><button class="btn" data-sample="1">电视版</button><button class="btn" data-sample="2">悬案版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">电池舱发掘报告</span><span class="en">BATTERY&nbsp;DIG</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">考古队结语</div>
+    <p>电池舱是家里唯一被岁月分层保存的地方:衣服常洗,桌面常擦,只有电池舱一合上就是三年。本队发掘它,不为查案——查也查不出凶手,只有年份;我们只是想让您在换电池那五分钟里,和自己家的历史打个照面:2019 年的小票、上个月刚失效的电池,一层压一层,像一本家庭账簿的精装合订本。合上舱盖,新地层开始积累——下一个考古队,还是您自己。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">发掘完毕。合舱之前,记得把便条也换新。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 228 号藏品 · 本队与 203 号(输入法词库残留考古队)同属「家庭考古联合体」:一个挖词库,一个挖电池<br>队内冷知识:电池舱底层的「文物」出土率高达 74%——最常见的器物是硬币,第二常见是上一任住户留下的心情
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您家电池舱里的地层,本队出具发掘报告","btnLabel":"开始发掘","sampleLabels":["空调版","电视版","悬案版"],"samples":["空调遥控器:新旧电池混装,正负极各有一套主张","电视遥控器:舱底压着一张 2019 年的售后小票","悬案舱:电池安然无恙,遥控器就是不理人"],"num":"地层年代:至少两个夏天以前","verdict":"发掘结论:电池舱是家中最小的遗址,却是地层最完整的一处——每一层旧电池,都封存着一个「当时想着明天再换」的夜晚。","breakdown":[["第一层","现役电池","上层的电池往往半新不旧:它刚上岗就发现同事是两节十年工龄的老兵——电流在这支队伍里,靠资历谈判。"],["第二层","退役老兵","下层电池的出厂年份常被绿锈盖住:它们不是坏了,是熬完了——熬过了搬家的夏天和整夜开机的球赛之夜。"],["舱底夹层","手写遗迹","夹层里偶尔有笔迹:「换电池找爸」——五个字,一桩家事,一张便条在电池舱里当了五年工单。"],["锈迹","时间的包浆","触点上的锈不是故障,是包浆:它记录每一次「先凑合用」的决定——凑合,是家用电器的传统友谊。"],["发掘建议","整层换新","本队建议两节一起换:新老兵混编的队伍,战斗力不如一支整齐的新军——这一点,家庭和公司是一样的。"]],"empty":{"num":"发掘暂停","verdict":"没给地层没法挖——不过遥控器没电时,您拍下「电池舱特写」发群里求助的样子,本队已经存档了。","breakdown":[["发现","求助即考古","发群问「这怎么拆」的那一刻,您已是编外队员"],["建议","两节同换","别只换没电那节,电是集体的事"]]},"reportTitle":"电池舱发掘报告","reportEn":"BATTERY&nbsp;DIG"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

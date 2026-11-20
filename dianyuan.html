@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>桌垫玻璃下的老照片修复预案处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>在案照片 <b>3 张(玻璃下封存)</b></span>
+    <span>预案制定 <b>2019 年,未启动</b></span>
+    <span>本处立场 <b>预案不改期,照片不褪色(物理上会)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">UNDER-GLASS&nbsp;ARCHIVE</div>
+    <h1>桌垫玻璃下的老照片修复预案处</h1>
+    <div class="sub">桌垫玻璃下压着三张照片:入职合影、团建抓拍、一张谁也不认得的集体照——本处为它们制定修复预案:修是迟早要修的,从 2019 年拖到现在。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">预案待抽</div><div class="status" id="status">点击抽取一张在案照片的修复预案。本处只管规划,不管动工——动工的那天,由您忽然想起的那一刻决定。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽取修复预案</button><button class="btn" id="moreBtn">再抽一份</button></div><div class="metrics"><div class="m"><div class="k">在案照片</div><div class="v">3 张</div></div><div class="m"><div class="k">预案年限</div><div class="v">5 年</div></div><div class="m"><div class="k">动工率</div><div class="v">0%</div></div><div class="m"><div class="k">免修名额</div><div class="v">1 个</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">预案记录</span><span class="en">ARCHIVE</span></div><ul id="log"><li style="color:var(--muted)">暂无预案。玻璃板安静压着照片,反光照常——今天也不是动工的日子。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">备案处说明</div>
+    <p>桌垫玻璃是办公室最诚实的时间容器:压进去的东西,行政不收,离职不带,一压就是许多年。本处制定预案五年,动工为零——备案说明想承认一件事:拖延的从来不是那 40 分钟,是「修好之后,就要面对照片里的人都不在了」的那个下午。可照片不修也会褪色,人不见也会走散;预案的意义,是让您知道这件事一直挂在心上——哪天真的扫描了、辨认了、放大了,那 40 分钟,会是您给 2016 年的自己,补拍的一场重逢。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">备案完毕。预案不改期,只等您想起。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 242 号藏品 · 本处与 222 号(存钱罐沉睡基金)同属「桌下文明陈列室」:一个存着不动,一个压着不修<br>处内冷知识:办公室玻璃板下的照片,平均停留时长是 6.8 年——比大多数同事的在职时间都长,玻璃板才是真正的元老
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"预案待抽","why0":"点击抽取一张在案照片的修复预案。本处只管规划,不管动工——动工的那天,由您忽然想起的那一刻决定。","btnLabel":"抽取修复预案","moreLabel":"再抽一份","pools":[{"q":"在案:入职合影(2016,全员 12 人)","w":"预案:高清扫描,人像逐一定位,建立「当年座次表」。预计工时:40 分钟。状态:预案已存五年——12 人现况,仅 3 人还在联系,扫描的意义正在从「修复」变成「告别」。"},{"q":"在案:团建抓拍(有人在镜头外喊话)","w":"预案:裁掉右下角的啤酒瓶,提升公司形象。预计工时:5 分钟。备注:每年都把这 5 分钟排进「有空就做」,五年过去,啤酒瓶还在——它成了照片的组成部分,像那年团建本身。"},{"q":"在案:一张谁也不认得的集体照","w":"预案:全员辨认会,从工龄 15 年以上的同事问起。预计工时:一场午饭。备注:预案升级版建议——辨认会请老同事参加,照片上的脸他们未必认识,但照片上的桌布,他们一定用过。"},{"q":"在案:手写便签(压在照片旁,字迹已淡)","w":"预案:高对比度扫描,抢救手迹。预计工时:10 分钟。备注:便签内容是「周五下班别锁打印机房」——事情早结束了,字迹留着,像一位还在交接班的门卫。"},{"q":"在案:过塑的工作证旧照(证件已换三代)","w":"预案:不修,原样压着。备注:本处唯一一票「免修」——照片里那个人刚入职,头发比现在多,眼神比现在亮;修它做什么,让它看着您就好。"},{"q":"在案:打印的年度全家福(公司版)","w":"预案:重印一张彩色版,替换玻璃下的褪色版。预计工时:含下楼取件 20 分钟。备注:替换下来的旧版别扔——褪色是时间的签名,新版是行政的美意,两版都收,才是完整的年轮。"},{"q":"在案:玻璃板本身(反光,影响拍照)","w":"预案:换磨砂垫,一劳永逸。预计工时:下单 3 分钟。备注:这是全处所有预案里唯一年年被否决的——大家都说玻璃反光碍事,可谁也舍不得:反光里偶尔映出的,是趴在桌上打盹的那些下午。"}],"metrics":[["在案照片","3 张"],["预案年限","5 年"],["动工率","0%"],["免修名额","1 个"]],"logTitle":"预案记录","logEn":"ARCHIVE","logEmpty":"暂无预案。玻璃板安静压着照片,反光照常——今天也不是动工的日子。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PPT 动画审美委员会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>普查范围 <b>全司年度 PPT 动画用量</b></span>
+    <span>裁定基调 <b>动画是调味料,不是主菜</b></span>
+    <span>委员会立场 <b>观众记得住的,只有转场的尴尬</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ANIMATION&nbsp;REVIEW&nbsp;BOARD</div>
+    <h1>PPT 动画审美委员会</h1>
+    <div class="sub">全司 PPT 动画普查:飞入 47 处、弹跳 12 处、百叶窗 6 处——本委员会逐页评审,并宣布裁定:成年人的 PPT,只有「淡入淡出」配拥有姓名。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">普查进行中</div><div class="status" id="status">委员会已进驻。请提交您最近一份 PPT——放心,委员会只审动画,不审内容:内容是您的事,动画是审美的事。</div><div class="metrics"><div class="m"><div class="k">普查动画</div><div class="v">65 处</div></div><div class="m"><div class="k">批准使用</div><div class="v">淡入淡出</div></div><div class="m"><div class="k">观众留存</div><div class="v">内容 3%,动画 0</div></div><div class="m"><div class="k">委员会裁定</div><div class="v">少即是多</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">评审·飞入派</button><button class="btn" id="btn1">评审·特效滥用组</button><button class="btn" id="btn2">评审·无动画派</button></div></div><div class="log"><div class="sec-tag"><span class="zh">评审记录</span><span class="en">REVIEW&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无评审。您的下一份 PPT 还在路上——动手之前,先来委员会喝杯茶。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">委员会章程</div>
+    <p>PPT 动画是职场审美最后的野蛮生长地带:内容有人把关,数据有人复核,唯独动画,全凭作者深夜的心情。本委员会不封杀任何特效——只重申一条审美底线:动画为内容服务,内容不为动画打工。您熬的夜应该被看见,但被看见的应该是您想说的那句话,而不是那句话弹跳着进场的姿势。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">评审完毕。下一份,让字安静地进来。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 195 号藏品 · 本委员会与 189 号(周报名词美容院)同属「职场包装整风小组」:一个管动词,一个管动画<br>会内冷知识:全人类 PPT 动画使用量在 2010 年前后达到巅峰,此后逐年下降——审美这东西,都是拿尴尬换来的
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"普查进行中","stat0":"委员会已进驻。请提交您最近一份 PPT——放心,委员会只审动画,不审内容:内容是您的事,动画是审美的事。","btns":[{"label":"评审·飞入派","tag":"飞入","lines":["送审作品:全片 24 页,页页飞入,图表逐条弹出——作者本意是「有气势」,观感是「被弹药扫射」。委员会记录:全片飞入 47 处,观众晕 3 人。","飞入派心理:作者对「静态 PPT 不够努力」有着深沉的焦虑——于是每个标题都要从天而降,每条结论都要弹三下,以证明熬夜没白熬。","委员会裁定:飞入的本质,是让文字排队进场的仪式感——但观众只记得「字飞进来的那一页自己说了什么」,而那一页,他们正在晕。"],"bigs":["47 处","熬夜没白熬","晕 3 人"]},{"label":"评审·特效滥用组","tag":"特效","lines":["送审作品:标题弹跳、重点旋转、图表生长——第 18 页甚至用了「百叶窗」,一种上次流行还是 2008 年的转场。","滥用组心理:特效越多,越显得「用心做了」——委员会理解这份心意,但必须指出:观众记住的不是您的数据,是那个旋转着进来的饼图。","委员会裁定:特效是有年头的——百叶窗、棋盘、擦除,自带「我小学做过课件」的气质。建议全部收进博物馆,编号 195。"],"bigs":["2008 年","旋转饼图","小学课件"]},{"label":"评审·无动画派","tag":"素净","lines":["送审作品:全片零动画,翻页如翻书,干净、笃定、一秒不耽误——委员会起立鼓掌,并邀请作者分享心得。","作者心得:「我试过飞入,后来发现,大家急着看的不是字怎么进来,是字写的是什么。」——这句话,被委员会刻在了门口。","委员会总结论:动画的至高境界,是让人忘记动画——像好的服务员,您只记得菜,不记得他。全片仅有的「淡入淡出」,是留给观众的一点点体面。"],"bigs":["起立鼓掌","刻在门口","忘记动画"]}],"metrics":[["普查动画","65 处"],["批准使用","淡入淡出"],["观众留存","内容 3%,动画 0"],["委员会裁定","少即是多"]],"logTitle":"评审记录","logEn":"REVIEW&nbsp;LOG","logEmpty":"暂无评审。您的下一份 PPT 还在路上——动手之前,先来委员会喝杯茶。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

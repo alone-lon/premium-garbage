@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>单人餐具「等会儿洗」立案监</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受理对象 <b>泡在水槽里的碗(1 只起)</b></span>
+    <span>「等会儿」时效 <b>法定 20 分钟,民间执行 48 小时</b></span>
+    <span>监里立场 <b>碗不急,急的是看见碗的人</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DRIED&nbsp;BOWL&nbsp;BUREAU</div>
+    <h1>单人餐具「等会儿洗」立案监</h1>
+    <div class="sub">水槽里那只碗,泡了两天,水面上飘着一层薄薄的自我说服——「等会儿洗」:本监不催洗,只对「等会儿」进行立案与时效认定。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">本监开在厨房水槽边,与洗洁精一臂之遥。取号不解决碗,只解决「这事还挂着」的心理挂账。</div><div class="metrics"><div class="m"><div class="k">累计立案</div><div class="v" id="took"><span id=took>0</span> 件</div></div><div class="m"><div class="k">平均时效</div><div class="v">48 小时</div></div><div class="m"><div class="k">结案用时</div><div class="v">4 分钟</div></div><div class="m"><div class="k">水槽遗产</div><div class="v">风干蛋羹,1 件</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交立案</button><button class="btn" id="callBtn">查询时效</button></div></div><div class="log"><div class="sec-tag"><span class="zh">时效记录</span><span class="en">BUREAU</span></div><ul id="log"><li style="color:var(--muted)">暂无立案。水槽空着,碗都在架上——本监暂无业务,乐得清闲。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">监守则</div>
+    <p>「等会儿洗」是独居生活的头号悬案:它不是懒,是把一件小事押给未来的自己,而未来的自己通常也押给了更未来的自己。本监不设强制执行——碗不脏到不能吃饭,就不算违法;只是提醒:泡两天的碗,洗时只需四分钟,泡时却要六十八个四分钟。这笔账,监替您算平了,碗替您存着,剩下的,水槽见。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结案。今晚的碗,建议四分钟内解决。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 224 号藏品 · 本监与 153 号(办公室冰箱悬案侦查组)同属「饮食遗物管理局」:一个管冰箱,一个管水槽<br>监内冷知识:人类把洗碗耗时高估 12 倍是普遍现象——我们拖延的从来不是四分钟,是启动的那一步
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"碗务","stat0":"本监开在厨房水槽边,与洗洁精一臂之遥。取号不解决碗,只解决「这事还挂着」的心理挂账。","takeLabel":"提交立案","callLabel":"查询时效","takeLines":["立案受理:本案水槽存碗 1 只,残羹已风干成文化遗产,泡水理由登记为「泡软了好洗」——该理由本监认可,时效自受理起算。","立案受理:本案碗数升至 2 只,叠放关系成立。第二只碗的存在让第一只碗获得了心理掩护——本监提醒:掩护不是消毒。","立案受理:本案碗数 3 只,水槽接近满员。案卷备注:此时洗碗的意义已超出清洁,属于对生活秩序的重新主张。"],"scenes":["时效播报:距「等会儿」已过 6 小时,泡碗水完成一次浑浊度跃升——本监不派员,请您自行目测,并做好心理建设。","时效播报:已过 24 小时,「等会儿」依法失效,案件升级为「明天一起洗」——注意,「明天」的时效又是 24 小时,循环立法,依法拖延。","时效播报:本案终审——碗终于洗了。全程耗时 4 分钟,与两天泡水时长相比,效率 300:1。本监结案陈词:最难的一步从来不是洗,是走到水槽前。"],"metrics":[["累计立案","\u003cspan id=took>0\u003c/span> 件","took"],["平均时效","48 小时"],["结案用时","4 分钟"],["水槽遗产","风干蛋羹,1 件"]],"logTitle":"时效记录","logEn":"BUREAU","logEmpty":"暂无立案。水槽空着,碗都在架上——本监暂无业务,乐得清闲。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>手机膜气泡考古</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>发掘对象 <b>一张贴了三年的钢化膜</b></span>
+    <span>文化层 <b>自贴层 · 灰尘层 · 师傅层</b></span>
+    <span>考古结论 <b>手艺的尽头,是给别人十块钱</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BUBBLE&nbsp;EXCAVATION</div>
+    <h1>手机膜气泡考古</h1>
+    <div class="sub">每张手机膜下面,都埋着一个时代的灰尘:第一次自己贴的气泡、第二次进去的绒毛、第三次街边师傅的手艺——本队逐层发掘,出土物:您的手残史。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">考古队进场</div><div class="status" id="status">请对着光举起手机——膜下那些气泡与微尘,即将迎来一次正式的学术发掘。</div><div class="metrics"><div class="m"><div class="k">文化层</div><div class="v">3 层</div></div><div class="m"><div class="k">出土气泡</div><div class="v">3 枚</div></div><div class="m"><div class="k">出土绒毛</div><div class="v">1 根(未解)</div></div><div class="m"><div class="k">考古结论</div><div class="v">专业的事交给专业的人</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">发掘·自贴层</button><button class="btn" id="btn1">发掘·灰尘层</button><button class="btn" id="btn2">发掘·师傅层</button></div></div><div class="log"><div class="sec-tag"><span class="zh">发掘日志</span><span class="en">DIG&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无发掘。您的膜此刻还干净——脏,是时间的事,不急。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">考古队结语</div>
+    <p>手机膜是普通人最贴身的考古地层:它记着您的第一次逞强、第二次不甘心、第三次终于服气。别的考古发掘古人的智慧,这一层发掘的是您自己的成长——从「我自己能贴」到「师傅麻烦了」,走完了从少年到成年的一小段路。膜下的气泡终会被新膜覆盖,但那些对着光吹灰的夜晚,值得定期出土。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">发掘完毕。膜下的气泡,是青春的气囊。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 193 号藏品 · 本考古队与 113 号(手机壳收藏学)共管「手机外装文明」:一个管壳,一个管膜<br>队内冷知识:全人类第一次自贴膜的气泡存活率是 100%——气泡从不消失,只是被下一张膜厚葬
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"考古队进场","stat0":"请对着光举起手机——膜下那些气泡与微尘,即将迎来一次正式的学术发掘。","btns":[{"label":"发掘·自贴层","tag":"第一次","lines":["出土文物:直径 3 毫米气泡一枚,位于屏幕左上角——那是您人生第一次自己贴膜的勋章。当晚您擦了二十遍屏幕,吹了四十遍灰,气泡还是住进去了。","自贴层工艺考:当年的您用银行卡刮、用指甲推、用电费单卷——工具轮番上阵,气泡原地结婚,还生了三个小的。","考古批注:第一次贴膜教会全人类同一件事:贴膜的理论是一回事,膜和屏幕之间的空气,是另一回事。"],"bigs":["吹了四十遍","原地结婚","另一回事"]},{"label":"发掘·灰尘层","tag":"第二次","lines":["出土文物:绒毛一根,横卧屏幕正中央。第二次贴膜的您已经学聪明了:浴室里贴?灰尘更多;开灯贴?看得更清,心更凉。","灰尘悬案:那根绒毛来自毛衣、毛巾,还是您自己的眉毛?已不可考——考古学称这类无法解释的存在为「膜的祖传之谜」。","考古批注:第二次贴膜的您,学会了一个新动作:贴到一半,揭开,拿胶带粘灰——那是全人类离考古学最近的时刻。"],"bigs":["心更凉","祖传之谜","胶带粘灰"]},{"label":"发掘·师傅层","tag":"第三次","lines":["出土文物:无。第三张膜,是街边手机店师傅贴的——十秒钟,除尘、对位、一压,膜下无尘,气泡绝迹,严丝合缝得像原厂出厂。","手艺观察:师傅贴膜时不呼吸。据本队考证,那屏息的十秒,是人类对抗灰尘史上唯一获胜的战役。","考古总结:三次贴膜,精神损耗一次比一次低。本队出具最终报告:手残的尽头,是给师傅十块钱——这十块钱,是人类向专业精神交的税。"],"bigs":["十秒钟","屏息十秒","十块钱的税"]}],"metrics":[["文化层","3 层"],["出土气泡","3 枚"],["出土绒毛","1 根(未解)"],["考古结论","专业的事交给专业的人"]],"logTitle":"发掘日志","logEn":"DIG&nbsp;LOG","logEmpty":"暂无发掘。您的膜此刻还干净——脏,是时间的事,不急。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
