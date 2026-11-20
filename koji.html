@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>口气自检中心</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>检测原理 <b>哈气-闻味(自闻)</b></span>
+    <span>准确率 <b>取决于你的鼻子和良心</b></span>
+    <span>配套方案 <b>嚼、喷、憋三选一</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BREATH&nbsp;SELF-CHECK</div>
+    <h1>口气自检中心</h1>
+    <div class="sub">会议前、约会前、贴脸聊天前的最后一道工序:本中心帮你确认口气——确认不了,但流程完整,仪式感拉满。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">请哈气</div><div class="status" id="status">中心就绪。请对准掌心哈气,缓缓凑近鼻端——你将面对的是自己最诚实的一面。</div><div class="metrics"><div class="m"><div class="k">检测次数</div><div class="v">0</div></div><div class="m"><div class="k">可信度</div><div class="v">存疑</div></div><div class="m"><div class="k">补救库存</div><div class="v">嚼/喷/憋</div></div><div class="m"><div class="k">安全距离</div><div class="v">1 米</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">哈气自检</button><button class="btn" id="btn1">紧急补救</button><button class="btn" id="btn2">带味上岗</button></div></div><div class="log"><div class="sec-tag"><span class="zh">检测记录</span><span class="en">CHECK&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无检测。口气安静地陪伴着你,不为人知。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">中心守则</div>
+    <p>口气检测是成年人最孤独的自检项目:仪器测不了,别人不好意思说,只能靠自己那只手掌。本中心把这套流程郑重化、仪式化——不为测出什么,只为让你在重要对话前,有那么三秒钟,认真地照顾了一下自己的存在方式。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">检测完毕。祝你的每一次贴脸,都坦然。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 51 号藏品 · 本中心不检测「脚气」——那属于另一个感官系统,暂无立项<br>生活常识:饭后一颗薄荷糖,是成年人之间的君子协定
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"请哈气","stat0":"中心就绪。请对准掌心哈气,缓缓凑近鼻端——你将面对的是自己最诚实的一面。","btns":[{"label":"哈气自检","tag":"检测","lines":["检测完成:结论「还行」。这个结论的可信度,与你的社交勇气成反比。","二次检测:建议换只手再哈一次。两只手的结论如果一致,基本可以放心;不一致,建议直接嚼口香糖。","三次检测:中心提醒——人对自己的口气有天然豁免权,自己闻着没事,不代表别人闻着没事。"]},{"label":"紧急补救","tag":"补救","lines":["补救方案已执行:口香糖两粒,薄荷浓度「社交安全级」。有效时长 20 分钟,请规划好贴脸窗口。","补救方案二:漱口水半瓶。现在你整个人从内到外散发牙膏味——这是化学武器级别的安全。","补救完成。中心鉴定:现在的你,是全场口气最礼貌的人。"]},{"label":"带味上岗","tag":"摆烂","lines":["决定带味上岗。中心尊重你的选择,并提醒:一米社交距离是你最后的防线。","带味续:对方皱了一下眉——也可能是阳光刺眼。存疑,但不值得赌。","中心结案:口气这东西,自己永远最后一个知道。这就是为什么要有朋友——可惜朋友也不好意思说。"]}],"metrics":[["检测次数","0"],["可信度","存疑"],["补救库存","嚼/喷/憋"],["安全距离","1 米"]],"logTitle":"检测记录","logEn":"CHECK&nbsp;LOG","logEmpty":"暂无检测。口气安静地陪伴着你,不为人知。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

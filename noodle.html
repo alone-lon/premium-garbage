@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>泡面等待计时研究所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>一杯等待中的红烧牛肉面</b></span>
+    <span>标准时长 <b>3 分钟(可无限展期)</b></span>
+    <span>研究所立场 <b>面优先</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">INSTANT&nbsp;NOODLE&nbsp;TIMER&nbsp;INSTITUTE</div>
+    <h1>泡面等待计时研究所</h1>
+    <div class="sub">科学管理泡面等待期:3 分钟倒计时精确无误,但可以无限续期——面等得起,你等不起。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">03:00</div><div class="status" id="status">计时器就绪。请在泡面注入热水后按下「开始等待」——这是全宇宙最漫长三分之一的起点。</div><div class="metrics"><div class="m"><div class="k">标准时长</div><div class="v">3 分钟</div></div><div class="m"><div class="k">掀盖次数</div><div class="v">您自己数</div></div><div class="m"><div class="k">续期上限</div><div class="v">无</div></div><div class="m"><div class="k">面的意见</div><div class="v">没人问过</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">开始等待</button><button class="btn" id="btn1">再等一会</button><button class="btn" id="btn2">开吃</button></div></div><div class="log"><div class="sec-tag"><span class="zh">实验记录</span><span class="en">LAB&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无实验。热水壶在旁边待命,面在杯里脱水思考。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">研究结论</div>
+    <p>经过上千次对照实验,本所确认:泡面包装上的「3 分钟」是全世界被违反最多的时间承诺。人们在 2 分 10 秒开吃的占六成,在 5 分钟后想起的占三成,真正等到 3 分钟整的——都是刚被烫过的人。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">计时完毕。开盖那一刻,3 分钟就值了。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 39 号藏品 · 本所不研究「等外卖」,那个领域太痛苦,归玄学系列管<br>养生提示:盖子别全掀,留个缝——蒸汽会记得你的克制
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"03:00","stat0":"计时器就绪。请在泡面注入热水后按下「开始等待」——这是全宇宙最漫长三分之一的起点。","btns":[{"label":"开始等待","tag":"计时","lines":["计时开始。当前面体状态:拒绝软化。当前你的状态:反复掀盖。","第 47 秒。你已经掀盖 3 次,每掀一次,面就少软一分——热气是会跑的,常识也是。","第 90 秒。研究所提示:换一部短视频,时间流速会明显加快。这是相对论的厨房应用。"]},{"label":"再等一会","tag":"续期","lines":["倒计时归零,你按下了「再等一会」。研究所尊重你的选择:烂一点的面,也是面。","二次续期。面已进入「过度软化」区间,牛肉粒开始疑似融化。研究所保持中立。","三次续期。杯内已无结构可言。研究所出具正式意见:你等的不是面,是一个「可以开吃的理由」。"]},{"label":"开吃","tag":"验收","lines":["开吃。面条弹性:失去了。汤的温度:刚好烫嘴。综合评价:值得。","二次开吃(第二杯):你显然没吸取教训。研究所欣赏这份不长记性。","研究所结案陈词:泡面的 3 分钟从来不是物理时间,是「饿」的心理单位。饿极了,45 秒也敢开盖。"]}],"metrics":[["标准时长","3 分钟"],["掀盖次数","您自己数"],["续期上限","无"],["面的意见","没人问过"]],"logTitle":"实验记录","logEn":"LAB&nbsp;LOG","logEmpty":"暂无实验。热水壶在旁边待命,面在杯里脱水思考。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

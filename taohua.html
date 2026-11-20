@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>桃花观测站</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>观测对象 <b>你的姻缘(主观可见)</b></span>
+    <span>站点海拔 <b>单身第 N 年</b></span>
+    <span>数据精度 <b>与愿望成正比</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ROMANCE&nbsp;OBSERVATORY</div>
+    <h1>桃花观测站</h1>
+    <div class="sub">专业观测你的桃花:方位、浓度、距离。最新数据:方位在东南,浓度微量,距离——以光年计。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">观测中</div><div class="status" id="status">点击开始一次观测。桃花属于量子现象:观测本身会影响结果——所以观测不到也很正常。</div><div class="ctrl"><button class="btn accent" id="goBtn">观测今日桃花</button><button class="btn" id="moreBtn">换个方位再观测</button></div><div class="metrics"><div class="m"><div class="k">今日观测</div><div class="v">0 次</div></div><div class="m"><div class="k">平均浓度</div><div class="v">微量</div></div><div class="m"><div class="k">最近心动</div><div class="v">记不清</div></div><div class="m"><div class="k">设备状态</div><div class="v">在线</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">实时记录</span><span class="en">LOG</span></div><ul id="log"><li style="color:var(--muted)">undefined</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">观测站总结</div>
+    <p>经过常年的观测,本站发现桃花的三定律:一、越找越没有;二、不找的时候,它也不来,但你心态好了;三、真正的桃花不需要观测——它出现的那一刻,你浑身的雷达自己就开机了。所以本站真正的业务,是陪你等雷达开机。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">今日观测完毕。桃花在路上,堵在东南。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 48 号藏品 · 本站与 14 号(每日运势)为玄学系列友邻,一个管全天,一个管心动<br>观测员守则:可以观测,不许许愿——许愿请去 19 号池
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"观测中","why0":"点击开始一次观测。桃花属于量子现象:观测本身会影响结果——所以观测不到也很正常。","btnLabel":"观测今日桃花","moreLabel":"换个方位再观测","pools":[{"q":"今日桃花:东南,微量","w":"浓度不足以成霾,仅供感知。建议:别主动,也别躲,该来的路上它自己会堵车。"},{"q":"今日桃花:正北,中量","w":"观测到短暂对视 1.7 秒,超过普通同事标准 0.9 秒。属 coincidence 级,不建议展开。"},{"q":"今日桃花:全方向,0","w":"今日桃花浓度为零,观测站照常上班。建议把注意力转向西南方的奶茶店——那个方向的糖分是实的。"},{"q":"今日桃花:室内聚集","w":"异常现象:桃花集中出现在你的通讯录里,以「在吗」开头、以「帮你砍一刀」结尾。观测站深表同情。"},{"q":"今日桃花:大风预警","w":"有旧桃花回旋迹象,风力 3 级。观测站建议:前任的消息像秋天的落叶,扫了还有,不扫也终会停。"},{"q":"今日桃花:雷达全开","w":"观测到心动信号,信号源:一个笑起来有虎牙的人。观测站罕见地给出建议:这次别只观测,上前说句话。"},{"q":"今日桃花:夜间多云","w":" nocturnal 观测显示,你的桃花运在夜里 11 点后活跃——主要形式为:给三个月前的聊天记录点赞。"},{"q":"今日桃花:观测设备故障","w":"今日观测中断,原因:观测员本人恋爱了。本站历史上第一次因「满员」停摆,可喜可贺。"}],"metrics":[["今日观测","0 次"],["平均浓度","微量"],["最近心动","记不清"],["设备状态","在线"]]};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

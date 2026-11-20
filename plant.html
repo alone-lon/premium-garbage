@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电子仙人掌养殖场</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>品种 <b>铁骨素心(电子版)</b></span>
+    <span>养护难度 <b>零(它不需要你)</b></span>
+    <span>开花周期 <b>承诺过,没兑现</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">E-CACTUS&nbsp;FARM</div>
+    <h1>电子仙人掌养殖场</h1>
+    <div class="sub">养一株永远差一口气的电子仙人掌:它不死、不长、不开花,偶尔掉一根刺,提醒你它还活着。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">🌵</div><div class="status" id="status">养殖场营业中。仙人掌静坐窗台位,进行永恒的休眠——不是枯萎,是节能。</div><div class="metrics"><div class="m"><div class="k">株高</div><div class="v">恒定</div></div><div class="m"><div class="k">刺数</div><div class="v">缓慢减少</div></div><div class="m"><div class="k">浇水利用率</div><div class="v">≈0%</div></div><div class="m"><div class="k">开花倒计时</div><div class="v">∞</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">浇水</button><button class="btn" id="btn1">晒太阳</button><button class="btn" id="btn2">换盆</button></div></div><div class="log"><div class="sec-tag"><span class="zh">养护日志</span><span class="en">FARM&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无养护。仙人掌在它的时间尺度里,一眨眼就是一年。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">养殖场寄语</div>
+    <p>仙人掌是这个星球上最接近「电子宠物」的植物:不粘人、不需求、不掉链子。你以为你在养它,其实它在陪你——用它那副「千年不动」的样子,告诉你:有些陪伴就是安静的,不响,但在。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">养殖愉快。它不会辜负你,因为它什么都不做。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 47 号藏品 · 本农场与 15 号(猫语翻译机)并称生物系列双璧:一个懒得理你,一个懒得动<br>养护口诀:少浇水,多看它,别手贱
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"🌵","stat0":"养殖场营业中。仙人掌静坐窗台位,进行永恒的休眠——不是枯萎,是节能。","btns":[{"label":"浇水","tag":"养护","lines":["已浇水。仙人掌表示:多谢,但我两个月前喝的还没用完。水已转入内部调节池(虚无)。","二次浇水:盆底开始积水。仙人掌用掉一根刺的方式表达了抗议。","三次浇水:本农场正式通知:仙人掌不是渴,是懒。请把水留给你自己。"]},{"label":"晒太阳","tag":"光照","lines":["已搬到窗边。仙人掌接受光照 6 小时,光合作用产出:0(它只是喜欢亮一点)。","二次光照:向阳面微微发绿——那是它全部的表示。别期待开花,开花在它的合同里是「不可抗力」。","三次光照:农场记录:光照充足,长势为零。这就是多肉界的「躺平」。"]},{"label":"换盆","tag":"折腾","lines":["换盆完成。新盆更大,仙人掌更沉默——多肉的哲学:环境怎么变,我都不变。","二次换盆:根须检查完毕,健康,且完全没打算扩展。它对「成长」有自己的时间表:无限期。","三次换盆:农场友情提示:再换下去,先枯的是你。养护的尽头是放手,放水的尽头是烂根。"]}],"metrics":[["株高","恒定"],["刺数","缓慢减少"],["浇水利用率","≈0%"],["开花倒计时","∞"]],"logTitle":"养护日志","logEn":"FARM&nbsp;LOG","logEmpty":"暂无养护。仙人掌在它的时间尺度里,一眨眼就是一年。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
