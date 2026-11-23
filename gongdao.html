@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公交坐过站复盘委员会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受理范围 <b>坐过站一至七站(八站以上转交玄学)</b></span>
+    <span>复盘材料 <b>到站铃声 · 窗外街景 · 惊醒瞬间</b></span>
+    <span>会内立场 <b>过站不是事故,是神游的凭证</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">OVERSTOP&nbsp;REVIEW</div>
+    <h1>公交坐过站复盘委员会</h1>
+    <div class="sub">耳机一戴,灵魂出窍,站台在窗外飞走:委员会受理每一次坐过站,复盘事故全程,不追究责任——反正责任永远在窗外。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">会议未开始</div><div class="status" id="status">请提交您最近一次坐过站的经过,委员会照章复盘——先声明:过站不算迟到,算旅行。</div><div class="metrics"><div class="m"><div class="k">本月受理</div><div class="v">0 起</div></div><div class="m"><div class="k">平均过站</div><div class="v">2.4 站</div></div><div class="m"><div class="k">最优方案</div><div class="v">原地等回程</div></div><div class="m"><div class="k">官方定性</div><div class="v">合法走神</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">提交事故经过</button><button class="btn" id="btn1">复盘回程方案</button><button class="btn" id="btn2">结案陈词</button></div></div><div class="log"><div class="sec-tag"><span class="zh">复盘台账</span><span class="en">REVIEW</span></div><ul id="log"><li style="color:var(--muted)">暂无过站。公交准点进站,您在正确的门口下车,一次都没多坐。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">委员会章程节选</div>
+    <p>坐过站是人类通勤史上最普遍的无害事故:成因多为耳机、窗景与疲劳,后果多为多走两公里,收益偶尔是一家新店。委员会成立二十年,只受理过复盘,从未开出过一张罚单——因为章程第一条写明:神游不是过错,是身体在替大脑喊累。本会建议,每次过站后做一件小事犒劳自己:买个包子,站一会儿,看看这个本不属于您行程的地方。然后上回程的车,把多出来的这段路,还给生活。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">复盘完毕。多坐的站,没白坐。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 389 号藏品 · 本会与 171 号(末班公交车文艺舱)同属「公交人文观察联会」:一个收藏夜车的心情,一个复盘白天的走神<br>会内冷知识:坐过站后发现的包子铺,回头率高达九成——比相亲对象高得多
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"会议未开始","stat0":"请提交您最近一次坐过站的经过,委员会照章复盘——先声明:过站不算迟到,算旅行。","btns":[{"label":"提交事故经过","tag":"受理","lines":["事故受理:您在耳机里听完了整首歌,站台在副歌里飞走。委员会批注:经典款过站——音乐是过站的第一大成因,特征是「越喜欢的歌,过得越远」。","二次受理:您盯着窗外一辆同款车看了四站,把自家车看丢了。委员会批注:观察型过站——危险等级最高,因为它在两站之前就已经开始了。","三次受理:您睡着了,过了终点站。委员会批注:这是过站界的满贯——别的乘客过站,您过的是整条线;司机回头叫您的那一声,是本会收录过的最温柔的叫醒服务。"]},{"label":"复盘回程方案","tag":"复盘","lines":["复盘完成:方案一,原地等对向车,全程零运动——委员会判定为最优解,缺点是站着,优点是不用动脑。","二次复盘:方案二,从下车站步行返回,全程消耗两公里——委员会批注:这是把事故写成锻炼的乐观主义方案,建议晴天使用。","三次复盘:方案三,干脆在过站的地方吃了顿饭再回去——委员会盛赞:这是过站哲学的最高境界,事故现场变成饭点,损失折算成体验,财务上视为盈利。"]},{"label":"结案陈词","tag":"结案","lines":["结案一:委员会宣布,本次过站不计入任何信用记录——公交不记仇,城市不记仇,只有您自己记了三天,今天销账。","二次结案:本次过站的副产品已登记:发现一家新开的包子铺——委员会确认,这是坐过站唯一稳定的收益,命中率达七成。","终审陈词:委员会认为,坐过站是城市生活里罕见的「合法走神」——没人受伤,只是多走了几站路,多看了一段不是给您准备的风景。"]}],"metrics":[["本月受理","0 起"],["平均过站","2.4 站"],["最优方案","原地等回程"],["官方定性","合法走神"]],"logTitle":"复盘台账","logEn":"REVIEW","logEmpty":"暂无过站。公交准点进站,您在正确的门口下车,一次都没多坐。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

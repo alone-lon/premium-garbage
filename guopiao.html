@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>过期单程票忏悔室</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏票种 <b>单程票(3 元档,已过期)</b></span>
+    <span>忏悔受理 <b>只听不办,听完全程</b></span>
+    <span>退票窗口 <b>已关闭十年</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">EXPIRED&nbsp;TICKET&nbsp;CONFESSIONAL</div>
+    <h1>过期单程票忏悔室</h1>
+    <div class="sub">每一张过期的地铁单程票,都有一段没走完的旅程。本室替它们办忏悔:票根在册,心事在卡包,路程三公里,遗憾无限期。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">忏悔室安静</div><div class="status" id="status">点击抽一张票,听它开口。它们平时不说话,今天既然来了,就听完。</div><div class="ctrl"><button class="btn accent" id="goBtn">抽一张票听忏悔</button><button class="btn" id="moreBtn">再听一张</button></div><div class="metrics"><div class="m"><div class="k">馆藏票数</div><div class="v">8 张</div></div><div class="m"><div class="k">忏悔完结率</div><div class="v">100%(听完)</div></div><div class="m"><div class="k">退票受理</div><div class="v">0 张</div></div><div class="m"><div class="k">建议</div><div class="v">下次扫码</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">忏悔记录</span><span class="en">CONFESSION</span></div><ul id="log"><li style="color:var(--muted)">暂无忏悔。抽屉里的票排成一列,还没轮到第一个开口。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">室训</div>
+    <p>票的一生只有一次旅程,错过就是一生。本室不办退票——票价三元,遗憾无价,退了反而亏。听完八张票的忏悔你会发现:它们遗憾的从来不是三块钱,而是「那一天,我本来可以陪你去」。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">忏悔完毕。下一程,记得带上它。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 363 号藏品 · 本室与 145 号(早高峰地铁生态图鉴)互不承认认识:一个管人挤人,一个管票过期<br>温馨提示:过期票无回收价值,但有故事价值——本室收购故事,不出钱
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"忏悔室安静","why0":"点击抽一张票,听它开口。它们平时不说话,今天既然来了,就听完。","btnLabel":"抽一张票听忏悔","moreLabel":"再听一张","pools":[{"q":"3 元票 · 2019 年 · 未进站","w":"忏悔:被买下的那一刻,我在掌心出了汗。后来计划变了,我在裤兜里躺到褪色。没进站的票,不算坐过地铁,但算用过真心。"},{"q":"3 元票 · 进站了,没出成","w":"忏悔:闸机说我「未出站记录异常」。其实那天我只是送人到站台,又原路折返——零公里的旅程,闸机不肯销案。陪人这件事,从来不计里程,只计真心。"},{"q":"3 元票 · 出站口卡壳三次","w":"忏悔:那天我贴得太近,和前面的卡贴在了一起。闸机红了我三次,身后叹了我三次。孤独的票,连出站都要排队。"},{"q":"3 元票 · 被错投进收藏册","w":"忏悔:主人说票面干净,像纪念品。可我是票,不是纪念品——我想被闸机咬一口,不想被玻璃纸供着。供了五年,我认了,但我不开心。"},{"q":"3 元票 · 与钥匙同居三年","w":"忏悔:卡包里我挨着钥匙,钥匙总戳我。三年里主人出门十几万次,我被用零次。我见证了他每一次出门,没见证过自己的一次上岗。"},{"q":"3 元票 · 洗衣机里泡过一场","w":"忏悔:滚筒里翻滚四十分钟,票面糊了,芯还在。捞出来晾在阳台,像一面小旗。主人看了三天,第四天忘了我。旗帜的命运,就是被遗忘。"},{"q":"3 元票 · 差一步赶上末班车","w":"忏悔:那天主人攥着我狂奔,我在他手心第二次出汗。闸机放了我,车没放他。我们互相看了最后一眼——他叹气,我过期。"},{"q":"3 元票 · 票面崭新,从未出行","w":"忏悔:我是最遗憾的一种:买时真心,用时变卦。新到反光,过期作废。主人后来学会了扫码,我成了他「曾经怕麻烦」的证据。"}],"metrics":[["馆藏票数","8 张"],["忏悔完结率","100%(听完)"],["退票受理","0 张"],["建议","下次扫码"]],"logTitle":"忏悔记录","logEn":"CONFESSION","logEmpty":"暂无忏悔。抽屉里的票排成一列,还没轮到第一个开口。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

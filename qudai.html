@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>塑料袋取袋抉择台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>裁决对象 <b>「要袋子吗」答复前的 1.5 秒</b></span>
+    <span>谈判三方 <b>环保心 · 五毛预算 · 手忙程度</b></span>
+    <span>台内立场 <b>答「不要」的人,通常两手已满</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BAG&nbsp;DECISION&nbsp;STAND</div>
+    <h1>塑料袋取袋抉择台</h1>
+    <div class="sub">结账最后一秒的永恒之问「要袋子吗」:抉择台还原这一秒的内心全程——环保、预算与「手上东西太多」三方谈判,裁决随买随出。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">谈判待开场</div><div class="status" id="status">收银台前,东西已经扫完。收银员抬起头,问出那句全人类的必考题——请进台,开始谈判。</div><div class="metrics"><div class="m"><div class="k">今日裁决</div><div class="v">0 例</div></div><div class="m"><div class="k">省袋成功率</div><div class="v">两成</div></div><div class="m"><div class="k">袋中袋现象</div><div class="v">普遍</div></div><div class="m"><div class="k">台方建议</div><div class="v">包里备一个</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">仲裁「不要」</button><button class="btn" id="btn1">仲裁「要一个」</button><button class="btn" id="btn2">仲裁「自带袋」</button></div></div><div class="log"><div class="sec-tag"><span class="zh">裁决台账</span><span class="en">DECISION</span></div><ul id="log"><li style="color:var(--muted)">暂无裁决。收银台安静,袋子们叠在一起,等一个答案。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">抉择台备忘录</div>
+    <p>「要袋子吗」是当代生活成本最低、纠结度最高的选择题:左边是五毛钱和一点环保心,右边是拎着东西走全程的体面。台方多年观察,总结出三条铁律:一,家里永远不缺袋子,缺的是出门时想起它的那一下;二,袋子会繁殖——一个袋子在家里待满一周,身边必有五个;三,真正的环保不是每次都拒绝,而是让每个袋子多上岗一次。本台不站队,只把这三条写进备忘录,供下一次结账前速览。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">裁决完毕。袋与不袋,心贵则灵。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 390 号藏品 · 本台与 232 号(购物袋收纳悖论博物馆)同属「袋子户口总署」:一个管袋子回家后的安置,一个管袋子回家前的抉择<br>台内冷知识:人类说「不要袋子」的底气与手边商品数量成反比——双手已满时,底气最足
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"谈判待开场","stat0":"收银台前,东西已经扫完。收银员抬起头,问出那句全人类的必考题——请进台,开始谈判。","btns":[{"label":"仲裁「不要」","tag":"裁决","lines":["裁决送达:您说「不要」——裁决书附件显示,您包里其实有一个旧袋子,只是今天没带。台方批注:环保意志当晚抵达,晚于购物冲动三小时,算部分胜利。","二次裁决:您说「不要」,然后徒手抱起八件商品。台方批注:这是抉择台上最常见的硬汉行为——省下五毛,押上两根手指的血液循环。","三次裁决:您说「不要」,走出超市就后悔。台方记录:回家路上您用衣服兜着鸡蛋,走三步停一步——这五毛钱省得惊心动魄,建议写进回忆录。"]},{"label":"仲裁「要一个」","tag":"裁决","lines":["裁决送达:您要了一个袋子——台方确认:两毛五的大袋,您用它装了九块九的菜,袋子的身价第一次超过了内容物的一半。","二次裁决:您要了袋子,并要求「厚一点的」。台方批注:厚袋派是这个时代的收藏家——回家后它不会进垃圾桶,会进第二个袋子,和它的前辈们团聚。","三次裁决:您要了袋子,出门就把它当成了今天的全部容器:装菜、装书、装雨。台方致意:五毛钱,买了一个袋子的一生用途,值。"]},{"label":"仲裁「自带袋」","tag":"裁决","lines":["裁决送达:您掏出折成方块的自带袋,当众展开——台方认定:这是收银台的每日高光时刻,环保分与体面分同时到顶。","二次裁决:您掏出的是上一个超市的袋子,本店收银员毫无芥蒂。台方批注:袋子界早已实现天下大同——它们只认内容,不认出身。","三次裁决:您掏出的袋子破了。台方建议:下次在包里常备一个备用袋——这不是洁癖,是成年人的防灾意识,级别约等于伞。"]}],"metrics":[["今日裁决","0 例"],["省袋成功率","两成"],["袋中袋现象","普遍"],["台方建议","包里备一个"]],"logTitle":"裁决台账","logEn":"DECISION","logEmpty":"暂无裁决。收银台安静,袋子们叠在一起,等一个答案。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

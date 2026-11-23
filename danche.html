@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>共享单车失踪结案科</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>管辖范围 <b>定位消失 72 小时以上的单车</b></span>
+    <span>结案标准 <b>找到,或承认找不到</b></span>
+    <span>本科立场 <b>车没错,错的是搬它的人</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">BIKE&nbsp;WHEREABOUTS&nbsp;BUREAU</div>
+    <h1>共享单车失踪结案科</h1>
+    <div class="sub">每一辆消失的共享单车,都有一条不为人知的最后行程:被抬进小区、被搬上六楼、被遗忘在花坛。本科逐车结案,不追责,只存档。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">在办案件 0 起</div><div class="status" id="status">本科已挂牌。地图上最后几个光点不再移动——每一点熄灭,都是一起新案的立案理由。</div><div class="metrics"><div class="m"><div class="k">在办案件</div><div class="v">0 起</div></div><div class="m"><div class="k">找回率</div><div class="v">63%</div></div><div class="m"><div class="k">光荣册</div><div class="v">在册 12 辆</div></div><div class="m"><div class="k">归位率</div><div class="v">看自觉</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">立案一宗</button><button class="btn" id="btn1">出警寻找</button><button class="btn" id="btn2">结案归档</button></div></div><div class="log"><div class="sec-tag"><span class="zh">办案台账</span><span class="en">CASE</span></div><ul id="log"><li style="color:var(--muted)">暂无案件。单车在马路上列队,定位光点全部在线。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">科长办案手记</div>
+    <p>共享单车是这个时代最诚实的公共品:一块五,随借随还,坏了有人修。手记想说的是,失踪车的去向,画出了一个城市的良心地图——小区阳台、店门口、花坛深处,每一点都是一次「顺手」的代价。本科不办人,只办车;车修好了,人心那点锈,慢慢也能蹭掉。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结案完毕。还车的时候,听听那声「嘀」。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 373 号藏品 · 本科与 365 号(按错楼层记录仪)同属通勤系列:一个管楼道里的手滑,一个管马路上的顺手<br>科内数据:失踪车最远的一次,出现在邻省某县城——它自己骑过去的,科里愿意信
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"在办案件 0 起","stat0":"本科已挂牌。地图上最后几个光点不再移动——每一点熄灭,都是一起新案的立案理由。","btns":[{"label":"立案一宗","tag":"立案","lines":["立案:编号 0731,最后定位某小区六楼阳台。初步判断:被主人扛上楼占为己有。科内批注:它以为自己是私家车了,建议派人送它回马路。","立案:编号 0732,最后定位某花坛深处,车筐里长出一株草,草比车精神。批注:本案性质为「遗忘」,不构成「盗窃」——草可以做证。","立案:编号 0733,最后定位某条断头路的尽头,车轮朝天。批注:这是最悲壮的一种失踪——它跑到了地图边缘,像一次没成功的私奔。"],"bigs":["0731","0732","0733"]},{"label":"出警寻找","tag":"出警","lines":["出警结果:0731 号车已在阳台生锈,车铃还能响。本科依法将其运回马路,扫码立即可骑——重获新生的车,前三单都特别顺。","出警结果:0732 号车从花坛起出,车筐里的草移栽到路边绿化带——本科坚持:草无罪,留活口。","出警结果:0733 号车无法寻回,列入「失踪车光荣册」。册上按语:它至少自由过一天,比大部分同事都强。"],"bigs":["重回马路","草留活了","光荣册"]},{"label":"结案归档","tag":"结案","lines":["结案陈词:单车失踪的本质,是「共享」与「私有」的一念之差——抬上楼的那三步,人就变成了搬东西的,车就变成了东西。","结案续:本科统计,被找回的车里,八成重返岗位后不再失踪——它们见过花坛,所以更爱马路。","结案毕:科长相语:每辆车都想被骑走,也想被还回来。这个愿望很简单,简单到只需要你在关锁时,多听那一声「嘀」。"],"bigs":["一念之差","更爱马路","那声嘀"]}],"metrics":[["在办案件","0 起"],["找回率","63%"],["光荣册","在册 12 辆"],["归位率","看自觉"]],"logTitle":"办案台账","logEn":"CASE","logEmpty":"暂无案件。单车在马路上列队,定位光点全部在线。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

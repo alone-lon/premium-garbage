@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>早安闹钟「再睡五分钟」战报科</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>战报范围 <b>闹钟首响至真正起床</b></span>
+    <span>常用战术 <b>贪睡三连 · 换手关闹钟 · 坐起待机</b></span>
+    <span>科内立场 <b>赖床不是输,是谈判</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SNOOZE&nbsp;WAR&nbsp;REPORT</div>
+    <h1>早安闹钟「再睡五分钟」战报科</h1>
+    <div class="sub">闹钟响,按掉,再响,再按——每个早晨都有一场围绕「再睡五分钟」的攻防战:战报科逐晨收录战况,不评判胜负,只承认赖床也是抵抗。</div>
+  </div>
+
+  <div class="console"><div class="big" id="ticket">--</div><div class="status" id="status">清晨战事频发。请提交今晨战况,本科逐条入册——先说好:贪睡不算迟到,算中场休息。</div><div class="metrics"><div class="m"><div class="k">累计入册</div><div class="v" id="took">0 单</div></div><div class="m"><div class="k">场均贪睡</div><div class="v">2.4 次</div></div><div class="m"><div class="k">巅峰纪录</div><div class="v">6 连</div></div><div class="m"><div class="k">科方定性</div><div class="v">谈判而非投降</div></div></div><div class="ctrl"><button class="btn accent" id="takeBtn">提交今晨战报</button><button class="btn" id="callBtn">公布战况汇总</button></div></div><div class="log"><div class="sec-tag"><span class="zh">战报台账</span><span class="en">REPORT</span></div><ul id="log"><li style="color:var(--muted)">暂无战报。闹钟待命,清晨安静,双方暂时休战。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">战报科科长致辞</div>
+    <p>snooze 键是人类给自己留的后门:闹钟没有恶意,但也没有情面,唯有「再睡五分钟」是您与时间谈成的分期付款。科长审阅上万份晨间战报后总结:赖床的本质不是懒惰,是身体在为「清醒」讨价还价——每次五分钟,分三期付清,谁也没吃亏。本科不建议戒掉贪睡——被闹钟一响就弹起的人生固然高效,但少了那三段缓冲,清晨就太像军人了。人生需要一点防守:响,按掉,再响,再按,最后坐起来叹口气——这一套动作做完,人才算真正醒了,连叹气都是起床仪式的一部分。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">战报归档。明晨再战,谁也不服谁。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 401 号藏品 · 本科与 119 号(「强制 Wake」闹钟效应研究所)同属「晨间攻防学术委员会」:一个研究闹钟的狠,一个记录人的缓<br>科内冷知识:snooze 键的默认间隔是九分钟——传说是因为旧式闹钟齿轮咬合九分钟一圈,人类就这样被工业时代定了赖床的计量单位
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"prefix":"晨号","stat0":"清晨战事频发。请提交今晨战况,本科逐条入册——先说好:贪睡不算迟到,算中场休息。","takeLabel":"提交今晨战报","callLabel":"公布战况汇总","takeLines":["战报受理:闹钟 7:00 首响,您按掉,7:10 二响,按掉,7:20 三响,您坐起,7:25 起床——本科批注:标准三段式防守,每段十分钟,攻守有度,体面周全。","二次受理:您把手机换成左手按贪睡键,右手继续睡——本科记录:换手战术说明意志已动但身体未动,是「想起没起」的中间态,战场上叫「胶着」。","三次受理:今晨无战事,闹钟响前您已自然醒——本科认定:无战事是最高战果,身体自己收了兵;本科照常记录,并注明「今晨,人赢了」。"],"scenes":["战况汇总:本周贪睡合计 47 次,场均 2.4 次,最高纪录 6 连贪睡——本科批注:6 连是本周巅峰之战,其间您做了三个关于迟到的梦,梦比闹钟敬业。","二次汇总:战况显示,周一场均贪睡高于周五两倍——本科分析:周一是心理战,周五是体力战;人类不是起不来,是周一起不来,这笔账要算在工作头上。","三次汇总:本科终审认定,人类与闹钟的战争永无终结——闹钟赢在准时,人赢在最终总是起了;谁都没输,天亮了,大家都上班去了。"],"metrics":[["本周战报","47 次"],["场均贪睡","2.4 次"],["巅峰纪录","6 连"],["科方定性","谈判而非投降"]],"logTitle":"战报台账","logEn":"REPORT","logEmpty":"暂无战报。闹钟待命,清晨安静,双方暂时休战。"};
+var log=$("log"),total=0,calls=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("takeBtn").addEventListener("click",function(){
+total++;
+$("ticket").textContent=D.prefix+"-"+String(1000+total).slice(1);
+$("took").textContent=total+" 张";
+var s=D.takeLines[(total-1)%D.takeLines.length];
+$("status").textContent=s;
+record("取号 #"+total,s);
+});
+$("callBtn").addEventListener("click",function(){
+calls++;
+var s=D.scenes[(calls-1)%D.scenes.length];
+$("status").textContent=s;
+record("广播 #"+calls,s);
+});
+})();
+</script>
+</body>
+</html>

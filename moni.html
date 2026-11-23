@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>模拟声音自嗨测试间</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>收录对象 <b>人类自制音效(未经授权)</b></span>
+    <span>声源清单 <b>哼歌 · 口技 · 拟声词</b></span>
+    <span>间内立场 <b>自嗨合法,走调免费</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SELF&nbsp;SFX&nbsp;BOOTH</div>
+    <h1>模拟声音自嗨测试间</h1>
+    <div class="sub">洗碗时的哼歌、倒车时的「滴滴」、拧瓶盖时的「呃——」:测试间收录人类自给自足的音效,逐条评测,不评分,只承认它们确实存在。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">录音待调</div><div class="status" id="status">点击调取一段馆藏录音。每段都是人类在无人监督时的即兴发挥——真实度满分,质量不承诺。</div><div class="ctrl"><button class="btn accent" id="goBtn">调一段录音</button><button class="btn" id="moreBtn">再调一段</button></div><div class="metrics"><div class="m"><div class="k">馆藏总量</div><div class="v">8 段</div></div><div class="m"><div class="k">收声场景</div><div class="v">厨房浴室为首</div></div><div class="m"><div class="k">评分制度</div><div class="v">无</div></div><div class="m"><div class="k">听众数</div><div class="v">一律为零</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">调取记录</span><span class="en">BOOTH</span></div><ul id="log"><li style="color:var(--muted)">暂无调取。测试间隔音良好,您的哼声只在洗碗池上空盘旋。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">首席录音师手记</div>
+    <p>人类是世界上唯一一个自带音效库的物种:手上有活,嘴里就有声——洗碗配哼歌,拧盖配战吼,倒车配滴滴。录音师调阅全部馆藏后得出结论:这些音效的共同点是听众为零,制作成本为零,快乐却真实发生。它们不为表演,不为记录,只是身体在干活时的自我伴奏——像小时候写作业抖腿一样,是身体给无聊找的下坡路。本间不修音,不剪辑,原声保存:多年以后,您哼跑调的那段旋律,比任何正式录音都更能让您想起那个傍晚的洗碗池。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">调取完毕。哼完了吗,碗还没洗完。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 392 号藏品 · 本间与 156 号(智能音箱装聋实录)同属「声音事务联合办公厅」:一个管音箱装聋,一个管人声自嗨<br>间内冷知识:浴室版本的人类歌声,自我评分普遍高出实际水平两个八度——水汽不背锅,自信是主要成分
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"录音待调","why0":"点击调取一段馆藏录音。每段都是人类在无人监督时的即兴发挥——真实度满分,质量不承诺。","btnLabel":"调一段录音","moreLabel":"再调一段","pools":[{"q":"馆藏:洗碗布鲁斯","w":"水声为伴奏,碗沿为话筒,哼的是不成调的旋律——鉴定意见:走调三处,真情百分,洗碗工的小调没有听众,但碗都听懂了。"},{"q":"馆藏:倒车人声雷达","w":"「滴滴,滴滴」,由本人亲自担任倒车提示音——鉴定意见:这是人类对机器最深情的模仿,音准堪比原厂,卡点精确到厘米。"},{"q":"馆藏:拧盖战吼","w":"拧不开瓶盖时,喉咙先发力,「呃——」声贯穿厨房——鉴定意见:此音效无实际助力,但心理学意义巨大:战吼之后,盖子自己也不好意思不松。"},{"q":"馆藏:电梯口哨","w":"独自乘电梯时的即兴口哨,声调飘忽,常在到站铃前紧急收声——鉴定意见:口哨是人类的扩音器性格,只在四壁无人的三分钟里营业。"},{"q":"馆藏:做饭拟声词","w":"颠勺时配「嘿」,撒盐时配「撒——」,开火时配「噗」——鉴定意见:一套完整的厨房音效系统,人菜瘾大,声势浩大,饭菜的质量与音量无关。"},{"q":"馆藏:楼梯惊魂配乐","w":"夜里下楼,自己给脚步配悬疑音效,下到一半自己吓自己——鉴定意见:本馆藏品证明,人类是唯一会给自己制造恐惧又后悔的物种。"},{"q":"馆藏:钓鱼时的空鸣","w":"湖边静坐,钓鱼佬用嘴模拟收线声、上钩声、风声——鉴定意见:鱼没上钩,音效先到;这是世界上唯一一台自产自销的声呐。"},{"q":"馆藏:浴室演唱会","w":"花洒当乐队,毛巾当话筒,副歌直接升调——鉴定意见:本间馆藏的人气满分作品,音质在水汽中提升百分之三十,听众为零,掌声自带。"}],"metrics":[["馆藏总量","8 段"],["收声场景","厨房浴室为首"],["评分制度","无"],["听众数","一律为零"]],"logTitle":"调取记录","logEn":"BOOTH","logEmpty":"暂无调取。测试间隔音良好,您的哼声只在洗碗池上空盘旋。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

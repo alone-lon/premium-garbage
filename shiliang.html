@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>菜谱「适量」换算所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>换算范围 <b>适量 · 少许 · 一把 · 若干</b></span>
+    <span>裁定口径 <b>咸了算你,淡了算菜谱</b></span>
+    <span>所内立场 <b>菜谱没错,错的是人类的勺子</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">RECIPE&nbsp;PINCH&nbsp;STANDARDS</div>
+    <h1>菜谱「适量」换算所</h1>
+    <div class="sub">盐适量、油少许、中火偏小、八成热:菜谱的最小计量单位,考验的是每个下厨人的领悟能力。本所出具换算标准,仅供家庭内部裁定。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="输入菜谱里那句模糊的话,例如:盐适量"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">出具换算</button><button class="btn" data-sample="0">盐适量</button><button class="btn" data-sample="1">少许葱花</button><button class="btn" data-sample="2">八成热</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">适量换算表</span><span class="en">PINCH&nbsp;STANDARDS</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">所长致辞</div>
+    <p>「适量」是中餐的灵魂,也是新手的地狱。本所研究十年,最终承认:适量无法被标准化,只能被传下去——你妈说的「适量」和她妈说的「适量」,量的是同一勺,咸的是同一种乡愁。所谓家传菜,传的不是配方,是对适量的共同记忆。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">换算完毕。咸了加水,淡了加盐,别慌。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 367 号藏品 · 本所与 343 号(老抽瓶口管理局)同属厨房系:一个管瓶口的印章,一个管菜谱的玄学<br>所内共识:第一次下厨请全程尝——这不是不信任菜谱,是不信任翻译
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入菜谱里那句模糊的话,例如:盐适量","btnLabel":"出具换算","sampleLabels":["盐适量","少许葱花","八成热"],"samples":["盐适量","葱花少许,香菜看心情","油温八成热下锅"],"num":"换算完成:误差 ±1 勺","verdict":"总结论:「适量」的定义权,在掌勺者手里——菜谱只负责提出哲学问题,咸淡由你签字画押。","breakdown":[["「适量」","一个区间,不是一个数","标准换算:盐适量 = 起手半勺,尝一口,不咸再补。它考验的不是计量,是承认错误的速度——补盐容易,补救咸汤,难。"],["「少许」","比适量更少,比没有多点","葱花少许 = 三根的量,多了抢戏,少了像没放。少许的精髓在于「若有似无」:吃的时候找不到,找的时候满碗都是。"],["「八成热」","油开始认真工作的温度","判断标准:筷子插进去冒小泡是六成,冒急泡是八成,冒烟就该关火——菜谱写八成,是因为它相信你一直盯着锅。"],["「中火偏小」","火候的中间派","中火偏小 = 外圈火苗刚舔到锅底。这个档位考验的是灶台的脾气与你的耐心,建议盯锅,别刷手机——焦了,锅会说。"],["终极换算","适量 = 下一次会记得的量","所有「适量」的终点,都是你家的口味:第一次照菜谱,第三次靠手感,第十年,你就是别人菜谱里的「适量」。"]],"empty":{"num":"换算暂停","verdict":"空口无凭——「适量」必须结合具体语境。就像「改天请你吃饭」,得知道是哪天、请谁、吃啥。","breakdown":[["发现","语境缺失","「适量」脱离菜谱就是空话"],["建议","抄一句菜谱","哪怕只有半句,本所也能开工"]]},"reportTitle":"适量换算表","reportEn":"PINCH&nbsp;STANDARDS"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

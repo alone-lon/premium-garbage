@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电梯按错楼层记录仪</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>记录对象 <b>按错楼层的那一根手指</b></span>
+    <span>圆场方式 <b>「哦,也是这层」占多数</b></span>
+    <span>数据口径 <b>只记手滑,不记心虚</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WRONG-FLOOR&nbsp;RECORDER</div>
+    <h1>电梯按错楼层记录仪</h1>
+    <div class="sub">12 楼与 13 楼只差一指宽,按错的那一下却要用整个电梯行程来圆场。本记录仪逐次登记每一次手滑,以及每一次将错就错。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">累计按错 0 次</div><div class="status" id="status">记录仪已开机。电梯上行,楼层数字安静地跳——每一跳背后,都可能有一根手指正在后悔。</div><div class="metrics"><div class="m"><div class="k">累计按错</div><div class="v">0 次</div></div><div class="m"><div class="k">圆场成功率</div><div class="v">100%(自评)</div></div><div class="m"><div class="k">将错就错</div><div class="v">少数派</div></div><div class="m"><div class="k">心虚比例</div><div class="v">不予统计</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">登记一次按错</button><button class="btn" id="btn1">登记一次圆场</button><button class="btn" id="btn2">深夜复盘</button></div></div><div class="log"><div class="sec-tag"><span class="zh">记录台账</span><span class="en">RECORDER</span></div><ul id="log"><li style="color:var(--muted)">暂无记录。电梯匀速上行,楼层数字规规矩矩。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">记录仪说明</div>
+    <p>按错楼层是都市人最小的失误,也是最大的坦白:手指替你说出了那个没打算去的地址。本记录仪只做登记,不做心理分析——分析留给电梯里的三秒沉默。它想说而没说的是:每一次「不好意思,手滑」,都是一次对全车人的温柔——你们继续沉默,我来承担尴尬。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">记录完毕。下次按错,坦然一点。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 365 号藏品 · 本仪与 123 号(电梯尴尬生存学)在同一部电梯:一个管生存,一个管事故<br>记录仪冷知识:按错后立刻重按的那一下,力气总是特别大——像在跟自己赌气
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"累计按错 0 次","stat0":"记录仪已开机。电梯上行,楼层数字安静地跳——每一跳背后,都可能有一根手指正在后悔。","btns":[{"label":"登记一次按错","tag":"登记","lines":["登记:目标 12,按成 13。当事人当场轻呼一声,随后沉默——电梯里所有人都在替他尴尬,但没有一个人抬头。","登记:目标 8,按成 11。补救动作是连按两下 8,仿佛这样就能抵消。电梯不懂抵消,只懂层层停。","登记:目标 1,按成 2。当事人:「哦,我先上个平台。」全梯无人拆穿——这是电梯里的最高默契。"],"bigs":["+1 次","+2 次","+3 次"]},{"label":"登记一次圆场","tag":"圆场","lines":["圆场记录:「不好意思,手滑。」——标准话术,使用率 74%,有效性 100%(反正也没人在意)。","圆场记录:假装看手机,深藏功名。手机屏幕其实黑着,但没有人验证。","圆场记录:将错就错,真在按错的楼层下了电梯——然后走楼梯下一层。为面子多爬一层,值不值,只有楼梯知道。"],"bigs":["手滑","黑屏","走楼梯"]},{"label":"深夜复盘","tag":"复盘","lines":["复盘报告:全年按错 217 次,其中 3 次按的是前任住的那层。手指比脑子诚实,但都及时改了口。","复盘续:有一笔记录存疑——当事人按了 18,犹豫两秒,又取消了。18 楼住着谁,记录仪不问;但灯亮的那两秒,比任何一次将错就错都长。","复盘毕:记录仪结语:按错的楼层是自由的,反正你会纠正;真正按对却不敢下的楼层,才值得登记在案。"],"bigs":["217 次","两秒","按对的"]}],"metrics":[["累计按错","0 次"],["圆场成功率","100%(自评)"],["将错就错","少数派"],["心虚比例","不予统计"]],"logTitle":"记录台账","logEn":"RECORDER","logEmpty":"暂无记录。电梯匀速上行,楼层数字规规矩矩。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

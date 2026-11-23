@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拖鞋初穿凉感研究院</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>新拖鞋首次上脚 60 秒</b></span>
+    <span>核心指标 <b>初触凉感 · 认主时点</b></span>
+    <span>院方结论 <b>凉感是拖鞋的出厂问候</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SLIPPER&nbsp;FIRST&nbsp;STEP</div>
+    <h1>拖鞋初穿凉感研究院</h1>
+    <div class="sub">新拖鞋上身那一刻,鞋底那阵陌生的凉,是全人类共同的夏日初体验:研究院记录初穿全程——凉三秒,然后它就开始像您的了。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">研究未开始</div><div class="meter"><div class="fill" id="fill" style="width:18%"></div></div><div class="status" id="status">新拖鞋在门口待命。请输入拖鞋的第一次出场场景,本院出具初穿研究报告。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入出场场景,例如:夏天傍晚" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">出具研究报告</button></div><div class="metrics"><div class="m"><div class="k">初触温度</div><div class="v">偏凉</div></div><div class="m"><div class="k">凉感时长</div><div class="v">约三秒</div></div><div class="m"><div class="k">认主时点</div><div class="v">第三步</div></div><div class="m"><div class="k">出厂问候</div><div class="v">凉</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">研究台账</span><span class="en">RESEARCH</span></div><ul id="log"><li style="color:var(--muted)">暂无研究。新拖鞋在鞋架上平放,鞋底朝天,等一双脚。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">院长致辞</div>
+    <p>凉感是拖鞋与人类关系的起点:它不是缺点,是出厂问候——塑料在仓库里睡了半年,初见体温,彼此都需三秒适应。院长研究鞋履半生,结论朴素:人这一生会穿几十双拖鞋,每一双的初穿凉感都一模一样,变的从来不是鞋,是穿鞋的人——小时候凉完就疯跑,长大后凉完先叹口气。本院把这三秒存档,是想说:凉感之后,是一整个夏天的踏实,是浴室里的安全,是半夜起床不冰脚的体面。三秒而已,值得记录;何况——所有长期关系,开头都凉那么一下。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">立档完毕。凉过了,就是自己的了。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 399 号藏品 · 本院与 402 号(沐浴球蓬松度终生测评所)同属「浴室门口互助会」:一个管脚下的凉,一个管手里的泡<br>院方冷知识:人类对拖鞋凉感的记忆可保持数十年——比鞋的记忆长得多,因为那是夏天的开头
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"研究未开始","pct":18,"stat0":"新拖鞋在门口待命。请输入拖鞋的第一次出场场景,本院出具初穿研究报告。","inputPh":"输入出场场景,例如:夏天傍晚","btnLabel":"出具研究报告","reasons":["夏天傍晚批文:拖鞋刚拆封,鞋底凉而硬,踩上去像踩了片薄荷——本院批文:这是塑料的出厂体温,三秒后即被脚底焐热;凉是它跟您说的第一句话,之后它就不再说凉了。","洗澡后批文:脚是湿的,拖鞋踩上去「叽」一声——本院记录:湿脚初穿是拖鞋界的洗礼仪式,水汽把鞋面浸出深色一块,从此那是您的专属水印,洗不掉,不必洗。","新学期批文:宿舍楼下买的那双,十块钱,走三步就习惯了——本院认定:十块钱的凉感与一百块的凉感完全一致,这是拖鞋界最伟大的平等;贵的是鞋,便宜的是凉。","冬天批文:冬天的新拖鞋是绒面的,初穿不凉,反而一暖——本院特批:绒拖鞋是拖鞋界的冬令特例,它的初触是暖的,像被窝先跟您握了个手。","终审总结:一双拖鞋的一生里,只有第一次是「鞋」:凉三秒,认主,之后就只是「您的拖鞋」——本院的全部研究,就是为这三秒立档。"],"empty":"不填场景没法立档——按「随手一穿」处理:这是最高频的初穿方式,没有仪式,没有场景,凉感照常发生;本院认为,随意的开始也是正式的开始。","metrics":[["初触温度","偏凉"],["凉感时长","约三秒"],["认主时点","第三步"],["出厂问候","凉"]],"logTitle":"研究台账","logEn":"RESEARCH","logEmpty":"暂无研究。新拖鞋在鞋架上平放,鞋底朝天,等一双脚。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

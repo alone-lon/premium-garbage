@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>洗碗海绵服役档案室</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>建档对象 <b>厨房水槽边海绵一块</b></span>
+    <span>服役指标 <b>厚度下降率 · 气孔密度</b></span>
+    <span>室内存档 <b>薄,是它的军功章</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SPONGE&nbsp;SERVICE&nbsp;ARCHIVE</div>
+    <h1>洗碗海绵服役档案室</h1>
+    <div class="sub">它曾是蓬松的一块,如今薄得像片饼干:档案室为每块海绵建立服役档案,记录它从厚到薄的全部功劳——洗过的碗有数,吃过的油有账。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">档案待建</div><div class="meter"><div class="fill" id="fill" style="width:31%"></div></div><div class="status" id="status">水槽边的海绵正在晾干。请输入它的服役时长,本室出具服役档案——从崭新到退役,每一毫米都算数。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入服役时长,例如:两个月" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">出具服役档案</button></div><div class="metrics"><div class="m"><div class="k">现役海绵</div><div class="v">1 块</div></div><div class="m"><div class="k">厚度余量</div><div class="v">约一半</div></div><div class="m"><div class="k">日均工作量</div><div class="v">三餐</div></div><div class="m"><div class="k">荣誉记录</div><div class="v">薄即勋章</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">服役台账</span><span class="en">ARCHIVE</span></div><ul id="log"><li style="color:var(--muted)">暂无档案。海绵搭在水槽边晾着,今天的碗还没来。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">档案室章程</div>
+    <p>洗碗海绵是厨房里唯一「以自我损耗为工作成果」的岗位:它的考绩不写在纸上,写在自己的厚度里。档案室建立十年,翻阅过上千份服役档案,发现一个共同的结局:没有一块海绵是「光荣退休」的——它们都是在某天忽然发现已经太薄、太碎、太旧之后,被一块崭新的自己顶替,然后消失。本室认为,这不该是沉默的结局:您的碗为什么干净,汤为什么没有油花,答案都曾在那只被攥湿的手里。为它建档,不为别的——为了让「变薄」这件事,有一处正式的承认。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">建档完毕。今晚洗碗,替它按慢一点。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 396 号藏品 · 本室与 397 号(钢丝球脾气评定中心)同属「厨房消耗品军功馆」:一个管海绵的厚度,一个管钢丝球的脾气<br>室内存档:一块海绵一生约洗一千五百只碗——按一只碗三口饭算,它喂饱过全家的四千五百口
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"档案待建","pct":31,"stat0":"水槽边的海绵正在晾干。请输入它的服役时长,本室出具服役档案——从崭新到退役,每一毫米都算数。","inputPh":"输入服役时长,例如:两个月","btnLabel":"出具服役档案","reasons":["两周档案批注:海绵尚厚,气孔紧实,吸水后迅速回弹——本室批注:这是它的青壮年,干劲十足,碗过即净,连锅底的糊都愿意认真对付。","两个月档案批注:厚度降到原來的一半,边缘开始卷,中间凹成浅碟——本室认定:这是它的高光期,形态随劳动改变,凹陷处正是它按压最多的地方,那是劳动的地形图。","半年档案批注:薄如威化,一捏就透,某角已经掉渣——本室致敬:它把三个月的油污都收进了身体,只把干净留给碗;此刻它洗一只碗仍不偷懒,只是速度慢了,像老员工上了年纪。","临终批注:被新海绵顶替的那天,它通常被冲一下,搭在水龙头上,过几天悄悄消失——本室记录:退役仪式自古简单,功劳簿在本室,荣典在心里。","终审总结:厨房里没有第二样东西,以变薄为荣——抹布越洗越破,钢丝球越用越散,唯有海绵,把损耗当业绩;本室只管记录,不管替换。"],"empty":"不填时长没法建档——按「现役未知」默认处理:本室按中间值立卷,服役中,功劳持续累计,档案随用随补。","metrics":[["现役海绵","1 块"],["厚度余量","约一半"],["日均工作量","三餐"],["荣誉记录","薄即勋章"]],"logTitle":"服役台账","logEn":"ARCHIVE","logEmpty":"暂无档案。海绵搭在水槽边晾着,今天的碗还没来。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

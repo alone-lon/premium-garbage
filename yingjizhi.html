@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>应急灯执勤日志</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>执勤对象 <b>走廊应急灯一盏(平日隐形)</b></span>
+    <span>年出动次数 <b>约 4 次(半数为误报)</b></span>
+    <span>本志立场 <b>停电的三秒,是它的一生所向</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">EMERGENCY&nbsp;LAMP&nbsp;LOG</div>
+    <h1>应急灯执勤日志</h1>
+    <div class="sub">平时它与天花板融为一体,停电三秒才想起职责:日志逐次记录每一次跳闸、演练与「其实只是灯泡松了」,表彰它一生中仅有的几次高光。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">线路正常</div><div class="status" id="status">应急灯处于休眠执勤状态。它挂在走廊尽头,吃电、积灰、等待——等一次真正的黑暗。</div><div class="metrics"><div class="m"><div class="k">年度出动</div><div class="v">4 次</div></div><div class="m"><div class="k">误报占比</div><div class="v">50%</div></div><div class="m"><div class="k">黄金时长</div><div class="v">停电 3 秒</div></div><div class="m"><div class="k">服役年限</div><div class="v">自装日起</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">登记跳闸</button><button class="btn" id="btn1">登记演练</button><button class="btn" id="btn2">登记误报</button></div></div><div class="log"><div class="sec-tag"><span class="zh">执勤日志</span><span class="en">DUTY&nbsp;LOG</span></div><ul id="log"><li style="color:var(--muted)">暂无出动。走廊安静,灯在积灰,黑暗迟迟不来。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">日志编者按</div>
+    <p>应急灯是人类设备里最沉默的岗位:平日不响不亮,连坏都坏得悄无声息——很多家庭的应急灯,是在停电那天才发现「原来它早就不行了」。本志逐条记录它的出动,是想为这类设备补上迟到多年的表彰:它一生只做一件事,做的频率极低,做的时长极短,但每一次都全功率、零犹豫。人生若有岗位如此,便不算虚度。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">登记完毕。愿黑暗每次来,它都在。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 384 号藏品 · 本志与 302 号(饮水机「加热中」常亮灯观测站)同属「小灯岗哨联合会」:一个守着热水,一个守着黑暗<br>编者冷知识:全国应急灯的年均实战出动不足五次,但没有任何一盏敢请假
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"线路正常","stat0":"应急灯处于休眠执勤状态。它挂在走廊尽头,吃电、积灰、等待——等一次真正的黑暗。","btns":[{"label":"登记跳闸","tag":"出动","lines":["跳闸登记完毕:全楼骤暗,应急灯在三秒后亮起——那是它职业生涯的黄金三秒,走廊被它照得郑重其事。","二次出动:这次只暗了五秒,来电后它又多亮了一分钟,像下不了台的演员,谢幕谢得比正戏还长。","三次出动:巡逻记录显示,它本次照射的角度偏了十五度——照亮的不是逃生通道,是对面住户的晚餐。它不在乎,亮就是职责。"]},{"label":"登记演练","tag":"演习","lines":["消防演练登记:人为拉闸九十秒,全员逃生,应急灯全程在线。日志批注:这是它一年中最正式的一天,连灰都显得精神。","二次演习:演练中有人边跑边看手机,应急灯照亮了他不去集合点改刷短视频的背影。日志如实记录,不加评论。","三次演习:九十秒里它稳定供电,无闪无熄。日志感慨:一年三百六十五天,它就练这九十秒——像极了高考前的你。"]},{"label":"登记误报","tag":"虚警","lines":["误报结案:所谓跳闸,其实是灯泡接触不良,拧了半圈就好。应急灯白白激动一场,日志登记:虚惊,但态度满分。","二次误报:物业测试按钮被小孩子连按八下,应急灯八次响应,八次点亮。日志盛赞:响应零延迟,堪称灯界消防员。","误报总结:出动四次,误报两次——本志认为这不叫失灵,叫敬业过度:它对每一次黑暗都当真,哪怕黑暗只来半秒。"]}],"metrics":[["年度出动","4 次"],["误报占比","50%"],["黄金时长","停电 3 秒"],["服役年限","自装日起"]],"logTitle":"执勤日志","logEn":"DUTY&nbsp;LOG","logEmpty":"暂无出动。走廊安静,灯在积灰,黑暗迟迟不来。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
