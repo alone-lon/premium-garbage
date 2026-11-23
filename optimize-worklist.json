@@ -1,0 +1,4662 @@
+{
+ "updated": "2026-11-23T22:10:00+08:00",
+ "std": {
+  "counter": "每按钮 lines>=8",
+  "queue": "takeLines>=8 & scenes>=8",
+  "meter": "reasons>=8",
+  "slots": "pools>=12",
+  "generator": "presets>=5 & notes>=5",
+  "detector": "samples>=6"
+ },
+ "total": 520,
+ "queue": [
+  {
+   "file": "nianling.html",
+   "kind": "counter",
+   "fresh": 12,
+   "target": 32,
+   "deficit": 20,
+   "detail": "btns=4",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "pingxing.html",
+   "kind": "counter",
+   "fresh": 12,
+   "target": 32,
+   "deficit": 20,
+   "detail": "btns=4",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "address.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "alarm.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "baiban.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "baoxianhe.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "bianlitie.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "bushu.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "bx2.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "cahong.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "caidian.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "canpan.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "captcha.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "catpoop.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "chaoyue.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "chenzhong.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "chongdian.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "couple.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "cuolou.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "cuozi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "daijia.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "daka.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "danche.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "daohang.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dasuan.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "datan.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dengkaiguan.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "diannao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dianshi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dianti-anniu.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dianti.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dianying.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dianzi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dim.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dingkui.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dingwei.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dream.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "fankui.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "fridge.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "fuyinjian.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "gangsiqiu.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "ganzaoji.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "gengxin.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "gongdao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guajian.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guanbimen.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guandongzhu.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guapai.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guazhong.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "haxi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "hecha.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "hezhang.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jianfei.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jiezou.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jinchiji.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jinku.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jiushouji.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jiyao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "juanzhi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "kb.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "kecheng.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "koji.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "kongbaiye.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "kongjian.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "kuaidi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "kuaidixiang.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "laochou.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "lastlook.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "lenggui.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "lengqi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "liangkuai.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "liangyijia2.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "light.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "lingshi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "luosidao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "manjian.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "meishi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "menjin.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "metro.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "mubiao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "naicha.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "nap.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "no100.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "noinet.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "noodle.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "paiyueliang.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "penquan.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "phonedrop.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "pianzi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "plant.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "plantdeath.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "power.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "pptdonghua.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "printer.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "qianbi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "qiangzhi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "qishou.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "qudai.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "quzhong.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "renling.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "renqing.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "saobahui.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "scale.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shafa.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shiming.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shoucang.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shouji.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shoujimo.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shuangyue.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shuru.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "soundlamp.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "speaker.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "star.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "sudai.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "sudu.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tianchong.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tiaoliaoping.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tijian.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "timelab.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tingche.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tufa.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tuoyan.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "upan.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "voice.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "waimaihongbao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "waimaiping.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "waiter.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "wanggou.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "wazi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "wenzi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "wujin.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "wujing.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "wuziqi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xiaban.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xiangpi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xiaopiao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xiegui.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xiezi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xitong.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xiyiji2.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xufei.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xusuo.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yaoshi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yibei.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yiguoqi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yijia.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yijia2.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yingjizhi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yinliang2.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yiqian.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yizi.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "youxibei.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yuanfu.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yugao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yusan.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zhenxianhe.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zhiding.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zhineng.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zhiwen.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zhoubao.html",
+   "kind": "counter",
+   "fresh": 9,
+   "target": 24,
+   "deficit": 15,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "muyu.html",
+   "kind": "counter",
+   "fresh": 10,
+   "target": 24,
+   "deficit": 14,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "qipomo.html",
+   "kind": "counter",
+   "fresh": 10,
+   "target": 24,
+   "deficit": 14,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shouna.html",
+   "kind": "counter",
+   "fresh": 10,
+   "target": 24,
+   "deficit": 14,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "ok.html",
+   "kind": "counter",
+   "fresh": 5,
+   "target": 16,
+   "deficit": 11,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "acremote.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "ailoading.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "anjianbandai.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "baijiu.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "baozhan.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "bodai.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "canju.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "caogao.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "chaji.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "chaoge.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "chaozuo.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "checkin2.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "chongdianbao.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "chongyin.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "chuanglian.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "ctrls.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "cunqian.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "cyberfriend.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "daijia2.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "danmaku.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "danzi.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "daojishi.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "daolaji.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "dianfengshan.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dianyun.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dilantiao.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "douyin.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "duanzi.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "ershuji.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "fanhaole.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "fatao.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "fengshan.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "futi.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "gaoyaguo.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "geci.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "gongjian.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "guamian.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "gunlun.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guoqilai.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "hesu.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "huanchefail.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jiaoban.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "jiaonei.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "kafei.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "kuaidihe.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "kuaizi.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "lvwang.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "lvzhi.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "meetingroom.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "migang.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "modian.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "naozhong.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "neidan.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "nightbus.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "no520.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "paihang.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "pianwei.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "qujian.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "qunfazhufu.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "reno.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "saoziyang.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shichi.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "shoujikong.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shubiaodian.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shuisheng.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "sign.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "stock.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "suliaodai.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tiaoguo.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tongqinbao.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "twopoints.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "usb.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xianlan.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "xianshiqi.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yangping.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "yaokong.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "yashan.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "ykgfeng.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "youhuiquan.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yundoc.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zhanming.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zhengbao.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "zhuanbi.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zuijinshanchu.html",
+   "kind": "queue",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "take=3 scenes=3",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "zuizhongban.html",
+   "kind": "counter",
+   "fresh": 6,
+   "target": 16,
+   "deficit": 10,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "faxian.html",
+   "kind": "counter",
+   "fresh": 7,
+   "target": 16,
+   "deficit": 9,
+   "detail": "btns=2",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "tuihuo.html",
+   "kind": "queue",
+   "fresh": 7,
+   "target": 16,
+   "deficit": 9,
+   "detail": "take=3 scenes=4",
+   "std": "takeLines>=8 & scenes>=8"
+  },
+  {
+   "file": "asap.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "barber.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "beiwang.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "clickbait.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "cuxia.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "dianzican.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "duorou.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "emoji.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "fuzi.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "heying.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "huangdi.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "huida.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "jianli.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "jianmao.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "jiantieban.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "jidan.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "jietu.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "keduxian.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "lvxin.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "mendian.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "menling.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "mingpian.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "mobu.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "niandu.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "ocr.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "putonghua.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "qiuku.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "shafatan.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "shiliang.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "shipin.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "shuju.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "shunbian.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "shuomingshu.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "shupian.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "shurufa.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "tiepiao.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "tuila.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "tuoba.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "typing.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "weijuan.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "xiaoshoujian.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "xijiejing.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "xusui.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "yagao.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "yaokongqi.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "yaoqing.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "yedeng.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "yima.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "zhaoming2.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "zhihe.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "zhuomian.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "ziti.html",
+   "kind": "detector",
+   "fresh": 0,
+   "target": 6,
+   "deficit": 6,
+   "detail": "samples=3",
+   "std": "samples>=6"
+  },
+  {
+   "file": "baicai.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "beisu.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "biaomen.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "chepeng.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "chuantang.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "chunwan.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dayindian.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dengreshui.html",
+   "kind": "meter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "reasons=3",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "diancilu.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dianretan.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dumiao.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "gongzhang.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guali.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guandeng.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "guochan.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "hualian.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jiaodai.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jiaohuan.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "jielongqun.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "liuyan.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "louti.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "maojinjia.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "modi.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "nixing.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "pinggai.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "qianbao.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "reshuidai.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "shaibei.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "toukui.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yancai.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yaojianpan.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "yasuiqian.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zhuantou.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "zizhushouyin.html",
+   "kind": "counter",
+   "fresh": 3,
+   "target": 8,
+   "deficit": 5,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "dianxiangye.html",
+   "kind": "meter",
+   "fresh": 4,
+   "target": 8,
+   "deficit": 4,
+   "detail": "reasons=4",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "dianzishu.html",
+   "kind": "meter",
+   "fresh": 4,
+   "target": 8,
+   "deficit": 4,
+   "detail": "reasons=4",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "fengyoujing.html",
+   "kind": "counter",
+   "fresh": 4,
+   "target": 8,
+   "deficit": 4,
+   "detail": "btns=1",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "pinche.html",
+   "kind": "meter",
+   "fresh": 4,
+   "target": 8,
+   "deficit": 4,
+   "detail": "reasons=4",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "quxiao.html",
+   "kind": "meter",
+   "fresh": 4,
+   "target": 8,
+   "deficit": 4,
+   "detail": "reasons=4",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "cunchu.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "dingzi.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "fangdai.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "gongjiaoka.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "haimian.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "huangbian.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "jielong.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "kanyidao.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "kouke.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "lastcold.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "nianzhong.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "piaojiao.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "qianyi.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "shitang.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "tuoxie.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "xiuxi.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "zhitou.html",
+   "kind": "meter",
+   "fresh": 5,
+   "target": 8,
+   "deficit": 3,
+   "detail": "reasons=5",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "battery.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "beihen.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "beiwo.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "bingxiangtie.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "buhuo.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "chaxianban.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "chazuo.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "dengpao.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "diver.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "doujiang.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "duanju.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "emo.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "guanji.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "huishou.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "jianshenka.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "jiashiqi.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "jizhang.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "kaochang.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "kongtiao.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "lahsui.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "linqi.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "niezi.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "playlist.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "screen.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "shangmen.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "shengri.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "shilian.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "shoulian.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "shouyin.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "shuihu.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "waiterlong.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "wangsu.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "weibolu.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "weiboluredian.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "xichenqi.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "xinhao.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "yazi.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "yusanjie.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "zhenban.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "zizhu.html",
+   "kind": "meter",
+   "fresh": 6,
+   "target": 8,
+   "deficit": 2,
+   "detail": "reasons=6",
+   "std": "reasons>=8"
+  },
+  {
+   "file": "404.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "cat.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "click.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "decide.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "dig.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "doubt.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "ending.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "format.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "fortune.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "futuredate.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "guess.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "lazy.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "meeting.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "moyu.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "music.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "nonsense.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "notebook.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "nothing.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "payslip.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "pie.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "premium-garbage.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "progress.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "qrcode.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "queue.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "readme.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "saver.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "support.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "terminal.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "update.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "weather.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "weekend.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "wish.html",
+   "kind": "handmade",
+   "fresh": -1,
+   "target": null,
+   "deficit": 0,
+   "detail": "手工时代页面,无标准数据块"
+  },
+  {
+   "file": "anhao.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "banjia.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "baoxi.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "bianqian.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "choujiang.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "disheng.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "excuse.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "feihua.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "gaoneng.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "gongji.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "gouqi.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "huizhi.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "jifen.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "juanzhou.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "lala.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "luanhui.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "luban.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "mantou.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "pingfen.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "shengfan.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "shixian.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "tihuan.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "tuiwei.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "visible.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "wenming.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "xieguiqian.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "youth.html",
+   "kind": "generator",
+   "fresh": 12,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=0",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "yuebao.html",
+   "kind": "generator",
+   "fresh": 14,
+   "target": 10,
+   "deficit": 0,
+   "detail": "presets=12 notes=2",
+   "std": "presets>=5 & notes>=5"
+  },
+  {
+   "file": "xuanzuo.html",
+   "kind": "slots",
+   "fresh": 20,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=20",
+   "std": "pools>=12"
+  },
+  {
+   "file": "fanju.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "huoguo.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "jiandao.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "jiaobu.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "moren.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "sanntaoji.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "shoushi.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "shouxie.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "wangguan.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "wenxiang.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "yandong.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "yaobai.html",
+   "kind": "slots",
+   "fresh": 24,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=24",
+   "std": "pools>=12"
+  },
+  {
+   "file": "dianyuan.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "fapiao.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "groupname.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "guanggao.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "huibi.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "huiyi.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "liangyijia.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "netname.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "shaibeizi.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "shouzhitou.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "tidai.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "tiezhi.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "weibolu2.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "yinshuiji.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "zhuanpan.html",
+   "kind": "slots",
+   "fresh": 28,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=28",
+   "std": "pools>=12"
+  },
+  {
+   "file": "baozhen.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "bopan.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "canzhuozhuanpan.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "cha.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "choutiyichan.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "doufig.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "fantuan.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "feipian.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "guopiao.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "hongbao.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "koi.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "laojia.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "ldren.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "lvluo.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "moni.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "musong.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "muyuqiu.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "qianzou.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "qinqi.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "saodijiqiren.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "shuizi.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "taohua.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "waimaicanju.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "xiaodie.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "yangtaijiao.html",
+   "kind": "slots",
+   "fresh": 32,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=32",
+   "std": "pools>=12"
+  },
+  {
+   "file": "blinddate.html",
+   "kind": "slots",
+   "fresh": 36,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=36",
+   "std": "pools>=12"
+  },
+  {
+   "file": "waimai.html",
+   "kind": "slots",
+   "fresh": 36,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=36",
+   "std": "pools>=12"
+  },
+  {
+   "file": "wifi.html",
+   "kind": "slots",
+   "fresh": 36,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=36",
+   "std": "pools>=12"
+  },
+  {
+   "file": "bgm.html",
+   "kind": "slots",
+   "fresh": 40,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=40",
+   "std": "pools>=12"
+  },
+  {
+   "file": "smell.html",
+   "kind": "slots",
+   "fresh": 40,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=40",
+   "std": "pools>=12"
+  },
+  {
+   "file": "suanming.html",
+   "kind": "slots",
+   "fresh": 40,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=40",
+   "std": "pools>=12"
+  },
+  {
+   "file": "traveler.html",
+   "kind": "slots",
+   "fresh": 40,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=40",
+   "std": "pools>=12"
+  },
+  {
+   "file": "xiayiju.html",
+   "kind": "slots",
+   "fresh": 40,
+   "target": 12,
+   "deficit": 0,
+   "detail": "pools=40",
+   "std": "pools>=12"
+  }
+ ]
+}
