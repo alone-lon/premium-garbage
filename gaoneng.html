@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「前方高能」生活预警台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>预警格式 <b>「前方高能」体(弹幕标准)</b></span>
+    <span>预警对象 <b>生活中即将炸裂的瞬间</b></span>
+    <span>台内立场 <b>高能不可怕,没预警才可怕</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SPOILER-ALERT&nbsp;FORECAST</div>
+    <h1>「前方高能」生活预警台</h1>
+    <div class="sub">弹幕里的一句「前方高能」,拯救过无数人的心脏。本台把这套预警机制引入生活:输入即将发生的事,生成一条郑重其事的高能预警。</div>
+  </div>
+
+  <div class="console"><div class="input"><input id="src" type="text" placeholder="输入即将发生的事,例如:下周回家" maxlength="60"></div><div class="ctrl" style="margin-top:16px"><button class="btn accent" id="goBtn">生成高能预警</button><button class="btn" data-ev="下周回家">示例·回家</button><button class="btn" data-ev="明天见前任">示例·前任</button><button class="btn" data-ev="体检报告出了">示例·体检</button></div><div class="output" id="out"><div class="fact" id="fact"></div><div class="deep" id="deep"></div></div></div>
+
+  
+
+  <div class="note">
+    <div class="title">预警台附则</div>
+    <p>「前方高能」是弹幕时代最温柔的发明:它不能替您挡住冲击,只提前喊一嗓子,让您攥紧扶手。本台把这句话搬进生活——生活里的大部分高能,没有弹幕保护,只能自己给自己发预警。提前知道会痛的事,痛感会打折;提前知道会笑的事,笑声会更响。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">预警发布完毕。前方高能,请系好安全带。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 447 号藏品 · 本台与 20 号(强行升华结尾机)共享字幕组精神:一个管结尾,一个管开头<br>台内冷知识:弹幕里「前方高能」出现得越密集的地方越安全——真正的高能,从来没人来得及发弹幕
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"输入即将发生的事,例如:下周回家","btnLabel":"生成高能预警","presets":[{"ev":"下周回家","label":"示例·回家"},{"ev":"明天见前任","label":"示例·前任"},{"ev":"体检报告出了","label":"示例·体检"}],"defaultEv":"下周回家","tmpl":"【高能预警】关于「{ev}」,本台播报如下:{a}{b}","a":["前方高能:「{ev}」将在毫无防备的时刻抵达——建议提前敷面膜、睡好觉、把心态调成「来都来了」模式。","前方高能预警:据观测,「{ev}」的冲击力不在事件本身,在于它毫无预兆——本台预警,正是为了给它一点仪式感。","前方非自愿高能:「{ev}」已在路上,回头来不及了——建议立刻通知身边的自己:稳住,我们能赢。","前方双倍高能:「{ev}」叠加了期待与紧张两种成分——本台建议您提前排练三次开场白,正式出场时,一次都用不上,但排练值回了票价。"],"b":["预警补充:高能过后是平稳期,请提前备好零食、热水与一个可以吐槽的人。","预警失效条款:如果「{ev}」最终没发生,请按「虚惊一场」处理——这是人生最便宜的快乐。","预警附言:所有高能,回头看都是剧情——您现在觉得天塌的事,日后都是下酒菜。","预警终条:本台无法取消任何高能,只能陪您等它落地——落地之后,您会比想象中站得稳。"]};
+function rnd(a){return a[Math.floor(Math.random()*a.length)]}
+function fill(t,ev){
+return t.replace(/\{ev\}/g,ev||"").replace(/\{a\}/g,rnd(D.a)).replace(/\{b\}/g,rnd(D.b)).replace(/\{c\}/g,rnd(D.c||D.b));
+}
+$("goBtn").addEventListener("click",function(){
+var ev=$("src").value.trim()||D.defaultEv;
+$("fact").textContent="原始素材:"+(ev||"(空)");
+$("deep").innerHTML=fill(D.tmpl,ev);
+$("out").style.display="block";
+});
+document.querySelectorAll("[data-ev]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=b.getAttribute("data-ev");$("goBtn").click();});
+});
+})();
+</script>
+</body>
+</html>

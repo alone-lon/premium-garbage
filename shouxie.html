@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>长辈手写输入观察馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>观察对象 <b>长辈的手写输入法</b></span>
+    <span>书写速度 <b>约一字一秒</b></span>
+    <span>馆内发现 <b>错字率接近零——写得慢,但写得准</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">ELDER-HANDWRITING&nbsp;GALLERY</div>
+    <h1>长辈手写输入观察馆</h1>
+    <div class="sub">长辈不发语音也不打拼音,他们用手指在屏幕上一笔一划地写——慢,但郑重。本馆观察这份笔画里的认真:每个字都写得像小学生作业,每个字都算数。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">观察记录中</div><div class="status" id="status">点击收录一份观察记录。那些歪歪扭扭的手写字,是数字时代最庄重的家书笔迹。</div><div class="ctrl"><button class="btn accent" id="goBtn">收录一份记录</button><button class="btn" id="moreBtn">换一份收录</button></div><div class="metrics"><div class="m"><div class="k">观察记录</div><div class="v">6 份</div></div><div class="m"><div class="k">书写速度</div><div class="v">约一字一秒</div></div><div class="m"><div class="k">错字率</div><div class="v">接近零</div></div><div class="m"><div class="k">馆内立场</div><div class="v">慢即郑重</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">观察档案</span><span class="en">WRITE</span></div><ul id="log"><li style="color:var(--muted)">暂无收录。家庭群里,下一份手写消息正在被慢慢写出来——别催,等它。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">观察馆结语</div>
+    <p>手写输入是长辈们与技术之间签的和平协议:他们不学拼音了,但也没放弃表达——用最原始的笔画,一笔一笔跟屏幕谈判。本馆观察这份认真,最终读懂的是:他们慢,不是不会,是想把每句话写对。毕竟在他们的年代,写错字是要重抄一遍的。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">收录完毕。下次收到手写消息,认真回。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 452 号藏品 · 本馆与 96 号(长辈表情包翻译署)组成「家族数字礼仪双馆」:一个译图,一个读字<br>馆内冷知识:长辈手写输入的高频字,翻来覆去就是「吃、好、冷、钱、嗯」——这五个字,基本就是他们想说的一切
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"观察记录中","why0":"点击收录一份观察记录。那些歪歪扭扭的手写字,是数字时代最庄重的家书笔迹。","btnLabel":"收录一份记录","moreLabel":"换一份收录","pools":[{"q":"记录一 · 「吃了吗」的手写版","w":"三个字写了半分钟,发出来还配一个太阳表情。别嫌慢——这半分钟里,他找字、比划、确认,像当年写信打草稿。内容朴素,工序郑重。"},{"q":"记录二 · 连笔被认不出的瞬间","w":"他写「钱」字连了笔,输入法不认识,他换个写法再来一遍——不烦躁,像跟机器耐心讲道理。最后选中了,还念叨一句「这回对了」。"},{"q":"记录三 · 生字卡住的时刻","w":"某个字一时想不起,他退出去问家人「那个字怎么写来着」——问完回来接着写。这一代人识字靠字典,现在字典换成了儿女,儿女要接得住。"},{"q":"记录四 · 手写比语音安静","w":"深夜群里,别人发语音,他发手写——「怕吵着你们」。这份体谅没说出口,全在那一笔一划里:写字是最轻的发送方式。"},{"q":"记录五 · 表情包与手写混搭","w":"他发一句手写的「天冷加衣」,再补一个转发来的闪光玫瑰——手写是自己的话,表情是借来的心意,两层都舍不得省。"},{"q":"记录六 · 「拼音不会」的坦白","w":"问他为什么不用拼音,他说「拼音忘了,字还认得」——这句话是整整一代人的文化底账:口音在流变,笔画还在骨头里。"}],"metrics":[["观察记录","6 份"],["书写速度","约一字一秒"],["错字率","接近零"],["馆内立场","慢即郑重"]],"logTitle":"观察档案","logEn":"WRITE","logEmpty":"暂无收录。家庭群里,下一份手写消息正在被慢慢写出来——别催,等它。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

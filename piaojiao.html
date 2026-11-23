@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>泡脚水位仪式馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>评定对象 <b>泡脚水位线(厘米级)</b></span>
+    <span>仪式标尺 <b>脚踝合格 · 小腿隆重</b></span>
+    <span>馆内提醒 <b>水位越高,毛巾越要备好</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FOOT-SOAK&nbsp;WATERLINE</div>
+    <h1>泡脚水位仪式馆</h1>
+    <div class="sub">泡脚的仪式感,一半在热水,一半在水位:没过脚踝是敷衍,没过小腿是隆重,水位线每高一厘米,郑重程度加一分。本馆为您的泡脚水位定级。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">仪式感 20 分</div><div class="meter"><div class="fill" id="fill" style="width:20%"></div></div><div class="status" id="status">本馆开馆。请回顾您最近一次泡脚的水位——记住,水位不是物理参数,是您给自己今晚的定位。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入您泡脚的常规水位(厘米,从脚底算起),例如:12" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">评定仪式等级</button></div><div class="metrics"><div class="m"><div class="k">当前仪式感</div><div class="v">25 分</div></div><div class="m"><div class="k">合格线</div><div class="v">脚踝上方</div></div><div class="m"><div class="k">隆重线</div><div class="v">小腿肚</div></div><div class="m"><div class="k">境界线</div><div class="v">逼近膝盖</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">水位档案</span><span class="en">SOAK</span></div><ul id="log"><li style="color:var(--muted)">暂无评级。您家泡脚桶此刻是干的——它在等今晚的水位。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">仪式馆结语</div>
+    <p>泡脚是中式养生里最便宜的一项,也是最讲究水位的一项。本馆定级不为攀比——泡到脚踝也是养生,泡到膝盖也是养生——只想说一句:泡脚的那二十分钟,是您一天里少数「哪儿也不用去、什么事也不用干」的正当时光。水位高一点,那时光就长一点。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">评定完毕。今晚,加三厘米水。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 455 号藏品 · 本馆与 407 号(手脸冰凉检测分级处)同属「冬季保暖事务联合馆」:一个管手,一个管脚<br>馆内冷知识:泡脚水位的家庭争议率常年过四成——争议焦点只有一个:谁先泡,谁负责续水
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"仪式感 20 分","pct":20,"stat0":"本馆开馆。请回顾您最近一次泡脚的水位——记住,水位不是物理参数,是您给自己今晚的定位。","inputPh":"输入您泡脚的常规水位(厘米,从脚底算起),例如:12","btnLabel":"评定仪式等级","reasons":["评定结果:十二厘米,约到脚踝上方——「合格级泡脚」:脚暖了,心还没泡到。仪式感二十五分,属于「顺手泡一泡」的日常档。","水位与心理的对应学:脚踝以下,泡的是脚,想的是「赶紧完事」;到小腿肚,开始刷剧,时间感消失;逼近膝盖,您已进入「今晚不走了」的境界。","加码仪式学:真正的隆重泡脚,配套齐全——深桶、毛巾、试水温的传统艺能(手肘下水)、以及一壶续热水。水位每高五厘米,配套需求翻一番。","本馆考证:泡脚水位的家庭上限,通常由桶决定——桶矮,再郑重的心也泡不起来。所以泡脚的终极升级,是换一只高桶,这是很多家庭后半生的头等采购。","本馆终极发现:泡脚水位与年岁呈微妙正相关——年轻人泡到脚踝就跑,中年人泡到小腿刷手机,长辈泡到膝盖还要续三次水。水位线,是岁月的刻度。"],"empty":"不给水位没法评级——但您可以现在去卫生间看看桶,心里默测一下,回头补评。","metrics":[["当前仪式感","25 分"],["合格线","脚踝上方"],["隆重线","小腿肚"],["境界线","逼近膝盖"]],"logTitle":"水位档案","logEn":"SOAK","logEmpty":"暂无评级。您家泡脚桶此刻是干的——它在等今晚的水位。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

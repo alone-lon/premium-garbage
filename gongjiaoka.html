@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公交卡余额玄学波动台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>观测对象 <b>公交卡余额(玄学波动)</b></span>
+    <span>充值记忆 <b>「明明充过」(待考证)</b></span>
+    <span>台内立场 <b>卡不会错,错的是记忆</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TRANSIT-CARD&nbsp;MYSTIC</div>
+    <h1>公交卡余额玄学波动台</h1>
+    <div class="sub">昨晚明明充了 50,今早刷卡只剩 18.6——公交卡的余额,是全城最玄的数字。本台记录每一次波动,并研究「明明充过」的记忆准确性。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">余额 18.6</div><div class="meter"><div class="fill" id="fill" style="width:35%"></div></div><div class="status" id="status">本台接案。请出示您卡片的最近一笔充值记录——「明明充过」的「明明」,需要证据。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入您记忆中的充值金额(元),例如:50" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">核对玄学账</button></div><div class="metrics"><div class="m"><div class="k">当前余额</div><div class="v">18.6</div></div><div class="m"><div class="k">记忆充值</div><div class="v">¥50(存疑)</div></div><div class="m"><div class="k">幽灵充值</div><div class="v">1 次</div></div><div class="m"><div class="k">台内结论</div><div class="v">看流水</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">核对记录</span><span class="en">BALANCE</span></div><ul id="log"><li style="color:var(--muted)">暂无核对。您的卡在口袋里,余额在玄学里。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本台结语</div>
+    <p>公交卡的余额玄学,本质是「小额支付无痕化」的代价:充 50 没有小票,扣 2 元没有提醒,余额不足没有预警——数字在一个黑盒里自生自灭。本台的全部建议:给 App 开余额提醒,设 10 元触发——把玄学,关回数据的笼子里。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">核对完毕。充 50,实充 20。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 463 号藏品 · 本台与 433 号(上门取件等待窗)同属「通勤经济学观测网」<br>台内冷知识:公交卡余额低于 5 元时,人类的充值意愿反而下降——「反正快没了,换扫码吧」,旧卡的最后体面
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"余额 18.6","pct":35,"stat0":"本台接案。请出示您卡片的最近一笔充值记录——「明明充过」的「明明」,需要证据。","inputPh":"输入您记忆中的充值金额(元),例如:50","btnLabel":"核对玄学账","reasons":["核对结果:充值记录存在,但金额是 20,不是 50——您记忆里的 50,混进了上上次。记忆的充值记录,会自动合并。","核对补充:余额 18.6 的另一种成因——您的卡开了「换乘优惠」,优惠扣的是次数不是钱,但次数用完后的扣费,单价比您印象里贵。","玄学确认:全人类的公交卡都有一次「我以为充了」的经历——那次充值存在于想象,不在系统里。本台称之为「幽灵充值」。","补记:您手机 App 里的充值,是「待支付」状态——当时网络断了,支付没成,而您的记忆已经完成了仪式。幽灵充实的第二种形态。","本台终极发现:公交卡余额的正确核对方式,是看 App 流水,不是回忆——回忆会美化,流水不会。"],"empty":"不给金额没法核对——但您的卡余额此刻是多少,您自己也不确定,对吧?","metrics":[["当前余额","18.6"],["记忆充值","¥50(存疑)"],["幽灵充值","1 次"],["台内结论","看流水"]],"logTitle":"核对记录","logEn":"BALANCE","logEmpty":"暂无核对。您的卡在口袋里,余额在玄学里。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>透明壳黄变陈列馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>陈列对象 <b>透明壳的黄变史</b></span>
+    <span>黄变周期 <b>约九十天(均值)</b></span>
+    <span>馆内立场 <b>黄色是时间的包浆</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">YELLOWING&nbsp;GALLERY</div>
+    <h1>透明壳黄变陈列馆</h1>
+    <div class="sub">透明手机壳的下场只有一个:变黄。三个月新壳变旧,半年黄成琥珀——本馆按黄变度分级陈列,并论证:变黄的不是壳,是您与它朝夕相处的证据。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">黄变度 35%</div><div class="meter"><div class="fill" id="fill" style="width:35%"></div></div><div class="status" id="status">本馆开馆。请举起您的手机壳对着光看一眼——透亮、微黄、还是琥珀色?黄变度,自己心里有数。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入手机壳已使用天数,例如:120" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">评定黄变等级</button></div><div class="metrics"><div class="m"><div class="k">当前黄度</div><div class="v">55%(示意)</div></div><div class="m"><div class="k">黄变周期</div><div class="v">约九十天</div></div><div class="m"><div class="k">可逆性</div><div class="v">无</div></div><div class="m"><div class="k">退休建议</div><div class="v">琥珀期</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">黄变档案</span><span class="en">YELLOW</span></div><ul id="log"><li style="color:var(--muted)">暂无评级。您的壳正在悄悄变黄——黄变从不请假,从不休息。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">陈列馆结语</div>
+    <p>透明壳的黄变,是这个时代最常见的慢性变化:快到每年都有,慢到没人说破。本馆陈列黄变,不为推广勤换——恰恰相反,我们想说:那层黄,是您把它揣在兜里、贴在桌边、攥在手心两千多个小时的证据。从包浆的角度看,黄,是一种勋章。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">陈列完毕。琥珀期到了,换不换您定。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 450 号藏品 · 本馆与 113 号(手机壳收藏学)联合策展:一个收藏壳,一个收藏黄<br>馆内冷知识:透明壳变黄的速度,与您玩手机时的手汗量正相关——壳的黄度,是您使用强度的年轮
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"黄变度 35%","pct":35,"stat0":"本馆开馆。请举起您的手机壳对着光看一眼——透亮、微黄、还是琥珀色?黄变度,自己心里有数。","inputPh":"输入手机壳已使用天数,例如:120","btnLabel":"评定黄变等级","reasons":["评定结果:一百二十天,黄变度约五成五——已进入「琥珀前期」。这个阶段的壳,边角泛黄、背面仍透,是透明壳的中年:体面还在,黄气渐浓。","黄变的成因学:光照、汗液与皮脂共同作用,让塑料材质缓慢氧化——变黄不可逆、洗不掉、擦不净。科学上这叫「材料老化」,情感上这叫「共同生活过的痕迹」。","黄变的分级学:一个月内是透亮期,三个月是微黄期,半年是琥珀期,一年以上可评为「复古收藏级」。本馆建议:琥珀期即可退休,收藏级请入馆寄存。","黄变的心理学:有人三个月一换,永远透亮;有人一壳用两年,黄得坦然。前者追求崭新,后者习惯陪伴——两种活法,没有高下,只有黄度不同。","本馆终极发现:换新壳的那一刻,您会觉得「手机都新了」——其实手机没变,变的是您对它的心情。壳是手机的滤镜,也是您对生活的滤镜。"],"empty":"不给天数没法评级——但您刚才瞄一眼壳子的那个眼神,已经完成了一次自评。","metrics":[["当前黄度","55%(示意)"],["黄变周期","约九十天"],["可逆性","无"],["退休建议","琥珀期"]],"logTitle":"黄变档案","logEn":"YELLOW","logEmpty":"暂无评级。您的壳正在悄悄变黄——黄变从不请假,从不休息。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

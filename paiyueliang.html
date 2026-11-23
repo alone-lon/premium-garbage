@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拍月亮必糊研究所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>月亮(约三十八万公里外)</b></span>
+    <span>糊片率 <b>九成九(手持直拍)</b></span>
+    <span>所内立场 <b>糊,也是一种月亮艺术</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">MOON-SHOT&nbsp;BLUR-LAB</div>
+    <h1>拍月亮必糊研究所</h1>
+    <div class="sub">肉眼看月亮,清清楚楚;举手机一拍,一团光斑——这是当代摄影第一悬案。本所逐帧分析「拍月必糊」的成因,并教您一招真的能糊得少一点的办法。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">今日观测 0 次</div><div class="status" id="status">研究所值班。今晚月亮升起时,您大概率又试了一次——本所提前把结论备好,供您拍完回来对号入座。</div><div class="metrics"><div class="m"><div class="k">今日观测</div><div class="v">0 次</div></div><div class="m"><div class="k">糊片率</div><div class="v">九成九</div></div><div class="m"><div class="k">最大秘密</div><div class="v">拉低曝光</div></div><div class="m"><div class="k">真实拍摄对象</div><div class="v">心情</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">研究一·糊因分析</button><button class="btn" id="btn1">研究二·缓解方案</button><button class="btn" id="btn2">研究三·糊片美学</button></div></div><div class="log"><div class="sec-tag"><span class="zh">观测台账</span><span class="en">MOON</span></div><ul id="log"><li style="color:var(--muted)">暂无观测。今晚如果是晴天——抬头,然后随手一拍,糊了也没关系。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">研究所结语</div>
+    <p>拍月亮必糊,是手机时代最温柔的挫败:三十八万公里外的东西,凭什么听您手机的话。本所研究多年,最后的结论充满善意——糊片率九成九的拍摄,却有着十成的抬头率。人类因为拍月亮,每年多抬头几十次;就冲这个,糊,值了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">观测完毕。下次满月,记得拉低曝光。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 454 号藏品 · 本所与 201 号(连拍废片展览馆)同属「糊片保护协会」:一个保废片,一个保月亮<br>所内冷知识:全世界手机相册里的月亮照片,绝大多数是糊片——它们共同构成了人类抬头史的底片库
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"今日观测 0 次","stat0":"研究所值班。今晚月亮升起时,您大概率又试了一次——本所提前把结论备好,供您拍完回来对号入座。","btns":[{"label":"研究一·糊因分析","tag":"糊因","lines":["糊因一:月亮是「夜景里的远灯」——手机自动测光对着夜空,把月亮当成一个亮点狂压,结果月亮糊成一团白斑,像一枚煮过头的蛋黄。","糊因二:手抖放大化——三十八万公里的距离,把半毫米的手抖放大成一道光晕。您的手越稳,月亮越圆;越激动,越像不明飞行物。","糊因结论:拍月必糊的本质,是「肉眼宽容」与「镜头较真」的矛盾——眼睛会脑补,镜头不会。"],"bigs":["煮蛋黄","半毫米","眼睛会脑补"]},{"label":"研究二·缓解方案","tag":"方案","lines":["方案一:点屏幕上的月亮,把曝光拉到最低——月亮立刻从光斑变回圆盘,这是手机摄影界最大的公开秘密。","方案二:靠稳——墙、栏杆、桌子,任何支撑物都能让您的「不明飞行物」变回月亮。三脚架是终极答案,但没有人会为拍月亮专门带三脚架,这就是人生。","方案三:专业模式,感光度调到最低,快门调快——参数背下来,下次满月直接用。背不下来也没关系,拍出来还是会糊一点点,一点点的糊,叫氛围。"],"bigs":["拉曝光","靠墙","氛围"]},{"label":"研究三·糊片美学","tag":"美学","lines":["美学观察:糊掉的月亮照片,配上文字反而更动人——「今晚的月亮」四个字,拯救了全部糊片。文字是月亮摄影的最后一支脚架。","美学考据:人类用手机拍月亮这些年,存下来的大部分是糊片——但每次翻到,还是会想起那晚抬头的心情。糊片是心情的底片,清晰从来不是重点。","美学结论:拍月亮这件事,拍的从来不是月亮,是「我今晚抬头了」这个动作本身。"],"bigs":["最后一支脚架","心情底片","我抬头了"]}],"metrics":[["今日观测","0 次"],["糊片率","九成九"],["最大秘密","拉低曝光"],["真实拍摄对象","心情"]],"logTitle":"观测台账","logEn":"MOON","logEmpty":"暂无观测。今晚如果是晴天——抬头,然后随手一拍,糊了也没关系。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

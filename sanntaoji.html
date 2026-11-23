@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>商场门口伞套机吐槽站</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>吐槽对象 <b>伞套机(一次性伞套)</b></span>
+    <span>成功套伞率 <b>58%</b></span>
+    <span>站内立场 <b>槽归槽,该用还得用</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">UMBRELLA-BAG&nbsp;MACHINE</div>
+    <h1>商场门口伞套机吐槽站</h1>
+    <div class="sub">雨天进商场,伞套机前排队:一台机器,一次性伞套,插进去——伞套破了,伞没套上,队伍在变长。本站收录伞套机的全部槽点,并致敬这个「体面的发明」。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">伞套机前排 4 人</div><div class="status" id="status">点击领取一次使用体验。伞套机是雨天的礼仪官:它让您带着体面进场——但礼仪官自己,常常手抖。</div><div class="ctrl"><button class="btn accent" id="goBtn">体验一次套伞</button><button class="btn" id="moreBtn">再试一次</button></div><div class="metrics"><div class="m"><div class="k">成功套伞率</div><div class="v">58%</div></div><div class="m"><div class="k">平均耗时</div><div class="v">1 分钟</div></div><div class="m"><div class="k">雨天排队</div><div class="v">4 人起</div></div><div class="m"><div class="k">槽点浓度</div><div class="v">高</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">使用记录</span><span class="en">UMBRELLA</span></div><ul id="log"><li style="color:var(--muted)">暂无体验。外面没下雨——伞套机在门口安静地立着,像一个备用的礼仪官。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本站结语</div>
+    <p>伞套机是商场最朴素的体贴:它解决「湿伞进商场」这个千年尴尬,哪怕执行得笨手笨脚。本站吐槽它的破、它的紧、它的空——但每次雨天,我们还是排它的队。因为体面这东西,1 分钟的折腾,值得。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">体验完毕。伞套破了也套,体面要紧。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 476 号藏品 · 本站与 121 号(雨伞在途定律)是雨天双子星:一个管带伞,一个管进商场<br>站内冷知识:伞套机的伞套消耗量,与商场档次成正比——越高档的商场,伞套越厚
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"伞套机前排 4 人","why0":"点击领取一次使用体验。伞套机是雨天的礼仪官:它让您带着体面进场——但礼仪官自己,常常手抖。","btnLabel":"体验一次套伞","moreLabel":"再试一次","pools":[{"q":"第一次:伞套破了","w":"伞尖戳破了套底——大伞的伞尖,天生是伞套机的天敌。您换个方向再插,像在调整一次失败的发射。"},{"q":"第二次:套上了,拔不出","w":"伞套太紧,伞拔出来时连带套一起出来——您站在商场门口,重新把伞从套里拔出来,队伍在您身后叹气。"},{"q":"第三次:成功。体面入场","w":"伞套服帖,伞尖收拢,您提着「穿了雨衣」的伞走进商场——滴水不漏。这 1 分钟的折腾,换来了整个商场的地面干燥。值得。"},{"q":"机器故障:套用完了","w":"伞套机空了。您看着「暂无伞套」的提示,选择:把伞收好拎着,滴水就滴水吧——体面这东西,有时候只能靠自觉。"},{"q":"旁边大爷直接抖伞进门","w":"您还在套伞,大爷已经抖了两下伞直接进门了——两种雨天哲学的碰撞:体面派 vs 洒脱派。商场地面会记得每一个人的选择。"},{"q":"出商场时:伞套还得再取一次","w":"套伞容易取伞难——湿伞套在出口的垃圾桶旁堆成了小山。您把伞套退下来的时候,突然理解了这个机器的一体两面。"}],"metrics":[["成功套伞率","58%"],["平均耗时","1 分钟"],["雨天排队","4 人起"],["槽点浓度","高"]],"logTitle":"使用记录","logEn":"UMBRELLA","logEmpty":"暂无体验。外面没下雨——伞套机在门口安静地立着,像一个备用的礼仪官。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玻璃门「推拉辨别」困难处</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>辨别对象 <b>玻璃门的推拉语言</b></span>
+    <span>判断失误率 <b>41%(首次)</b></span>
+    <span>处内发现 <b>把手即答案</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PUSH-PULL&nbsp;DILEMMA</div>
+    <h1>玻璃门「推拉辨别」困难处</h1>
+    <div class="sub">门上有「推」也有「拉」,您选了「拉」——门纹丝不动。旁边的人选「推」,门开了。本处研究这个每天都在上演的尴尬,并破译门的设计语言。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您最近一次推拉门选错方向的名场面"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">提交尴尬</button><button class="btn" data-sample="0">拉错版</button><button class="btn" data-sample="1">推错版</button><button class="btn" data-sample="2">连环版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">推拉辨别诊断书</span><span class="en">DOOR&nbsp;LAB</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本处结语</div>
+    <p>玻璃门的推拉辨别,是成年人每天都要考一次的小测验:考的不是智商,是「停下来看一眼」的耐心。本处的破译结论很实用:字会骗人(贴反),把手不会——平板是推,竖杆是拉。学会读把手,全世界的玻璃门,都会为您提前 0.5 秒让路。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">诊断完毕。下次,先看把手。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 479 号藏品 · 本处与 470 号(屏蔽门抢救科)同属「门系统研究会」:一个救命,一个救脸<br>处内冷知识:全人类推错玻璃门后,61% 会假装「我本来就想试试这门结不结实」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您最近一次推拉门选错方向的名场面","btnLabel":"提交尴尬","sampleLabels":["拉错版","推错版","连环版"],"samples":["写着「拉」,我推了——推不动,退半步,再拉,开了。旁边同事全程目击","玻璃门太干净,看不见字,推了一下,弹回来,再拉——拉的话,脸差点贴上去","推了两次,拉了两次,最后是门自己感应开的——它实在看不下去了"],"num":"尴尬等级:二级(有人目击)","verdict":"诊断结论:推拉选错的尴尬系数,与门的透明度成正比——玻璃越干净,字越难看见,错得越体面。.","breakdown":[["尴尬一","目击者效应","推错门的瞬间,最怕的不是门,是「门后正好有人」——那种与陌生人四目相对的 0.8 秒,终身难忘"],["尴尬二","标牌悖论","「推」「拉」两个字的贴纸,永远贴在与您视线相反的方向——门的设计师,可能从未从外面看过这扇门"],["尴尬三","惯性循环","推不动→下意识再推→用力推→才想起来看字——人类在门前,遵循「重复无效动作三次才换策略」的通用定律"],["辨别的终极技巧","看把手,不看字","有平板把手=推;有竖杆把手=拉。把手是门的真实语言,字只是装饰——看把手,一次到位"],["处方","给门贴个大字标","一楼的门,自己贴——「推」字放大 40 号,全楼感谢您"]],"empty":{"num":"诊断暂停","verdict":"没有推拉失败史,说明您可能是「扶门等人」礼仪的传承者——您总是等别人先推。","breakdown":[["判定","礼仪派","您推错的概率确实低"],["建议","也别总扶门","扶多了,您就是那扇门"]]},"reportTitle":"推拉辨别诊断书","reportEn":"DOOR&nbsp;LAB"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

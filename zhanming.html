@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>地铁站名文学研究会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>地铁站名的文学性</b></span>
+    <span>馆藏流派 <b>武侠 · 田园 · 神话</b></span>
+    <span>会内大奖 <b>最想住进那个站名</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">STATION-NAME&nbsp;LITERATI</div>
+    <h1>地铁站名文学研究会</h1>
+    <div class="sub">六里桥、苹果园、洗手间(不是设施)——地铁站名是城市写给通勤者的诗:有的像武侠门派,有的像老家村口。本会收集站名之美,并评选「最想住在那个站名里」大奖。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">文学采集 0 篇</div><div class="status" id="status">研究会开门。请翻开通勤线路图——您每天路过的站名,其实都是一首首没读过的诗。</div><div class="metrics"><div class="m"><div class="k">采集流派</div><div class="v">2 派</div></div><div class="m"><div class="k">文学浓度</div><div class="v">通勤圈的糖</div></div><div class="m"><div class="k">会内大奖</div><div class="v">苹果园(田园)</div></div><div class="m"><div class="k">六里桥</div><div class="v">武侠代表</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">采集·武侠流派</button><button class="btn" id="btn1">采集·田园流派</button></div></div><div class="log"><div class="sec-tag"><span class="zh">采集记录</span><span class="en">NAMES</span></div><ul id="log"><li style="color:var(--muted)">暂无采集。您每天都经过那些站名——今天,读一读它们。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">研究会结语</div>
+    <p>地铁站名是城市最公共的文学:它每天被念几万次,被听几百万次,却很少被「读」。本会只是提醒一句:您通勤路上经过的,不只是站点,还有武侠与田园——下一站到的时候,不妨在心里多念一遍它的名字。城市会因为你这一遍,可爱一点点。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">采集完毕。下一站,牡丹园。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 477 号藏品 · 本会与 66 号(报站声唤醒科)共享声源:一个用声音叫醒,一个用声音写诗<br>会内冷知识:全国最受欢迎的地铁站名评选里,「深圳·竹子林」常年第一——竹林,是通勤人心里的白月光
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"文学采集 0 篇","stat0":"研究会开门。请翻开通勤线路图——您每天路过的站名,其实都是一首首没读过的诗。","btns":[{"label":"采集·武侠流派","tag":"武侠","lines":["武侠采集:「六里桥」「十里河」「百子湾」——数字加地物,像门派驻地;「亮马桥」像侠客歇脚处;「团结湖」像比武大会的湖畔擂台。","武侠的延伸:每次报站「下一站,六里桥」,您脑中都会闪过一秒「六里桥派的信使到了」——通勤的枯燥,被站名的武侠感稀释了 3%。","采集结论:武侠系站名的共同点:自带故事背景,却从不见故事发生——故事都在上下车的人身上。"],"bigs":["门派驻地","信使","稀释 3%"]},{"label":"采集·田园流派","tag":"田园","lines":["田园采集:「苹果园」「枣营」「牡丹园」——这些站名像老家村口的果树名录,报站员念到它们时,语气都软了半度。","田园的共情:在「苹果园」下车的人,去的可能是钢筋水泥的写字楼——但出站的这一刻,他路过了果园。田园站名,是城市留给打工人的温柔陷阱。","采集结论:田园系站名是通勤人的精神果园——摘不到苹果,闻一下名字也行。"],"bigs":["果树名录","软半度","精神果园"]}],"metrics":[["采集流派","2 派"],["文学浓度","通勤圈的糖"],["会内大奖","苹果园(田园)"],["六里桥","武侠代表"]],"logTitle":"采集记录","logEn":"NAMES","logEmpty":"暂无采集。您每天都经过那些站名——今天,读一读它们。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
