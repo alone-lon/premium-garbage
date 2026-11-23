@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>过期优惠券追悼会</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>追悼对象 <b>过期优惠券(遗恨版)</b></span>
+    <span>惋惜金额 <b>¥100( theoretical )</b></span>
+    <span>追悼会流程 <b>默哀 · 回顾 · 埋葬 · 预防</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">COUPON-FUNERAL</div>
+    <h1>过期优惠券追悼会</h1>
+    <div class="sub">「满 199 减 100,有效期至 11.30」——您在 12 月 2 日想起它。追悼会现在开始:全场默哀,回顾它曾经带来的幻想,并埋葬「本来能省 100」的遗憾。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">追悼会开始</div><div class="status" id="status">会场已布置。遗像:那张优惠券的截图,红色边框,白色数字「¥100」。您的购物车里,躺着 ¥205 的商品——它曾经可以只花 105。</div><div class="metrics"><div class="m"><div class="k">本场追悼</div><div class="v">¥100</div></div><div class="m"><div class="k">遗忘率</div><div class="v">68%(全人类)</div></div><div class="m"><div class="k">默哀时长</div><div class="v">10 秒</div></div><div class="m"><div class="k">预防宣言</div><div class="v">3 条</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">追悼·默哀环节</button><button class="btn" id="btn1">追悼·预防宣言</button></div></div><div class="log"><div class="sec-tag"><span class="zh">追悼记录</span><span class="en">COUPON</span></div><ul id="log"><li style="color:var(--muted)">暂无追悼。您的手机里还有几张没过期的券——趁它们活着,用掉。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">追悼会结语</div>
+    <p>过期优惠券是消费时代的集体遗憾:每张券都承载过「省 100」的喜悦幻想,又在沉默中过期。本追悼会的真正目的,不是后悔——后悔 10 秒就够——是建立一套「券类事务」的处理纪律:设提醒、先券后货、接受遗忘率。下一张券,会活到被使用的那天。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">追悼完毕。散会。记得设提醒。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 493 号藏品 · 本追悼会与 81 号(购物车坟场)同园:坟场埋购物车,追悼会送优惠券<br>会内冷知识:全人类每年过期的优惠券价值,估计够再办一场双十一——可惜,它们只能过一次生日
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"追悼会开始","stat0":"会场已布置。遗像:那张优惠券的截图,红色边框,白色数字「¥100」。您的购物车里,躺着 ¥205 的商品——它曾经可以只花 105。","btns":[{"label":"追悼·默哀环节","tag":"默哀","lines":["默哀环节:全体起立,为这张优惠券默哀 10 秒。它的死亡原因:遗忘。死亡时间:11 月 30 日 23:59:59。死亡时,购物车里 ¥205 的商品陪伴在侧。","追悼致辞:这张券的诞生,是一次营销的邀请;它的死亡,是一次记忆的失约。它没有等到被使用的那一天——但它在您的手机里,曾经让您心动过整整 27 天。","默哀结语:逝者已矣。遗愿是:下一次,把提醒日历设上。"],"bigs":["10 秒","遗忘","27 天"]},{"label":"追悼·预防宣言","tag":"预防","lines":["预防宣言一:所有优惠券,收到即设日历提醒——到期前 48 小时弹窗。优惠券的死亡,90% 死于「没设提醒」。","预防宣言二:使用优先级排序——「快过期的券」先于「想买的货」:先花券,再买货;不要反过来。","预防宣言三:接受遗忘率——人类对优惠券的遗忘率是 68%,这是天性。设了提醒还忘的,就是真不想要——那张券的死,其实是一种解脱。"],"bigs":["48 小时","先券后货","解脱"]}],"metrics":[["本场追悼","¥100"],["遗忘率","68%(全人类)"],["默哀时长","10 秒"],["预防宣言","3 条"]],"logTitle":"追悼记录","logEn":"COUPON","logEmpty":"暂无追悼。您的手机里还有几张没过期的券——趁它们活着,用掉。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

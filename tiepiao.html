@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>报销贴票礼仪学校</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>教授科目 <b>贴票方向 · 重叠度 · 边距</b></span>
+    <span>退回率 <b>41%(不学的话)</b></span>
+    <span>学校宗旨 <b>一次通过,不再返工</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">RECEIPT-GLUING&nbsp;ACADEMY</div>
+    <h1>报销贴票礼仪学校</h1>
+    <div class="sub">报销单贴票,是一门没人教的手艺:贴歪了退回,贴重了揭烂,贴少了缺单——本校开课,传授贴票的全部礼仪,让您的报销单一次通过。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您贴票的失败经历(被退回几次、怎么贴的)"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">入学诊断</button><button class="btn" data-sample="0">平铺派</button><button class="btn" data-sample="1">叠瓦派</button><button class="btn" data-sample="2">乱贴派</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">贴票礼仪诊断书</span><span class="en">GLUING&nbsp;ACADEMY</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本校结语</div>
+    <p>贴票是职场的第一堂隐形课:没人教,但人人都在考。本校的四条礼仪——阶梯叠瓦、上沿涂胶、方向统一、金额排序——是无数退回单据换来的血泪结晶。学会了,您的报销单将在财务的桌子上闪闪发光;学不会,它会在您的抽屉里反复返工。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">结业。贴票,一次通过。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 494 号藏品 · 本校与 494 号前的所有「职场隐形课」同属「没人教但都要会学院」<br>校内冷知识:财务部最讨厌的贴票方式是「订书机钉死」——揭开核对时会撕破票,撕破就要重开,重开就要再跑一趟
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您贴票的失败经历(被退回几次、怎么贴的)","btnLabel":"入学诊断","sampleLabels":["平铺派","叠瓦派","乱贴派"],"samples":["一张一张平铺,贴了半张 A4,被批「浪费空间」","全部叠成一摞,只露最后一安卓——被批「无法核对金额」","随手乱贴,交上去后财务打回,附言:「请按小票在下、大票在上的顺序重新粘贴」"],"num":"诊断:需重修","verdict":"诊断结论:您的贴票手法属于「自创流派」,不符合财务部的隐形规范——本校将传授「阶梯叠瓦式」官方贴法,一次通过率 96%。","breakdown":[["礼仪一","阶梯叠瓦式","小票在上、大票在下,从下往上逐层排开,像铺瓦——每一张的金额栏都要露出来,财务一眼可核"],["礼仪二","胶水只涂上沿","只在票的上沿涂胶——下沿留白,方便财务揭开核对原件。涂满整面的,属于「防拆型贴票」,会被退回"],["礼仪三","方向统一","所有票同一方向——横的都横,竖的都竖。斜贴的虽然省空间,但会触发财务的「强迫症退回」"],["礼仪四","金额排序","票按金额从大到小排列——这是隐形规矩:没人明说,但守规矩的单子,处理速度快一倍"],["毕业标准","一次通过","按照本校礼仪执行,报销单一次通过率 96%——剩余 4% 的失败,是财务那天心情的问题,不是您的"]],"empty":{"num":"入学暂停","verdict":"没有贴票失败史,说明您还没交过报销单——或者您是贴票界的扫地僧。","breakdown":[["判定","新手/扫地僧","两种都欢迎入学"],["建议","先学再贴","第一次就贴对,是职场最便宜的加分项"]]},"reportTitle":"贴票礼仪诊断书","reportEn":"GLUING&nbsp;ACADEMY"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

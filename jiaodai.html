@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>撕箱胶带「残留考古」队</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>考古对象 <b>纸箱上的胶带残骸</b></span>
+    <span>残留形态 <b>半截带 · 粘手带 · 带毛带</b></span>
+    <span>技术要领 <b>撕的起点与角度</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TAPE-RESIDUE&nbsp;DIG</div>
+    <h1>撕箱胶带「残留考古」队</h1>
+    <div class="sub">撕开快递箱,胶带在纸箱上留下一道半截的残带——撕不断、粘手、粘灰。本队考古胶带残留的形态学,并总结「一撕到底」的技术要领。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">残留 1 道</div><div class="status" id="status">考古现场。快递箱已开,胶带在箱面留下 30 厘米的半截残带——它撕得七扭八歪,边缘粘满了纸屑与毛絮。</div><div class="metrics"><div class="m"><div class="k">残留长度</div><div class="v">30 厘米</div></div><div class="m"><div class="k">粘手次数</div><div class="v">2 次</div></div><div class="m"><div class="k">纸屑附着</div><div class="v">11 絮</div></div><div class="m"><div class="k">技术要领</div><div class="v">撕的起点</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">考古·残留形态</button></div></div><div class="log"><div class="sec-tag"><span class="zh">考古记录</span><span class="en">TAPE</span></div><ul id="log"><li style="color:var(--muted)">暂无考古。下一个快递箱正在路上——它的胶带,也在等一场撕扯。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">考古队结语</div>
+    <p>胶带残留是快递文化的活化石:每一道残带,都记录着一次「撕的决策失误」。本队的终极技术要领:从箱角下手,45 度斜撕,一气呵成——斜撕的角度能让胶带连续离纸。学会了,您撕的每一道胶带,都是完整的一笔。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">考古完毕。下次,从箱角撕。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 504 号藏品 · 本队与 116 号(沙发缝文明展)同属「家庭考古学会」:一个挖缝,一个撕箱<br>队内冷知识:胶带的粘性在撕断瞬间最强——所以「撕一半断掉」的那一下,会留下一道最粘的残带
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"残留 1 道","stat0":"考古现场。快递箱已开,胶带在箱面留下 30 厘米的半截残带——它撕得七扭八歪,边缘粘满了纸屑与毛絮。","btns":[{"label":"考古·残留形态","tag":"形态","lines":["形态一:半截带——撕到一半断了,剩下的像一道伤疤。它的成因:撕的起点没找对,起点找对了,一撕到底。","形态二:粘手带——断掉的胶带卷回自己,粘在手指上。您甩手、搓手、用另一只手揭——胶带与手指的战争,没有赢家。","形态三:带毛带——残带上粘着纸箱的毛絮,像一条沾了草籽的裤腿。它是「反复撕扯」的犯罪现场。"],"bigs":["伤疤","没有赢家","犯罪现场"]}],"metrics":[["残留长度","30 厘米"],["粘手次数","2 次"],["纸屑附着","11 絮"],["技术要领","撕的起点"]],"logTitle":"考古记录","logEn":"TAPE","logEmpty":"暂无考古。下一个快递箱正在路上——它的胶带,也在等一场撕扯。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

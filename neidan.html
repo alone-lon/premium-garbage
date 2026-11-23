@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电饭煲内胆涂层告别礼</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>告别对象 <b>内胆涂层(斑块脱落)</b></span>
+    <span>告别礼流程 <b>追忆 · 评估 · 缓刑</b></span>
+    <span>处内立场 <b>涂层尽了力,锅还得用</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">COATING-FAREWELL</div>
+    <h1>电饭煲内胆涂层告别礼</h1>
+    <div class="sub">电饭煲内胆的涂层,一块一块地脱落——每块脱落的黑斑,都是一锅米饭的纪念日。本处为涂层举行告别礼:它可以继续煮,但它的黄金时代结束了。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">涂层斑块 3 块</div><div class="status" id="status">告别礼现场。您翻开内胆:三块黑斑,边缘毛糙——它们是每一锅锅巴的遗迹,也是涂层退休的申请书。</div><div class="metrics"><div class="m"><div class="k">斑块面积</div><div class="v">8%</div></div><div class="m"><div class="k">服役年限</div><div class="v">5 年</div></div><div class="m"><div class="k">告别礼结论</div><div class="v">缓刑</div></div><div class="m"><div class="k">新锅预算</div><div class="v">列入</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">告别·追忆环节</button><button class="btn" id="btn1">告别·评估环节</button></div></div><div class="log"><div class="sec-tag"><span class="zh">告别礼记录</span><span class="en">COATING</span></div><ul id="log"><li style="color:var(--muted)">暂无告别。您的内胆涂层完整光滑——趁它完整,对它好一点:用木铲。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本处结语</div>
+    <p>电饭煲内胆是家里最劳碌的部件:每天高温服役两次,全年无休。本处的告别礼,不是仪式主义——是对劳碌者的基本礼数。涂层会尽,锅巴会糊,但那一锅锅准时开锅的米饭,值得一场正式的告别。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">告别完毕。今晚,用木铲盛饭。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 484 号藏品 · 本处与 463 号(玄学波动台)同属「家电荣誉退休体系」<br>处内冷知识:内胆涂层的寿命,与「用钢丝球洗锅」的次数成精确反比——每一块斑,都对应一次心急
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"涂层斑块 3 块","stat0":"告别礼现场。您翻开内胆:三块黑斑,边缘毛糙——它们是每一锅锅巴的遗迹,也是涂层退休的申请书。","btns":[{"label":"告别·追忆环节","tag":"追忆","lines":["追忆环节:这块涂层曾经不粘——米粒服帖,锅巴完整,清洗时一冲就净。它用五年的光滑,换来了您家每天准时的一锅饭。","追忆补充:第一块斑出现在那次忘关电源之后——它替您的疏忽,承受了高温的审判。涂层从不抱怨,它只是默默少了一块。","追忆结语:涂层的伟大,在于它从不索取——它脱落的每一块,都是它给出去的。今天,我们脱帽致敬。"],"bigs":["不粘","审判","脱帽"]},{"label":"告别·评估环节","tag":"评估","lines":["评估报告:斑块总面积 8%,未到「必须换锅」的官方线——民间标准则更宽容:「只要饭还香,就还能用。」","评估的风险提示:脱落的涂层虽然「吃不死人」,但饭会粘、糊底会加速——它的衰老是加速度的,告别礼之后,请开始留意新锅。","评估结论:缓刑。换锅列入预算,旧锅转入「煮杂粮粥专用」——涂层老化区域,煮粥不粘锅底,物尽其用。"],"bigs":["8%","缓刑","物尽其用"]}],"metrics":[["斑块面积","8%"],["服役年限","5 年"],["告别礼结论","缓刑"],["新锅预算","列入"]],"logTitle":"告别礼记录","logEn":"COATING","logEmpty":"暂无告别。您的内胆涂层完整光滑——趁它完整,对它好一点:用木铲。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

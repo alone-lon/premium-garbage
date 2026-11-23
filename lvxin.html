@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>空气净化器滤芯焦虑症门诊</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>诊疗对象 <b>滤芯更换焦虑(三难)</b></span>
+    <span>焦虑结构 <b>原装贵 · 三方怕 · 不换慌</b></span>
+    <span>门诊结论 <b>第三方大牌,可用</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FILTER-ANXIETY&nbsp;CLINIC</div>
+    <h1>空气净化器滤芯焦虑症门诊</h1>
+    <div class="sub">滤芯更换提醒亮了三个月,您一直没换:原装滤芯 ¥399,第三方 ¥89 不敢买,不换又怕「白开」。本门诊诊断滤芯焦虑,并给出一个良心结论。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您的滤芯焦虑(拖了多久、纠结什么)"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始诊断</button><button class="btn" data-sample="0">拖延期</button><button class="btn" data-sample="1">比价期</button><button class="btn" data-sample="2">发作期</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">滤芯焦虑诊断书</span><span class="en">FILTER&nbsp;CLINIC</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">门诊结语</div>
+    <p>滤芯焦虑是「原厂信仰」与「性价比本能」的夹心战争:原装的贵得安心,第三方的便宜得心虚,不换的白开得坦然。本门诊的良心结论:大牌第三方的滤芯,物理性能与原装差距在 10% 以内——省下的 300 元,可以买台加湿器,让焦虑换个地方长。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">诊断完毕。吹一吹,换一个。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 490 号藏品 · 本门诊与 490 号前的所有「耗材焦虑」共鸣:滤芯、口罩、净水器芯——全世界都在为「更换」犹豫<br>门诊冷知识:60% 的净化器用户,从未更换过滤芯——他们的机器,在用「第一口新鲜空气」的余温工作
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您的滤芯焦虑(拖了多久、纠结什么)","btnLabel":"开始诊断","sampleLabels":["拖延期","比价期","发作期"],"samples":["提醒亮了三个月,原装的太贵,一直拖着","买了第三方的,装上后总觉得风里有味道","干脆把滤芯抽出来吹了吹,又装回去了"],"num":"焦虑等级:三难夹心","verdict":"诊断结论:您的焦虑是典型的「滤芯三难」——贵、怕、拖。好消息是:滤芯的真实寿命比提醒灯宽容得多,第三方大牌滤芯,可以用。","breakdown":[["焦虑一","原装滤芯的价格","¥399 的定价包含品牌溢价与「安心税」——安心有价值,但不是每 6 个月都值 399"],["焦虑二","第三方的风评","第三方滤芯鱼龙混杂:大牌代工可用,无名作坊慎用——认准「标称 CADR 值」与自己机器匹配的,即可"],["焦虑三","不换的侥幸","滤芯饱和后净化效率下降,但它不会「坏」——最坏结果是「白开」,不是「事故」——这是三种选择里最温和的失败"],["良心结论","先吹后换,大牌可上","把旧滤芯抽出吹 3 分钟(吹掉浮灰),能再战一个月;同时下单大牌第三方,两头兼顾"],["就诊建议","设「滤芯日」提醒","每 5 个月一次,固定日期——焦虑的解药不是钱,是确定性"]],"empty":{"num":"诊断暂停","verdict":"没有滤芯焦虑,说明您的净化器可能是新的——或者,您压根没开机。后者请先开机。","breakdown":[["判定","新机/未用","两种都幸福"],["建议","开机能治焦虑","转起来,就有底气"]]},"reportTitle":"滤芯焦虑诊断书","reportEn":"FILTER&nbsp;CLINIC"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

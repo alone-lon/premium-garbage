@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>福字「倒贴正贴」争议仲裁庭</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>争议焦点 <b>倒贴是否成立</b></span>
+    <span>法理依据 <b>民俗考据(双方各执一词)</b></span>
+    <span>庭内裁定 <b>大门正贴,柜子倒贴</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FU-CHARACTER&nbsp;COURT</div>
+    <h1>福字「倒贴正贴」争议仲裁庭</h1>
+    <div class="sub">福字倒贴=「福到」?还是正贴=「福气端正」?每年春节,这场家庭内部法理之争都会重演。本庭出具裁定书,并附各地民俗考据,终结(或不终结)这场争议。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您家福字的贴法与家庭争议(谁主张倒贴)"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">提起仲裁</button><button class="btn" data-sample="0">倒贴派</button><button class="btn" data-sample="1">正贴派</button><button class="btn" data-sample="2">and稀泥派</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">福字贴法仲裁书</span><span class="en">FU&nbsp;COURT</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">仲裁庭结语</div>
+    <p>福字倒贴之争,是中国家庭最有文化的日常吵架:双方引经据典,各有民俗背书,最后以「各贴各的」收场。本庭的裁定书,不想终结这场争论——每年吵一次的福字贴法,就是年味本身。庭期:每年除夕;受理范围:全体家庭成员;判决:无最终判决,年年重审。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">仲裁完毕。除夕开庭,全员出席。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 506 号藏品 · 本庭与 160 号(空调遥控权战争)同属「家庭内部法理体系」:一个管温度,一个管福气<br>庭内冷知识:全国福字倒贴比例约为 55%——倒贴派以微弱优势领先,但大门区域,正贴派优势明显
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您家福字的贴法与家庭争议(谁主张倒贴)","btnLabel":"提起仲裁","sampleLabels":["倒贴派","正贴派","and稀泥派"],"samples":["我主张倒贴:福「倒」= 福「到」,谐音梗是老祖宗的智慧","我妈主张正贴:大门的福要正,倒贴不敬——只有水缸和柜子才倒贴","我爸和了稀泥:一张贴正,一张贴倒,「福气双保险」"],"num":"裁定:大门正贴,水缸柜子倒贴","verdict":"仲裁结论:双方都有民俗依据——大门福字正贴(大门迎福,福应端正);水缸、柜子、垃圾桶倒贴(倒福=福到,且这些地方「倒」字有实际功能:水缸倒贴=福不出缸)。争议,在传统内部本就有分工。","breakdown":[["倒贴派依据","「福到」谐音","倒=到,是汉语谐音文化的经典应用——水缸倒贴「福水长流」,垃圾桶倒贴「福不外泄」"],["正贴派依据","大门端正","大门是家的门面,福字端正才有敬意——民俗考据:大门福字倒贴,恰是「福倒(到)门外」的忌讳"],["和稀泥派","双保险","贴两张,一正一倒——看似投机,实为民俗的实践智慧:争议本身,也是年味的一部分"],["裁定的真正意义","家庭协商的机会","福字怎么贴不重要,重要的是全家一起贴——每年这场争论,是春节仪式感的一部分"],["终极建议","按区贴法","大门正贴,室内水缸柜子倒贴——既全了「福到」的彩头,又守了「大门端正」的敬礼"]],"empty":{"num":"仲裁暂停","verdict":"福字还没贴就来了仲裁庭?——提前量好评,但争议要在贴的时候吵才有年味。","breakdown":[["判定","提前量","年味要现场吵"],["建议","除夕当天开庭","贴的时候吵,才热闹"]]},"reportTitle":"福字贴法仲裁书","reportEn":"FU&nbsp;COURT"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

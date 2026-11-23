@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>塑料袋抽屉膨胀症专科</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>接诊对象 <b>塑料袋抽屉(关不上)</b></span>
+    <span>袋量估算 <b>200+ 只</b></span>
+    <span>专科结论 <b>晚期,但这是美德</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PLASTIC-BAG&nbsp;DRAWER</div>
+    <h1>塑料袋抽屉膨胀症专科</h1>
+    <div class="sub">厨房那个装塑料袋的抽屉,已经关不上了——每次拆快递,您都把袋子团一团塞进去,想着「总有用得上的时候」。本专科诊断:膨胀症,晚期,但无需治疗。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">袋量 200+</div><div class="status" id="status">专科接诊。您拉开抽屉,袋子们涌出来一半——它们被团成各种形状,层层叠叠,像一窝越冬的候鸟。</div><div class="metrics"><div class="m"><div class="k">袋量估算</div><div class="v">200+</div></div><div class="m"><div class="k">年消耗</div><div class="v">31 只</div></div><div class="m"><div class="k">库存续航</div><div class="v">6 年</div></div><div class="m"><div class="k">专科结论</div><div class="v">无需治疗</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">接诊·袋源普查</button><button class="btn" id="btn1">接诊·使用率审计</button></div></div><div class="log"><div class="sec-tag"><span class="zh">接诊记录</span><span class="en">BAGS</span></div><ul id="log"><li style="color:var(--muted)">暂无接诊。抽屉此刻半开,袋子们在黑暗中积蓄力量。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">专科结语</div>
+    <p>塑料袋抽屉是中国家庭的精神图腾:它不体面、不环保、关不上,但它给了每一代人「万一要用」的底气。本专科不下病危通知——这个病,治好了反而心里空。只需要一件事:偶尔清一清,让抽屉还能关上。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">接诊完毕。抽屉,记得能关上。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 485 号藏品 · 本专科与 468 号(通勤包地层)同属「家庭沉没物研究院」<br>专科冷知识:全中国家庭塑料袋抽屉的袋量中位数是 137 只——超过 300 只的,被称为「藏袋世家」
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"袋量 200+","stat0":"专科接诊。您拉开抽屉,袋子们涌出来一半——它们被团成各种形状,层层叠叠,像一窝越冬的候鸟。","btns":[{"label":"接诊·袋源普查","tag":"普查","lines":["袋源普查:超市袋 67 只(大)、菜场袋 89 只(红)、外卖袋 31 只(带提手)、服装店袋 13 只(高级,有纸质感)。","袋源分析:您的袋子储备,覆盖了从买菜到送礼的全部场景——这是十年精打细算的沉淀,不是囤积,是战备。","普查结论:中国家庭的塑料袋抽屉,是祖传的「以备不时之需」——您妈的抽屉,您妈的妈的抽屉,代代相传。"],"bigs":["超市 67","战备","代代相传"]},{"label":"接诊·使用率审计","tag":"审计","lines":["使用率审计:过去一年,从抽屉里取出的袋子:31 只(装垃圾 24、装东西 6、临时救急 1)。产出比:袋量 200+,年耗 31——按此速率,您的库存够用 6 年。","审计的哲学:这抽屉永远不空,也永远用不完——它是家庭安全感的实体化:知道它在,就心安。至于用不用,是另一回事。","审计终极结论:膨胀症无需治疗——但建议「袋类分层」:大袋归大袋,小袋归小袋,抽屉就能关上。病还是晚期,但起码门能关了。"],"bigs":["年耗 31","安全感","门能关了"]}],"metrics":[["袋量估算","200+"],["年消耗","31 只"],["库存续航","6 年"],["专科结论","无需治疗"]],"logTitle":"接诊记录","logEn":"BAGS","logEmpty":"暂无接诊。抽屉此刻半开,袋子们在黑暗中积蓄力量。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>牙膏「从中间挤」门派之争</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>争议对象 <b>牙膏的挤压位置</b></span>
+    <span>门派 <b>尾部派 · 中间派 · 剪刀派</b></span>
+    <span>辩论核心 <b>秩序 vs 效率 vs 暴力美学</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">TOOTHPASTE-SQUEEZE&nbsp;WAR</div>
+    <h1>牙膏「从中间挤」门派之争</h1>
+    <div class="sub">牙膏从尾部挤还是从中间挤?两大门派争了五十年:尾部门派讲「工艺」,中间派讲「效率」,还有第三派——直接用剪刀剪开。本门派之争,公开辩论。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您家牙膏管的挤压习惯(谁挤的、从哪挤的)"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">加入辩论</button><button class="btn" data-sample="0">尾部派</button><button class="btn" data-sample="1">中间派</button><button class="btn" data-sample="2">剪刀派</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">牙膏门派辩论记录</span><span class="en">SQUEEZE&nbsp;WAR</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">辩论会结语</div>
+    <p>牙膏挤压是家庭内部最温和的战争:它不伤感情,只伤牙膏管。本辩论会的最终裁定:三派都是对的——尾部派守护秩序,中间派拥抱效率,剪刀派践行彻底。唯一的输家是牙膏管:它想笔挺地退役,却被挤成了麻花,最后还被剪开。致所有牙膏管:你们辛苦了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">辩论完毕。今晚,您挤哪头?</div>
+    <div class="fine">
+      精品垃圾系列 · 第 501 号藏品 · 本辩论与 501 号前的「家庭内部战争」(空调遥控权/毛巾挂杆)组成「家庭战争三部曲」<br>辩论冷知识:全人类牙膏管的中段,是最先变形的部位——中间派与尾部派的争夺,都发生在那里
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您家牙膏管的挤压习惯(谁挤的、从哪挤的)","btnLabel":"加入辩论","sampleLabels":["尾部派","中间派","剪刀派"],"samples":["我妈永远从尾部挤,挤完还要用刮板刮平——管身永远笔挺","我从中间随便一捏,挤出量刚好,管身五分钟后变成麻花","我直接剪开尾巴,用手指挖最后一点——管子的尸体,横在杯架三天"],"num":"辩论结果:三派并行,各有真理","verdict":"辩论结论:尾部派赢在「管子的体面」,中间派赢在「手部的自由」,剪刀派赢在「最后一点膏体的归属权」——三派争论的本质,是对「浪费」的定义不同。","breakdown":[["尾部派","秩序美学","管身笔挺如新,是对牙膏的尊重——但尾部挤到最后,需要双手配合,是「挤牙膏里的加班」"],["中间派","效率美学","一捏即出,量大管饱——但管身会变成麻花,膏体堆积在捏痕处,尾部永远挤不干净"],["剪刀派","实用主义","剪开尾巴,刮出最后 3 克——他们不浪费每一克膏体,代价是失去一支完整的牙膏管"],["家庭冲突","混居家庭的战争","尾部派的妈 + 中间派的娃 = 管身永远在「挺直」与「麻花」之间横跳——这是家庭秩序的缩影"],["终极和解","各挤各的,各买各的","一人一支牙膏,是三派停战的唯一方案——牙膏之战的终点,是私有制"]],"empty":{"num":"辩论暂停","verdict":"没有挤压习惯没法参战——但您家牙膏管的形状,已经替您站了队。","breakdown":[["判定","管身即立场","笔挺=尾部派,麻花=中间派"],["建议","看看您家那管","它比您诚实"]]},"reportTitle":"牙膏门派辩论记录","reportEn":"SQUEEZE&nbsp;WAR"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>
