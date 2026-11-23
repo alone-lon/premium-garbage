@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>炒菜「颠勺」学徒资格赛</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>赛事范围 <b>家庭灶台(民用级)</b></span>
+    <span>考核动作 <b>颠勺一次的完整性</b></span>
+    <span>赛会精神 <b>掉锅里的都是学费</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">WOK-TOSS&nbsp;APPRENTICE</div>
+    <h1>炒菜「颠勺」学徒资格赛</h1>
+    <div class="sub">颠勺的帅,只属于灶台:家庭选手颠一次,掉一半;厨师颠三次,米粒都不落——本赛考核您的家庭颠勺段位,并颁发「勇气比技术值钱」奖。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">考核第 1 勺</div><div class="status" id="status">灶台已热,油已下,菜已备——请评估:要不要颠这一勺?本赛提醒:颠勺的帅,是用灶台清洁度换的。</div><div class="metrics"><div class="m"><div class="k">当前勺数</div><div class="v">0</div></div><div class="m"><div class="k">掉落率</div><div class="v">80%(首勺)</div></div><div class="m"><div class="k">晋级线</div><div class="v">掉落 <20%</div></div><div class="m"><div class="k">赛会精神</div><div class="v">掉的都是学费</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">考核·第一勺</button><button class="btn" id="btn1">考核·第十勺</button></div></div><div class="log"><div class="sec-tag"><span class="zh">考核记录</span><span class="en">WOK</span></div><ul id="log"><li style="color:var(--muted)">暂无考核。您家的锅此刻安静——它见过太多有勇气的第一勺。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">赛会结语</div>
+    <p>颠勺是中餐最具观赏性的动作,也是家庭厨房最昂贵的帅:一次成功的颠勺,值一顿饭的赞美;一次失败的颠勺,值十五分钟的擦灶。本赛的立场:家里想颠就颠——帅气是练出来的,灶台是擦出来的,热爱厨房的心,不该被「怕掉」浇灭。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">考核完毕。第十勺,再见分晓。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 419 号藏品 · 本赛与 212 号(火锅涮序协会)同属「中式烹饪文化研究会」<br>赛会冷知识:厨师颠勺的手感,本质是「对锅体重量的预判」——家用锅轻一半,手感完全不同,掉菜不怪您
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"考核第 1 勺","stat0":"灶台已热,油已下,菜已备——请评估:要不要颠这一勺?本赛提醒:颠勺的帅,是用灶台清洁度换的。","btns":[{"label":"考核·第一勺","tag":"初赛","lines":["第一勺实录:手腕发力,锅向前送,菜腾空而起——40% 落回锅中,35% 落在灶台上,25% 落在灶台与锅的缝隙里,从此成为「厨房考古层」。","第一勺的物理学:颠勺靠的不是腕力,是「抛物线的提前量」——厨师的手感来自十年万次,您的手感来自今天看完的短视频。","考核初评:勇气分满分,技术分待练——建议下一勺减半菜量,先找回「腾空-落回」的手感。"],"bigs":["25% 缝隙","提前量","勇气满分"]},{"label":"考核·第十勺","tag":"复赛","lines":["第十勺实录:掉落率降到 18%——您的手腕开始记住那个「送」的瞬间。菜不再乱飞,开始「听指挥」。","复赛的现象学:您颠勺时开始下意识憋气、缩脖子、护灶台——这个姿势说明您入门了:从「炫技心态」切换到「控制心态」,是家庭颠勺手的成人礼。","复赛评语:第十勺之后,您颠的已经不是菜,是自信——虽然灶台还是要擦。"],"bigs":["18%","成人礼","自信"]}],"metrics":[["当前勺数","0"],["掉落率","80%(首勺)"],["晋级线","掉落 \u003c20%"],["赛会精神","掉的都是学费"]],"logTitle":"考核记录","logEn":"WOK","logEmpty":"暂无考核。您家的锅此刻安静——它见过太多有勇气的第一勺。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

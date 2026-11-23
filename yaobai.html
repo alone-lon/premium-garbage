@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「摇一摇」广告误触赔偿公约</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>公约对象 <b>「摇一摇」跳转广告</b></span>
+    <span>误触率 <b>68%(自报)</b></span>
+    <span>公约目标 <b>让我打开的是 App,不是广告</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SHAKE-AD&nbsp;CONVENTION</div>
+    <h1>「摇一摇」广告误触赔偿公约</h1>
+    <div class="sub">打开 App,页面一晃,广告全屏——「摇一摇」跳转广告是当代手机最大的陷阱:您没点,是您「晃」了。本公约受理全部误触案,教您三招防摇。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">公约生效中</div><div class="status" id="status">点击领取一条防摇条款。本公约不教您砸手机——教您在 0.5 秒的反应窗口里,稳住自己的手。</div><div class="ctrl"><button class="btn accent" id="goBtn">领取防摇条款</button><button class="btn" id="moreBtn">再领一条</button></div><div class="metrics"><div class="m"><div class="k">误触率</div><div class="v">68%</div></div><div class="m"><div class="k">逃生窗口</div><div class="v">0.5 秒</div></div><div class="m"><div class="k">年度损失</div><div class="v">33 分钟</div></div><div class="m"><div class="k">公约签名</div><div class="v">待领</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">误触档案</span><span class="en">SHAKE</span></div><ul id="log"><li style="color:var(--muted)">暂无误触。您的手机此刻安静——广告的陷阱,总在您最想正常打开 App 的时候弹出。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">公约结语</div>
+    <p>「摇一摇」广告钻的是一个空子:您没「点」,所以不算「同意」——但它把「晃」也算成了授权。本公约无法消灭这个设计,只能教您防御:端平、快杀、关推荐。以及一个终极心法:您的注意力是您最后的私有财产——每一次稳住的手,都是一次护产。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">领约完毕。今晚,端平手机。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 422 号藏品 · 本公约与 58 号(已读乱回生成器)同属「数字生活防御工事」<br>公约冷知识:「摇一摇」的判定灵敏度,被工程师私下称为「鱼漂」——风吹草动,都算咬钩
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"公约生效中","why0":"点击领取一条防摇条款。本公约不教您砸手机——教您在 0.5 秒的反应窗口里,稳住自己的手。","btnLabel":"领取防摇条款","moreLabel":"再领一条","pools":[{"q":"条款一 · 打开前先「扶正」","w":"防摇要诀:点开 App 前,先把手机端平——「摇一摇」的判定阈值在陀螺仪,端平的手,骗不过它,也摇不动它。"},{"q":"条款二 · 误触后 0.5 秒杀后台","w":"急救手册:误触跳转的瞬间,立刻上滑杀后台——广告页的加载需要 2 秒,您有 0.5 秒的逃生窗口,手快有,手慢无。"},{"q":"条款三 · 关闭「个性化广告」","w":"釜底抽薪:设置里关闭个性化广告推荐——跳转还是会有,但至少少一半。剩下的,交给条款一和条款二。"},{"q":"条款四 · 误触的连锁伤害","w":"受害清单:误触一次,平均损失 11 秒(加载+返回)+1 次心情波动+若干流量——按每天误触 3 次算,一年浪费 33 分钟人生,够看完一部电影。"},{"q":"条款五 · 最稳姿势学","w":"姿势学:躺着刷手机是误触重灾区——侧躺时手腕自然晃动,全被识别成「摇」。本条款建议:躺刷时用双手持机,拇指操作,手腕锁死。"},{"q":"条款六 · 终极心法","w":"心法:把「摇一摇」当作当代礼仪考试——每次打开 App 端平手机的那个动作,是您对注意力的主权宣示:我打开什么,我说了算。"}],"metrics":[["误触率","68%"],["逃生窗口","0.5 秒"],["年度损失","33 分钟"],["公约签名","待领"]],"logTitle":"误触档案","logEn":"SHAKE","logEmpty":"暂无误触。您的手机此刻安静——广告的陷阱,总在您最想正常打开 App 的时候弹出。"};
+var log=$("log"),used=[],n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+function serve(){
+if(used.length>=D.pools.length)used=[];
+var idx;do{idx=Math.floor(Math.random()*D.pools.length);}while(used.indexOf(idx)>-1);
+used.push(idx);n++;
+var q=D.pools[idx];
+$("big").textContent=q.q;$("status").textContent=q.w;
+record("第 "+n+" 抽","结果:"+q.q+"。");
+}
+$("goBtn").addEventListener("click",serve);
+$("moreBtn").addEventListener("click",function(){serve();record("追加","已加抽一份。运气这东西,本机管供应,不管效果。");});
+})();
+</script>
+</body>
+</html>

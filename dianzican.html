@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电子秤「脱鞋之争」仲裁庭</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>仲裁对象 <b>称重时的鞋与衣</b></span>
+    <span>争议差值 <b>0.4kg(鞋)</b></span>
+    <span>庭内立场 <b>统一口径,才有可比性</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">SCALE-SHOES&nbsp;ARBITRATION</div>
+    <h1>电子秤「脱鞋之争」仲裁庭</h1>
+    <div class="sub">称体重,鞋脱不脱?脱了少 0.4kg,穿着多 0.4kg——本庭仲裁这场年度之争,并披露行业黑幕:某些电子秤,连衣服都给你算进去了。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您家秤上的称重习惯(脱鞋/穿鞋/脱外套吗)"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">提起仲裁</button><button class="btn" data-sample="0">脱鞋派</button><button class="btn" data-sample="1">穿鞋派</button><button class="btn" data-sample="2">全脱派</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">脱鞋之争仲裁书</span><span class="en">SCALE&nbsp;COURT</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">仲裁庭结语</div>
+    <p>脱鞋之争的本质,是人类与数据的关系之争:精确派要纯净,趋势派要连续,仪式派要庄严。本庭不判对错——称体重是私事——只判一条:口径必须统一。今天脱明天穿的秤,量出来的不是体重,是心情。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">仲裁完毕。定好口径,终身执行。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 421 号藏品 · 本庭与 43 号(体重秤谈判专家)合并办案:一个谈判,一个仲裁<br>庭内冷知识:全人类称体重的最佳时段是晨起如厕后——那是身体一天中最「诚实」的时刻
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您家秤上的称重习惯(脱鞋/穿鞋/脱外套吗)","btnLabel":"提起仲裁","sampleLabels":["脱鞋派","穿鞋派","全脱派"],"samples":["永远脱鞋,冬天也脱,袜子都脱——精确至上","从不脱鞋,「我就看看趋势,差那 0.4 干嘛」","全脱:鞋、外套、眼镜、手表,连手机都掏出来放地上"],"num":"裁定:口径不一,数据作废","verdict":"仲裁结论:您家秤上的数字,因为称重口径不统一,历史数据基本不具备可比性——这 0.4kg 的争论,毁掉的是您三年体重曲线的科学性。","breakdown":[["脱鞋派","精确主义","每次 -0.4kg,数据纯净,但冬天受罪——他们相信「误差是魔鬼」"],["穿鞋派","趋势主义","数据带鞋重,但口径恒定——他们相信「趋势比数字重要」,鞋也是体重的一部分(哲学上成立)"],["全脱派","仪式主义","称重像一种修行:脱鞋、摘表、屏息——他们称的不是体重,是敬畏"],["仲裁结果","统一口径即可","脱不脱都对,但必须「每次一样」——口径一致,曲线才有意义;今天脱明天穿,等于用两把尺子量身高"],["附加披露","秤的黑幕","电子秤的误差 ±0.3kg 是常态:同一天早晚能差 1kg——所以别为单次读数伤心,看周趋势"]],"empty":{"num":"仲裁暂停","verdict":"没有称重习惯就没法仲裁——这说明您还没被那台秤统治,恭喜。","breakdown":[["判定","自由身","未被数据绑架"],["建议","保持现状","不称,也是一种体重管理"]]},"reportTitle":"脱鞋之争仲裁书","reportEn":"SCALE&nbsp;COURT"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>嗓子哑声分级诊疗台</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>诊疗对象 <b>声带(带伤上班)</b></span>
+    <span>哑度分级 <b>4 级</b></span>
+    <span>台内处方 <b>闭嘴(难执行版)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">HOARSE-VOICE&nbsp;TRIAGE</div>
+    <h1>嗓子哑声分级诊疗台</h1>
+    <div class="sub">「没事,就是喊多了」——嗓子哑的第三天,您还在这么骗自己。本台按哑度分级:从「 merely 沙哑」到「气声告急」,并开具唯一处方:闭嘴。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">哑度待测</div><div class="meter"><div class="fill" id="fill" style="width:55%"></div></div><div class="status" id="status">本台接诊。检测方式:清唱一句「啊——」,自己听,自己分级——您比谁都清楚,那个音撑了多久。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入连续用嗓天数,例如:3" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">哑度分级</button></div><div class="metrics"><div class="m"><div class="k">当前哑度</div><div class="v">二级(预估)</div></div><div class="m"><div class="k">最佳处方</div><div class="v">静音 48h</div></div><div class="m"><div class="k">最难执行</div><div class="v">闭嘴</div></div><div class="m"><div class="k">就医线</div><div class="v">四级</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">诊疗记录</span><span class="en">VOICE</span></div><ul id="log"><li style="color:var(--muted)">暂无诊疗。您的嗓子此刻在工作——它想休假,不敢说。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">诊疗台结语</div>
+    <p>嗓子是全身最敬业的器官:它带病上班、超时加班、永不罢休——直到哑掉。本台的四级分诊,本质是给声带的请假制度:一级早退,二级调休,三级病假,四级住院。别再对哑掉的嗓子说「没事」——它替您说了太多话,轮到您替它闭一次嘴了。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">分级完毕。今天,少说几句。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 410 号藏品 · 本台与 51 号(口气自检中心)同属「口腔辖区管理局」<br>台内冷知识:声带每天振动约 100 万次——它是全身振动量最大的部件,却连个休息日都没有
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"哑度待测","pct":55,"stat0":"本台接诊。检测方式:清唱一句「啊——」,自己听,自己分级——您比谁都清楚,那个音撑了多久。","inputPh":"输入连续用嗓天数,例如:3","btnLabel":"哑度分级","reasons":["一级哑:轻微沙哑,高音上不去——声带的轻度抗议。处方:今天少说话 30%,多喝温水,别清嗓子(清嗓比哑更伤)。","二级哑:明显沙哑,说话像加了电焊效果——声带的正式警告。处方:能打字别开口,能点头别回答。您的嗓子需要 48 小时静音修复期。","三级哑:气声为主,真声失踪——声带已在带病上班。处方:禁声一天。别小看「禁声」,对靠说话吃饭的人,这比加班难十倍。","四级哑:只有气流,没有声音——声带罢工。处方:就医。这一级不是「忍忍就好」,是身体在拽您的袖子:去医院。","特别条目:哑着嗓子继续开会的人,是当代最悲壮的职业行为——声带在残血状态下输出 KPI。您的敬业,声带记着账,以后一起算。","本台终极发现:嗓子哑的时候,人会不自觉压低音量说悄悄话——那个沙沙的气声,听起来反而格外真诚。如果要用哑嗓说一句重要的话,现在是最好的时机。"],"empty":"不给天数没法分级——但您刚才那句「啊——」,本台听见了,大概二级。","metrics":[["当前哑度","二级(预估)"],["最佳处方","静音 48h"],["最难执行","闭嘴"],["就医线","四级"]],"logTitle":"诊疗记录","logEn":"VOICE","logEmpty":"暂无诊疗。您的嗓子此刻在工作——它想休假,不敢说。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>指尖冰凉与打字速度悖论实验室</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>研究对象 <b>指尖温度与打字速度的负相关</b></span>
+    <span>死循环结构 <b>急 → 凉 → 慢 → 更急</b></span>
+    <span>实验室立场 <b>先暖手,再谈 KPI</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">COLD-FINGER&nbsp;PARADOX</div>
+    <h1>指尖冰凉与打字速度悖论实验室</h1>
+    <div class="sub">手越凉,打字越慢;打字越急,手越凉——这是冬季办公的经典死循环。本实验室拆解这个悖论,并给出双解:暖手方案 ×2,效率方案 ×1。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">循环进行中</div><div class="meter"><div class="fill" id="fill" style="width:70%"></div></div><div class="status" id="status">您的指尖现在几度?别猜——放在屏幕边框上贴 3 秒,用「玻璃温不温」做参考,实测比感觉准。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入当前每分钟打字数(大概),例如:60" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">测量悖论深度</button></div><div class="metrics"><div class="m"><div class="k">当前速度</div><div class="v">60 字/分</div></div><div class="m"><div class="k">指尖估算</div><div class="v">22℃</div></div><div class="m"><div class="k">循环深度</div><div class="v">中高</div></div><div class="m"><div class="k">双解</div><div class="v">暖手+列纲</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">测量记录</span><span class="en">PARADOX</span></div><ul id="log"><li style="color:var(--muted)">暂无测量。您的手指正在键盘上——它们的温度,正在决定您的 deadline。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">实验室结语</div>
+    <p>指尖悖论是冬季办公的隐形税:每个人都交,没人察觉。本实验室拆环的结论很朴素:身体是打字速度的地基——手指凉了,什么输入法都救不了。先暖 20 秒,再敲 2 小时——这 20 秒,是冬天里回报率最高的投资。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">测量完毕。搓手 20 秒,再开工。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 412 号藏品 · 本实验室与 407 号(手脸冰凉分级处)联合办公:一个分级,一个解题<br>室内冷知识:键盘的温度,冬天比夏天低 6℃——它是您每天触摸十小时的、最冰的服务器
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"循环进行中","pct":70,"stat0":"您的指尖现在几度?别猜——放在屏幕边框上贴 3 秒,用「玻璃温不温」做参考,实测比感觉准。","inputPh":"输入当前每分钟打字数(大概),例如:60","btnLabel":"测量悖论深度","reasons":["测量结果:60 字/分钟,指尖温度估算 22℃——已进入「凉手减速区」:手指灵活度在 25℃ 以下,每降 1 度,速度掉 3%。","悖论解析:越赶工越急,越急越专注屏幕,越专注越不动手——手不动,血不流,手越凉,打字越慢。这个环,不是意志能破的,是物理。","暖手方案一:搓手 20 秒——摩擦生热是原始但有效的方案,搓完立刻打字,前 5 分钟速度回升 8%。","暖手方案二:杯子当暖手宝——装热水的马克杯,是办公室免费的指尖桑拿。左手打字,右手捂杯,轮流上岗,效率不减。","效率方案:先别急着打——把要说的内容在脑子里过一遍,列三个关键词。想清楚了再动手,打字时间省 30%,手指负担省一半。"],"empty":"不给打字速度没法测——但您的手指现在凉不凉,它自己知道。","metrics":[["当前速度","60 字/分"],["指尖估算","22℃"],["循环深度","中高"],["双解","暖手+列纲"]],"logTitle":"测量记录","logEn":"PARADOX","logEmpty":"暂无测量。您的手指正在键盘上——它们的温度,正在决定您的 deadline。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>
