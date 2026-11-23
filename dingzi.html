@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图钉按入深度测绘局</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>测绘对象 <b>软木板钉群(现行役 27 枚)</b></span>
+    <span>测量维度 <b>露出钉帽高度 · 入板角度</b></span>
+    <span>局内立场 <b>深有深的担当,浅有浅的下场</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">PUSH-PIN&nbsp;SURVEY</div>
+    <h1>图钉按入深度测绘局</h1>
+    <div class="sub">同一块软木板,图钉按入的深浅全凭手感:测绘局逐枚测量入板深度,不评好坏,只绘制这块板上的人类按压史。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">测绘待开始</div><div class="meter"><div class="fill" id="fill" style="width:23%"></div></div><div class="status" id="status">软木板挂在墙上,钉帽参差。请输入您按图钉的手势类型,本局出具深度测绘报告。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入按压手势,例如:拇指 + 食指" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">出具测绘报告</button></div><div class="metrics"><div class="m"><div class="k">在役钉数</div><div class="v">27 枚</div></div><div class="m"><div class="k">深度中位数</div><div class="v">三分之二</div></div><div class="m"><div class="k">斜钉占比</div><div class="v">两成</div></div><div class="m"><div class="k">局方立场</div><div class="v">只测不拔</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">测绘台账</span><span class="en">SURVEY</span></div><ul id="log"><li style="color:var(--muted)">暂无测绘。软木板静立,钉帽反光,深浅各自为政。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">局长致辞</div>
+    <p>图钉是办公用品里唯一的「自己决定退役日期」岗位:按得深,钉得久;按得浅,三天后连纸带钉一起殉职。局长在任职期间测绘过上百块软木板,发现一个规律:最深的钉子下面,永远压着最重要的那张纸——加班表、缴费单、或者一张没人舍得摘的合影。而最浅的钉子,按钉那天其实就知道自己守不住什么。本局的全部工作,是把这些深浅记录在案:您按下的每一枚,都是当时那件事在您心里的重量。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">测绘完毕。钉深钉浅,都有说法。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 391 号藏品 · 本局与 260 号(五金袋沉底博物院)同属「小五金户籍总会」:一个管袋底散件,一个管板上钉籍<br>局内冷知识:软木板上最长寿的斜钉平均服役六年——比端正的钉子长寿三倍,歪是一种生存策略
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"测绘待开始","pct":23,"stat0":"软木板挂在墙上,钉帽参差。请输入您按图钉的手势类型,本局出具深度测绘报告。","inputPh":"输入按压手势,例如:拇指 + 食指","btnLabel":"出具测绘报告","reasons":["拇指 + 食指批注:标准手势,按入深度稳定在三分之二——本局认定:这是办公区主流按法,钉帽留有起钉余地,深得体面又不失退路。","纯拇指批注:单指按压,深度全靠当天心情——本局批注:此手势按得浅的居多,一周后必有钉子抱着纸条一起落地,建议配合悔悟使用。","借物按压批注:用橡皮、订书机甚至另一枚图钉的背面把钉顶进去——本局致敬:这是指力的退役与工具的接班,按入深度最深,钉帽几乎贴板,起钉时要用指甲考古。","斜按批注:钉子以四十五度入板,歪着但牢——本局认定:斜钉是软木板上的民间智慧,常有钉子因此服役多年,比任何端正的钉子都长寿。","终审总结:一块软木板的钉群,就是一部按压编年史——最深的钉着从未换过的通知,最浅的钉着天天换的便签,最歪的钉着没人敢摘的旧照;本局只测绘,不拔钉。"],"empty":"不填手势没法测绘——按「随手一按」默认处理:这是最大众的流派,特点是深度随机、角度随缘,钉子们上岗时都签过生死状。","metrics":[["在役钉数","27 枚"],["深度中位数","三分之二"],["斜钉占比","两成"],["局方立场","只测不拔"]],"logTitle":"测绘台账","logEn":"SURVEY","logEmpty":"暂无测绘。软木板静立,钉帽反光,深浅各自为政。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

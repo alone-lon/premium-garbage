@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>浴室镜面起雾书写保护区</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>保护对象 <b>起雾镜面上的指尖笔迹</b></span>
+    <span>保存时长 <b>约一分钟(雾散即逝)</b></span>
+    <span>区内核准 <b>写了就写了,不必署名</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">FOGGED&nbsp;MIRROR&nbsp;RESERVE</div>
+    <h1>浴室镜面起雾书写保护区</h1>
+    <div class="sub">洗热水澡,镜面起雾,总有人忍不住写两个字又擦掉:保护区收录雾面书写的全部笔迹——「加油」也好,「烦」也罢,都只存在一分钟。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">保护区设立</div><div class="status" id="status">镜面目前清晰。下次热水澡时,雾起,提指——本区为您保存那几十秒的笔迹,不问内容,不限字数。</div><div class="metrics"><div class="m"><div class="k">累计收录</div><div class="v">每日一至三笔</div></div><div class="m"><div class="k">平均寿命</div><div class="v">60 秒</div></div><div class="m"><div class="k">高频词</div><div class="v">加油</div></div><div class="m"><div class="k">最高礼遇</div><div class="v">不署名</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">登记雾面笔迹</button><button class="btn" id="btn1">登记即兴画作</button><button class="btn" id="btn2">登记雾散时刻</button></div></div><div class="log"><div class="sec-tag"><span class="zh">保护区台账</span><span class="en">RESERVE</span></div><ul id="log"><li style="color:var(--muted)">暂无笔迹。镜面清晰,热水器待命,今晚的雾还未起。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">保护区立区辞</div>
+    <p>人类一生在正式纸面写过千万字,却很少有一分钟的字——不用稿纸,不改错别字,不给人看,写了就散。浴室雾面是全人类最诚实的临时黑板:热水给了勇气,水汽给了匿名,一分钟给了免责。立区十年,保护区收录过的最高频字是「加油」,最长的句子是「明天再说」,最悲伤的作品是一个写到一半的名字,最快乐的是那只五笔的小猫。本区不设围栏,不收门票,只承诺一件事:只要雾还会起,笔迹就永远有人收藏——哪怕收藏的时长,只有一分钟。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">收录完毕。下一个雾天,接着写。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 398 号藏品 · 本区与 70 号(气味记忆博物馆)同属「短暂记忆保存联合会」:一个管闻到的过去,一个管写下的一分钟<br>区内冷知识:人类在雾面镜上写「加油」的频率是写「放弃」的四十倍——浴室是全人类最容易被说服的地方
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"保护区设立","stat0":"镜面目前清晰。下次热水澡时,雾起,提指——本区为您保存那几十秒的笔迹,不问内容,不限字数。","btns":[{"label":"登记雾面笔迹","tag":"收录","lines":["笔迹收录:雾面上写着「加油」,笔画歪,像急着写的——区批注:这是雾面书写的第一大高频词,写给明天的自己;字迹的歪,是热水澡的松,不是手抖。","二次收录:写的是一个名字,写到第二笔就停了,用掌心擦掉——区记录:未完成的名字是保护区最珍贵的藏品,本区不登记内容,只登记「停笔」这个动作——停笔比写完诚实。","三次收录:画的是一个笑脸,圆圈里两个点——区批注:无字作品,情绪直给;热水澡的人画出笑脸,说明这一天虽然辛苦,但没输。"]},{"label":"登记即兴画作","tag":"画作","lines":["画作受理:镜面被画了一只小猫,五笔,圆滚滚——区记录:雾面画的共同点是「圆」,一切棱角都被水汽泡软了;人在雾里,画不出尖锐的东西。","二次画作:有人画了个高脚杯,杯里三道波纹——区批注:这是浴室里的生活幻想,画完的人冲完这澡,照旧喝白开水;幻想免费,本区保护幻想。","三次画作:镜面被整掌抹开一道,什么都没画——区认定:这叫「开窗」,是雾面书写的零号作品:先给自己开一扇能看清自己的窗,再决定写什么。"]},{"label":"登记雾散时刻","tag":"雾散","lines":["雾散受理:字迹在第三分钟变淡,第五分钟只剩水痕,第八分钟镜面如新——区记录:本区从不挽留任何一件作品,雾的展厅,散场就是散场。","二次雾散:有个字擦不掉了,是上个月用手指甲刻的——区批注:镜面不保存刻痕之外的东西,您指甲留下的那一笔,已升级为「浴室编年史文物」,与雾无关。","三次雾散:下次雾起,上一幅作品的地界又被写了新字——区终语:保护区的意义不是保存,是接力:每个雾天都有人提指,每幅作品都只活一分钟,一分钟就够了。"]}],"metrics":[["累计收录","每日一至三笔"],["平均寿命","60 秒"],["高频词","加油"],["最高礼遇","不署名"]],"logTitle":"保护区台账","logEn":"RESERVE","logEmpty":"暂无笔迹。镜面清晰,热水器待命,今晚的雾还未起。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
