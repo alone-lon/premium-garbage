@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拼车顺路度计算所</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>换算对象 <b>拼车绕路的时间成本</b></span>
+    <span>绕路系数 <b>1.6 倍(均值)</b></span>
+    <span>所内结论 <b>省的钱,用时间付</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">POOL-RIDE&nbsp;DETOUR-MATH</div>
+    <h1>拼车顺路度计算所</h1>
+    <div class="sub">「顺路」的顺,是司机定义的顺:您的 8 公里直达,拼上另一位乘客,变成 14 公里的观光路线——本所换算拼车的真实绕路成本与时间利息。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">绕路 ×1.6</div><div class="meter"><div class="fill" id="fill" style="width:55%"></div></div><div class="status" id="status">本所开张。请输入您的拼车单:原价、拼后价、以及您心里默数的红灯数——绕路成本,当场核算。</div><div class="input" style="margin-top:20px"><input id="src" type="text" placeholder="输入拼车节省金额(元),例如:15" maxlength="30"></div><div class="ctrl"><button class="btn accent" id="goBtn">核算时间利息</button></div><div class="metrics"><div class="m"><div class="k">节省金额</div><div class="v">¥15</div></div><div class="m"><div class="k">绕路时长</div><div class="v">25 分钟</div></div><div class="m"><div class="k">时间利息</div><div class="v">-1.7 元(按时薪)</div></div><div class="m"><div class="k">适用前提</div><div class="v">不赶时间</div></div></div></div><div class="log"><div class="sec-tag"><span class="zh">核算记录</span><span class="en">POOL</span></div><ul id="log"><li style="color:var(--muted)">暂无核算。您的下一单拼车,正在等一位「顺路」的陌生人。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本所结语</div>
+    <p>拼车是共享经济的时间魔术:它把您的直线,换成别人的折线,再用折扣弥补您的耐心。本所不反对拼车——它确实是穷游神器——只提供一个公式:省下的钱 ÷ 多花的时间 = 您的时间单价。如果算出来低于心理价,安心拼;如果高于,这钱,省不得。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">核算完毕。不赶时间,就拼吧。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 432 号藏品 · 本所与 232 号(满减数学家)同属「省钱的数学课」教研组<br>所内冷知识:拼车绕路的真实均值是 1.6 倍——但乘客感知的绕路,均值是 2.5 倍——心理放大,行业惯例
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"绕路 ×1.6","pct":55,"stat0":"本所开张。请输入您的拼车单:原价、拼后价、以及您心里默数的红灯数——绕路成本,当场核算。","inputPh":"输入拼车节省金额(元),例如:15","btnLabel":"核算时间利息","reasons":["核算结果:省 15 元,绕路 25 分钟——时薪换算:您的 25 分钟按 40 元/时计,实际「赚」了 -1.7 元。拼车的经济学,取决于您的时间值多少钱。","核算补充:拼车的时间成本不止行车——上车等人 5 分钟、接第二位乘客绕行 8 分钟、中途在某小区门口「稍等一下」5 分钟——三段加起来,比绕路本身更长。","核算例外:如果您在车上补了一觉、回了三条消息、听完两集播客——这 25 分钟就不是成本,是「被动的自由时间」。拼车值不值,看您拿这 25 分钟干什么。","核算终极建议:赶时间,别拼车;不赶时间,拼车+心态放宽。拼车的最差用法,是「赶时间还拼车」——那 15 块的节省,会变成 50 块的打车焦虑。"],"empty":"不给节省金额没法核算——但您点「确认拼车」那 0.5 秒的犹豫,本所已经计入了。","metrics":[["节省金额","¥15"],["绕路时长","25 分钟"],["时间利息","-1.7 元(按时薪)"],["适用前提","不赶时间"]],"logTitle":"核算记录","logEn":"POOL","logEmpty":"暂无核算。您的下一单拼车,正在等一位「顺路」的陌生人。"};
+var log=$("log"),i=0,n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+$("goBtn").addEventListener("click",function(){
+i++;n++;
+var v=$("src").value.trim();
+var line=v?D.reasons[(i-1)%D.reasons.length]:D.empty;
+$("status").textContent=line;
+$("fill").style.width=D.pct+"%";
+record("第 "+n+" 次检测",line);
+});
+})();
+</script>
+</body>
+</html>

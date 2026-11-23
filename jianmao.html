@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>键帽字符磨损普查队</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>普查对象 <b>键帽字符(消失中)</b></span>
+    <span>磨损冠军 <b>空格键(全员公认)</b></span>
+    <span>普查立场 <b>磨掉的字,都是用过的命</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">KEYCAP-WEAR&nbsp;CENSUS</div>
+    <h1>键帽字符磨损普查队</h1>
+    <div class="sub">键盘上的字母会消失:ASD 先磨平,空格键永远最亮——本队普查键帽的磨损序列,并从磨损顺序里,读出您的人生重心。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您键盘上最先磨没字的键(几个都行)"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">提交普查</button><button class="btn" data-sample="0">打字员版</button><button class="btn" data-sample="1">游戏版</button><button class="btn" data-sample="2">程序员版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">键帽磨损普查报告</span><span class="en">KEYCAP&nbsp;CENSUS</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">普查队结语</div>
+    <p>键帽磨损是最诚实的劳动档案:它不记录您说了什么,只记录您按了什么。本队普查多年,得出一个温柔的结论——磨得最狠的那几个键,是您与世界打交道的方式。空格磨亮的人爱说话,回车磨平的人爱确认,Ctrl 磨白的人爱搬运。键盘知道您的一切,只是从不外传。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">普查完毕。看看您的空格键。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 424 号藏品 · 本队与 92 号(人生打字报告研究所)是姊妹队:一个查词库,一个查键帽<br>队内冷知识:机械键盘玩家的空格键,磨损速度是普通用户的 5 倍——他们连打字都带着回响
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您键盘上最先磨没字的键(几个都行)","btnLabel":"提交普查","sampleLabels":["打字员版","游戏版","程序员版"],"samples":["A、S、D、W 磨平了,空格键的字已经看不见","回车键的漆掉了,Enter 两个字只剩轮廓","Ctrl+C 的 C 磨没了,Ctrl+V 还很新——奇怪,明明复制粘贴一样多"],"num":"磨损画像:劳动型键盘","verdict":"普查结论:您的磨损集中在「操作键」而非「字母键」——这说明您的手,大部分时间在执行,少部分时间在打字。这是一台干活的键盘。","breakdown":[["空格键","光泽度最高","它承担着暂停、跳跃、发送的三重使命——全键盘最忙的键,也是唯一不用刻字的键"],["ASDW 磨平","游戏痕迹","方向键指纹——WASD 是数字世界的东南西北,磨平它们的人,在另一个世界走了很远的路"],["Ctrl 磨损","效率勋章","Ctrl 的磨损度 = 您的复制粘贴量 = 您的工作性质说明书"],["字母完好","打字靠盲打","字母磨平的人才需要看键盘——您不看,所以字母们很安全"],["普查建议","给 E 键也做个检查","E 是英文词频冠军——如果它先磨平,说明您在写英文;如果空格先磨平,说明您在聊天——磨损顺序,就是生活顺序"]],"empty":{"num":"普查暂停","verdict":"键盘都没有,谈什么磨损——您可能是个纯触屏选手,那是另一套普查体系。","breakdown":[["判定","触屏派","磨损在屏幕膜上"],["建议","下次换个键盘试试","机械键盘的磨损,更有收藏价值"]]},"reportTitle":"键帽磨损普查报告","reportEn":"KEYCAP&nbsp;CENSUS"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>办公椅滚轮遛弯档案馆</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>馆藏对象 <b>滚轮漂移事故(全部)</b></span>
+    <span>漂移半径 <b>30-80 厘米</b></span>
+    <span>馆内立场 <b>椅子不是在滑,是在逃</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">CHAIR-WHEEL&nbsp;WANDER</div>
+    <h1>办公椅滚轮遛弯档案馆</h1>
+    <div class="sub">办公椅的滚轮有自己的想法:您只是想靠近键盘一点,它却带您滑向工位 30 厘米外的未知——本馆收录历年「椅子漂移」事故与驯化方案。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">漂移 30 厘米</div><div class="status" id="status">档案馆开门。您此刻的坐姿,大概率不是您早上摆的那个——椅子在过去 8 小时里,悄悄挪了位。</div><div class="metrics"><div class="m"><div class="k">漂移半径</div><div class="v">40 厘米</div></div><div class="m"><div class="k">驯化方案</div><div class="v">3 套</div></div><div class="m"><div class="k">每日推回</div><div class="v">40 次</div></div><div class="m"><div class="k">馆内立场</div><div class="v">接受漂移</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">档案一·漂移实录</button><button class="btn" id="btn1">档案二·驯化方案</button></div></div><div class="log"><div class="sec-tag"><span class="zh">漂移档案</span><span class="en">WHEEL</span></div><ul id="log"><li style="color:var(--muted)">暂无档案。您的椅子此刻可能正在悄悄位移——它从不休息。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">档案馆结语</div>
+    <p>办公椅滚轮是被低估的行为艺术家:它把您每一次起身的力,都转化成了位移。本馆不提供完美解决方案——完美方案(轮锁)会让椅子失去灵性——只想说:与漂移的椅子共处,是办公室生活的必修课。您推它 40 次的耐心,就是职场修行的日常。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">登记完毕。起身时,记得推回来。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 426 号藏品 · 本馆与 45 号(生活节奏调音台)共同发现:漂移也是一种节奏——只是没人指挥<br>馆内冷知识:办公椅滚轮的累计滑动里程,平均每年 11 公里——您的椅子,比您想得爱运动
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"漂移 30 厘米","stat0":"档案馆开门。您此刻的坐姿,大概率不是您早上摆的那个——椅子在过去 8 小时里,悄悄挪了位。","btns":[{"label":"档案一·漂移实录","tag":"漂移","lines":["漂移实录一:上午您把椅子推到位,下午发现椅子在自己身后 40 厘米处——它乘着您每次起身的推力,完成了一次缓慢越狱。","漂移实录二:伸手够鼠标,椅子向后滑——您与桌子的距离,是被滚轮的每一次「服务性滑动」拉开的。服务,有时也是一种逃跑。","档案一结论:滚轮的每一次滚动都顺从您的当下,却违背您的初衷——这不是故障,是物理:您的每一次动作,都在为漂移蓄力。"],"bigs":["缓慢越狱","服务性滑动","为漂移蓄力"]},{"label":"档案二·驯化方案","tag":"驯化","lines":["驯化方案一:给两个前轮加装「轮锁」——牺牲自由换取定位,像给猫戴项圈。","驯化方案二:换地毯——硬地板是滚轮的天堂,地毯是它们的流放地。阻力提升 300%,漂移当场死亡。","驯化方案三(终极):接受漂移——反正每次起身您都会重新推回来,这是您与椅子的日常仪式:推过去,滑回来,一天 40 次。"],"bigs":["轮锁","地毯","40 次仪式"]}],"metrics":[["漂移半径","40 厘米"],["驯化方案","3 套"],["每日推回","40 次"],["馆内立场","接受漂移"]],"logTitle":"漂移档案","logEn":"WHEEL","logEmpty":"暂无档案。您的椅子此刻可能正在悄悄位移——它从不休息。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

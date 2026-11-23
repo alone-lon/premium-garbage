@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>显示器仰角博弈办公室</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>博弈对象 <b>显示器仰角(±5°)</b></span>
+    <span>参战方 <b>颈椎 · 眼睛 · 窗户反光</b></span>
+    <span>办内方案 <b>仰 10°,垫高 8 厘米</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">MONITOR-TILT&nbsp;OFFICE</div>
+    <h1>显示器仰角博弈办公室</h1>
+    <div class="sub">显示器该仰还是该俯:仰角护颈但反光,俯角护屏但低头——本办受理这场人体工学与采光权的百年博弈,并出具折中方案。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">当前仰角 0°</div><div class="status" id="status">本办受理中。请目测:您的显示器是平放的、垫高的,还是用两本书斜撑的?——撑书派,本办懂您。</div><div class="metrics"><div class="m"><div class="k">当前仰角</div><div class="v">0°(平放)</div></div><div class="m"><div class="k">参战方</div><div class="v">3 方</div></div><div class="m"><div class="k">和平温度</div><div class="v">26℃ 时的 0°</div></div><div class="m"><div class="k">办内立场</div><div class="v">仰 10°+垫高</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">受理·平放派</button><button class="btn" id="btn1">受理·垫高派</button></div></div><div class="log"><div class="sec-tag"><span class="zh">博弈记录</span><span class="en">TILT</span></div><ul id="log"><li style="color:var(--muted)">暂无受理。您的显示器此刻平放——它对角度没有意见,意见都是您脖子提的。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本办结语</div>
+    <p>显示器仰角是人体工学与办公现实的三角博弈:颈椎要仰,眼睛要俯,反光要斜。本办的折中方案是全宇宙通用的妥协艺术——仰 10 度,垫高 8 厘米,窗帘拉一半。没有完美答案,只有大家都能活的中庸。您的颈椎、眼睛和下午三点的阳光,会在 25 度室温里握手言和。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">受理完毕。垫高两本书,从今天起。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 425 号藏品 · 本办与 423 号(鼠标垫卷边处)同属「工位人体工学局」<br>办内冷知识:显示器垫高的书,一旦形成,三年内不会被移动——它们从读物,晋升为承重结构
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"当前仰角 0°","stat0":"本办受理中。请目测:您的显示器是平放的、垫高的,还是用两本书斜撑的?——撑书派,本办懂您。","btns":[{"label":"受理·平放派","tag":"平放","lines":["平放派现状:显示器平放在底座上,视线自然下垂 15 度——颈椎表示可以接受,但反光时段(每天下午 3 点)屏幕会变成一面镜子。","平放派的妥协:拉窗帘。窗帘一拉,采光权输给颈椎权——这是工位版的「跷跷板博弈」,按下这头,翘起那头。","受理结论:平放是默认配置,也是最大公约数——没人特别满意,但没人特别反对,这就是办公室的和平。"],"bigs":["15 度","拉窗帘","最大公约数"]},{"label":"受理·垫高派","tag":"垫高","lines":["垫高派现状:显示器下垫两本书,屏幕中心与视线齐平——颈椎赢得了战争,stdout 眼睛开始抱怨干涩。","垫高派的代价:书会滑。那两本书(一本《深入浅出》,一本《活着》)承担着人体工学重任,谁都不敢抽走——知识以另一种方式支撑了工作。","受理结论:垫高是颈椎的胜利,但每次调整完,您都会花一周重新适应——人体工学的每一步,都有迁移成本。"],"bigs":["两本书","不敢抽","迁移成本"]}],"metrics":[["当前仰角","0°(平放)"],["参战方","3 方"],["和平温度","26℃ 时的 0°"],["办内立场","仰 10°+垫高"]],"logTitle":"博弈记录","logEn":"TILT","logEmpty":"暂无受理。您的显示器此刻平放——它对角度没有意见,意见都是您脖子提的。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>

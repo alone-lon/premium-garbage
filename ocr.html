@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图片文字「无法复制」挣扎室</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>挣扎对象 <b>图片内文字(看得见抓不着)</b></span>
+    <span>平均尝试 <b>2.6 次(手划+长按+放大)</b></span>
+    <span>逃生路线 <b>3 条(OCR / 手打 / 转发)</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">IMAGE-TEXT&nbsp;STRUGGLE</div>
+    <h1>图片文字「无法复制」挣扎室</h1>
+    <div class="sub">截图里的文字明明看得清,却选不中、复制不了——您用手指在屏幕上划拉了三次,系统无动于衷。本室收录这场人机拉锯的全部挣扎,并给出三条逃生路线。</div>
+  </div>
+
+  <div class="console"><textarea id="src" placeholder="描述您最近一次「图片文字复制失败」的现场"></textarea><div class="ctrl"><button class="btn accent" id="goBtn">开始诊断</button><button class="btn" data-sample="0">手划版</button><button class="btn" data-sample="1">放大版</button><button class="btn" data-sample="2">求助版</button></div><div class="result" id="result"><div class="num" id="num">--</div><div class="verdict" id="verdict"></div></div></div><div class="report"><div class="sec-tag"><span class="zh">图片文字挣扎报告</span><span class="en">OCR&nbsp;CLINIC</span></div><ul id="breakdown"></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">挣扎室结语</div>
+    <p>「看得见抓不着」是数字时代最日常的无力感:文字明明在眼前,却被封印在像素里。本室的三条逃生路线,本质是把「人眼识别」升级成「机器识别」——OCR 不是魔法,它只是替您的手指,做完了您想做的那个划选动作。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">诊断完毕。下次,长按提取文字。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 440 号藏品 · 本室与 84 号(语音转文字灾难馆)同属「文字搬运事故科」:一个转语音,一个转图片<br>室内冷知识:OCR 识别准确率最高的字体,是打印宋体——您手写的那张单据,机器认不出来
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"placeholder":"描述您最近一次「图片文字复制失败」的现场","btnLabel":"开始诊断","sampleLabels":["手划版","放大版","求助版"],"samples":["长按图片,弹出的是「保存图片」——我要的是文字,不是图","用手指在字上划了三遍,试图选中——屏幕毫无反应,像在对牛弹琴","最后把图发给朋友:帮我打一下这上面的字——人肉 OCR,一次成功"],"num":"挣扎等级:全员中招","verdict":"诊断结论:「图片文字不可复制」是数字时代的经典无力感——您的手指在模拟选择,屏幕在假装没看见。这不是您的问题,是图片的天性:像素没有文字的灵魂。","breakdown":[["挣扎一","手指划选","人类对文字的本能反应是「划选」——但图片里的字是像素画出来的,没有可选中对象"],["挣扎二","长按等待","长按的期待是「弹出复制」——弹出的是「保存/转发/收藏」,三选一,都不是您要的"],["挣扎三","放大细看","放大后逐字手打,打到第 7 个字开始怀疑人生——手打是对的,但您的耐心只有 6 个字"],["逃生路线一","OCR 提取","微信长按图片选「提取文字」、输入法自带的识图——3 秒,整段捕获,准确率 96%"],["逃生路线二","直接转发","把图发给能打字的人——人肉 OCR 虽古老,但成功率 100%,还带人工校对"]],"empty":{"num":"诊断暂停","verdict":"没有挣扎经历没法确诊——但您既然来了,想必已经划过三次了。","breakdown":[["判定","中招","全人类都中招"],["建议","记住路线一","长按图片,提取文字"]]},"reportTitle":"图片文字挣扎报告","reportEn":"OCR&nbsp;CLINIC"};
+function render(rows){
+var ul=$("breakdown");ul.innerHTML="";
+rows.forEach(function(r){
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+r[0]+'</span><span>'+r[1]+' · <span style="color:var(--muted)">'+r[2]+'</span></span>';
+ul.appendChild(li);
+});
+}
+function detect(){
+var t=$("src").value.trim();
+$("result").style.display="block";
+if(!t){$("num").textContent=D.empty.num;$("verdict").textContent=D.empty.verdict;render(D.empty.breakdown);return;}
+$("num").textContent=D.num;$("verdict").textContent=D.verdict;render(D.breakdown);
+}
+$("goBtn").addEventListener("click",detect);
+document.querySelectorAll("[data-sample]").forEach(function(b){
+b.addEventListener("click",function(){$("src").value=D.samples[+b.getAttribute("data-sample")];detect();});
+});
+})();
+</script>
+</body>
+</html>

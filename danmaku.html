@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>弹幕遮挡关键剧情投诉办</title>
+<style>
+:root{--paper:#FAF6EE;--ink:#1C1914;--muted:#8A8272;--seal:#BF3A2B;--faint:#DDD5C3}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased}
+::selection{background:var(--seal);color:#fff}
+.page{max-width:800px;margin:0 auto;padding:60px 28px 110px}
+.meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:14px;font-size:12px;letter-spacing:.18em;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.mast{padding:50px 0 36px;text-align:center}
+.mast .en{font-size:11px;letter-spacing:.42em;color:var(--muted);margin-bottom:22px}
+.mast h1{font-size:clamp(30px,6vw,50px);font-weight:700;letter-spacing:.13em;font-family:"Songti SC","STSong","SimSun",Georgia,serif}
+.mast .sub{margin-top:18px;font-size:14px;color:var(--muted)}
+.console{border:1px solid var(--ink);padding:38px 30px 32px;margin-top:8px;text-align:center}
+.big{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(36px,8vw,60px);font-weight:700;color:var(--seal);line-height:1.25;min-height:1.25em}
+.big.plain{color:var(--ink)}
+.status{font-size:14px;color:var(--muted);margin-top:10px;min-height:2.2em}
+.ctrl{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:12px 26px;font-size:15px;letter-spacing:.12em;cursor:pointer;font-family:inherit;transition:background .15s,color .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.accent{border-color:var(--seal);color:var(--seal)}
+.btn.accent:hover{background:var(--seal);color:#fff}
+.input{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.input input{border:1px solid var(--faint);background:transparent;color:var(--ink);padding:12px 14px;font:inherit;font-size:14px;width:min(440px,100%)}
+.input input:focus{outline:none;border-color:var(--ink)}
+.console textarea{width:100%;min-height:110px;border:1px solid var(--faint);background:transparent;color:var(--ink);padding:14px;font:inherit;font-size:14px;line-height:1.8;resize:vertical}
+.console textarea:focus{outline:none;border-color:var(--ink)}
+.metrics{display:flex;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);margin-top:26px}
+.m{flex:1;padding:16px 6px;text-align:center;border-left:1px solid var(--faint)}
+.m:first-child{border-left:none}
+.m .k{font-size:11px;letter-spacing:.2em;color:var(--muted)}
+.m .v{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;margin-top:3px}
+.m .v small{font-size:12px;font-weight:400;color:var(--muted)}
+.meter{height:14px;border:1px solid var(--ink);margin-top:22px;padding:2px}
+.meter .fill{height:100%;background:var(--seal);opacity:.75}
+.result{margin-top:28px;display:none}
+.result .num{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:clamp(32px,7vw,52px);font-weight:700;color:var(--seal)}
+.result .verdict{font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.08em;min-height:1.8em}
+.output{margin-top:26px;border-top:1px solid var(--faint);padding-top:22px;display:none;text-align:left}
+.output .fact{font-size:13px;color:var(--muted);letter-spacing:.06em}
+.output .deep{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2.1;margin-top:12px;word-break:break-all}
+.report{margin-top:56px}
+.sec-tag{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:4px}
+.sec-tag .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:20px;font-weight:700;letter-spacing:.14em}
+.sec-tag .en{font-size:10px;letter-spacing:.3em;color:var(--muted)}
+ul{list-style:none}
+li{padding:13px 2px;border-bottom:1px solid var(--faint);font-size:14px;display:flex;gap:14px}
+li .t{color:var(--seal);font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700;white-space:nowrap}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:12px 6px;border-bottom:1px solid var(--faint);vertical-align:top}
+th{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:400;border-bottom:1px solid var(--ink)}
+td:first-child{width:26%;font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-weight:700}
+td:last-child{color:var(--muted)}
+.note{margin-top:44px;border:1px solid var(--ink);padding:26px 30px}
+.note .title{font-size:12px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px}
+.note p{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:17px;line-height:2}
+.end{margin-top:76px;border-top:1px solid var(--ink);padding-top:30px;text-align:center}
+.end .zh{font-family:"Songti SC","STSong","SimSun",Georgia,serif;font-size:21px;letter-spacing:.1em}
+.end .fine{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;line-height:2}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="meta">
+    <span>受理对象 <b>弹幕遮挡(高能时刻高发)</b></span>
+    <span>遮屏峰值 <b>高能前 10 秒</b></span>
+    <span>办内方案 <b>智能屏蔽 · 底部弹幕 · 半屏模式</b></span>
+  </div>
+
+  <div class="mast">
+    <div class="en">DANMAKU-BLOCK&nbsp;BUREAU</div>
+    <h1>弹幕遮挡关键剧情投诉办</h1>
+    <div class="sub">「前面高能」的弹幕,把高能本身挡住了——弹幕是看视频的伴侣,也是画面的贴膜。本办受理弹幕遮屏投诉,并研究「关弹幕保平安」的时机学。</div>
+  </div>
+
+  <div class="console"><div class="big" id="big">弹幕密度峰值</div><div class="status" id="status">本办接案。剧情进入高潮,弹幕开始刷「前方高能」「名场面来了」「泪目」——然后,您什么都没看见。</div><div class="metrics"><div class="m"><div class="k">受理投诉</div><div class="v">2 起</div></div><div class="m"><div class="k">遮屏峰值</div><div class="v">47 条/屏</div></div><div class="m"><div class="k">弹幕价值</div><div class="v">二刷翻倍</div></div><div class="m"><div class="k">推荐模式</div><div class="v">底部弹幕</div></div></div><div class="ctrl"><button class="btn accent" id="btn0">受理·遮屏投诉</button><button class="btn" id="btn1">方案·时机学</button></div></div><div class="log"><div class="sec-tag"><span class="zh">受理记录</span><span class="en">DANMAKU</span></div><ul id="log"><li style="color:var(--muted)">暂无受理。您的弹幕此刻飘过——「前面高能」的预警,又挡住了一个高能。</li></ul></div>
+
+  
+
+  <div class="note">
+    <div class="title">本办结语</div>
+    <p>弹幕是当代观影的第二叙事层:它让孤独的观看变成云陪伴,也让画面多了层「活的贴膜」。本办不裁决弹幕好坏——它两者都是——只传授时机学:一刷关弹幕,尊重作品;二刷开弹幕,享受共鸣。弹幕与画面,本就该分场使用。</p>
+  </div>
+
+  <div class="end">
+    <div class="zh">受理完毕。高能时刻,请关弹幕。</div>
+    <div class="fine">
+      精品垃圾系列 · 第 438 号藏品 · 本办与 438 号前的弹幕用户达成共识:弹幕是陪伴,不是字幕<br>办内冷知识:弹幕密度最高的 10 秒,恰好是全片情绪最高点——观众的热情,总是精准地挡在最关键的画面上
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var D={"big0":"弹幕密度峰值","stat0":"本办接案。剧情进入高潮,弹幕开始刷「前方高能」「名场面来了」「泪目」——然后,您什么都没看见。","btns":[{"label":"受理·遮屏投诉","tag":"投诉","lines":["投诉实录:名场面出现的 10 秒内,弹幕密度达到每屏 47 条——「啊啊啊啊」刷满了画面。您看到了大家的激动,没看到画面本身。","投诉的悖论:弹幕「前方高能」是善意预警,也是善意遮挡——它告诉您精彩来了,又让您错过了精彩。预警与遮蔽,是同一件事。","受理结论:弹幕的社交价值与画面价值,此消彼长——本办的职责不是消灭弹幕,是教您在 0.5 秒内切换。"],"bigs":["47 条/屏","预警即遮挡","0.5 秒切换"]},{"label":"方案·时机学","tag":"时机","lines":["时机学一:开弹幕看「铺垫」,关弹幕看「高潮」——弹幕的乐趣在共鸣,画面的价值在细节,分段使用,两全其美。","时机学二:二刷必开弹幕——一刷看剧情,二刷看弹幕里的「我也这样想过」——弹幕是二刷的正确打开方式。","本办终极方案:底部弹幕模式——弹幕沉底,画面清爽,「前方高能」依然可见。这是本办多年来调解弹幕与画面的最优解。"],"bigs":["分段使用","二刷必开","底部模式"]}],"metrics":[["受理投诉","2 起"],["遮屏峰值","47 条/屏"],["弹幕价值","二刷翻倍"],["推荐模式","底部弹幕"]],"logTitle":"受理记录","logEn":"DANMAKU","logEmpty":"暂无受理。您的弹幕此刻飘过——「前面高能」的预警,又挡住了一个高能。"};
+var log=$("log"),n=0;
+function record(tag,text){
+if(log.children.length===1&&log.children[0].textContent.indexOf("暂无")>-1)log.innerHTML="";
+var li=document.createElement("li");
+li.innerHTML='<span class="t">'+tag+'</span><span>'+text+'</span>';
+log.prepend(li);
+}
+D.btns.forEach(function(b,i){
+var c=0;
+$("btn"+i).addEventListener("click",function(){
+c++;n++;
+var line=b.lines[(c-1)%b.lines.length];
+if(b.bigs)$("big").textContent=b.bigs[(c-1)%b.bigs.length];
+$("status").textContent=line;
+record(b.tag||("第 "+n+" 次"),line);
+});
+});
+})();
+</script>
+</body>
+</html>
