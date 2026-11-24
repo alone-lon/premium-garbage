@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T09:10:14.600Z",
+ "updated": "2026-11-24T11:06:48.499Z",
  "std": {
   "counter": "姣忔寜閽?lines>=8",
   "queue": "takeLines>=8 & scenes>=8",
@@ -10,42 +10,6 @@
  },
  "total": 520,
  "queue": [
-  {
-   "file": "dianzi.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dim.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dream.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "fankui.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
   {
    "file": "fridge.html",
    "kind": "counter",
@@ -4065,6 +4029,33 @@
    "std": "姣忔寜閽?lines>=8"
   },
   {
+   "file": "dianzi.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "dim.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "dream.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
    "file": "fanju.html",
    "kind": "slots",
    "fresh": 24,
@@ -4072,6 +4063,15 @@
    "deficit": 0,
    "detail": "pools=24",
    "std": "pools>=12"
+  },
+  {
+   "file": "fankui.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "huoguo.html",
