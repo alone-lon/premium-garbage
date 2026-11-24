@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T02:04:11.456Z",
+ "updated": "2026-11-24T03:48:14.165Z",
  "std": {
   "counter": "姣忔寜閽?lines>=8",
   "queue": "takeLines>=8 & scenes>=8",
@@ -11,60 +11,6 @@
  "total": 520,
  "queue": [
   {
-   "file": "nianling.html",
-   "kind": "counter",
-   "fresh": 12,
-   "target": 32,
-   "deficit": 20,
-   "detail": "btns=4",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "pingxing.html",
-   "kind": "counter",
-   "fresh": 12,
-   "target": 32,
-   "deficit": 20,
-   "detail": "btns=4",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "caidian.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "canpan.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "captcha.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "catpoop.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
    "file": "chaoyue.html",
    "kind": "counter",
    "fresh": 9,
@@ -75,24 +21,6 @@
   },
   {
    "file": "chenzhong.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "chongdian.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "couple.html",
    "kind": "counter",
    "fresh": 9,
    "target": 24,
@@ -4119,6 +4047,60 @@
    "std": "姣忔寜閽?lines>=8"
   },
   {
+   "file": "caidian.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "canpan.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "captcha.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "catpoop.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "chongdian.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "couple.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
    "file": "fanju.html",
    "kind": "slots",
    "fresh": 24,
@@ -4513,6 +4495,24 @@
    "deficit": 0,
    "detail": "pools=32",
    "std": "pools>=12"
+  },
+  {
+   "file": "nianling.html",
+   "kind": "counter",
+   "fresh": 32,
+   "target": 32,
+   "deficit": 0,
+   "detail": "btns=4",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "pingxing.html",
+   "kind": "counter",
+   "fresh": 32,
+   "target": 32,
+   "deficit": 0,
+   "detail": "btns=4",
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "qianzou.html",
