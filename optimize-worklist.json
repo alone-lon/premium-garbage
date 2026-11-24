@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-23T22:10:00+08:00",
+ "updated": "2026-11-24T02:04:11.456Z",
  "std": {
-  "counter": "每按钮 lines>=8",
+  "counter": "姣忔寜閽?lines>=8",
   "queue": "takeLines>=8 & scenes>=8",
   "meter": "reasons>=8",
   "slots": "pools>=12",
@@ -17,7 +17,7 @@
    "target": 32,
    "deficit": 20,
    "detail": "btns=4",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "pingxing.html",
@@ -26,7 +26,7 @@
    "target": 32,
    "deficit": 20,
    "detail": "btns=4",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "caidian.html",
@@ -35,7 +35,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "canpan.html",
@@ -44,7 +44,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "captcha.html",
@@ -53,7 +53,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "catpoop.html",
@@ -62,7 +62,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "chaoyue.html",
@@ -71,7 +71,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "chenzhong.html",
@@ -80,7 +80,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "chongdian.html",
@@ -89,7 +89,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "couple.html",
@@ -98,7 +98,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "cuolou.html",
@@ -107,7 +107,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "cuozi.html",
@@ -116,7 +116,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "daijia.html",
@@ -125,7 +125,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "daka.html",
@@ -134,7 +134,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "danche.html",
@@ -143,7 +143,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "daohang.html",
@@ -152,7 +152,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dasuan.html",
@@ -161,7 +161,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "datan.html",
@@ -170,7 +170,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dengkaiguan.html",
@@ -179,7 +179,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "diannao.html",
@@ -188,7 +188,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianshi.html",
@@ -197,7 +197,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianti-anniu.html",
@@ -206,7 +206,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianti.html",
@@ -215,7 +215,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianying.html",
@@ -224,7 +224,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianzi.html",
@@ -233,7 +233,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dim.html",
@@ -242,7 +242,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dingkui.html",
@@ -251,7 +251,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dingwei.html",
@@ -260,7 +260,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dream.html",
@@ -269,7 +269,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "fankui.html",
@@ -278,7 +278,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "fridge.html",
@@ -287,7 +287,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "fuyinjian.html",
@@ -296,7 +296,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "gangsiqiu.html",
@@ -305,7 +305,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "ganzaoji.html",
@@ -314,7 +314,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "gengxin.html",
@@ -323,7 +323,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "gongdao.html",
@@ -332,7 +332,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guajian.html",
@@ -341,7 +341,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guanbimen.html",
@@ -350,7 +350,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guandongzhu.html",
@@ -359,7 +359,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guapai.html",
@@ -368,7 +368,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guazhong.html",
@@ -377,7 +377,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "haxi.html",
@@ -386,7 +386,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "hecha.html",
@@ -395,7 +395,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "hezhang.html",
@@ -404,7 +404,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jianfei.html",
@@ -413,7 +413,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jiezou.html",
@@ -422,7 +422,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jinchiji.html",
@@ -431,7 +431,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jinku.html",
@@ -440,7 +440,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jiushouji.html",
@@ -449,7 +449,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jiyao.html",
@@ -458,7 +458,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "juanzhi.html",
@@ -467,7 +467,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "kb.html",
@@ -476,7 +476,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "kecheng.html",
@@ -485,7 +485,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "koji.html",
@@ -494,7 +494,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "kongbaiye.html",
@@ -503,7 +503,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "kongjian.html",
@@ -512,7 +512,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "kuaidi.html",
@@ -521,7 +521,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "kuaidixiang.html",
@@ -530,7 +530,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "laochou.html",
@@ -539,7 +539,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "lastlook.html",
@@ -548,7 +548,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "lenggui.html",
@@ -557,7 +557,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "lengqi.html",
@@ -566,7 +566,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "liangkuai.html",
@@ -575,7 +575,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "liangyijia2.html",
@@ -584,7 +584,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "light.html",
@@ -593,7 +593,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "lingshi.html",
@@ -602,7 +602,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "luosidao.html",
@@ -611,7 +611,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "manjian.html",
@@ -620,7 +620,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "meishi.html",
@@ -629,7 +629,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "menjin.html",
@@ -638,7 +638,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "metro.html",
@@ -647,7 +647,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "mubiao.html",
@@ -656,7 +656,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "naicha.html",
@@ -665,7 +665,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "nap.html",
@@ -674,7 +674,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "no100.html",
@@ -683,7 +683,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "noinet.html",
@@ -692,7 +692,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "noodle.html",
@@ -701,7 +701,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "paiyueliang.html",
@@ -710,7 +710,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "penquan.html",
@@ -719,7 +719,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "phonedrop.html",
@@ -728,7 +728,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "pianzi.html",
@@ -737,7 +737,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "plant.html",
@@ -746,7 +746,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "plantdeath.html",
@@ -755,7 +755,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "power.html",
@@ -764,7 +764,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "pptdonghua.html",
@@ -773,7 +773,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "printer.html",
@@ -782,7 +782,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "qianbi.html",
@@ -791,7 +791,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "qiangzhi.html",
@@ -800,7 +800,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "qishou.html",
@@ -809,7 +809,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "qudai.html",
@@ -818,7 +818,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "quzhong.html",
@@ -827,7 +827,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "renling.html",
@@ -836,7 +836,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "renqing.html",
@@ -845,7 +845,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "saobahui.html",
@@ -854,7 +854,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "scale.html",
@@ -863,7 +863,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shafa.html",
@@ -872,7 +872,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shiming.html",
@@ -881,7 +881,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shoucang.html",
@@ -890,7 +890,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shouji.html",
@@ -899,7 +899,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shoujimo.html",
@@ -908,7 +908,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shuangyue.html",
@@ -917,7 +917,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shuru.html",
@@ -926,7 +926,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "soundlamp.html",
@@ -935,7 +935,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "speaker.html",
@@ -944,7 +944,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "star.html",
@@ -953,7 +953,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "sudai.html",
@@ -962,7 +962,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "sudu.html",
@@ -971,7 +971,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tianchong.html",
@@ -980,7 +980,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tiaoliaoping.html",
@@ -989,7 +989,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tijian.html",
@@ -998,7 +998,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "timelab.html",
@@ -1007,7 +1007,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tingche.html",
@@ -1016,7 +1016,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tufa.html",
@@ -1025,7 +1025,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tuoyan.html",
@@ -1034,7 +1034,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "upan.html",
@@ -1043,7 +1043,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "voice.html",
@@ -1052,7 +1052,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "waimaihongbao.html",
@@ -1061,7 +1061,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "waimaiping.html",
@@ -1070,7 +1070,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "waiter.html",
@@ -1079,7 +1079,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "wanggou.html",
@@ -1088,7 +1088,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "wazi.html",
@@ -1097,7 +1097,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "wenzi.html",
@@ -1106,7 +1106,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "wujin.html",
@@ -1115,7 +1115,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "wujing.html",
@@ -1124,7 +1124,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "wuziqi.html",
@@ -1133,7 +1133,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xiaban.html",
@@ -1142,7 +1142,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xiangpi.html",
@@ -1151,7 +1151,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xiaopiao.html",
@@ -1160,7 +1160,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xiegui.html",
@@ -1169,7 +1169,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xiezi.html",
@@ -1178,7 +1178,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xitong.html",
@@ -1187,7 +1187,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xiyiji2.html",
@@ -1196,7 +1196,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xufei.html",
@@ -1205,7 +1205,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xusuo.html",
@@ -1214,7 +1214,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yaoshi.html",
@@ -1223,7 +1223,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yibei.html",
@@ -1232,7 +1232,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yiguoqi.html",
@@ -1241,7 +1241,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yijia.html",
@@ -1250,7 +1250,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yijia2.html",
@@ -1259,7 +1259,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yingjizhi.html",
@@ -1268,7 +1268,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yinliang2.html",
@@ -1277,7 +1277,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yiqian.html",
@@ -1286,7 +1286,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yizi.html",
@@ -1295,7 +1295,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "youxibei.html",
@@ -1304,7 +1304,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yuanfu.html",
@@ -1313,7 +1313,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yugao.html",
@@ -1322,7 +1322,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yusan.html",
@@ -1331,7 +1331,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zhenxianhe.html",
@@ -1340,7 +1340,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zhiding.html",
@@ -1349,7 +1349,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zhineng.html",
@@ -1358,7 +1358,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zhiwen.html",
@@ -1367,7 +1367,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zhoubao.html",
@@ -1376,7 +1376,7 @@
    "target": 24,
    "deficit": 15,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "muyu.html",
@@ -1385,7 +1385,7 @@
    "target": 24,
    "deficit": 14,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "qipomo.html",
@@ -1394,7 +1394,7 @@
    "target": 24,
    "deficit": 14,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shouna.html",
@@ -1403,7 +1403,7 @@
    "target": 24,
    "deficit": 14,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "ok.html",
@@ -1412,7 +1412,7 @@
    "target": 16,
    "deficit": 11,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "acremote.html",
@@ -1421,7 +1421,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "ailoading.html",
@@ -1430,7 +1430,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "anjianbandai.html",
@@ -1439,7 +1439,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "baijiu.html",
@@ -1457,7 +1457,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "bodai.html",
@@ -1502,7 +1502,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "chaozuo.html",
@@ -1511,7 +1511,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "checkin2.html",
@@ -1520,7 +1520,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "chongdianbao.html",
@@ -1556,7 +1556,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "cunqian.html",
@@ -1565,7 +1565,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "cyberfriend.html",
@@ -1574,7 +1574,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "daijia2.html",
@@ -1583,7 +1583,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "danmaku.html",
@@ -1592,7 +1592,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "danzi.html",
@@ -1610,7 +1610,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "daolaji.html",
@@ -1628,7 +1628,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianyun.html",
@@ -1637,7 +1637,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dilantiao.html",
@@ -1655,7 +1655,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "duanzi.html",
@@ -1664,7 +1664,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "ershuji.html",
@@ -1673,7 +1673,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "fanhaole.html",
@@ -1691,7 +1691,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "fengshan.html",
@@ -1709,7 +1709,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "gaoyaguo.html",
@@ -1727,7 +1727,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "gongjian.html",
@@ -1754,7 +1754,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guoqilai.html",
@@ -1763,7 +1763,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "hesu.html",
@@ -1781,7 +1781,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jiaoban.html",
@@ -1799,7 +1799,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "kafei.html",
@@ -1817,7 +1817,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "kuaizi.html",
@@ -1853,7 +1853,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "migang.html",
@@ -1889,7 +1889,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "nightbus.html",
@@ -1898,7 +1898,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "no520.html",
@@ -1907,7 +1907,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "paihang.html",
@@ -1916,7 +1916,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "pianwei.html",
@@ -1925,7 +1925,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "qujian.html",
@@ -1952,7 +1952,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "saoziyang.html",
@@ -1961,7 +1961,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shichi.html",
@@ -1979,7 +1979,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shubiaodian.html",
@@ -1988,7 +1988,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shuisheng.html",
@@ -1997,7 +1997,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "sign.html",
@@ -2006,7 +2006,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "stock.html",
@@ -2015,7 +2015,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "suliaodai.html",
@@ -2024,7 +2024,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tiaoguo.html",
@@ -2033,7 +2033,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tongqinbao.html",
@@ -2042,7 +2042,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "twopoints.html",
@@ -2051,7 +2051,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "usb.html",
@@ -2060,7 +2060,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xianlan.html",
@@ -2069,7 +2069,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "xianshiqi.html",
@@ -2078,7 +2078,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yangping.html",
@@ -2105,7 +2105,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "ykgfeng.html",
@@ -2123,7 +2123,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yundoc.html",
@@ -2132,7 +2132,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zhanming.html",
@@ -2141,7 +2141,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zhengbao.html",
@@ -2159,7 +2159,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zuijinshanchu.html",
@@ -2177,7 +2177,7 @@
    "target": 16,
    "deficit": 10,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "faxian.html",
@@ -2186,7 +2186,7 @@
    "target": 16,
    "deficit": 9,
    "detail": "btns=2",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "tuihuo.html",
@@ -2672,7 +2672,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "beisu.html",
@@ -2681,7 +2681,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "biaomen.html",
@@ -2690,7 +2690,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "chepeng.html",
@@ -2699,7 +2699,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "chuantang.html",
@@ -2708,7 +2708,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "chunwan.html",
@@ -2717,7 +2717,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dayindian.html",
@@ -2726,7 +2726,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dengreshui.html",
@@ -2744,7 +2744,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianretan.html",
@@ -2753,7 +2753,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dumiao.html",
@@ -2762,7 +2762,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "gongzhang.html",
@@ -2771,7 +2771,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guali.html",
@@ -2780,7 +2780,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guandeng.html",
@@ -2789,7 +2789,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "guochan.html",
@@ -2798,7 +2798,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "hualian.html",
@@ -2807,7 +2807,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jiaodai.html",
@@ -2816,7 +2816,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jiaohuan.html",
@@ -2825,7 +2825,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "jielongqun.html",
@@ -2834,7 +2834,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "liuyan.html",
@@ -2843,7 +2843,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "louti.html",
@@ -2852,7 +2852,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "maojinjia.html",
@@ -2861,7 +2861,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "modi.html",
@@ -2870,7 +2870,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "nixing.html",
@@ -2879,7 +2879,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "pinggai.html",
@@ -2888,7 +2888,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "qianbao.html",
@@ -2897,7 +2897,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "reshuidai.html",
@@ -2906,7 +2906,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "shaibei.html",
@@ -2915,7 +2915,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "toukui.html",
@@ -2924,7 +2924,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yancai.html",
@@ -2933,7 +2933,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yaojianpan.html",
@@ -2942,7 +2942,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "yasuiqian.html",
@@ -2951,7 +2951,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zhuantou.html",
@@ -2960,7 +2960,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "zizhushouyin.html",
@@ -2969,7 +2969,7 @@
    "target": 8,
    "deficit": 5,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianxiangye.html",
@@ -2996,7 +2996,7 @@
    "target": 8,
    "deficit": 4,
    "detail": "btns=1",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "pinche.html",
@@ -3535,7 +3535,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "cat.html",
@@ -3543,7 +3543,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "click.html",
@@ -3551,7 +3551,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "decide.html",
@@ -3559,7 +3559,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "dig.html",
@@ -3567,7 +3567,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "doubt.html",
@@ -3575,7 +3575,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "ending.html",
@@ -3583,7 +3583,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "format.html",
@@ -3591,7 +3591,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "fortune.html",
@@ -3599,7 +3599,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "futuredate.html",
@@ -3607,7 +3607,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "guess.html",
@@ -3615,7 +3615,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "lazy.html",
@@ -3623,7 +3623,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "meeting.html",
@@ -3631,7 +3631,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "moyu.html",
@@ -3639,7 +3639,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "music.html",
@@ -3647,7 +3647,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "nonsense.html",
@@ -3655,7 +3655,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "notebook.html",
@@ -3663,7 +3663,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "nothing.html",
@@ -3671,7 +3671,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "payslip.html",
@@ -3679,7 +3679,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "pie.html",
@@ -3687,7 +3687,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "premium-garbage.html",
@@ -3695,7 +3695,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "progress.html",
@@ -3703,7 +3703,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "qrcode.html",
@@ -3711,7 +3711,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "queue.html",
@@ -3719,7 +3719,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "readme.html",
@@ -3727,7 +3727,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "saver.html",
@@ -3735,7 +3735,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "support.html",
@@ -3743,7 +3743,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "terminal.html",
@@ -3751,7 +3751,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "update.html",
@@ -3759,7 +3759,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "weather.html",
@@ -3767,7 +3767,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "weekend.html",
@@ -3775,7 +3775,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "wish.html",
@@ -3783,7 +3783,7 @@
    "fresh": -1,
    "target": null,
    "deficit": 0,
-   "detail": "手工时代页面,无标准数据块"
+   "detail": "鎵嬪伐鏃朵唬椤甸潰,鏃犳爣鍑嗘暟鎹潡"
   },
   {
    "file": "anhao.html",
@@ -4053,7 +4053,7 @@
    "target": 24,
    "deficit": 0,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "alarm.html",
@@ -4062,7 +4062,7 @@
    "target": 24,
    "deficit": 0,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "baiban.html",
@@ -4071,7 +4071,7 @@
    "target": 24,
    "deficit": 0,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "baoxianhe.html",
@@ -4080,7 +4080,7 @@
    "target": 24,
    "deficit": 0,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "bianlitie.html",
@@ -4089,7 +4089,7 @@
    "target": 24,
    "deficit": 0,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "bushu.html",
@@ -4098,7 +4098,7 @@
    "target": 24,
    "deficit": 0,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "bx2.html",
@@ -4107,7 +4107,7 @@
    "target": 24,
    "deficit": 0,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "cahong.html",
@@ -4116,7 +4116,7 @@
    "target": 24,
    "deficit": 0,
    "detail": "btns=3",
-   "std": "每按钮 lines>=8"
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "fanju.html",
