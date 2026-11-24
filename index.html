@@ -4761,5 +4761,90 @@ body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Hiragin
     </div>
   </div>
 </div>
+
+<!-- 谢幕报告入口:闭馆封条(本封条是全馆最后一件免费周边) -->
+<style>
+.finale-seal{max-width:860px;margin:46px auto 30px;background:var(--red,#BF3A2B);color:#FFFDF7;border-radius:6px;transform:rotate(-1.2deg);box-shadow:0 6px 18px rgba(191,58,43,.35);cursor:pointer;position:relative;overflow:hidden;transition:transform .2s;}
+.finale-seal:hover{transform:rotate(-0.4deg) scale(1.01);}
+.finale-seal .seal-main{display:flex;align-items:center;gap:14px;padding:16px 20px;border-top:2px dashed rgba(255,253,247,.65);border-bottom:2px dashed rgba(255,253,247,.65);}
+.finale-seal .seal-stamp{flex:0 0 auto;border:3px solid #FFFDF7;border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;letter-spacing:.1em;transform:rotate(-12deg);}
+.finale-seal .seal-txt{flex:1;font-size:14.5px;line-height:1.7;}
+.finale-seal .seal-sub{display:block;font-size:12px;opacity:.85;margin-top:3px;}
+.finale-seal .seal-x{flex:0 0 auto;background:rgba(255,253,247,.14);border:2px solid #FFFDF7;color:#FFFDF7;font-size:22px;line-height:1;width:38px;height:38px;border-radius:50%;cursor:pointer;font-family:inherit;}
+.finale-seal .seal-x:hover{background:#FFFDF7;color:#BF3A2B;}
+.finale-ov{position:fixed;inset:0;background:rgba(28,25,20,.58);z-index:999;overflow-y:auto;padding:40px 16px;}
+.finale-ov[hidden]{display:none;}
+.ov-card{position:relative;max-width:760px;margin:0 auto;background:#FAF6EE;color:#1C1914;border-radius:10px;padding:38px 34px 30px;box-shadow:0 18px 50px rgba(0,0,0,.4);}
+.ov-x{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:50%;border:3px solid #BF3A2B;background:#FFFDF7;color:#BF3A2B;font-size:24px;line-height:1;cursor:pointer;font-family:inherit;font-weight:900;}
+.ov-x:hover{background:#BF3A2B;color:#FFFDF7;}
+.ov-badge{display:inline-block;background:#BF3A2B;color:#FFFDF7;font-size:12px;letter-spacing:.3em;padding:5px 12px 5px 15px;border-radius:3px;}
+.ov-card h2{font-size:30px;font-weight:900;letter-spacing:.08em;margin:14px 0 4px;}
+.ov-en{color:#6E655A;font-size:12px;letter-spacing:.35em;margin-bottom:20px;}
+.ov-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
+.ov-metrics .m{background:#FFFDF7;border:1px solid #E5DCC9;border-radius:8px;padding:12px 14px;}
+.ov-metrics .m b{display:block;font-size:22px;color:#BF3A2B;font-weight:900;}
+.ov-metrics .m span{font-size:12px;color:#6E655A;}
+.ov-his{border-left:3px solid #BF3A2B;margin:0 0 18px;padding-left:14px;font-size:13.5px;line-height:2;}
+.ov-his b{letter-spacing:.04em;}
+.ov-his .n{color:#6E655A;font-size:12px;}
+.ov-check{background:#F4EDDD;border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:18px;}
+.ov-trio{font-size:13.5px;margin:0 0 14px;}
+.ov-motto{font-size:19px;font-weight:900;letter-spacing:.12em;margin:0 0 16px;}
+.ov-motto b{color:#BF3A2B;}
+.ov-more{font-size:13px;margin:0 0 8px;}
+.ov-more a{color:#BF3A2B;}
+.ov-fine{font-size:12px;color:#6E655A;}
+</style>
+
+<div class="finale-seal" id="finaleSeal" role="button" tabindex="0" title="撕开封条,瞻仰谢幕报告">
+  <div class="seal-main">
+    <span class="seal-stamp">闭馆</span>
+    <span class="seal-txt">本系列已于 2026-11-23 正式闭馆 · 谢幕报告供瞻仰 —— 点击撕开封条
+      <span class="seal-sub">撕毁无效,但不撕更无效。本封条是全馆最后一件免费周边,谢幕报告不算藏品,算遗言。</span></span>
+    <button class="seal-x" id="sealX" aria-label="打开谢幕报告" title="这个 × 是开瓶器,点了就开">×</button>
+  </div>
+</div>
+
+<div class="finale-ov" id="finaleOv" hidden>
+  <div class="ov-card">
+    <button class="ov-x" id="ovX" aria-label="关闭谢幕报告" title="看完再关,不许假装没看过">×</button>
+    <span class="ov-badge">闭 馆 公 告</span>
+    <h2>谢幕报告</h2>
+    <p class="ov-en">THE CURTAIN CALL · PREMIUM GARBAGE NO.1-520</p>
+    <div class="ov-metrics">
+      <div class="m"><b>520</b><span>藏品总数,编号 1-520 无断号</span></div>
+      <div class="m"><b>0</b><span>运行时异常(收官批 78 页双扫描 + 历史 442 页全量已验)</span></div>
+      <div class="m"><b>0</b><span>概念重复(编号/文件名/藏品名全查)</span></div>
+      <div class="m"><b>25+</b><span>版本提交,全部 UTF-8</span></div>
+    </div>
+    <div class="ov-his">
+      <b>手工奠基期</b> <span class="n">第 1-182 号</span> —— 十炉手写,工厂化流水线在废墟中成型。<br>
+      <b>定时炉自动化期</b> <span class="n">第 183-362 号</span> —— cron 每小时一炉双路并发,自主三炉后遇额度停摆。<br>
+      <b>协调员直产期</b> <span class="n">第 363-482 号</span> —— 遗留批收编,双特辑恢复产能,人工串行收口。<br>
+      <b>收官冲刺期</b> <span class="n">第 483-520 号</span> —— 三联特辑,500 号腰间盘荣退,520 号纪念堂封顶。<br>
+      <b>谢幕</b> <span class="n">2026-11-23</span> —— 页脚换收官铭文,定时任务删除,生产线正式停机。
+    </div>
+    <div class="ov-check">终检:静态质检 520 页全绿 · 编号对账 520=520=520 · 概念查重 0 重复 · 运行时扫描 0 真实异常 —— 本馆是带着全绿体检报告闭馆的。</div>
+    <p class="ov-trio">收官三件套:第 500 号「腰间盘荣誉退休大会」(它突出的不是间盘,是奉献) · 第 519 号「系列留言墙」 · 第 520 号「系列收官纪念堂」(展品是「完结」本身)。</p>
+    <p class="ov-motto">垃圾会散场,<b>认真不会。</b></p>
+    <p class="ov-more">完整版谢幕报告(含编年史、终检表、现场存照):<a href="curtain-call.html">curtain-call.html</a> · 展览虽已闭馆,垃圾仍在原地址常开放,欢迎常回来看看。</p>
+    <p class="ov-fine">点右上角 × 关闭本公告。公告关闭后,请勿假装没看过。</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var seal=document.getElementById('finaleSeal');
+  var ov=document.getElementById('finaleOv');
+  var ox=document.getElementById('ovX');
+  function open(){ov.hidden=false;document.body.style.overflow='hidden';}
+  function close(){ov.hidden=true;document.body.style.overflow='';}
+  seal.addEventListener('click',open);
+  seal.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  ox.addEventListener('click',close);
+  ov.addEventListener('click',function(e){if(e.target===ov)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
 </body>
 </html>
