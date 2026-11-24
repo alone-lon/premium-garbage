@@ -29,78 +29,6 @@
    "std": "每按钮 lines>=8"
   },
   {
-   "file": "address.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "每按钮 lines>=8"
-  },
-  {
-   "file": "alarm.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "每按钮 lines>=8"
-  },
-  {
-   "file": "baiban.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "每按钮 lines>=8"
-  },
-  {
-   "file": "baoxianhe.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "每按钮 lines>=8"
-  },
-  {
-   "file": "bianlitie.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "每按钮 lines>=8"
-  },
-  {
-   "file": "bushu.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "每按钮 lines>=8"
-  },
-  {
-   "file": "bx2.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "每按钮 lines>=8"
-  },
-  {
-   "file": "cahong.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "每按钮 lines>=8"
-  },
-  {
    "file": "caidian.html",
    "kind": "counter",
    "fresh": 9,
@@ -4117,6 +4045,78 @@
    "deficit": 0,
    "detail": "pools=20",
    "std": "pools>=12"
+  },
+  {
+   "file": "address.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "alarm.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "baiban.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "baoxianhe.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "bianlitie.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "bushu.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "bx2.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
+  },
+  {
+   "file": "cahong.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "每按钮 lines>=8"
   },
   {
    "file": "fanju.html",
