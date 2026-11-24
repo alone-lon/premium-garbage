@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T05:33:09.177Z",
+ "updated": "2026-11-24T09:10:14.600Z",
  "std": {
   "counter": "姣忔寜閽?lines>=8",
   "queue": "takeLines>=8 & scenes>=8",
@@ -11,60 +11,6 @@
  "total": 520,
  "queue": [
   {
-   "file": "dengkaiguan.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "diannao.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dianshi.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dianti-anniu.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dianti.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dianying.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
    "file": "dianzi.html",
    "kind": "counter",
    "fresh": 9,
@@ -75,24 +21,6 @@
   },
   {
    "file": "dim.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dingkui.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dingwei.html",
    "kind": "counter",
    "fresh": 9,
    "target": 24,
@@ -4101,6 +4029,42 @@
    "std": "姣忔寜閽?lines>=8"
   },
   {
+   "file": "dengkaiguan.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "diannao.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "dianshi.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "dianti-anniu.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
    "file": "fanju.html",
    "kind": "slots",
    "fresh": 24,
@@ -4207,6 +4171,24 @@
    "deficit": 0,
    "detail": "pools=24",
    "std": "pools>=12"
+  },
+  {
+   "file": "dingkui.html",
+   "kind": "counter",
+   "fresh": 27,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "dingwei.html",
+   "kind": "counter",
+   "fresh": 27,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "dianyuan.html",
@@ -4585,6 +4567,24 @@
    "deficit": 0,
    "detail": "pools=32",
    "std": "pools>=12"
+  },
+  {
+   "file": "dianying.html",
+   "kind": "counter",
+   "fresh": 34,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "dianti.html",
+   "kind": "counter",
+   "fresh": 35,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
   },
   {
    "file": "blinddate.html",
