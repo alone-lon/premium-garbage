@@ -18,16 +18,18 @@ function extractD(s) {
 }
 function arrItems(block, key) {
   let total = 0, idx = 0, count = 0;
+  const re = new RegExp('"' + key + '"\\s*:\\s*\\[', 'g');
   while (true) {
-    const start = block.indexOf('"' + key + '":[', idx);
-    if (start === -1) break;
-    let depth = 0, i = start + key.length + 3;
+    re.lastIndex = idx;
+    const m = re.exec(block);
+    if (!m) break;
+    let depth = 1, i = re.lastIndex;
     for (; i < block.length; i++) {
       const ch = block[i];
       if (ch === '[') depth++;
       else if (ch === ']') { depth--; if (depth === 0) break; }
     }
-    const body = block.slice(start + key.length + 3, i);
+    const body = block.slice(re.lastIndex, i);
     const strs = body.match(/"(?:[^"\\]|\\.)*"/g);
     total += strs ? strs.length : 0;
     idx = i; count++;
