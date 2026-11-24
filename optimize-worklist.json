@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T03:48:14.165Z",
+ "updated": "2026-11-24T05:33:09.177Z",
  "std": {
   "counter": "姣忔寜閽?lines>=8",
   "queue": "takeLines>=8 & scenes>=8",
@@ -10,96 +10,6 @@
  },
  "total": 520,
  "queue": [
-  {
-   "file": "chaoyue.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "chenzhong.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "cuolou.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "cuozi.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "daijia.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "daka.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "danche.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "daohang.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "dasuan.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
-  {
-   "file": "datan.html",
-   "kind": "counter",
-   "fresh": 9,
-   "target": 24,
-   "deficit": 15,
-   "detail": "btns=3",
-   "std": "姣忔寜閽?lines>=8"
-  },
   {
    "file": "dengkaiguan.html",
    "kind": "counter",
@@ -4083,6 +3993,24 @@
    "std": "姣忔寜閽?lines>=8"
   },
   {
+   "file": "chaoyue.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "chenzhong.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
    "file": "chongdian.html",
    "kind": "counter",
    "fresh": 24,
@@ -4093,6 +4021,78 @@
   },
   {
    "file": "couple.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "cuolou.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "cuozi.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "daijia.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "daka.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "danche.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "daohang.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "dasuan.html",
+   "kind": "counter",
+   "fresh": 24,
+   "target": 24,
+   "deficit": 0,
+   "detail": "btns=3",
+   "std": "姣忔寜閽?lines>=8"
+  },
+  {
+   "file": "datan.html",
    "kind": "counter",
    "fresh": 24,
    "target": 24,
